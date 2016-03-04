@@ -47,7 +47,6 @@ cdef class MBufferIO(object):
     cpdef writable(self)
     cpdef writelines(self, lines)
     cpdef readlines(self, int64_t hint=?)
-    cpdef oldbuffer(self)
     cpdef tobytearray(self)
     cpdef tobytes(self)
     cpdef detach(self, int64_t how_many_more_bytes=?)

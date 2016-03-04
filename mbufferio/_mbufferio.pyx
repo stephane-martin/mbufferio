@@ -8,7 +8,6 @@ from cpython.mem cimport PyMem_Malloc, PyMem_Free
 # noinspection PyUnresolvedReferences
 from cpython.buffer cimport PyObject_CheckBuffer, PyObject_GetBuffer, PyBuffer_Release
 from cpython.buffer cimport PyBUF_SIMPLE, PyBUF_WRITABLE, PyBUF_STRIDES, PyBUF_ND
-from cpython.oldbuffer cimport PyBuffer_FromMemory, PyBuffer_FromReadWriteMemory
 from cpython.unicode cimport PyUnicode_AsUTF8String, PyUnicode_Check
 from cpython.bytes cimport PyBytes_Check
 # noinspection PyUnresolvedReferences
@@ -680,20 +679,6 @@ cdef class MBufferIO(object):
 
     def __releasebuffer__(self, Py_buffer *pybuf):
         self.view_count -= 1
-
-    cpdef oldbuffer(self):
-        """
-        oldbuffer()
-        Returns a "buffer" object (old buffer protocol) that represents the content of the MBufferIO
-        """
-        if self.closed:
-            raise BufferError("buffer is closed")
-        # The caller is responsible for ensuring that the memory buffer, passed in as ptr, is not deallocated while
-        # the returned buffer object exists.
-        if self.readonly:
-            return PyBuffer_FromMemory(<void *>(self.buf_pointer + self.startpos), self.length)
-        else:
-            return PyBuffer_FromReadWriteMemory(<void *>(self.buf_pointer + self.startpos), self.length)
 
     def __getitem__(self, item):
         cdef int64_t slice_length
