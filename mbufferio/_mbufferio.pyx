@@ -5,6 +5,7 @@ from libc.stdint cimport uint8_t, uintptr_t, int64_t, uint64_t, uint32_t
 # noinspection PyUnresolvedReferences
 from cpython.ref cimport PyObject
 from cpython.mem cimport PyMem_Malloc, PyMem_Free
+from libc.stdlib cimport free
 # noinspection PyUnresolvedReferences
 from cpython.buffer cimport PyObject_CheckBuffer, PyObject_GetBuffer, PyBuffer_Release
 from cpython.buffer cimport PyBUF_SIMPLE, PyBUF_WRITABLE, PyBUF_STRIDES, PyBUF_ND
@@ -44,6 +45,7 @@ cdef class MBufferIO(object):
 
     """
     def __cinit__(self, object src=None, int64_t startpos=0, int64_t length=-1, bint copy=0):
+        self.have_ownership = 0
         if startpos < 0:
             startpos = 0
         cdef int res = 0
@@ -121,7 +123,7 @@ cdef class MBufferIO(object):
         length: int64_t
             how many bytes to read/reference from 'src'. -1 for all 'src' content.
         copy: bool
-            if True, make a copy of 'src' content to the MBufferIO (the MBufferIO is not a reference)
+            if True, make a copy of 'src' content to the MBufferIO (the MBufferIO is not a reference).
         """
 
     def __dealloc__(self):
@@ -129,6 +131,34 @@ cdef class MBufferIO(object):
         if self.copy_buf_pointer is not NULL:
             PyMem_Free(self.copy_buf_pointer)
             self.copy_buf_pointer = NULL
+
+    @classmethod
+    def from_mview(cls, mview, take_ownership=False):
+        """
+        Create a MBufferIO object from an existing memoryview.
+
+        from_mview can be useful to create MBufferIO objects from a C char* buffer, without copying data: first
+        create a memoryview object using PyMemoryView_FromMemory, then create the MBufferIO.
+
+        Parameters
+        ----------
+        mview: memoryview
+            The memoryview source object
+        take_ownership: bool
+            If True, the created MBufferIO object will release (free) the C buffer pointed by the memoryview, either
+            in its destructor or after a detach() call. ONLY DO THIS IF YOU KNOW WHAT YOU'RE DOING. DOUBLE free()
+            BUGS ARE WATCHING YOU.
+
+        Returns
+        -------
+        mbuf: MBufferIO
+        """
+        if not PyMemoryView_Check(<PyObject*> mview):
+            raise TypeError("from_mview only takes a memoryview object")
+        mbuf = cls(mview)
+        (<MBufferIO> mbuf).have_ownership = bool(take_ownership)
+        return mbuf
+
 
     cpdef close(self):
         """
@@ -139,10 +169,17 @@ cdef class MBufferIO(object):
             raise ValueError("Can not modify the buffer when there are active views")
         # Once the file is closed, any operation on the file (e.g. reading or writing) will raise a ValueError.
         self.closed = 1
-        if self.src_view is not NULL:
+        if self.is_a_reference:
+            # release the view on the original object
             PyBuffer_Release(self.src_view)
             PyMem_Free(self.src_view)
             self.src_view = NULL
+            if self.have_ownership:
+                free(<void*> self.buf_pointer)
+                self.have_ownership = 0
+
+
+
 
     def __enter__(self):
         return self
@@ -165,6 +202,7 @@ cdef class MBufferIO(object):
         how_many_more_bytes: int64_t
             Allocate at least 'how_many_more_bytes' bytes more than necessary to make the copy
         """
+        cdef void* orig_buf_pointer
         if self.is_a_reference:
             self.is_a_reference = 0
             self.copy_buf_size = max(4096, up_power2(self.length + how_many_more_bytes))
@@ -172,15 +210,19 @@ cdef class MBufferIO(object):
             if self.copy_buf_pointer == NULL:
                 raise MemoryError(u"Could not allocate enough memory when copying buf")
             memcpy(self.copy_buf_pointer, self.buf_pointer + self.startpos, self.length)
+            orig_buf_pointer = <void*> self.buf_pointer
             self.buf_pointer = self.copy_buf_pointer
             self.startpos = 0
             self.readonly = 0
-            if self.src_view is not NULL:
-                # release the view on the original object
-                PyBuffer_Release(self.src_view)
-                PyMem_Free(self.src_view)
-                self.src_view = NULL
-                self.original_obj = None
+
+            # release the view on the original object
+            PyBuffer_Release(self.src_view)
+            PyMem_Free(self.src_view)
+            self.src_view = NULL
+            self.original_obj = None
+            if self.have_ownership:
+                free(orig_buf_pointer)
+                self.have_ownership = 0
             return
 
         elif ((self.length + how_many_more_bytes) <= (self.copy_buf_size - self.startpos)) and (self.readonly == 0):
@@ -209,10 +251,13 @@ cdef class MBufferIO(object):
         If the MBufferIO is a reference, and the referenced object is big enough, write 'obj_to_write'
         directly to the referenced object.
 
+        If the MBufferIO is a reference, and the referenced object is readonly, make a copy of the referenced
+        object to the internal buffer, then write 'obj_to_write' to the internal buffer.
+
         If the MBufferIO is a reference, and the referenced object is not big enough, make a copy of the referenced
         object to the internal buffer, then write 'obj_to_write' to the internal buffer.
 
-        If the MBufferIO is a copy, write to the internal buffer.
+        If the MBufferIO is a copy, write to the internal buffer, growing the internal buffer if necessary.
 
         Parameters
         ----------
@@ -396,24 +441,6 @@ cdef class MBufferIO(object):
         current_offset, self.offset = self.offset, self.length
         return <bytes> (self.buf_pointer[self.startpos + current_offset:self.startpos + self.offset])
 
-    def __str__(self):
-        if self.closed:
-            return b''
-        return <bytes> self.buf_pointer[self.startpos:self.startpos + self.length]
-
-    cpdef bytes getvalue(self):
-        """
-        getvalue()
-        Return bytes containing the entire contents of the MBufferIO.
-
-        Returns
-        -------
-        bytes
-        """
-        if self.closed:
-            raise ValueError(u"I/O operation on closed file.")
-        return self.__str__()
-
     def __len__(self):
         if self.closed:
             return 0
@@ -480,8 +507,6 @@ cdef class MBufferIO(object):
                 PyBuffer_Release(dest_view)
                 PyMem_Free(dest_view)
 
-
-
     cpdef exportto(self, object destination):
         """
         exportto(destination)
@@ -540,9 +565,29 @@ cdef class MBufferIO(object):
     cpdef tobytes(self):
         """
         tobytes()
-        Returns a copy of the MBufferIO content as a 'bytes' object
+        Return 'bytes' containing the entire content of the MBufferIO.
         """
-        return bytes(self)
+        return self.__bytes__()
+
+    cpdef bytes getvalue(self):
+        """
+        getvalue()
+        Return 'bytes' containing the entire content of the MBufferIO.
+        """
+        return self.__bytes__()
+
+    def __bytes__(self):
+        if self.closed:
+            return b''
+        return <bytes> self.buf_pointer[self.startpos:self.startpos + self.length]
+
+    def __str__(self):
+        return repr(self)
+
+    def __repr__(self):
+        if self.closed:
+            return u"MBufferIO (closed)"
+        return u"MBufferIO({} bytes long)".format(self.length)
 
     cpdef fileno(self):
         """

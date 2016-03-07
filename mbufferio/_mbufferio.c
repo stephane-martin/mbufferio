@@ -240,8 +240,8 @@ static CYTHON_INLINE float __PYX_NAN() {
 #include "string.h"
 #include "stdio.h"
 #include "murmur.h"
-#include "pythread.h"
 #include "stdlib.h"
+#include "pythread.h"
 #include "pystate.h"
 #ifdef _OPENMP
 #include <omp.h>
@@ -566,8 +566,8 @@ struct __pyx_opt_args_9mbufferio_10_mbufferio_9MBufferIO_murmur128;
 struct __pyx_opt_args_9mbufferio_10_mbufferio_murmur128;
 struct __pyx_opt_args_9mbufferio_10_mbufferio_umurmur128;
 
-/* "mbufferio/_mbufferio.pxd":30
- *     cdef object original_obj
+/* "mbufferio/_mbufferio.pxd":35
+ *     cdef bint have_ownership
  * 
  *     cpdef bytes read(self, int64_t n=?)             # <<<<<<<<<<<<<<
  *     cpdef bytes readl(self, int64_t n=?)
@@ -578,7 +578,7 @@ struct __pyx_opt_args_9mbufferio_10_mbufferio_9MBufferIO_read {
   int64_t n;
 };
 
-/* "mbufferio/_mbufferio.pxd":31
+/* "mbufferio/_mbufferio.pxd":36
  * 
  *     cpdef bytes read(self, int64_t n=?)
  *     cpdef bytes readl(self, int64_t n=?)             # <<<<<<<<<<<<<<
@@ -590,7 +590,7 @@ struct __pyx_opt_args_9mbufferio_10_mbufferio_9MBufferIO_readl {
   int64_t n;
 };
 
-/* "mbufferio/_mbufferio.pxd":32
+/* "mbufferio/_mbufferio.pxd":37
  *     cpdef bytes read(self, int64_t n=?)
  *     cpdef bytes readl(self, int64_t n=?)
  *     cpdef bytes readline(self, int64_t limit=?)             # <<<<<<<<<<<<<<
@@ -602,7 +602,7 @@ struct __pyx_opt_args_9mbufferio_10_mbufferio_9MBufferIO_readline {
   int64_t limit;
 };
 
-/* "mbufferio/_mbufferio.pxd":35
+/* "mbufferio/_mbufferio.pxd":40
  *     cpdef bytes readall(self)
  *     cpdef close(self)
  *     cpdef seek(self, int64_t pos, int whence=?)             # <<<<<<<<<<<<<<
@@ -614,7 +614,7 @@ struct __pyx_opt_args_9mbufferio_10_mbufferio_9MBufferIO_seek {
   int whence;
 };
 
-/* "mbufferio/_mbufferio.pxd":49
+/* "mbufferio/_mbufferio.pxd":54
  *     cpdef writable(self)
  *     cpdef writelines(self, lines)
  *     cpdef readlines(self, int64_t hint=?)             # <<<<<<<<<<<<<<
@@ -626,7 +626,7 @@ struct __pyx_opt_args_9mbufferio_10_mbufferio_9MBufferIO_readlines {
   int64_t hint;
 };
 
-/* "mbufferio/_mbufferio.pxd":52
+/* "mbufferio/_mbufferio.pxd":57
  *     cpdef tobytearray(self)
  *     cpdef tobytes(self)
  *     cpdef detach(self, int64_t how_many_more_bytes=?)             # <<<<<<<<<<<<<<
@@ -638,7 +638,7 @@ struct __pyx_opt_args_9mbufferio_10_mbufferio_9MBufferIO_detach {
   int64_t how_many_more_bytes;
 };
 
-/* "mbufferio/_mbufferio.pxd":53
+/* "mbufferio/_mbufferio.pxd":58
  *     cpdef tobytes(self)
  *     cpdef detach(self, int64_t how_many_more_bytes=?)
  *     cpdef murmur128(self, prefix=?, to_unicode=?)             # <<<<<<<<<<<<<<
@@ -651,7 +651,7 @@ struct __pyx_opt_args_9mbufferio_10_mbufferio_9MBufferIO_murmur128 {
   PyObject *to_unicode;
 };
 
-/* "mbufferio/_mbufferio.pxd":68
+/* "mbufferio/_mbufferio.pxd":73
  * 
  * 
  * cpdef murmur128(obj, prefix=?, to_unicode=?)             # <<<<<<<<<<<<<<
@@ -664,7 +664,7 @@ struct __pyx_opt_args_9mbufferio_10_mbufferio_murmur128 {
   PyObject *to_unicode;
 };
 
-/* "mbufferio/_mbufferio.pxd":69
+/* "mbufferio/_mbufferio.pxd":74
  * 
  * cpdef murmur128(obj, prefix=?, to_unicode=?)
  * cpdef umurmur128(obj, prefix=?)             # <<<<<<<<<<<<<<
@@ -676,7 +676,7 @@ struct __pyx_opt_args_9mbufferio_10_mbufferio_umurmur128 {
   PyObject *prefix;
 };
 
-/* "mbufferio/_mbufferio.pxd":15
+/* "mbufferio/_mbufferio.pxd":19
  * 
  * 
  * cdef class MBufferIO(object):             # <<<<<<<<<<<<<<
@@ -699,10 +699,11 @@ struct __pyx_obj_9mbufferio_10_mbufferio_MBufferIO {
   int readonly;
   int is_a_reference;
   PyObject *original_obj;
+  int have_ownership;
 };
 
 
-/* "mbufferio/_mbufferio.pyx":650
+/* "mbufferio/_mbufferio.pyx":697
  *         return lines
  * 
  *     def __iter__(self):             # <<<<<<<<<<<<<<
@@ -812,7 +813,7 @@ struct __pyx_vtabstruct_memoryview {
 static struct __pyx_vtabstruct_memoryview *__pyx_vtabptr_memoryview;
 
 
-/* "mbufferio/_mbufferio.pyx":18
+/* "mbufferio/_mbufferio.pyx":19
  * 
  * 
  * cdef class MBufferIO(object):             # <<<<<<<<<<<<<<
@@ -1121,6 +1122,10 @@ static CYTHON_INLINE long __Pyx_div_long(long, long);
 static PyObject *__pyx_memoryviewslice__get__base(PyObject *__pyx_v_self); /*proto*/
 static int __Pyx_SetVtable(PyObject *dict, void *vtable);
 
+static CYTHON_INLINE PyObject *__Pyx_GetModuleGlobalName(PyObject *name);
+
+static PyObject *__Pyx_GetNameInClass(PyObject *nmspace, PyObject *name);
+
 typedef struct {
     int code_line;
     PyCodeObject* code_object;
@@ -1149,6 +1154,9 @@ static CYTHON_INLINE int __Pyx_PyInt_As_int(PyObject *);
 static CYTHON_INLINE PyObject* __Pyx_PyInt_From_int(int value);
 
 static CYTHON_INLINE PyObject* __Pyx_PyInt_From_int64_t(int64_t value);
+
+#include "descrobject.h"
+static PyObject* __Pyx_Method_ClassMethod(PyObject *method);
 
 #if PY_MAJOR_VERSION < 3
     static int __Pyx_GetBuffer(PyObject *obj, Py_buffer *view, int flags);
@@ -1292,12 +1300,12 @@ static PyObject *__pyx_f_9mbufferio_10_mbufferio_9MBufferIO_read(struct __pyx_ob
 static PyObject *__pyx_f_9mbufferio_10_mbufferio_9MBufferIO_readl(struct __pyx_obj_9mbufferio_10_mbufferio_MBufferIO *__pyx_v_self, int __pyx_skip_dispatch, struct __pyx_opt_args_9mbufferio_10_mbufferio_9MBufferIO_readl *__pyx_optional_args); /* proto*/
 static PyObject *__pyx_f_9mbufferio_10_mbufferio_9MBufferIO_readline(struct __pyx_obj_9mbufferio_10_mbufferio_MBufferIO *__pyx_v_self, int __pyx_skip_dispatch, struct __pyx_opt_args_9mbufferio_10_mbufferio_9MBufferIO_readline *__pyx_optional_args); /* proto*/
 static PyObject *__pyx_f_9mbufferio_10_mbufferio_9MBufferIO_readall(struct __pyx_obj_9mbufferio_10_mbufferio_MBufferIO *__pyx_v_self, int __pyx_skip_dispatch); /* proto*/
-static PyObject *__pyx_f_9mbufferio_10_mbufferio_9MBufferIO_getvalue(struct __pyx_obj_9mbufferio_10_mbufferio_MBufferIO *__pyx_v_self, int __pyx_skip_dispatch); /* proto*/
 static PyObject *__pyx_f_9mbufferio_10_mbufferio_9MBufferIO_extend(struct __pyx_obj_9mbufferio_10_mbufferio_MBufferIO *__pyx_v_self, PyObject *__pyx_v_obj_to_write, int __pyx_skip_dispatch); /* proto*/
 static PyObject *__pyx_f_9mbufferio_10_mbufferio_9MBufferIO_readinto(struct __pyx_obj_9mbufferio_10_mbufferio_MBufferIO *__pyx_v_self, PyObject *__pyx_v_destination, int __pyx_skip_dispatch); /* proto*/
 static PyObject *__pyx_f_9mbufferio_10_mbufferio_9MBufferIO_exportto(struct __pyx_obj_9mbufferio_10_mbufferio_MBufferIO *__pyx_v_self, PyObject *__pyx_v_destination, int __pyx_skip_dispatch); /* proto*/
 static PyObject *__pyx_f_9mbufferio_10_mbufferio_9MBufferIO_tobytearray(struct __pyx_obj_9mbufferio_10_mbufferio_MBufferIO *__pyx_v_self, int __pyx_skip_dispatch); /* proto*/
 static PyObject *__pyx_f_9mbufferio_10_mbufferio_9MBufferIO_tobytes(struct __pyx_obj_9mbufferio_10_mbufferio_MBufferIO *__pyx_v_self, int __pyx_skip_dispatch); /* proto*/
+static PyObject *__pyx_f_9mbufferio_10_mbufferio_9MBufferIO_getvalue(struct __pyx_obj_9mbufferio_10_mbufferio_MBufferIO *__pyx_v_self, int __pyx_skip_dispatch); /* proto*/
 static PyObject *__pyx_f_9mbufferio_10_mbufferio_9MBufferIO_fileno(CYTHON_UNUSED struct __pyx_obj_9mbufferio_10_mbufferio_MBufferIO *__pyx_v_self, int __pyx_skip_dispatch); /* proto*/
 static PyObject *__pyx_f_9mbufferio_10_mbufferio_9MBufferIO_flush(struct __pyx_obj_9mbufferio_10_mbufferio_MBufferIO *__pyx_v_self, int __pyx_skip_dispatch); /* proto*/
 static PyObject *__pyx_f_9mbufferio_10_mbufferio_9MBufferIO_isatty(CYTHON_UNUSED struct __pyx_obj_9mbufferio_10_mbufferio_MBufferIO *__pyx_v_self, int __pyx_skip_dispatch); /* proto*/
@@ -1336,6 +1344,8 @@ static PyTypeObject *__pyx_ptype_7cpython_4type_type = 0;
 /* Module declarations from 'cpython.ref' */
 
 /* Module declarations from 'cpython.mem' */
+
+/* Module declarations from 'libc.stdlib' */
 
 /* Module declarations from 'cpython.buffer' */
 
@@ -1400,8 +1410,8 @@ int __pyx_module_is_main_mbufferio___mbufferio = 0;
 /* Implementation of 'mbufferio._mbufferio' */
 static PyObject *__pyx_builtin_MemoryError;
 static PyObject *__pyx_builtin_RuntimeError;
-static PyObject *__pyx_builtin_ValueError;
 static PyObject *__pyx_builtin_TypeError;
+static PyObject *__pyx_builtin_ValueError;
 static PyObject *__pyx_builtin_IOError;
 static PyObject *__pyx_builtin_BufferError;
 static PyObject *__pyx_builtin_IndexError;
@@ -1414,12 +1424,11 @@ static char __pyx_k_O[] = "O";
 static char __pyx_k_c[] = "c";
 static char __pyx_k_n[] = "n";
 static char __pyx_k_id[] = "id";
-static char __pyx_k__14[] = "";
+static char __pyx_k__15[] = "";
 static char __pyx_k_hex[] = "hex";
 static char __pyx_k_obj[] = "obj";
 static char __pyx_k_pos[] = "pos";
 static char __pyx_k_src[] = "src";
-static char __pyx_k_str[] = "__str__";
 static char __pyx_k_args[] = "args";
 static char __pyx_k_base[] = "base";
 static char __pyx_k_copy[] = "copy";
@@ -1447,6 +1456,7 @@ static char __pyx_k_error[] = "error";
 static char __pyx_k_flags[] = "flags";
 static char __pyx_k_flush[] = "flush";
 static char __pyx_k_limit[] = "limit";
+static char __pyx_k_mview[] = "mview";
 static char __pyx_k_range[] = "range";
 static char __pyx_k_readl[] = "readl";
 static char __pyx_k_shape[] = "shape";
@@ -1495,6 +1505,7 @@ static char __pyx_k_murmur128[] = "murmur128";
 static char __pyx_k_readlines[] = "readlines";
 static char __pyx_k_IndexError[] = "IndexError";
 static char __pyx_k_ValueError[] = "ValueError";
+static char __pyx_k_from_mview[] = "from_mview";
 static char __pyx_k_pyx_vtable[] = "__pyx_vtable__";
 static char __pyx_k_to_unicode[] = "to_unicode";
 static char __pyx_k_writelines[] = "writelines";
@@ -1504,12 +1515,15 @@ static char __pyx_k_tobytearray[] = "tobytearray";
 static char __pyx_k_RuntimeError[] = "RuntimeError";
 static char __pyx_k_pybuf_is_NULL[] = "pybuf is NULL";
 static char __pyx_k_pyx_getbuffer[] = "__pyx_getbuffer";
+static char __pyx_k_take_ownership[] = "take_ownership";
 static char __pyx_k_allocate_buffer[] = "allocate_buffer";
 static char __pyx_k_dtype_is_object[] = "dtype_is_object";
 static char __pyx_k_MBufferIO___iter[] = "MBufferIO.__iter__";
+static char __pyx_k_MBufferIO_closed[] = "MBufferIO (closed)";
 static char __pyx_k_read_only_object[] = "read only object";
 static char __pyx_k_strided_and_direct[] = "<strided and direct>";
 static char __pyx_k_how_many_more_bytes[] = "how_many_more_bytes";
+static char __pyx_k_MBufferIO_bytes_long[] = "MBufferIO({} bytes long)";
 static char __pyx_k_The_buffer_is_closed[] = "The buffer is closed";
 static char __pyx_k_strided_and_indirect[] = "<strided and indirect>";
 static char __pyx_k_the_object_is_closed[] = "the object is closed";
@@ -1549,6 +1563,7 @@ static char __pyx_k_Out_of_bounds_on_buffer_access_a[] = "Out of bounds on buffe
 static char __pyx_k_The_IO_object_does_not_use_a_fil[] = "The IO object does not use a file descriptor";
 static char __pyx_k_Unable_to_convert_item_to_object[] = "Unable to convert item to object";
 static char __pyx_k_exportto_parameter_destination_m[] = "exportto: parameter 'destination' must support the buffer protocol";
+static char __pyx_k_from_mview_only_takes_a_memoryvi[] = "from_mview only takes a memoryview object";
 static char __pyx_k_got_differing_extents_in_dimensi[] = "got differing extents in dimension %d (got %d and %d)";
 static char __pyx_k_invalid_value_for_whence_paramet[] = "invalid value for whence parameter";
 static char __pyx_k_unable_to_allocate_shape_and_str[] = "unable to allocate shape and strides.";
@@ -1573,6 +1588,8 @@ static PyObject *__pyx_kp_s_Indirect_dimensions_not_supporte;
 static PyObject *__pyx_kp_s_Invalid_mode_expected_c_or_fortr;
 static PyObject *__pyx_kp_s_Invalid_shape_in_axis_d_d;
 static PyObject *__pyx_n_s_MBufferIO___iter;
+static PyObject *__pyx_kp_u_MBufferIO_bytes_long;
+static PyObject *__pyx_kp_u_MBufferIO_closed;
 static PyObject *__pyx_n_s_MemoryError;
 static PyObject *__pyx_kp_s_MemoryView_of_r_at_0x_x;
 static PyObject *__pyx_kp_s_MemoryView_of_r_object;
@@ -1585,8 +1602,8 @@ static PyObject *__pyx_kp_s_The_buffer_is_closed;
 static PyObject *__pyx_n_s_TypeError;
 static PyObject *__pyx_kp_s_Unable_to_convert_item_to_object;
 static PyObject *__pyx_n_s_ValueError;
-static PyObject *__pyx_kp_b__14;
-static PyObject *__pyx_kp_u__14;
+static PyObject *__pyx_kp_b__15;
+static PyObject *__pyx_kp_u__15;
 static PyObject *__pyx_n_s_allocate_buffer;
 static PyObject *__pyx_n_s_args;
 static PyObject *__pyx_n_s_base;
@@ -1619,6 +1636,8 @@ static PyObject *__pyx_n_s_flush;
 static PyObject *__pyx_n_s_format;
 static PyObject *__pyx_n_s_fortran;
 static PyObject *__pyx_n_u_fortran;
+static PyObject *__pyx_n_s_from_mview;
+static PyObject *__pyx_kp_s_from_mview_only_takes_a_memoryvi;
 static PyObject *__pyx_n_s_getvalue;
 static PyObject *__pyx_kp_s_got_differing_extents_in_dimensi;
 static PyObject *__pyx_n_s_hash;
@@ -1639,6 +1658,7 @@ static PyObject *__pyx_n_s_main;
 static PyObject *__pyx_n_s_memview;
 static PyObject *__pyx_n_s_mode;
 static PyObject *__pyx_n_s_murmur128;
+static PyObject *__pyx_n_s_mview;
 static PyObject *__pyx_n_s_n;
 static PyObject *__pyx_n_s_name;
 static PyObject *__pyx_n_s_name_2;
@@ -1670,11 +1690,11 @@ static PyObject *__pyx_n_s_start;
 static PyObject *__pyx_n_s_startpos;
 static PyObject *__pyx_n_s_step;
 static PyObject *__pyx_n_s_stop;
-static PyObject *__pyx_n_s_str;
 static PyObject *__pyx_kp_s_strided_and_direct;
 static PyObject *__pyx_kp_s_strided_and_direct_or_indirect;
 static PyObject *__pyx_kp_s_strided_and_indirect;
 static PyObject *__pyx_n_s_struct;
+static PyObject *__pyx_n_s_take_ownership;
 static PyObject *__pyx_n_s_tell;
 static PyObject *__pyx_n_s_test;
 static PyObject *__pyx_kp_s_the_object_is_closed;
@@ -1694,43 +1714,46 @@ static PyObject *__pyx_n_s_writelines;
 static int __pyx_pf_9mbufferio_10_mbufferio_9MBufferIO___cinit__(struct __pyx_obj_9mbufferio_10_mbufferio_MBufferIO *__pyx_v_self, PyObject *__pyx_v_src, int64_t __pyx_v_startpos, int64_t __pyx_v_length, int __pyx_v_copy); /* proto */
 static int __pyx_pf_9mbufferio_10_mbufferio_9MBufferIO_2__init__(CYTHON_UNUSED struct __pyx_obj_9mbufferio_10_mbufferio_MBufferIO *__pyx_v_self, CYTHON_UNUSED PyObject *__pyx_v_src, CYTHON_UNUSED int64_t __pyx_v_startpos, CYTHON_UNUSED int64_t __pyx_v_length, CYTHON_UNUSED int __pyx_v_copy); /* proto */
 static void __pyx_pf_9mbufferio_10_mbufferio_9MBufferIO_4__dealloc__(struct __pyx_obj_9mbufferio_10_mbufferio_MBufferIO *__pyx_v_self); /* proto */
-static PyObject *__pyx_pf_9mbufferio_10_mbufferio_9MBufferIO_6close(struct __pyx_obj_9mbufferio_10_mbufferio_MBufferIO *__pyx_v_self); /* proto */
-static PyObject *__pyx_pf_9mbufferio_10_mbufferio_9MBufferIO_8__enter__(struct __pyx_obj_9mbufferio_10_mbufferio_MBufferIO *__pyx_v_self); /* proto */
-static PyObject *__pyx_pf_9mbufferio_10_mbufferio_9MBufferIO_10__exit__(struct __pyx_obj_9mbufferio_10_mbufferio_MBufferIO *__pyx_v_self, CYTHON_UNUSED PyObject *__pyx_v_exc_type, CYTHON_UNUSED PyObject *__pyx_v_exc_val, CYTHON_UNUSED PyObject *__pyx_v_exc_tb); /* proto */
-static PyObject *__pyx_pf_9mbufferio_10_mbufferio_9MBufferIO_12detach(struct __pyx_obj_9mbufferio_10_mbufferio_MBufferIO *__pyx_v_self, int64_t __pyx_v_how_many_more_bytes); /* proto */
-static PyObject *__pyx_pf_9mbufferio_10_mbufferio_9MBufferIO_14write(struct __pyx_obj_9mbufferio_10_mbufferio_MBufferIO *__pyx_v_self, PyObject *__pyx_v_obj_to_write); /* proto */
-static PyObject *__pyx_pf_9mbufferio_10_mbufferio_9MBufferIO_16seek(struct __pyx_obj_9mbufferio_10_mbufferio_MBufferIO *__pyx_v_self, int64_t __pyx_v_pos, int __pyx_v_whence); /* proto */
-static PyObject *__pyx_pf_9mbufferio_10_mbufferio_9MBufferIO_18read(struct __pyx_obj_9mbufferio_10_mbufferio_MBufferIO *__pyx_v_self, int64_t __pyx_v_n); /* proto */
-static PyObject *__pyx_pf_9mbufferio_10_mbufferio_9MBufferIO_20readl(struct __pyx_obj_9mbufferio_10_mbufferio_MBufferIO *__pyx_v_self, int64_t __pyx_v_n); /* proto */
-static PyObject *__pyx_pf_9mbufferio_10_mbufferio_9MBufferIO_22readline(struct __pyx_obj_9mbufferio_10_mbufferio_MBufferIO *__pyx_v_self, int64_t __pyx_v_limit); /* proto */
-static PyObject *__pyx_pf_9mbufferio_10_mbufferio_9MBufferIO_24readall(struct __pyx_obj_9mbufferio_10_mbufferio_MBufferIO *__pyx_v_self); /* proto */
-static PyObject *__pyx_pf_9mbufferio_10_mbufferio_9MBufferIO_26__str__(struct __pyx_obj_9mbufferio_10_mbufferio_MBufferIO *__pyx_v_self); /* proto */
-static PyObject *__pyx_pf_9mbufferio_10_mbufferio_9MBufferIO_28getvalue(struct __pyx_obj_9mbufferio_10_mbufferio_MBufferIO *__pyx_v_self); /* proto */
-static Py_ssize_t __pyx_pf_9mbufferio_10_mbufferio_9MBufferIO_30__len__(struct __pyx_obj_9mbufferio_10_mbufferio_MBufferIO *__pyx_v_self); /* proto */
-static PyObject *__pyx_pf_9mbufferio_10_mbufferio_9MBufferIO_32extend(struct __pyx_obj_9mbufferio_10_mbufferio_MBufferIO *__pyx_v_self, PyObject *__pyx_v_obj_to_write); /* proto */
-static PyObject *__pyx_pf_9mbufferio_10_mbufferio_9MBufferIO_34readinto(struct __pyx_obj_9mbufferio_10_mbufferio_MBufferIO *__pyx_v_self, PyObject *__pyx_v_destination); /* proto */
-static PyObject *__pyx_pf_9mbufferio_10_mbufferio_9MBufferIO_36exportto(struct __pyx_obj_9mbufferio_10_mbufferio_MBufferIO *__pyx_v_self, PyObject *__pyx_v_destination); /* proto */
-static PyObject *__pyx_pf_9mbufferio_10_mbufferio_9MBufferIO_38tobytearray(struct __pyx_obj_9mbufferio_10_mbufferio_MBufferIO *__pyx_v_self); /* proto */
-static PyObject *__pyx_pf_9mbufferio_10_mbufferio_9MBufferIO_40tobytes(struct __pyx_obj_9mbufferio_10_mbufferio_MBufferIO *__pyx_v_self); /* proto */
-static PyObject *__pyx_pf_9mbufferio_10_mbufferio_9MBufferIO_42fileno(struct __pyx_obj_9mbufferio_10_mbufferio_MBufferIO *__pyx_v_self); /* proto */
-static PyObject *__pyx_pf_9mbufferio_10_mbufferio_9MBufferIO_44flush(struct __pyx_obj_9mbufferio_10_mbufferio_MBufferIO *__pyx_v_self); /* proto */
-static PyObject *__pyx_pf_9mbufferio_10_mbufferio_9MBufferIO_46isatty(struct __pyx_obj_9mbufferio_10_mbufferio_MBufferIO *__pyx_v_self); /* proto */
-static PyObject *__pyx_pf_9mbufferio_10_mbufferio_9MBufferIO_48readable(struct __pyx_obj_9mbufferio_10_mbufferio_MBufferIO *__pyx_v_self); /* proto */
-static PyObject *__pyx_pf_9mbufferio_10_mbufferio_9MBufferIO_50seekable(struct __pyx_obj_9mbufferio_10_mbufferio_MBufferIO *__pyx_v_self); /* proto */
-static PyObject *__pyx_pf_9mbufferio_10_mbufferio_9MBufferIO_52tell(struct __pyx_obj_9mbufferio_10_mbufferio_MBufferIO *__pyx_v_self); /* proto */
-static PyObject *__pyx_pf_9mbufferio_10_mbufferio_9MBufferIO_54writable(struct __pyx_obj_9mbufferio_10_mbufferio_MBufferIO *__pyx_v_self); /* proto */
-static PyObject *__pyx_pf_9mbufferio_10_mbufferio_9MBufferIO_56writelines(struct __pyx_obj_9mbufferio_10_mbufferio_MBufferIO *__pyx_v_self, PyObject *__pyx_v_lines); /* proto */
-static PyObject *__pyx_pf_9mbufferio_10_mbufferio_9MBufferIO_58readlines(struct __pyx_obj_9mbufferio_10_mbufferio_MBufferIO *__pyx_v_self, int64_t __pyx_v_hint); /* proto */
-static PyObject *__pyx_pf_9mbufferio_10_mbufferio_9MBufferIO_60__iter__(struct __pyx_obj_9mbufferio_10_mbufferio_MBufferIO *__pyx_v_self); /* proto */
-static int __pyx_pf_9mbufferio_10_mbufferio_9MBufferIO_63__getbuffer__(struct __pyx_obj_9mbufferio_10_mbufferio_MBufferIO *__pyx_v_self, Py_buffer *__pyx_v_pybuf, int __pyx_v_flags); /* proto */
-static void __pyx_pf_9mbufferio_10_mbufferio_9MBufferIO_65__releasebuffer__(struct __pyx_obj_9mbufferio_10_mbufferio_MBufferIO *__pyx_v_self, CYTHON_UNUSED Py_buffer *__pyx_v_pybuf); /* proto */
-static PyObject *__pyx_pf_9mbufferio_10_mbufferio_9MBufferIO_67__getitem__(struct __pyx_obj_9mbufferio_10_mbufferio_MBufferIO *__pyx_v_self, PyObject *__pyx_v_item); /* proto */
-static PyObject *__pyx_pf_9mbufferio_10_mbufferio_9MBufferIO_69murmur128(struct __pyx_obj_9mbufferio_10_mbufferio_MBufferIO *__pyx_v_self, PyObject *__pyx_v_prefix, PyObject *__pyx_v_to_unicode); /* proto */
-static Py_hash_t __pyx_pf_9mbufferio_10_mbufferio_9MBufferIO_71__hash__(struct __pyx_obj_9mbufferio_10_mbufferio_MBufferIO *__pyx_v_self); /* proto */
-static PyObject *__pyx_pf_9mbufferio_10_mbufferio_9MBufferIO_73__richcmp__(PyObject *__pyx_v_self, PyObject *__pyx_v_other, PyObject *__pyx_v_op); /* proto */
-static PyObject *__pyx_pf_9mbufferio_10_mbufferio_9MBufferIO_75__reduce__(struct __pyx_obj_9mbufferio_10_mbufferio_MBufferIO *__pyx_v_self); /* proto */
-static int __pyx_pf_9mbufferio_10_mbufferio_9MBufferIO_77__nonzero__(struct __pyx_obj_9mbufferio_10_mbufferio_MBufferIO *__pyx_v_self); /* proto */
-static PyObject *__pyx_pf_9mbufferio_10_mbufferio_9MBufferIO_79__copy__(struct __pyx_obj_9mbufferio_10_mbufferio_MBufferIO *__pyx_v_self); /* proto */
+static PyObject *__pyx_pf_9mbufferio_10_mbufferio_9MBufferIO_6from_mview(PyTypeObject *__pyx_v_cls, PyObject *__pyx_v_mview, PyObject *__pyx_v_take_ownership); /* proto */
+static PyObject *__pyx_pf_9mbufferio_10_mbufferio_9MBufferIO_8close(struct __pyx_obj_9mbufferio_10_mbufferio_MBufferIO *__pyx_v_self); /* proto */
+static PyObject *__pyx_pf_9mbufferio_10_mbufferio_9MBufferIO_10__enter__(struct __pyx_obj_9mbufferio_10_mbufferio_MBufferIO *__pyx_v_self); /* proto */
+static PyObject *__pyx_pf_9mbufferio_10_mbufferio_9MBufferIO_12__exit__(struct __pyx_obj_9mbufferio_10_mbufferio_MBufferIO *__pyx_v_self, CYTHON_UNUSED PyObject *__pyx_v_exc_type, CYTHON_UNUSED PyObject *__pyx_v_exc_val, CYTHON_UNUSED PyObject *__pyx_v_exc_tb); /* proto */
+static PyObject *__pyx_pf_9mbufferio_10_mbufferio_9MBufferIO_14detach(struct __pyx_obj_9mbufferio_10_mbufferio_MBufferIO *__pyx_v_self, int64_t __pyx_v_how_many_more_bytes); /* proto */
+static PyObject *__pyx_pf_9mbufferio_10_mbufferio_9MBufferIO_16write(struct __pyx_obj_9mbufferio_10_mbufferio_MBufferIO *__pyx_v_self, PyObject *__pyx_v_obj_to_write); /* proto */
+static PyObject *__pyx_pf_9mbufferio_10_mbufferio_9MBufferIO_18seek(struct __pyx_obj_9mbufferio_10_mbufferio_MBufferIO *__pyx_v_self, int64_t __pyx_v_pos, int __pyx_v_whence); /* proto */
+static PyObject *__pyx_pf_9mbufferio_10_mbufferio_9MBufferIO_20read(struct __pyx_obj_9mbufferio_10_mbufferio_MBufferIO *__pyx_v_self, int64_t __pyx_v_n); /* proto */
+static PyObject *__pyx_pf_9mbufferio_10_mbufferio_9MBufferIO_22readl(struct __pyx_obj_9mbufferio_10_mbufferio_MBufferIO *__pyx_v_self, int64_t __pyx_v_n); /* proto */
+static PyObject *__pyx_pf_9mbufferio_10_mbufferio_9MBufferIO_24readline(struct __pyx_obj_9mbufferio_10_mbufferio_MBufferIO *__pyx_v_self, int64_t __pyx_v_limit); /* proto */
+static PyObject *__pyx_pf_9mbufferio_10_mbufferio_9MBufferIO_26readall(struct __pyx_obj_9mbufferio_10_mbufferio_MBufferIO *__pyx_v_self); /* proto */
+static Py_ssize_t __pyx_pf_9mbufferio_10_mbufferio_9MBufferIO_28__len__(struct __pyx_obj_9mbufferio_10_mbufferio_MBufferIO *__pyx_v_self); /* proto */
+static PyObject *__pyx_pf_9mbufferio_10_mbufferio_9MBufferIO_30extend(struct __pyx_obj_9mbufferio_10_mbufferio_MBufferIO *__pyx_v_self, PyObject *__pyx_v_obj_to_write); /* proto */
+static PyObject *__pyx_pf_9mbufferio_10_mbufferio_9MBufferIO_32readinto(struct __pyx_obj_9mbufferio_10_mbufferio_MBufferIO *__pyx_v_self, PyObject *__pyx_v_destination); /* proto */
+static PyObject *__pyx_pf_9mbufferio_10_mbufferio_9MBufferIO_34exportto(struct __pyx_obj_9mbufferio_10_mbufferio_MBufferIO *__pyx_v_self, PyObject *__pyx_v_destination); /* proto */
+static PyObject *__pyx_pf_9mbufferio_10_mbufferio_9MBufferIO_36tobytearray(struct __pyx_obj_9mbufferio_10_mbufferio_MBufferIO *__pyx_v_self); /* proto */
+static PyObject *__pyx_pf_9mbufferio_10_mbufferio_9MBufferIO_38tobytes(struct __pyx_obj_9mbufferio_10_mbufferio_MBufferIO *__pyx_v_self); /* proto */
+static PyObject *__pyx_pf_9mbufferio_10_mbufferio_9MBufferIO_40getvalue(struct __pyx_obj_9mbufferio_10_mbufferio_MBufferIO *__pyx_v_self); /* proto */
+static PyObject *__pyx_pf_9mbufferio_10_mbufferio_9MBufferIO_42__bytes__(struct __pyx_obj_9mbufferio_10_mbufferio_MBufferIO *__pyx_v_self); /* proto */
+static PyObject *__pyx_pf_9mbufferio_10_mbufferio_9MBufferIO_44__str__(struct __pyx_obj_9mbufferio_10_mbufferio_MBufferIO *__pyx_v_self); /* proto */
+static PyObject *__pyx_pf_9mbufferio_10_mbufferio_9MBufferIO_46__repr__(struct __pyx_obj_9mbufferio_10_mbufferio_MBufferIO *__pyx_v_self); /* proto */
+static PyObject *__pyx_pf_9mbufferio_10_mbufferio_9MBufferIO_48fileno(struct __pyx_obj_9mbufferio_10_mbufferio_MBufferIO *__pyx_v_self); /* proto */
+static PyObject *__pyx_pf_9mbufferio_10_mbufferio_9MBufferIO_50flush(struct __pyx_obj_9mbufferio_10_mbufferio_MBufferIO *__pyx_v_self); /* proto */
+static PyObject *__pyx_pf_9mbufferio_10_mbufferio_9MBufferIO_52isatty(struct __pyx_obj_9mbufferio_10_mbufferio_MBufferIO *__pyx_v_self); /* proto */
+static PyObject *__pyx_pf_9mbufferio_10_mbufferio_9MBufferIO_54readable(struct __pyx_obj_9mbufferio_10_mbufferio_MBufferIO *__pyx_v_self); /* proto */
+static PyObject *__pyx_pf_9mbufferio_10_mbufferio_9MBufferIO_56seekable(struct __pyx_obj_9mbufferio_10_mbufferio_MBufferIO *__pyx_v_self); /* proto */
+static PyObject *__pyx_pf_9mbufferio_10_mbufferio_9MBufferIO_58tell(struct __pyx_obj_9mbufferio_10_mbufferio_MBufferIO *__pyx_v_self); /* proto */
+static PyObject *__pyx_pf_9mbufferio_10_mbufferio_9MBufferIO_60writable(struct __pyx_obj_9mbufferio_10_mbufferio_MBufferIO *__pyx_v_self); /* proto */
+static PyObject *__pyx_pf_9mbufferio_10_mbufferio_9MBufferIO_62writelines(struct __pyx_obj_9mbufferio_10_mbufferio_MBufferIO *__pyx_v_self, PyObject *__pyx_v_lines); /* proto */
+static PyObject *__pyx_pf_9mbufferio_10_mbufferio_9MBufferIO_64readlines(struct __pyx_obj_9mbufferio_10_mbufferio_MBufferIO *__pyx_v_self, int64_t __pyx_v_hint); /* proto */
+static PyObject *__pyx_pf_9mbufferio_10_mbufferio_9MBufferIO_66__iter__(struct __pyx_obj_9mbufferio_10_mbufferio_MBufferIO *__pyx_v_self); /* proto */
+static int __pyx_pf_9mbufferio_10_mbufferio_9MBufferIO_69__getbuffer__(struct __pyx_obj_9mbufferio_10_mbufferio_MBufferIO *__pyx_v_self, Py_buffer *__pyx_v_pybuf, int __pyx_v_flags); /* proto */
+static void __pyx_pf_9mbufferio_10_mbufferio_9MBufferIO_71__releasebuffer__(struct __pyx_obj_9mbufferio_10_mbufferio_MBufferIO *__pyx_v_self, CYTHON_UNUSED Py_buffer *__pyx_v_pybuf); /* proto */
+static PyObject *__pyx_pf_9mbufferio_10_mbufferio_9MBufferIO_73__getitem__(struct __pyx_obj_9mbufferio_10_mbufferio_MBufferIO *__pyx_v_self, PyObject *__pyx_v_item); /* proto */
+static PyObject *__pyx_pf_9mbufferio_10_mbufferio_9MBufferIO_75murmur128(struct __pyx_obj_9mbufferio_10_mbufferio_MBufferIO *__pyx_v_self, PyObject *__pyx_v_prefix, PyObject *__pyx_v_to_unicode); /* proto */
+static Py_hash_t __pyx_pf_9mbufferio_10_mbufferio_9MBufferIO_77__hash__(struct __pyx_obj_9mbufferio_10_mbufferio_MBufferIO *__pyx_v_self); /* proto */
+static PyObject *__pyx_pf_9mbufferio_10_mbufferio_9MBufferIO_79__richcmp__(PyObject *__pyx_v_self, PyObject *__pyx_v_other, PyObject *__pyx_v_op); /* proto */
+static PyObject *__pyx_pf_9mbufferio_10_mbufferio_9MBufferIO_81__reduce__(struct __pyx_obj_9mbufferio_10_mbufferio_MBufferIO *__pyx_v_self); /* proto */
+static int __pyx_pf_9mbufferio_10_mbufferio_9MBufferIO_83__nonzero__(struct __pyx_obj_9mbufferio_10_mbufferio_MBufferIO *__pyx_v_self); /* proto */
+static PyObject *__pyx_pf_9mbufferio_10_mbufferio_9MBufferIO_85__copy__(struct __pyx_obj_9mbufferio_10_mbufferio_MBufferIO *__pyx_v_self); /* proto */
 static PyObject *__pyx_pf_9mbufferio_10_mbufferio_9MBufferIO_10view_count___get__(struct __pyx_obj_9mbufferio_10_mbufferio_MBufferIO *__pyx_v_self); /* proto */
 static PyObject *__pyx_pf_9mbufferio_10_mbufferio_9MBufferIO_13copy_buf_size___get__(struct __pyx_obj_9mbufferio_10_mbufferio_MBufferIO *__pyx_v_self); /* proto */
 static PyObject *__pyx_pf_9mbufferio_10_mbufferio_9MBufferIO_6length___get__(struct __pyx_obj_9mbufferio_10_mbufferio_MBufferIO *__pyx_v_self); /* proto */
@@ -1802,7 +1825,7 @@ static PyObject *__pyx_tuple__10;
 static PyObject *__pyx_tuple__11;
 static PyObject *__pyx_tuple__12;
 static PyObject *__pyx_tuple__13;
-static PyObject *__pyx_tuple__15;
+static PyObject *__pyx_tuple__14;
 static PyObject *__pyx_tuple__16;
 static PyObject *__pyx_tuple__17;
 static PyObject *__pyx_tuple__18;
@@ -1852,12 +1875,12 @@ static PyObject *__pyx_tuple__64;
 static PyObject *__pyx_tuple__65;
 static PyObject *__pyx_tuple__66;
 
-/* "mbufferio/_mbufferio.pyx":46
+/* "mbufferio/_mbufferio.pyx":47
  * 
  *     """
  *     def __cinit__(self, object src=None, int64_t startpos=0, int64_t length=-1, bint copy=0):             # <<<<<<<<<<<<<<
+ *         self.have_ownership = 0
  *         if startpos < 0:
- *             startpos = 0
  */
 
 /* Python wrapper */
@@ -1912,7 +1935,7 @@ static int __pyx_pw_9mbufferio_10_mbufferio_9MBufferIO_1__cinit__(PyObject *__py
         }
       }
       if (unlikely(kw_args > 0)) {
-        if (unlikely(__Pyx_ParseOptionalKeywords(__pyx_kwds, __pyx_pyargnames, 0, values, pos_args, "__cinit__") < 0)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 46; __pyx_clineno = __LINE__; goto __pyx_L3_error;}
+        if (unlikely(__Pyx_ParseOptionalKeywords(__pyx_kwds, __pyx_pyargnames, 0, values, pos_args, "__cinit__") < 0)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 47; __pyx_clineno = __LINE__; goto __pyx_L3_error;}
       }
     } else {
       switch (PyTuple_GET_SIZE(__pyx_args)) {
@@ -1926,24 +1949,24 @@ static int __pyx_pw_9mbufferio_10_mbufferio_9MBufferIO_1__cinit__(PyObject *__py
     }
     __pyx_v_src = values[0];
     if (values[1]) {
-      __pyx_v_startpos = __Pyx_PyInt_As_int64_t(values[1]); if (unlikely((__pyx_v_startpos == (int64_t)-1) && PyErr_Occurred())) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 46; __pyx_clineno = __LINE__; goto __pyx_L3_error;}
+      __pyx_v_startpos = __Pyx_PyInt_As_int64_t(values[1]); if (unlikely((__pyx_v_startpos == (int64_t)-1) && PyErr_Occurred())) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 47; __pyx_clineno = __LINE__; goto __pyx_L3_error;}
     } else {
       __pyx_v_startpos = ((int64_t)0);
     }
     if (values[2]) {
-      __pyx_v_length = __Pyx_PyInt_As_int64_t(values[2]); if (unlikely((__pyx_v_length == (int64_t)-1) && PyErr_Occurred())) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 46; __pyx_clineno = __LINE__; goto __pyx_L3_error;}
+      __pyx_v_length = __Pyx_PyInt_As_int64_t(values[2]); if (unlikely((__pyx_v_length == (int64_t)-1) && PyErr_Occurred())) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 47; __pyx_clineno = __LINE__; goto __pyx_L3_error;}
     } else {
       __pyx_v_length = ((int64_t)-1L);
     }
     if (values[3]) {
-      __pyx_v_copy = __Pyx_PyObject_IsTrue(values[3]); if (unlikely((__pyx_v_copy == (int)-1) && PyErr_Occurred())) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 46; __pyx_clineno = __LINE__; goto __pyx_L3_error;}
+      __pyx_v_copy = __Pyx_PyObject_IsTrue(values[3]); if (unlikely((__pyx_v_copy == (int)-1) && PyErr_Occurred())) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 47; __pyx_clineno = __LINE__; goto __pyx_L3_error;}
     } else {
       __pyx_v_copy = ((int)0);
     }
   }
   goto __pyx_L4_argument_unpacking_done;
   __pyx_L5_argtuple_error:;
-  __Pyx_RaiseArgtupleInvalid("__cinit__", 0, 0, 4, PyTuple_GET_SIZE(__pyx_args)); {__pyx_filename = __pyx_f[0]; __pyx_lineno = 46; __pyx_clineno = __LINE__; goto __pyx_L3_error;}
+  __Pyx_RaiseArgtupleInvalid("__cinit__", 0, 0, 4, PyTuple_GET_SIZE(__pyx_args)); {__pyx_filename = __pyx_f[0]; __pyx_lineno = 47; __pyx_clineno = __LINE__; goto __pyx_L3_error;}
   __pyx_L3_error:;
   __Pyx_AddTraceback("mbufferio._mbufferio.MBufferIO.__cinit__", __pyx_clineno, __pyx_lineno, __pyx_filename);
   __Pyx_RefNannyFinishContext();
@@ -1982,9 +2005,18 @@ static int __pyx_pf_9mbufferio_10_mbufferio_9MBufferIO___cinit__(struct __pyx_ob
   __Pyx_RefNannySetupContext("__cinit__", 0);
   __Pyx_INCREF(__pyx_v_src);
 
-  /* "mbufferio/_mbufferio.pyx":47
+  /* "mbufferio/_mbufferio.pyx":48
  *     """
  *     def __cinit__(self, object src=None, int64_t startpos=0, int64_t length=-1, bint copy=0):
+ *         self.have_ownership = 0             # <<<<<<<<<<<<<<
+ *         if startpos < 0:
+ *             startpos = 0
+ */
+  __pyx_v_self->have_ownership = 0;
+
+  /* "mbufferio/_mbufferio.pyx":49
+ *     def __cinit__(self, object src=None, int64_t startpos=0, int64_t length=-1, bint copy=0):
+ *         self.have_ownership = 0
  *         if startpos < 0:             # <<<<<<<<<<<<<<
  *             startpos = 0
  *         cdef int res = 0
@@ -1992,8 +2024,8 @@ static int __pyx_pf_9mbufferio_10_mbufferio_9MBufferIO___cinit__(struct __pyx_ob
   __pyx_t_1 = ((__pyx_v_startpos < 0) != 0);
   if (__pyx_t_1) {
 
-    /* "mbufferio/_mbufferio.pyx":48
- *     def __cinit__(self, object src=None, int64_t startpos=0, int64_t length=-1, bint copy=0):
+    /* "mbufferio/_mbufferio.pyx":50
+ *         self.have_ownership = 0
  *         if startpos < 0:
  *             startpos = 0             # <<<<<<<<<<<<<<
  *         cdef int res = 0
@@ -2001,16 +2033,16 @@ static int __pyx_pf_9mbufferio_10_mbufferio_9MBufferIO___cinit__(struct __pyx_ob
  */
     __pyx_v_startpos = 0;
 
-    /* "mbufferio/_mbufferio.pyx":47
- *     """
+    /* "mbufferio/_mbufferio.pyx":49
  *     def __cinit__(self, object src=None, int64_t startpos=0, int64_t length=-1, bint copy=0):
+ *         self.have_ownership = 0
  *         if startpos < 0:             # <<<<<<<<<<<<<<
  *             startpos = 0
  *         cdef int res = 0
  */
   }
 
-  /* "mbufferio/_mbufferio.pyx":49
+  /* "mbufferio/_mbufferio.pyx":51
  *         if startpos < 0:
  *             startpos = 0
  *         cdef int res = 0             # <<<<<<<<<<<<<<
@@ -2019,7 +2051,7 @@ static int __pyx_pf_9mbufferio_10_mbufferio_9MBufferIO___cinit__(struct __pyx_ob
  */
   __pyx_v_res = 0;
 
-  /* "mbufferio/_mbufferio.pyx":50
+  /* "mbufferio/_mbufferio.pyx":52
  *             startpos = 0
  *         cdef int res = 0
  *         self.view_count = 0             # <<<<<<<<<<<<<<
@@ -2028,7 +2060,7 @@ static int __pyx_pf_9mbufferio_10_mbufferio_9MBufferIO___cinit__(struct __pyx_ob
  */
   __pyx_v_self->view_count = 0;
 
-  /* "mbufferio/_mbufferio.pyx":51
+  /* "mbufferio/_mbufferio.pyx":53
  *         cdef int res = 0
  *         self.view_count = 0
  *         self.original_obj = src             # <<<<<<<<<<<<<<
@@ -2041,7 +2073,7 @@ static int __pyx_pf_9mbufferio_10_mbufferio_9MBufferIO___cinit__(struct __pyx_ob
   __Pyx_DECREF(__pyx_v_self->original_obj);
   __pyx_v_self->original_obj = __pyx_v_src;
 
-  /* "mbufferio/_mbufferio.pyx":52
+  /* "mbufferio/_mbufferio.pyx":54
  *         self.view_count = 0
  *         self.original_obj = src
  *         self.offset = 0             # <<<<<<<<<<<<<<
@@ -2050,7 +2082,7 @@ static int __pyx_pf_9mbufferio_10_mbufferio_9MBufferIO___cinit__(struct __pyx_ob
  */
   __pyx_v_self->offset = 0;
 
-  /* "mbufferio/_mbufferio.pyx":53
+  /* "mbufferio/_mbufferio.pyx":55
  *         self.original_obj = src
  *         self.offset = 0
  *         self.closed = 0             # <<<<<<<<<<<<<<
@@ -2059,7 +2091,7 @@ static int __pyx_pf_9mbufferio_10_mbufferio_9MBufferIO___cinit__(struct __pyx_ob
  */
   __pyx_v_self->closed = 0;
 
-  /* "mbufferio/_mbufferio.pyx":54
+  /* "mbufferio/_mbufferio.pyx":56
  *         self.offset = 0
  *         self.closed = 0
  *         if src is None:             # <<<<<<<<<<<<<<
@@ -2070,7 +2102,7 @@ static int __pyx_pf_9mbufferio_10_mbufferio_9MBufferIO___cinit__(struct __pyx_ob
   __pyx_t_2 = (__pyx_t_1 != 0);
   if (__pyx_t_2) {
 
-    /* "mbufferio/_mbufferio.pyx":56
+    /* "mbufferio/_mbufferio.pyx":58
  *         if src is None:
  *             # empty MBufferIO object
  *             self.src_view = NULL             # <<<<<<<<<<<<<<
@@ -2079,7 +2111,7 @@ static int __pyx_pf_9mbufferio_10_mbufferio_9MBufferIO___cinit__(struct __pyx_ob
  */
     __pyx_v_self->src_view = NULL;
 
-    /* "mbufferio/_mbufferio.pyx":57
+    /* "mbufferio/_mbufferio.pyx":59
  *             # empty MBufferIO object
  *             self.src_view = NULL
  *             self.readonly = 0             # <<<<<<<<<<<<<<
@@ -2088,7 +2120,7 @@ static int __pyx_pf_9mbufferio_10_mbufferio_9MBufferIO___cinit__(struct __pyx_ob
  */
     __pyx_v_self->readonly = 0;
 
-    /* "mbufferio/_mbufferio.pyx":58
+    /* "mbufferio/_mbufferio.pyx":60
  *             self.src_view = NULL
  *             self.readonly = 0
  *             self.startpos = 0             # <<<<<<<<<<<<<<
@@ -2097,7 +2129,7 @@ static int __pyx_pf_9mbufferio_10_mbufferio_9MBufferIO___cinit__(struct __pyx_ob
  */
     __pyx_v_self->startpos = 0;
 
-    /* "mbufferio/_mbufferio.pyx":59
+    /* "mbufferio/_mbufferio.pyx":61
  *             self.readonly = 0
  *             self.startpos = 0
  *             self.length = 0             # <<<<<<<<<<<<<<
@@ -2106,7 +2138,7 @@ static int __pyx_pf_9mbufferio_10_mbufferio_9MBufferIO___cinit__(struct __pyx_ob
  */
     __pyx_v_self->length = 0;
 
-    /* "mbufferio/_mbufferio.pyx":60
+    /* "mbufferio/_mbufferio.pyx":62
  *             self.startpos = 0
  *             self.length = 0
  *             self.copy_buf_size = 4096             # <<<<<<<<<<<<<<
@@ -2115,7 +2147,7 @@ static int __pyx_pf_9mbufferio_10_mbufferio_9MBufferIO___cinit__(struct __pyx_ob
  */
     __pyx_v_self->copy_buf_size = 0x1000;
 
-    /* "mbufferio/_mbufferio.pyx":61
+    /* "mbufferio/_mbufferio.pyx":63
  *             self.length = 0
  *             self.copy_buf_size = 4096
  *             self.copy_buf_pointer = <char*> PyMem_Malloc(self.copy_buf_size)             # <<<<<<<<<<<<<<
@@ -2124,7 +2156,7 @@ static int __pyx_pf_9mbufferio_10_mbufferio_9MBufferIO___cinit__(struct __pyx_ob
  */
     __pyx_v_self->copy_buf_pointer = ((char *)PyMem_Malloc(__pyx_v_self->copy_buf_size));
 
-    /* "mbufferio/_mbufferio.pyx":62
+    /* "mbufferio/_mbufferio.pyx":64
  *             self.copy_buf_size = 4096
  *             self.copy_buf_pointer = <char*> PyMem_Malloc(self.copy_buf_size)
  *             if self.copy_buf_pointer == NULL:             # <<<<<<<<<<<<<<
@@ -2134,20 +2166,20 @@ static int __pyx_pf_9mbufferio_10_mbufferio_9MBufferIO___cinit__(struct __pyx_ob
     __pyx_t_2 = ((__pyx_v_self->copy_buf_pointer == NULL) != 0);
     if (__pyx_t_2) {
 
-      /* "mbufferio/_mbufferio.pyx":63
+      /* "mbufferio/_mbufferio.pyx":65
  *             self.copy_buf_pointer = <char*> PyMem_Malloc(self.copy_buf_size)
  *             if self.copy_buf_pointer == NULL:
  *                 raise MemoryError("Could not allocate initial memory for the copy_buf")             # <<<<<<<<<<<<<<
  *             self.buf_pointer = self.copy_buf_pointer
  *             self.is_a_reference = 0
  */
-      __pyx_t_3 = __Pyx_PyObject_Call(__pyx_builtin_MemoryError, __pyx_tuple_, NULL); if (unlikely(!__pyx_t_3)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 63; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+      __pyx_t_3 = __Pyx_PyObject_Call(__pyx_builtin_MemoryError, __pyx_tuple_, NULL); if (unlikely(!__pyx_t_3)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 65; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
       __Pyx_GOTREF(__pyx_t_3);
       __Pyx_Raise(__pyx_t_3, 0, 0, 0);
       __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
-      {__pyx_filename = __pyx_f[0]; __pyx_lineno = 63; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+      {__pyx_filename = __pyx_f[0]; __pyx_lineno = 65; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
 
-      /* "mbufferio/_mbufferio.pyx":62
+      /* "mbufferio/_mbufferio.pyx":64
  *             self.copy_buf_size = 4096
  *             self.copy_buf_pointer = <char*> PyMem_Malloc(self.copy_buf_size)
  *             if self.copy_buf_pointer == NULL:             # <<<<<<<<<<<<<<
@@ -2156,7 +2188,7 @@ static int __pyx_pf_9mbufferio_10_mbufferio_9MBufferIO___cinit__(struct __pyx_ob
  */
     }
 
-    /* "mbufferio/_mbufferio.pyx":64
+    /* "mbufferio/_mbufferio.pyx":66
  *             if self.copy_buf_pointer == NULL:
  *                 raise MemoryError("Could not allocate initial memory for the copy_buf")
  *             self.buf_pointer = self.copy_buf_pointer             # <<<<<<<<<<<<<<
@@ -2166,7 +2198,7 @@ static int __pyx_pf_9mbufferio_10_mbufferio_9MBufferIO___cinit__(struct __pyx_ob
     __pyx_t_4 = __pyx_v_self->copy_buf_pointer;
     __pyx_v_self->buf_pointer = __pyx_t_4;
 
-    /* "mbufferio/_mbufferio.pyx":65
+    /* "mbufferio/_mbufferio.pyx":67
  *                 raise MemoryError("Could not allocate initial memory for the copy_buf")
  *             self.buf_pointer = self.copy_buf_pointer
  *             self.is_a_reference = 0             # <<<<<<<<<<<<<<
@@ -2175,7 +2207,7 @@ static int __pyx_pf_9mbufferio_10_mbufferio_9MBufferIO___cinit__(struct __pyx_ob
  */
     __pyx_v_self->is_a_reference = 0;
 
-    /* "mbufferio/_mbufferio.pyx":66
+    /* "mbufferio/_mbufferio.pyx":68
  *             self.buf_pointer = self.copy_buf_pointer
  *             self.is_a_reference = 0
  *             return             # <<<<<<<<<<<<<<
@@ -2185,7 +2217,7 @@ static int __pyx_pf_9mbufferio_10_mbufferio_9MBufferIO___cinit__(struct __pyx_ob
     __pyx_r = 0;
     goto __pyx_L0;
 
-    /* "mbufferio/_mbufferio.pyx":54
+    /* "mbufferio/_mbufferio.pyx":56
  *         self.offset = 0
  *         self.closed = 0
  *         if src is None:             # <<<<<<<<<<<<<<
@@ -2194,7 +2226,7 @@ static int __pyx_pf_9mbufferio_10_mbufferio_9MBufferIO___cinit__(struct __pyx_ob
  */
   }
 
-  /* "mbufferio/_mbufferio.pyx":68
+  /* "mbufferio/_mbufferio.pyx":70
  *             return
  * 
  *         if not PyObject_CheckBuffer(src):             # <<<<<<<<<<<<<<
@@ -2204,25 +2236,25 @@ static int __pyx_pf_9mbufferio_10_mbufferio_9MBufferIO___cinit__(struct __pyx_ob
   __pyx_t_2 = ((!(PyObject_CheckBuffer(__pyx_v_src) != 0)) != 0);
   if (__pyx_t_2) {
 
-    /* "mbufferio/_mbufferio.pyx":69
+    /* "mbufferio/_mbufferio.pyx":71
  * 
  *         if not PyObject_CheckBuffer(src):
  *             src = bytes(src)             # <<<<<<<<<<<<<<
  *             copy = 1
  * 
  */
-    __pyx_t_3 = PyTuple_New(1); if (unlikely(!__pyx_t_3)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 69; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+    __pyx_t_3 = PyTuple_New(1); if (unlikely(!__pyx_t_3)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 71; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
     __Pyx_GOTREF(__pyx_t_3);
     __Pyx_INCREF(__pyx_v_src);
     __Pyx_GIVEREF(__pyx_v_src);
     PyTuple_SET_ITEM(__pyx_t_3, 0, __pyx_v_src);
-    __pyx_t_5 = __Pyx_PyObject_Call(((PyObject *)(&PyBytes_Type)), __pyx_t_3, NULL); if (unlikely(!__pyx_t_5)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 69; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+    __pyx_t_5 = __Pyx_PyObject_Call(((PyObject *)(&PyBytes_Type)), __pyx_t_3, NULL); if (unlikely(!__pyx_t_5)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 71; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
     __Pyx_GOTREF(__pyx_t_5);
     __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
     __Pyx_DECREF_SET(__pyx_v_src, __pyx_t_5);
     __pyx_t_5 = 0;
 
-    /* "mbufferio/_mbufferio.pyx":70
+    /* "mbufferio/_mbufferio.pyx":72
  *         if not PyObject_CheckBuffer(src):
  *             src = bytes(src)
  *             copy = 1             # <<<<<<<<<<<<<<
@@ -2231,7 +2263,7 @@ static int __pyx_pf_9mbufferio_10_mbufferio_9MBufferIO___cinit__(struct __pyx_ob
  */
     __pyx_v_copy = 1;
 
-    /* "mbufferio/_mbufferio.pyx":68
+    /* "mbufferio/_mbufferio.pyx":70
  *             return
  * 
  *         if not PyObject_CheckBuffer(src):             # <<<<<<<<<<<<<<
@@ -2240,7 +2272,7 @@ static int __pyx_pf_9mbufferio_10_mbufferio_9MBufferIO___cinit__(struct __pyx_ob
  */
   }
 
-  /* "mbufferio/_mbufferio.pyx":73
+  /* "mbufferio/_mbufferio.pyx":75
  * 
  *         # build a MBufferIO from an existing buffer
  *         self.src_view = <Py_buffer*> PyMem_Malloc(sizeof(Py_buffer))             # <<<<<<<<<<<<<<
@@ -2249,7 +2281,7 @@ static int __pyx_pf_9mbufferio_10_mbufferio_9MBufferIO___cinit__(struct __pyx_ob
  */
   __pyx_v_self->src_view = ((Py_buffer *)PyMem_Malloc((sizeof(Py_buffer))));
 
-  /* "mbufferio/_mbufferio.pyx":74
+  /* "mbufferio/_mbufferio.pyx":76
  *         # build a MBufferIO from an existing buffer
  *         self.src_view = <Py_buffer*> PyMem_Malloc(sizeof(Py_buffer))
  *         if self.src_view == NULL:             # <<<<<<<<<<<<<<
@@ -2259,20 +2291,20 @@ static int __pyx_pf_9mbufferio_10_mbufferio_9MBufferIO___cinit__(struct __pyx_ob
   __pyx_t_2 = ((__pyx_v_self->src_view == NULL) != 0);
   if (__pyx_t_2) {
 
-    /* "mbufferio/_mbufferio.pyx":75
+    /* "mbufferio/_mbufferio.pyx":77
  *         self.src_view = <Py_buffer*> PyMem_Malloc(sizeof(Py_buffer))
  *         if self.src_view == NULL:
  *             raise MemoryError("Could not allocate memory for the Py_buffer")             # <<<<<<<<<<<<<<
  *         if PyObject_GetBuffer(src, self.src_view, PyBUF_SIMPLE) == -1:
  *             PyMem_Free(self.src_view)
  */
-    __pyx_t_5 = __Pyx_PyObject_Call(__pyx_builtin_MemoryError, __pyx_tuple__2, NULL); if (unlikely(!__pyx_t_5)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 75; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+    __pyx_t_5 = __Pyx_PyObject_Call(__pyx_builtin_MemoryError, __pyx_tuple__2, NULL); if (unlikely(!__pyx_t_5)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 77; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
     __Pyx_GOTREF(__pyx_t_5);
     __Pyx_Raise(__pyx_t_5, 0, 0, 0);
     __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
-    {__pyx_filename = __pyx_f[0]; __pyx_lineno = 75; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+    {__pyx_filename = __pyx_f[0]; __pyx_lineno = 77; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
 
-    /* "mbufferio/_mbufferio.pyx":74
+    /* "mbufferio/_mbufferio.pyx":76
  *         # build a MBufferIO from an existing buffer
  *         self.src_view = <Py_buffer*> PyMem_Malloc(sizeof(Py_buffer))
  *         if self.src_view == NULL:             # <<<<<<<<<<<<<<
@@ -2281,18 +2313,18 @@ static int __pyx_pf_9mbufferio_10_mbufferio_9MBufferIO___cinit__(struct __pyx_ob
  */
   }
 
-  /* "mbufferio/_mbufferio.pyx":76
+  /* "mbufferio/_mbufferio.pyx":78
  *         if self.src_view == NULL:
  *             raise MemoryError("Could not allocate memory for the Py_buffer")
  *         if PyObject_GetBuffer(src, self.src_view, PyBUF_SIMPLE) == -1:             # <<<<<<<<<<<<<<
  *             PyMem_Free(self.src_view)
  *             raise RuntimeError("PyObject_GetBuffer failed")
  */
-  __pyx_t_6 = PyObject_GetBuffer(__pyx_v_src, __pyx_v_self->src_view, PyBUF_SIMPLE); if (unlikely(__pyx_t_6 == -1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 76; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __pyx_t_6 = PyObject_GetBuffer(__pyx_v_src, __pyx_v_self->src_view, PyBUF_SIMPLE); if (unlikely(__pyx_t_6 == -1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 78; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
   __pyx_t_2 = ((__pyx_t_6 == -1L) != 0);
   if (__pyx_t_2) {
 
-    /* "mbufferio/_mbufferio.pyx":77
+    /* "mbufferio/_mbufferio.pyx":79
  *             raise MemoryError("Could not allocate memory for the Py_buffer")
  *         if PyObject_GetBuffer(src, self.src_view, PyBUF_SIMPLE) == -1:
  *             PyMem_Free(self.src_view)             # <<<<<<<<<<<<<<
@@ -2301,20 +2333,20 @@ static int __pyx_pf_9mbufferio_10_mbufferio_9MBufferIO___cinit__(struct __pyx_ob
  */
     PyMem_Free(__pyx_v_self->src_view);
 
-    /* "mbufferio/_mbufferio.pyx":78
+    /* "mbufferio/_mbufferio.pyx":80
  *         if PyObject_GetBuffer(src, self.src_view, PyBUF_SIMPLE) == -1:
  *             PyMem_Free(self.src_view)
  *             raise RuntimeError("PyObject_GetBuffer failed")             # <<<<<<<<<<<<<<
  *         cdef int64_t original_length = self.src_view.len
  *         if startpos > original_length:
  */
-    __pyx_t_5 = __Pyx_PyObject_Call(__pyx_builtin_RuntimeError, __pyx_tuple__3, NULL); if (unlikely(!__pyx_t_5)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 78; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+    __pyx_t_5 = __Pyx_PyObject_Call(__pyx_builtin_RuntimeError, __pyx_tuple__3, NULL); if (unlikely(!__pyx_t_5)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 80; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
     __Pyx_GOTREF(__pyx_t_5);
     __Pyx_Raise(__pyx_t_5, 0, 0, 0);
     __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
-    {__pyx_filename = __pyx_f[0]; __pyx_lineno = 78; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+    {__pyx_filename = __pyx_f[0]; __pyx_lineno = 80; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
 
-    /* "mbufferio/_mbufferio.pyx":76
+    /* "mbufferio/_mbufferio.pyx":78
  *         if self.src_view == NULL:
  *             raise MemoryError("Could not allocate memory for the Py_buffer")
  *         if PyObject_GetBuffer(src, self.src_view, PyBUF_SIMPLE) == -1:             # <<<<<<<<<<<<<<
@@ -2323,7 +2355,7 @@ static int __pyx_pf_9mbufferio_10_mbufferio_9MBufferIO___cinit__(struct __pyx_ob
  */
   }
 
-  /* "mbufferio/_mbufferio.pyx":79
+  /* "mbufferio/_mbufferio.pyx":81
  *             PyMem_Free(self.src_view)
  *             raise RuntimeError("PyObject_GetBuffer failed")
  *         cdef int64_t original_length = self.src_view.len             # <<<<<<<<<<<<<<
@@ -2333,7 +2365,7 @@ static int __pyx_pf_9mbufferio_10_mbufferio_9MBufferIO___cinit__(struct __pyx_ob
   __pyx_t_7 = __pyx_v_self->src_view->len;
   __pyx_v_original_length = __pyx_t_7;
 
-  /* "mbufferio/_mbufferio.pyx":80
+  /* "mbufferio/_mbufferio.pyx":82
  *             raise RuntimeError("PyObject_GetBuffer failed")
  *         cdef int64_t original_length = self.src_view.len
  *         if startpos > original_length:             # <<<<<<<<<<<<<<
@@ -2343,7 +2375,7 @@ static int __pyx_pf_9mbufferio_10_mbufferio_9MBufferIO___cinit__(struct __pyx_ob
   __pyx_t_2 = ((__pyx_v_startpos > __pyx_v_original_length) != 0);
   if (__pyx_t_2) {
 
-    /* "mbufferio/_mbufferio.pyx":81
+    /* "mbufferio/_mbufferio.pyx":83
  *         cdef int64_t original_length = self.src_view.len
  *         if startpos > original_length:
  *             startpos = original_length             # <<<<<<<<<<<<<<
@@ -2352,7 +2384,7 @@ static int __pyx_pf_9mbufferio_10_mbufferio_9MBufferIO___cinit__(struct __pyx_ob
  */
     __pyx_v_startpos = __pyx_v_original_length;
 
-    /* "mbufferio/_mbufferio.pyx":80
+    /* "mbufferio/_mbufferio.pyx":82
  *             raise RuntimeError("PyObject_GetBuffer failed")
  *         cdef int64_t original_length = self.src_view.len
  *         if startpos > original_length:             # <<<<<<<<<<<<<<
@@ -2361,7 +2393,7 @@ static int __pyx_pf_9mbufferio_10_mbufferio_9MBufferIO___cinit__(struct __pyx_ob
  */
   }
 
-  /* "mbufferio/_mbufferio.pyx":82
+  /* "mbufferio/_mbufferio.pyx":84
  *         if startpos > original_length:
  *             startpos = original_length
  *         cdef int64_t max_orig_length = max(original_length - startpos, 0)             # <<<<<<<<<<<<<<
@@ -2377,7 +2409,7 @@ static int __pyx_pf_9mbufferio_10_mbufferio_9MBufferIO___cinit__(struct __pyx_ob
   }
   __pyx_v_max_orig_length = __pyx_t_10;
 
-  /* "mbufferio/_mbufferio.pyx":83
+  /* "mbufferio/_mbufferio.pyx":85
  *             startpos = original_length
  *         cdef int64_t max_orig_length = max(original_length - startpos, 0)
  *         self.length = max_orig_length if length < 0 else min(max_orig_length, length)             # <<<<<<<<<<<<<<
@@ -2398,7 +2430,7 @@ static int __pyx_pf_9mbufferio_10_mbufferio_9MBufferIO___cinit__(struct __pyx_ob
   }
   __pyx_v_self->length = __pyx_t_10;
 
-  /* "mbufferio/_mbufferio.pyx":84
+  /* "mbufferio/_mbufferio.pyx":86
  *         cdef int64_t max_orig_length = max(original_length - startpos, 0)
  *         self.length = max_orig_length if length < 0 else min(max_orig_length, length)
  *         if copy:             # <<<<<<<<<<<<<<
@@ -2408,7 +2440,7 @@ static int __pyx_pf_9mbufferio_10_mbufferio_9MBufferIO___cinit__(struct __pyx_ob
   __pyx_t_2 = (__pyx_v_copy != 0);
   if (__pyx_t_2) {
 
-    /* "mbufferio/_mbufferio.pyx":86
+    /* "mbufferio/_mbufferio.pyx":88
  *         if copy:
  *             # copy the original object (self.length bytes)
  *             self.readonly = 0             # <<<<<<<<<<<<<<
@@ -2417,7 +2449,7 @@ static int __pyx_pf_9mbufferio_10_mbufferio_9MBufferIO___cinit__(struct __pyx_ob
  */
     __pyx_v_self->readonly = 0;
 
-    /* "mbufferio/_mbufferio.pyx":87
+    /* "mbufferio/_mbufferio.pyx":89
  *             # copy the original object (self.length bytes)
  *             self.readonly = 0
  *             self.is_a_reference = 0             # <<<<<<<<<<<<<<
@@ -2426,7 +2458,7 @@ static int __pyx_pf_9mbufferio_10_mbufferio_9MBufferIO___cinit__(struct __pyx_ob
  */
     __pyx_v_self->is_a_reference = 0;
 
-    /* "mbufferio/_mbufferio.pyx":88
+    /* "mbufferio/_mbufferio.pyx":90
  *             self.readonly = 0
  *             self.is_a_reference = 0
  *             self.startpos = 0             # <<<<<<<<<<<<<<
@@ -2435,7 +2467,7 @@ static int __pyx_pf_9mbufferio_10_mbufferio_9MBufferIO___cinit__(struct __pyx_ob
  */
     __pyx_v_self->startpos = 0;
 
-    /* "mbufferio/_mbufferio.pyx":89
+    /* "mbufferio/_mbufferio.pyx":91
  *             self.is_a_reference = 0
  *             self.startpos = 0
  *             self.copy_buf_size = max(4096, up_power2(self.length))             # <<<<<<<<<<<<<<
@@ -2451,7 +2483,7 @@ static int __pyx_pf_9mbufferio_10_mbufferio_9MBufferIO___cinit__(struct __pyx_ob
     }
     __pyx_v_self->copy_buf_size = __pyx_t_14;
 
-    /* "mbufferio/_mbufferio.pyx":90
+    /* "mbufferio/_mbufferio.pyx":92
  *             self.startpos = 0
  *             self.copy_buf_size = max(4096, up_power2(self.length))
  *             self.copy_buf_pointer = <char*> PyMem_Malloc(self.copy_buf_size)             # <<<<<<<<<<<<<<
@@ -2460,7 +2492,7 @@ static int __pyx_pf_9mbufferio_10_mbufferio_9MBufferIO___cinit__(struct __pyx_ob
  */
     __pyx_v_self->copy_buf_pointer = ((char *)PyMem_Malloc(__pyx_v_self->copy_buf_size));
 
-    /* "mbufferio/_mbufferio.pyx":91
+    /* "mbufferio/_mbufferio.pyx":93
  *             self.copy_buf_size = max(4096, up_power2(self.length))
  *             self.copy_buf_pointer = <char*> PyMem_Malloc(self.copy_buf_size)
  *             if self.copy_buf_pointer == NULL:             # <<<<<<<<<<<<<<
@@ -2470,20 +2502,20 @@ static int __pyx_pf_9mbufferio_10_mbufferio_9MBufferIO___cinit__(struct __pyx_ob
     __pyx_t_2 = ((__pyx_v_self->copy_buf_pointer == NULL) != 0);
     if (__pyx_t_2) {
 
-      /* "mbufferio/_mbufferio.pyx":92
+      /* "mbufferio/_mbufferio.pyx":94
  *             self.copy_buf_pointer = <char*> PyMem_Malloc(self.copy_buf_size)
  *             if self.copy_buf_pointer == NULL:
  *                 raise MemoryError("Could not allocate initial memory for the copy_buf")             # <<<<<<<<<<<<<<
  *             self.buf_pointer = self.copy_buf_pointer
  *             if self.length > 0:
  */
-      __pyx_t_5 = __Pyx_PyObject_Call(__pyx_builtin_MemoryError, __pyx_tuple__4, NULL); if (unlikely(!__pyx_t_5)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 92; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+      __pyx_t_5 = __Pyx_PyObject_Call(__pyx_builtin_MemoryError, __pyx_tuple__4, NULL); if (unlikely(!__pyx_t_5)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 94; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
       __Pyx_GOTREF(__pyx_t_5);
       __Pyx_Raise(__pyx_t_5, 0, 0, 0);
       __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
-      {__pyx_filename = __pyx_f[0]; __pyx_lineno = 92; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+      {__pyx_filename = __pyx_f[0]; __pyx_lineno = 94; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
 
-      /* "mbufferio/_mbufferio.pyx":91
+      /* "mbufferio/_mbufferio.pyx":93
  *             self.copy_buf_size = max(4096, up_power2(self.length))
  *             self.copy_buf_pointer = <char*> PyMem_Malloc(self.copy_buf_size)
  *             if self.copy_buf_pointer == NULL:             # <<<<<<<<<<<<<<
@@ -2492,7 +2524,7 @@ static int __pyx_pf_9mbufferio_10_mbufferio_9MBufferIO___cinit__(struct __pyx_ob
  */
     }
 
-    /* "mbufferio/_mbufferio.pyx":93
+    /* "mbufferio/_mbufferio.pyx":95
  *             if self.copy_buf_pointer == NULL:
  *                 raise MemoryError("Could not allocate initial memory for the copy_buf")
  *             self.buf_pointer = self.copy_buf_pointer             # <<<<<<<<<<<<<<
@@ -2502,7 +2534,7 @@ static int __pyx_pf_9mbufferio_10_mbufferio_9MBufferIO___cinit__(struct __pyx_ob
     __pyx_t_4 = __pyx_v_self->copy_buf_pointer;
     __pyx_v_self->buf_pointer = __pyx_t_4;
 
-    /* "mbufferio/_mbufferio.pyx":94
+    /* "mbufferio/_mbufferio.pyx":96
  *                 raise MemoryError("Could not allocate initial memory for the copy_buf")
  *             self.buf_pointer = self.copy_buf_pointer
  *             if self.length > 0:             # <<<<<<<<<<<<<<
@@ -2512,7 +2544,7 @@ static int __pyx_pf_9mbufferio_10_mbufferio_9MBufferIO___cinit__(struct __pyx_ob
     __pyx_t_2 = ((__pyx_v_self->length > 0) != 0);
     if (__pyx_t_2) {
 
-      /* "mbufferio/_mbufferio.pyx":95
+      /* "mbufferio/_mbufferio.pyx":97
  *             self.buf_pointer = self.copy_buf_pointer
  *             if self.length > 0:
  *                 memcpy(self.buf_pointer, self.src_view.buf + startpos, self.length)             # <<<<<<<<<<<<<<
@@ -2521,7 +2553,7 @@ static int __pyx_pf_9mbufferio_10_mbufferio_9MBufferIO___cinit__(struct __pyx_ob
  */
       memcpy(__pyx_v_self->buf_pointer, (__pyx_v_self->src_view->buf + __pyx_v_startpos), __pyx_v_self->length);
 
-      /* "mbufferio/_mbufferio.pyx":94
+      /* "mbufferio/_mbufferio.pyx":96
  *                 raise MemoryError("Could not allocate initial memory for the copy_buf")
  *             self.buf_pointer = self.copy_buf_pointer
  *             if self.length > 0:             # <<<<<<<<<<<<<<
@@ -2530,7 +2562,7 @@ static int __pyx_pf_9mbufferio_10_mbufferio_9MBufferIO___cinit__(struct __pyx_ob
  */
     }
 
-    /* "mbufferio/_mbufferio.pyx":98
+    /* "mbufferio/_mbufferio.pyx":100
  * 
  *             # dont keep the reference to the original buffer
  *             PyBuffer_Release(self.src_view)             # <<<<<<<<<<<<<<
@@ -2539,7 +2571,7 @@ static int __pyx_pf_9mbufferio_10_mbufferio_9MBufferIO___cinit__(struct __pyx_ob
  */
     PyBuffer_Release(__pyx_v_self->src_view);
 
-    /* "mbufferio/_mbufferio.pyx":99
+    /* "mbufferio/_mbufferio.pyx":101
  *             # dont keep the reference to the original buffer
  *             PyBuffer_Release(self.src_view)
  *             PyMem_Free(self.src_view)             # <<<<<<<<<<<<<<
@@ -2548,7 +2580,7 @@ static int __pyx_pf_9mbufferio_10_mbufferio_9MBufferIO___cinit__(struct __pyx_ob
  */
     PyMem_Free(__pyx_v_self->src_view);
 
-    /* "mbufferio/_mbufferio.pyx":100
+    /* "mbufferio/_mbufferio.pyx":102
  *             PyBuffer_Release(self.src_view)
  *             PyMem_Free(self.src_view)
  *             self.src_view = NULL             # <<<<<<<<<<<<<<
@@ -2557,7 +2589,7 @@ static int __pyx_pf_9mbufferio_10_mbufferio_9MBufferIO___cinit__(struct __pyx_ob
  */
     __pyx_v_self->src_view = NULL;
 
-    /* "mbufferio/_mbufferio.pyx":101
+    /* "mbufferio/_mbufferio.pyx":103
  *             PyMem_Free(self.src_view)
  *             self.src_view = NULL
  *             self.original_obj = None             # <<<<<<<<<<<<<<
@@ -2570,7 +2602,7 @@ static int __pyx_pf_9mbufferio_10_mbufferio_9MBufferIO___cinit__(struct __pyx_ob
     __Pyx_DECREF(__pyx_v_self->original_obj);
     __pyx_v_self->original_obj = Py_None;
 
-    /* "mbufferio/_mbufferio.pyx":84
+    /* "mbufferio/_mbufferio.pyx":86
  *         cdef int64_t max_orig_length = max(original_length - startpos, 0)
  *         self.length = max_orig_length if length < 0 else min(max_orig_length, length)
  *         if copy:             # <<<<<<<<<<<<<<
@@ -2580,7 +2612,7 @@ static int __pyx_pf_9mbufferio_10_mbufferio_9MBufferIO___cinit__(struct __pyx_ob
     goto __pyx_L10;
   }
 
-  /* "mbufferio/_mbufferio.pyx":104
+  /* "mbufferio/_mbufferio.pyx":106
  *         else:
  *             # direct reference to the original buffer
  *             self.readonly = 1 if self.src_view.readonly else 0             # <<<<<<<<<<<<<<
@@ -2595,7 +2627,7 @@ static int __pyx_pf_9mbufferio_10_mbufferio_9MBufferIO___cinit__(struct __pyx_ob
     }
     __pyx_v_self->readonly = __pyx_t_2;
 
-    /* "mbufferio/_mbufferio.pyx":105
+    /* "mbufferio/_mbufferio.pyx":107
  *             # direct reference to the original buffer
  *             self.readonly = 1 if self.src_view.readonly else 0
  *             self.is_a_reference = 1             # <<<<<<<<<<<<<<
@@ -2604,7 +2636,7 @@ static int __pyx_pf_9mbufferio_10_mbufferio_9MBufferIO___cinit__(struct __pyx_ob
  */
     __pyx_v_self->is_a_reference = 1;
 
-    /* "mbufferio/_mbufferio.pyx":106
+    /* "mbufferio/_mbufferio.pyx":108
  *             self.readonly = 1 if self.src_view.readonly else 0
  *             self.is_a_reference = 1
  *             self.startpos = startpos             # <<<<<<<<<<<<<<
@@ -2613,7 +2645,7 @@ static int __pyx_pf_9mbufferio_10_mbufferio_9MBufferIO___cinit__(struct __pyx_ob
  */
     __pyx_v_self->startpos = __pyx_v_startpos;
 
-    /* "mbufferio/_mbufferio.pyx":107
+    /* "mbufferio/_mbufferio.pyx":109
  *             self.is_a_reference = 1
  *             self.startpos = startpos
  *             self.buf_pointer = <char*> self.src_view.buf             # <<<<<<<<<<<<<<
@@ -2622,7 +2654,7 @@ static int __pyx_pf_9mbufferio_10_mbufferio_9MBufferIO___cinit__(struct __pyx_ob
  */
     __pyx_v_self->buf_pointer = ((char *)__pyx_v_self->src_view->buf);
 
-    /* "mbufferio/_mbufferio.pyx":108
+    /* "mbufferio/_mbufferio.pyx":110
  *             self.startpos = startpos
  *             self.buf_pointer = <char*> self.src_view.buf
  *             self.copy_buf_pointer = NULL             # <<<<<<<<<<<<<<
@@ -2631,7 +2663,7 @@ static int __pyx_pf_9mbufferio_10_mbufferio_9MBufferIO___cinit__(struct __pyx_ob
  */
     __pyx_v_self->copy_buf_pointer = NULL;
 
-    /* "mbufferio/_mbufferio.pyx":109
+    /* "mbufferio/_mbufferio.pyx":111
  *             self.buf_pointer = <char*> self.src_view.buf
  *             self.copy_buf_pointer = NULL
  *             self.copy_buf_size = 0             # <<<<<<<<<<<<<<
@@ -2642,12 +2674,12 @@ static int __pyx_pf_9mbufferio_10_mbufferio_9MBufferIO___cinit__(struct __pyx_ob
   }
   __pyx_L10:;
 
-  /* "mbufferio/_mbufferio.pyx":46
+  /* "mbufferio/_mbufferio.pyx":47
  * 
  *     """
  *     def __cinit__(self, object src=None, int64_t startpos=0, int64_t length=-1, bint copy=0):             # <<<<<<<<<<<<<<
+ *         self.have_ownership = 0
  *         if startpos < 0:
- *             startpos = 0
  */
 
   /* function exit code */
@@ -2664,7 +2696,7 @@ static int __pyx_pf_9mbufferio_10_mbufferio_9MBufferIO___cinit__(struct __pyx_ob
   return __pyx_r;
 }
 
-/* "mbufferio/_mbufferio.pyx":111
+/* "mbufferio/_mbufferio.pyx":113
  *             self.copy_buf_size = 0
  * 
  *     def __init__(self, object src=None, int64_t startpos=0, int64_t length=-1, bint copy=0):             # <<<<<<<<<<<<<<
@@ -2674,7 +2706,7 @@ static int __pyx_pf_9mbufferio_10_mbufferio_9MBufferIO___cinit__(struct __pyx_ob
 
 /* Python wrapper */
 static int __pyx_pw_9mbufferio_10_mbufferio_9MBufferIO_3__init__(PyObject *__pyx_v_self, PyObject *__pyx_args, PyObject *__pyx_kwds); /*proto*/
-static char __pyx_doc_9mbufferio_10_mbufferio_9MBufferIO_2__init__[] = "\n        __init__(src=None, int64_t startpos=0, int64_t length=-1, bint copy=0)\n\n        Parameters\n        ----------\n        src: an object that supports the buffer protocol\n            The object that the MBufferIO references (or copies)\n        startpos: int64_t\n            start to read the 'src' content with this offset\n        length: int64_t\n            how many bytes to read/reference from 'src'. -1 for all 'src' content.\n        copy: bool\n            if True, make a copy of 'src' content to the MBufferIO (the MBufferIO is not a reference)\n        ";
+static char __pyx_doc_9mbufferio_10_mbufferio_9MBufferIO_2__init__[] = "\n        __init__(src=None, int64_t startpos=0, int64_t length=-1, bint copy=0)\n\n        Parameters\n        ----------\n        src: an object that supports the buffer protocol\n            The object that the MBufferIO references (or copies)\n        startpos: int64_t\n            start to read the 'src' content with this offset\n        length: int64_t\n            how many bytes to read/reference from 'src'. -1 for all 'src' content.\n        copy: bool\n            if True, make a copy of 'src' content to the MBufferIO (the MBufferIO is not a reference).\n        ";
 #if CYTHON_COMPILING_IN_CPYTHON
 struct wrapperbase __pyx_wrapperbase_9mbufferio_10_mbufferio_9MBufferIO_2__init__;
 #endif
@@ -2728,7 +2760,7 @@ static int __pyx_pw_9mbufferio_10_mbufferio_9MBufferIO_3__init__(PyObject *__pyx
         }
       }
       if (unlikely(kw_args > 0)) {
-        if (unlikely(__Pyx_ParseOptionalKeywords(__pyx_kwds, __pyx_pyargnames, 0, values, pos_args, "__init__") < 0)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 111; __pyx_clineno = __LINE__; goto __pyx_L3_error;}
+        if (unlikely(__Pyx_ParseOptionalKeywords(__pyx_kwds, __pyx_pyargnames, 0, values, pos_args, "__init__") < 0)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 113; __pyx_clineno = __LINE__; goto __pyx_L3_error;}
       }
     } else {
       switch (PyTuple_GET_SIZE(__pyx_args)) {
@@ -2742,24 +2774,24 @@ static int __pyx_pw_9mbufferio_10_mbufferio_9MBufferIO_3__init__(PyObject *__pyx
     }
     __pyx_v_src = values[0];
     if (values[1]) {
-      __pyx_v_startpos = __Pyx_PyInt_As_int64_t(values[1]); if (unlikely((__pyx_v_startpos == (int64_t)-1) && PyErr_Occurred())) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 111; __pyx_clineno = __LINE__; goto __pyx_L3_error;}
+      __pyx_v_startpos = __Pyx_PyInt_As_int64_t(values[1]); if (unlikely((__pyx_v_startpos == (int64_t)-1) && PyErr_Occurred())) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 113; __pyx_clineno = __LINE__; goto __pyx_L3_error;}
     } else {
       __pyx_v_startpos = ((int64_t)0);
     }
     if (values[2]) {
-      __pyx_v_length = __Pyx_PyInt_As_int64_t(values[2]); if (unlikely((__pyx_v_length == (int64_t)-1) && PyErr_Occurred())) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 111; __pyx_clineno = __LINE__; goto __pyx_L3_error;}
+      __pyx_v_length = __Pyx_PyInt_As_int64_t(values[2]); if (unlikely((__pyx_v_length == (int64_t)-1) && PyErr_Occurred())) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 113; __pyx_clineno = __LINE__; goto __pyx_L3_error;}
     } else {
       __pyx_v_length = ((int64_t)-1L);
     }
     if (values[3]) {
-      __pyx_v_copy = __Pyx_PyObject_IsTrue(values[3]); if (unlikely((__pyx_v_copy == (int)-1) && PyErr_Occurred())) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 111; __pyx_clineno = __LINE__; goto __pyx_L3_error;}
+      __pyx_v_copy = __Pyx_PyObject_IsTrue(values[3]); if (unlikely((__pyx_v_copy == (int)-1) && PyErr_Occurred())) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 113; __pyx_clineno = __LINE__; goto __pyx_L3_error;}
     } else {
       __pyx_v_copy = ((int)0);
     }
   }
   goto __pyx_L4_argument_unpacking_done;
   __pyx_L5_argtuple_error:;
-  __Pyx_RaiseArgtupleInvalid("__init__", 0, 0, 4, PyTuple_GET_SIZE(__pyx_args)); {__pyx_filename = __pyx_f[0]; __pyx_lineno = 111; __pyx_clineno = __LINE__; goto __pyx_L3_error;}
+  __Pyx_RaiseArgtupleInvalid("__init__", 0, 0, 4, PyTuple_GET_SIZE(__pyx_args)); {__pyx_filename = __pyx_f[0]; __pyx_lineno = 113; __pyx_clineno = __LINE__; goto __pyx_L3_error;}
   __pyx_L3_error:;
   __Pyx_AddTraceback("mbufferio._mbufferio.MBufferIO.__init__", __pyx_clineno, __pyx_lineno, __pyx_filename);
   __Pyx_RefNannyFinishContext();
@@ -2783,7 +2815,7 @@ static int __pyx_pf_9mbufferio_10_mbufferio_9MBufferIO_2__init__(CYTHON_UNUSED s
   return __pyx_r;
 }
 
-/* "mbufferio/_mbufferio.pyx":127
+/* "mbufferio/_mbufferio.pyx":129
  *         """
  * 
  *     def __dealloc__(self):             # <<<<<<<<<<<<<<
@@ -2811,18 +2843,18 @@ static void __pyx_pf_9mbufferio_10_mbufferio_9MBufferIO_4__dealloc__(struct __py
   int __pyx_clineno = 0;
   __Pyx_RefNannySetupContext("__dealloc__", 0);
 
-  /* "mbufferio/_mbufferio.pyx":128
+  /* "mbufferio/_mbufferio.pyx":130
  * 
  *     def __dealloc__(self):
  *         self.close()             # <<<<<<<<<<<<<<
  *         if self.copy_buf_pointer is not NULL:
  *             PyMem_Free(self.copy_buf_pointer)
  */
-  __pyx_t_1 = ((struct __pyx_vtabstruct_9mbufferio_10_mbufferio_MBufferIO *)__pyx_v_self->__pyx_vtab)->close(__pyx_v_self, 0); if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 128; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __pyx_t_1 = ((struct __pyx_vtabstruct_9mbufferio_10_mbufferio_MBufferIO *)__pyx_v_self->__pyx_vtab)->close(__pyx_v_self, 0); if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 130; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
   __Pyx_GOTREF(__pyx_t_1);
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
 
-  /* "mbufferio/_mbufferio.pyx":129
+  /* "mbufferio/_mbufferio.pyx":131
  *     def __dealloc__(self):
  *         self.close()
  *         if self.copy_buf_pointer is not NULL:             # <<<<<<<<<<<<<<
@@ -2832,7 +2864,7 @@ static void __pyx_pf_9mbufferio_10_mbufferio_9MBufferIO_4__dealloc__(struct __py
   __pyx_t_2 = ((__pyx_v_self->copy_buf_pointer != NULL) != 0);
   if (__pyx_t_2) {
 
-    /* "mbufferio/_mbufferio.pyx":130
+    /* "mbufferio/_mbufferio.pyx":132
  *         self.close()
  *         if self.copy_buf_pointer is not NULL:
  *             PyMem_Free(self.copy_buf_pointer)             # <<<<<<<<<<<<<<
@@ -2841,16 +2873,16 @@ static void __pyx_pf_9mbufferio_10_mbufferio_9MBufferIO_4__dealloc__(struct __py
  */
     PyMem_Free(__pyx_v_self->copy_buf_pointer);
 
-    /* "mbufferio/_mbufferio.pyx":131
+    /* "mbufferio/_mbufferio.pyx":133
  *         if self.copy_buf_pointer is not NULL:
  *             PyMem_Free(self.copy_buf_pointer)
  *             self.copy_buf_pointer = NULL             # <<<<<<<<<<<<<<
  * 
- *     cpdef close(self):
+ *     @classmethod
  */
     __pyx_v_self->copy_buf_pointer = NULL;
 
-    /* "mbufferio/_mbufferio.pyx":129
+    /* "mbufferio/_mbufferio.pyx":131
  *     def __dealloc__(self):
  *         self.close()
  *         if self.copy_buf_pointer is not NULL:             # <<<<<<<<<<<<<<
@@ -2859,7 +2891,7 @@ static void __pyx_pf_9mbufferio_10_mbufferio_9MBufferIO_4__dealloc__(struct __py
  */
   }
 
-  /* "mbufferio/_mbufferio.pyx":127
+  /* "mbufferio/_mbufferio.pyx":129
  *         """
  * 
  *     def __dealloc__(self):             # <<<<<<<<<<<<<<
@@ -2876,15 +2908,193 @@ static void __pyx_pf_9mbufferio_10_mbufferio_9MBufferIO_4__dealloc__(struct __py
   __Pyx_RefNannyFinishContext();
 }
 
-/* "mbufferio/_mbufferio.pyx":133
- *             self.copy_buf_pointer = NULL
+/* "mbufferio/_mbufferio.pyx":136
+ * 
+ *     @classmethod
+ *     def from_mview(cls, mview, take_ownership=False):             # <<<<<<<<<<<<<<
+ *         """
+ *         Create a MBufferIO object from an existing memoryview.
+ */
+
+/* Python wrapper */
+static PyObject *__pyx_pw_9mbufferio_10_mbufferio_9MBufferIO_7from_mview(PyObject *__pyx_v_cls, PyObject *__pyx_args, PyObject *__pyx_kwds); /*proto*/
+static char __pyx_doc_9mbufferio_10_mbufferio_9MBufferIO_6from_mview[] = "\n        Create a MBufferIO object from an existing memoryview.\n\n        from_mview can be useful to create MBufferIO objects from a C char* buffer, without copying data: first\n        create a memoryview object using PyMemoryView_FromMemory, then create the MBufferIO.\n\n        Parameters\n        ----------\n        mview: memoryview\n            The memoryview source object\n        take_ownership: bool\n            If True, the created MBufferIO object will release (free) the C buffer pointed by the memoryview, either\n            in its destructor or after a detach() call. ONLY DO THIS IF YOU KNOW WHAT YOU'RE DOING. DOUBLE free()\n            BUGS ARE WATCHING YOU.\n\n        Returns\n        -------\n        mbuf: MBufferIO\n        ";
+static PyObject *__pyx_pw_9mbufferio_10_mbufferio_9MBufferIO_7from_mview(PyObject *__pyx_v_cls, PyObject *__pyx_args, PyObject *__pyx_kwds) {
+  PyObject *__pyx_v_mview = 0;
+  PyObject *__pyx_v_take_ownership = 0;
+  int __pyx_lineno = 0;
+  const char *__pyx_filename = NULL;
+  int __pyx_clineno = 0;
+  PyObject *__pyx_r = 0;
+  __Pyx_RefNannyDeclarations
+  __Pyx_RefNannySetupContext("from_mview (wrapper)", 0);
+  {
+    static PyObject **__pyx_pyargnames[] = {&__pyx_n_s_mview,&__pyx_n_s_take_ownership,0};
+    PyObject* values[2] = {0,0};
+    values[1] = ((PyObject *)Py_False);
+    if (unlikely(__pyx_kwds)) {
+      Py_ssize_t kw_args;
+      const Py_ssize_t pos_args = PyTuple_GET_SIZE(__pyx_args);
+      switch (pos_args) {
+        case  2: values[1] = PyTuple_GET_ITEM(__pyx_args, 1);
+        case  1: values[0] = PyTuple_GET_ITEM(__pyx_args, 0);
+        case  0: break;
+        default: goto __pyx_L5_argtuple_error;
+      }
+      kw_args = PyDict_Size(__pyx_kwds);
+      switch (pos_args) {
+        case  0:
+        if (likely((values[0] = PyDict_GetItem(__pyx_kwds, __pyx_n_s_mview)) != 0)) kw_args--;
+        else goto __pyx_L5_argtuple_error;
+        case  1:
+        if (kw_args > 0) {
+          PyObject* value = PyDict_GetItem(__pyx_kwds, __pyx_n_s_take_ownership);
+          if (value) { values[1] = value; kw_args--; }
+        }
+      }
+      if (unlikely(kw_args > 0)) {
+        if (unlikely(__Pyx_ParseOptionalKeywords(__pyx_kwds, __pyx_pyargnames, 0, values, pos_args, "from_mview") < 0)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 136; __pyx_clineno = __LINE__; goto __pyx_L3_error;}
+      }
+    } else {
+      switch (PyTuple_GET_SIZE(__pyx_args)) {
+        case  2: values[1] = PyTuple_GET_ITEM(__pyx_args, 1);
+        case  1: values[0] = PyTuple_GET_ITEM(__pyx_args, 0);
+        break;
+        default: goto __pyx_L5_argtuple_error;
+      }
+    }
+    __pyx_v_mview = values[0];
+    __pyx_v_take_ownership = values[1];
+  }
+  goto __pyx_L4_argument_unpacking_done;
+  __pyx_L5_argtuple_error:;
+  __Pyx_RaiseArgtupleInvalid("from_mview", 0, 1, 2, PyTuple_GET_SIZE(__pyx_args)); {__pyx_filename = __pyx_f[0]; __pyx_lineno = 136; __pyx_clineno = __LINE__; goto __pyx_L3_error;}
+  __pyx_L3_error:;
+  __Pyx_AddTraceback("mbufferio._mbufferio.MBufferIO.from_mview", __pyx_clineno, __pyx_lineno, __pyx_filename);
+  __Pyx_RefNannyFinishContext();
+  return NULL;
+  __pyx_L4_argument_unpacking_done:;
+  __pyx_r = __pyx_pf_9mbufferio_10_mbufferio_9MBufferIO_6from_mview(((PyTypeObject*)__pyx_v_cls), __pyx_v_mview, __pyx_v_take_ownership);
+
+  /* function exit code */
+  __Pyx_RefNannyFinishContext();
+  return __pyx_r;
+}
+
+static PyObject *__pyx_pf_9mbufferio_10_mbufferio_9MBufferIO_6from_mview(PyTypeObject *__pyx_v_cls, PyObject *__pyx_v_mview, PyObject *__pyx_v_take_ownership) {
+  PyObject *__pyx_v_mbuf = NULL;
+  PyObject *__pyx_r = NULL;
+  __Pyx_RefNannyDeclarations
+  int __pyx_t_1;
+  PyObject *__pyx_t_2 = NULL;
+  PyObject *__pyx_t_3 = NULL;
+  int __pyx_lineno = 0;
+  const char *__pyx_filename = NULL;
+  int __pyx_clineno = 0;
+  __Pyx_RefNannySetupContext("from_mview", 0);
+
+  /* "mbufferio/_mbufferio.pyx":156
+ *         mbuf: MBufferIO
+ *         """
+ *         if not PyMemoryView_Check(<PyObject*> mview):             # <<<<<<<<<<<<<<
+ *             raise TypeError("from_mview only takes a memoryview object")
+ *         mbuf = cls(mview)
+ */
+  __pyx_t_1 = ((!(PyMemoryView_Check(((PyObject *)__pyx_v_mview)) != 0)) != 0);
+  if (__pyx_t_1) {
+
+    /* "mbufferio/_mbufferio.pyx":157
+ *         """
+ *         if not PyMemoryView_Check(<PyObject*> mview):
+ *             raise TypeError("from_mview only takes a memoryview object")             # <<<<<<<<<<<<<<
+ *         mbuf = cls(mview)
+ *         (<MBufferIO> mbuf).have_ownership = bool(take_ownership)
+ */
+    __pyx_t_2 = __Pyx_PyObject_Call(__pyx_builtin_TypeError, __pyx_tuple__5, NULL); if (unlikely(!__pyx_t_2)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 157; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+    __Pyx_GOTREF(__pyx_t_2);
+    __Pyx_Raise(__pyx_t_2, 0, 0, 0);
+    __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
+    {__pyx_filename = __pyx_f[0]; __pyx_lineno = 157; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+
+    /* "mbufferio/_mbufferio.pyx":156
+ *         mbuf: MBufferIO
+ *         """
+ *         if not PyMemoryView_Check(<PyObject*> mview):             # <<<<<<<<<<<<<<
+ *             raise TypeError("from_mview only takes a memoryview object")
+ *         mbuf = cls(mview)
+ */
+  }
+
+  /* "mbufferio/_mbufferio.pyx":158
+ *         if not PyMemoryView_Check(<PyObject*> mview):
+ *             raise TypeError("from_mview only takes a memoryview object")
+ *         mbuf = cls(mview)             # <<<<<<<<<<<<<<
+ *         (<MBufferIO> mbuf).have_ownership = bool(take_ownership)
+ *         return mbuf
+ */
+  __pyx_t_2 = PyTuple_New(1); if (unlikely(!__pyx_t_2)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 158; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __Pyx_GOTREF(__pyx_t_2);
+  __Pyx_INCREF(__pyx_v_mview);
+  __Pyx_GIVEREF(__pyx_v_mview);
+  PyTuple_SET_ITEM(__pyx_t_2, 0, __pyx_v_mview);
+  __pyx_t_3 = __Pyx_PyObject_Call(((PyObject *)__pyx_v_cls), __pyx_t_2, NULL); if (unlikely(!__pyx_t_3)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 158; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __Pyx_GOTREF(__pyx_t_3);
+  __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
+  __pyx_v_mbuf = __pyx_t_3;
+  __pyx_t_3 = 0;
+
+  /* "mbufferio/_mbufferio.pyx":159
+ *             raise TypeError("from_mview only takes a memoryview object")
+ *         mbuf = cls(mview)
+ *         (<MBufferIO> mbuf).have_ownership = bool(take_ownership)             # <<<<<<<<<<<<<<
+ *         return mbuf
+ * 
+ */
+  __pyx_t_1 = __Pyx_PyObject_IsTrue(__pyx_v_take_ownership); if (unlikely(__pyx_t_1 < 0)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 159; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  ((struct __pyx_obj_9mbufferio_10_mbufferio_MBufferIO *)__pyx_v_mbuf)->have_ownership = (!(!__pyx_t_1));
+
+  /* "mbufferio/_mbufferio.pyx":160
+ *         mbuf = cls(mview)
+ *         (<MBufferIO> mbuf).have_ownership = bool(take_ownership)
+ *         return mbuf             # <<<<<<<<<<<<<<
+ * 
+ * 
+ */
+  __Pyx_XDECREF(__pyx_r);
+  __Pyx_INCREF(__pyx_v_mbuf);
+  __pyx_r = __pyx_v_mbuf;
+  goto __pyx_L0;
+
+  /* "mbufferio/_mbufferio.pyx":136
+ * 
+ *     @classmethod
+ *     def from_mview(cls, mview, take_ownership=False):             # <<<<<<<<<<<<<<
+ *         """
+ *         Create a MBufferIO object from an existing memoryview.
+ */
+
+  /* function exit code */
+  __pyx_L1_error:;
+  __Pyx_XDECREF(__pyx_t_2);
+  __Pyx_XDECREF(__pyx_t_3);
+  __Pyx_AddTraceback("mbufferio._mbufferio.MBufferIO.from_mview", __pyx_clineno, __pyx_lineno, __pyx_filename);
+  __pyx_r = NULL;
+  __pyx_L0:;
+  __Pyx_XDECREF(__pyx_v_mbuf);
+  __Pyx_XGIVEREF(__pyx_r);
+  __Pyx_RefNannyFinishContext();
+  return __pyx_r;
+}
+
+/* "mbufferio/_mbufferio.pyx":163
+ * 
  * 
  *     cpdef close(self):             # <<<<<<<<<<<<<<
  *         """
  *         close(self)
  */
 
-static PyObject *__pyx_pw_9mbufferio_10_mbufferio_9MBufferIO_7close(PyObject *__pyx_v_self, CYTHON_UNUSED PyObject *unused); /*proto*/
+static PyObject *__pyx_pw_9mbufferio_10_mbufferio_9MBufferIO_9close(PyObject *__pyx_v_self, CYTHON_UNUSED PyObject *unused); /*proto*/
 static PyObject *__pyx_f_9mbufferio_10_mbufferio_9MBufferIO_close(struct __pyx_obj_9mbufferio_10_mbufferio_MBufferIO *__pyx_v_self, int __pyx_skip_dispatch) {
   PyObject *__pyx_r = NULL;
   __Pyx_RefNannyDeclarations
@@ -2901,9 +3111,9 @@ static PyObject *__pyx_f_9mbufferio_10_mbufferio_9MBufferIO_close(struct __pyx_o
   if (unlikely(__pyx_skip_dispatch)) ;
   /* Check if overridden in Python */
   else if (unlikely(Py_TYPE(((PyObject *)__pyx_v_self))->tp_dictoffset != 0)) {
-    __pyx_t_1 = __Pyx_PyObject_GetAttrStr(((PyObject *)__pyx_v_self), __pyx_n_s_close); if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 133; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+    __pyx_t_1 = __Pyx_PyObject_GetAttrStr(((PyObject *)__pyx_v_self), __pyx_n_s_close); if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 163; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
     __Pyx_GOTREF(__pyx_t_1);
-    if (!PyCFunction_Check(__pyx_t_1) || (PyCFunction_GET_FUNCTION(__pyx_t_1) != (PyCFunction)__pyx_pw_9mbufferio_10_mbufferio_9MBufferIO_7close)) {
+    if (!PyCFunction_Check(__pyx_t_1) || (PyCFunction_GET_FUNCTION(__pyx_t_1) != (PyCFunction)__pyx_pw_9mbufferio_10_mbufferio_9MBufferIO_9close)) {
       __Pyx_XDECREF(__pyx_r);
       __Pyx_INCREF(__pyx_t_1);
       __pyx_t_3 = __pyx_t_1; __pyx_t_4 = NULL;
@@ -2917,10 +3127,10 @@ static PyObject *__pyx_f_9mbufferio_10_mbufferio_9MBufferIO_close(struct __pyx_o
         }
       }
       if (__pyx_t_4) {
-        __pyx_t_2 = __Pyx_PyObject_CallOneArg(__pyx_t_3, __pyx_t_4); if (unlikely(!__pyx_t_2)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 133; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+        __pyx_t_2 = __Pyx_PyObject_CallOneArg(__pyx_t_3, __pyx_t_4); if (unlikely(!__pyx_t_2)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 163; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
         __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
       } else {
-        __pyx_t_2 = __Pyx_PyObject_CallNoArg(__pyx_t_3); if (unlikely(!__pyx_t_2)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 133; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+        __pyx_t_2 = __Pyx_PyObject_CallNoArg(__pyx_t_3); if (unlikely(!__pyx_t_2)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 163; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
       }
       __Pyx_GOTREF(__pyx_t_2);
       __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
@@ -2932,7 +3142,7 @@ static PyObject *__pyx_f_9mbufferio_10_mbufferio_9MBufferIO_close(struct __pyx_o
     __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
   }
 
-  /* "mbufferio/_mbufferio.pyx":138
+  /* "mbufferio/_mbufferio.pyx":168
  *         Close the MBufferIO. All further operations will fail.
  *         """
  *         if self.view_count > 0:             # <<<<<<<<<<<<<<
@@ -2942,20 +3152,20 @@ static PyObject *__pyx_f_9mbufferio_10_mbufferio_9MBufferIO_close(struct __pyx_o
   __pyx_t_5 = ((__pyx_v_self->view_count > 0) != 0);
   if (__pyx_t_5) {
 
-    /* "mbufferio/_mbufferio.pyx":139
+    /* "mbufferio/_mbufferio.pyx":169
  *         """
  *         if self.view_count > 0:
  *             raise ValueError("Can not modify the buffer when there are active views")             # <<<<<<<<<<<<<<
  *         # Once the file is closed, any operation on the file (e.g. reading or writing) will raise a ValueError.
  *         self.closed = 1
  */
-    __pyx_t_1 = __Pyx_PyObject_Call(__pyx_builtin_ValueError, __pyx_tuple__5, NULL); if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 139; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+    __pyx_t_1 = __Pyx_PyObject_Call(__pyx_builtin_ValueError, __pyx_tuple__6, NULL); if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 169; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
     __Pyx_GOTREF(__pyx_t_1);
     __Pyx_Raise(__pyx_t_1, 0, 0, 0);
     __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
-    {__pyx_filename = __pyx_f[0]; __pyx_lineno = 139; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+    {__pyx_filename = __pyx_f[0]; __pyx_lineno = 169; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
 
-    /* "mbufferio/_mbufferio.pyx":138
+    /* "mbufferio/_mbufferio.pyx":168
  *         Close the MBufferIO. All further operations will fail.
  *         """
  *         if self.view_count > 0:             # <<<<<<<<<<<<<<
@@ -2964,63 +3174,100 @@ static PyObject *__pyx_f_9mbufferio_10_mbufferio_9MBufferIO_close(struct __pyx_o
  */
   }
 
-  /* "mbufferio/_mbufferio.pyx":141
+  /* "mbufferio/_mbufferio.pyx":171
  *             raise ValueError("Can not modify the buffer when there are active views")
  *         # Once the file is closed, any operation on the file (e.g. reading or writing) will raise a ValueError.
  *         self.closed = 1             # <<<<<<<<<<<<<<
- *         if self.src_view is not NULL:
- *             PyBuffer_Release(self.src_view)
+ *         if self.is_a_reference:
+ *             # release the view on the original object
  */
   __pyx_v_self->closed = 1;
 
-  /* "mbufferio/_mbufferio.pyx":142
+  /* "mbufferio/_mbufferio.pyx":172
  *         # Once the file is closed, any operation on the file (e.g. reading or writing) will raise a ValueError.
  *         self.closed = 1
- *         if self.src_view is not NULL:             # <<<<<<<<<<<<<<
+ *         if self.is_a_reference:             # <<<<<<<<<<<<<<
+ *             # release the view on the original object
  *             PyBuffer_Release(self.src_view)
- *             PyMem_Free(self.src_view)
  */
-  __pyx_t_5 = ((__pyx_v_self->src_view != NULL) != 0);
+  __pyx_t_5 = (__pyx_v_self->is_a_reference != 0);
   if (__pyx_t_5) {
 
-    /* "mbufferio/_mbufferio.pyx":143
- *         self.closed = 1
- *         if self.src_view is not NULL:
+    /* "mbufferio/_mbufferio.pyx":174
+ *         if self.is_a_reference:
+ *             # release the view on the original object
  *             PyBuffer_Release(self.src_view)             # <<<<<<<<<<<<<<
  *             PyMem_Free(self.src_view)
  *             self.src_view = NULL
  */
     PyBuffer_Release(__pyx_v_self->src_view);
 
-    /* "mbufferio/_mbufferio.pyx":144
- *         if self.src_view is not NULL:
+    /* "mbufferio/_mbufferio.pyx":175
+ *             # release the view on the original object
  *             PyBuffer_Release(self.src_view)
  *             PyMem_Free(self.src_view)             # <<<<<<<<<<<<<<
  *             self.src_view = NULL
- * 
+ *             if self.have_ownership:
  */
     PyMem_Free(__pyx_v_self->src_view);
 
-    /* "mbufferio/_mbufferio.pyx":145
+    /* "mbufferio/_mbufferio.pyx":176
  *             PyBuffer_Release(self.src_view)
  *             PyMem_Free(self.src_view)
  *             self.src_view = NULL             # <<<<<<<<<<<<<<
- * 
- *     def __enter__(self):
+ *             if self.have_ownership:
+ *                 free(<void*> self.buf_pointer)
  */
     __pyx_v_self->src_view = NULL;
 
-    /* "mbufferio/_mbufferio.pyx":142
+    /* "mbufferio/_mbufferio.pyx":177
+ *             PyMem_Free(self.src_view)
+ *             self.src_view = NULL
+ *             if self.have_ownership:             # <<<<<<<<<<<<<<
+ *                 free(<void*> self.buf_pointer)
+ *                 self.have_ownership = 0
+ */
+    __pyx_t_5 = (__pyx_v_self->have_ownership != 0);
+    if (__pyx_t_5) {
+
+      /* "mbufferio/_mbufferio.pyx":178
+ *             self.src_view = NULL
+ *             if self.have_ownership:
+ *                 free(<void*> self.buf_pointer)             # <<<<<<<<<<<<<<
+ *                 self.have_ownership = 0
+ * 
+ */
+      free(((void *)__pyx_v_self->buf_pointer));
+
+      /* "mbufferio/_mbufferio.pyx":179
+ *             if self.have_ownership:
+ *                 free(<void*> self.buf_pointer)
+ *                 self.have_ownership = 0             # <<<<<<<<<<<<<<
+ * 
+ * 
+ */
+      __pyx_v_self->have_ownership = 0;
+
+      /* "mbufferio/_mbufferio.pyx":177
+ *             PyMem_Free(self.src_view)
+ *             self.src_view = NULL
+ *             if self.have_ownership:             # <<<<<<<<<<<<<<
+ *                 free(<void*> self.buf_pointer)
+ *                 self.have_ownership = 0
+ */
+    }
+
+    /* "mbufferio/_mbufferio.pyx":172
  *         # Once the file is closed, any operation on the file (e.g. reading or writing) will raise a ValueError.
  *         self.closed = 1
- *         if self.src_view is not NULL:             # <<<<<<<<<<<<<<
+ *         if self.is_a_reference:             # <<<<<<<<<<<<<<
+ *             # release the view on the original object
  *             PyBuffer_Release(self.src_view)
- *             PyMem_Free(self.src_view)
  */
   }
 
-  /* "mbufferio/_mbufferio.pyx":133
- *             self.copy_buf_pointer = NULL
+  /* "mbufferio/_mbufferio.pyx":163
+ * 
  * 
  *     cpdef close(self):             # <<<<<<<<<<<<<<
  *         """
@@ -3044,20 +3291,20 @@ static PyObject *__pyx_f_9mbufferio_10_mbufferio_9MBufferIO_close(struct __pyx_o
 }
 
 /* Python wrapper */
-static PyObject *__pyx_pw_9mbufferio_10_mbufferio_9MBufferIO_7close(PyObject *__pyx_v_self, CYTHON_UNUSED PyObject *unused); /*proto*/
-static char __pyx_doc_9mbufferio_10_mbufferio_9MBufferIO_6close[] = "\n        close(self)\n        Close the MBufferIO. All further operations will fail.\n        ";
-static PyObject *__pyx_pw_9mbufferio_10_mbufferio_9MBufferIO_7close(PyObject *__pyx_v_self, CYTHON_UNUSED PyObject *unused) {
+static PyObject *__pyx_pw_9mbufferio_10_mbufferio_9MBufferIO_9close(PyObject *__pyx_v_self, CYTHON_UNUSED PyObject *unused); /*proto*/
+static char __pyx_doc_9mbufferio_10_mbufferio_9MBufferIO_8close[] = "\n        close(self)\n        Close the MBufferIO. All further operations will fail.\n        ";
+static PyObject *__pyx_pw_9mbufferio_10_mbufferio_9MBufferIO_9close(PyObject *__pyx_v_self, CYTHON_UNUSED PyObject *unused) {
   PyObject *__pyx_r = 0;
   __Pyx_RefNannyDeclarations
   __Pyx_RefNannySetupContext("close (wrapper)", 0);
-  __pyx_r = __pyx_pf_9mbufferio_10_mbufferio_9MBufferIO_6close(((struct __pyx_obj_9mbufferio_10_mbufferio_MBufferIO *)__pyx_v_self));
+  __pyx_r = __pyx_pf_9mbufferio_10_mbufferio_9MBufferIO_8close(((struct __pyx_obj_9mbufferio_10_mbufferio_MBufferIO *)__pyx_v_self));
 
   /* function exit code */
   __Pyx_RefNannyFinishContext();
   return __pyx_r;
 }
 
-static PyObject *__pyx_pf_9mbufferio_10_mbufferio_9MBufferIO_6close(struct __pyx_obj_9mbufferio_10_mbufferio_MBufferIO *__pyx_v_self) {
+static PyObject *__pyx_pf_9mbufferio_10_mbufferio_9MBufferIO_8close(struct __pyx_obj_9mbufferio_10_mbufferio_MBufferIO *__pyx_v_self) {
   PyObject *__pyx_r = NULL;
   __Pyx_RefNannyDeclarations
   PyObject *__pyx_t_1 = NULL;
@@ -3066,7 +3313,7 @@ static PyObject *__pyx_pf_9mbufferio_10_mbufferio_9MBufferIO_6close(struct __pyx
   int __pyx_clineno = 0;
   __Pyx_RefNannySetupContext("close", 0);
   __Pyx_XDECREF(__pyx_r);
-  __pyx_t_1 = __pyx_f_9mbufferio_10_mbufferio_9MBufferIO_close(__pyx_v_self, 1); if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 133; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __pyx_t_1 = __pyx_f_9mbufferio_10_mbufferio_9MBufferIO_close(__pyx_v_self, 1); if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 163; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
   __Pyx_GOTREF(__pyx_t_1);
   __pyx_r = __pyx_t_1;
   __pyx_t_1 = 0;
@@ -3083,8 +3330,8 @@ static PyObject *__pyx_pf_9mbufferio_10_mbufferio_9MBufferIO_6close(struct __pyx
   return __pyx_r;
 }
 
-/* "mbufferio/_mbufferio.pyx":147
- *             self.src_view = NULL
+/* "mbufferio/_mbufferio.pyx":184
+ * 
  * 
  *     def __enter__(self):             # <<<<<<<<<<<<<<
  *         return self
@@ -3092,24 +3339,24 @@ static PyObject *__pyx_pf_9mbufferio_10_mbufferio_9MBufferIO_6close(struct __pyx
  */
 
 /* Python wrapper */
-static PyObject *__pyx_pw_9mbufferio_10_mbufferio_9MBufferIO_9__enter__(PyObject *__pyx_v_self, CYTHON_UNUSED PyObject *unused); /*proto*/
-static PyObject *__pyx_pw_9mbufferio_10_mbufferio_9MBufferIO_9__enter__(PyObject *__pyx_v_self, CYTHON_UNUSED PyObject *unused) {
+static PyObject *__pyx_pw_9mbufferio_10_mbufferio_9MBufferIO_11__enter__(PyObject *__pyx_v_self, CYTHON_UNUSED PyObject *unused); /*proto*/
+static PyObject *__pyx_pw_9mbufferio_10_mbufferio_9MBufferIO_11__enter__(PyObject *__pyx_v_self, CYTHON_UNUSED PyObject *unused) {
   PyObject *__pyx_r = 0;
   __Pyx_RefNannyDeclarations
   __Pyx_RefNannySetupContext("__enter__ (wrapper)", 0);
-  __pyx_r = __pyx_pf_9mbufferio_10_mbufferio_9MBufferIO_8__enter__(((struct __pyx_obj_9mbufferio_10_mbufferio_MBufferIO *)__pyx_v_self));
+  __pyx_r = __pyx_pf_9mbufferio_10_mbufferio_9MBufferIO_10__enter__(((struct __pyx_obj_9mbufferio_10_mbufferio_MBufferIO *)__pyx_v_self));
 
   /* function exit code */
   __Pyx_RefNannyFinishContext();
   return __pyx_r;
 }
 
-static PyObject *__pyx_pf_9mbufferio_10_mbufferio_9MBufferIO_8__enter__(struct __pyx_obj_9mbufferio_10_mbufferio_MBufferIO *__pyx_v_self) {
+static PyObject *__pyx_pf_9mbufferio_10_mbufferio_9MBufferIO_10__enter__(struct __pyx_obj_9mbufferio_10_mbufferio_MBufferIO *__pyx_v_self) {
   PyObject *__pyx_r = NULL;
   __Pyx_RefNannyDeclarations
   __Pyx_RefNannySetupContext("__enter__", 0);
 
-  /* "mbufferio/_mbufferio.pyx":148
+  /* "mbufferio/_mbufferio.pyx":185
  * 
  *     def __enter__(self):
  *         return self             # <<<<<<<<<<<<<<
@@ -3121,8 +3368,8 @@ static PyObject *__pyx_pf_9mbufferio_10_mbufferio_9MBufferIO_8__enter__(struct _
   __pyx_r = ((PyObject *)__pyx_v_self);
   goto __pyx_L0;
 
-  /* "mbufferio/_mbufferio.pyx":147
- *             self.src_view = NULL
+  /* "mbufferio/_mbufferio.pyx":184
+ * 
  * 
  *     def __enter__(self):             # <<<<<<<<<<<<<<
  *         return self
@@ -3136,7 +3383,7 @@ static PyObject *__pyx_pf_9mbufferio_10_mbufferio_9MBufferIO_8__enter__(struct _
   return __pyx_r;
 }
 
-/* "mbufferio/_mbufferio.pyx":150
+/* "mbufferio/_mbufferio.pyx":187
  *         return self
  * 
  *     def __exit__(self, exc_type, exc_val, exc_tb):             # <<<<<<<<<<<<<<
@@ -3145,8 +3392,8 @@ static PyObject *__pyx_pf_9mbufferio_10_mbufferio_9MBufferIO_8__enter__(struct _
  */
 
 /* Python wrapper */
-static PyObject *__pyx_pw_9mbufferio_10_mbufferio_9MBufferIO_11__exit__(PyObject *__pyx_v_self, PyObject *__pyx_args, PyObject *__pyx_kwds); /*proto*/
-static PyObject *__pyx_pw_9mbufferio_10_mbufferio_9MBufferIO_11__exit__(PyObject *__pyx_v_self, PyObject *__pyx_args, PyObject *__pyx_kwds) {
+static PyObject *__pyx_pw_9mbufferio_10_mbufferio_9MBufferIO_13__exit__(PyObject *__pyx_v_self, PyObject *__pyx_args, PyObject *__pyx_kwds); /*proto*/
+static PyObject *__pyx_pw_9mbufferio_10_mbufferio_9MBufferIO_13__exit__(PyObject *__pyx_v_self, PyObject *__pyx_args, PyObject *__pyx_kwds) {
   CYTHON_UNUSED PyObject *__pyx_v_exc_type = 0;
   CYTHON_UNUSED PyObject *__pyx_v_exc_val = 0;
   CYTHON_UNUSED PyObject *__pyx_v_exc_tb = 0;
@@ -3177,16 +3424,16 @@ static PyObject *__pyx_pw_9mbufferio_10_mbufferio_9MBufferIO_11__exit__(PyObject
         case  1:
         if (likely((values[1] = PyDict_GetItem(__pyx_kwds, __pyx_n_s_exc_val)) != 0)) kw_args--;
         else {
-          __Pyx_RaiseArgtupleInvalid("__exit__", 1, 3, 3, 1); {__pyx_filename = __pyx_f[0]; __pyx_lineno = 150; __pyx_clineno = __LINE__; goto __pyx_L3_error;}
+          __Pyx_RaiseArgtupleInvalid("__exit__", 1, 3, 3, 1); {__pyx_filename = __pyx_f[0]; __pyx_lineno = 187; __pyx_clineno = __LINE__; goto __pyx_L3_error;}
         }
         case  2:
         if (likely((values[2] = PyDict_GetItem(__pyx_kwds, __pyx_n_s_exc_tb)) != 0)) kw_args--;
         else {
-          __Pyx_RaiseArgtupleInvalid("__exit__", 1, 3, 3, 2); {__pyx_filename = __pyx_f[0]; __pyx_lineno = 150; __pyx_clineno = __LINE__; goto __pyx_L3_error;}
+          __Pyx_RaiseArgtupleInvalid("__exit__", 1, 3, 3, 2); {__pyx_filename = __pyx_f[0]; __pyx_lineno = 187; __pyx_clineno = __LINE__; goto __pyx_L3_error;}
         }
       }
       if (unlikely(kw_args > 0)) {
-        if (unlikely(__Pyx_ParseOptionalKeywords(__pyx_kwds, __pyx_pyargnames, 0, values, pos_args, "__exit__") < 0)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 150; __pyx_clineno = __LINE__; goto __pyx_L3_error;}
+        if (unlikely(__Pyx_ParseOptionalKeywords(__pyx_kwds, __pyx_pyargnames, 0, values, pos_args, "__exit__") < 0)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 187; __pyx_clineno = __LINE__; goto __pyx_L3_error;}
       }
     } else if (PyTuple_GET_SIZE(__pyx_args) != 3) {
       goto __pyx_L5_argtuple_error;
@@ -3201,20 +3448,20 @@ static PyObject *__pyx_pw_9mbufferio_10_mbufferio_9MBufferIO_11__exit__(PyObject
   }
   goto __pyx_L4_argument_unpacking_done;
   __pyx_L5_argtuple_error:;
-  __Pyx_RaiseArgtupleInvalid("__exit__", 1, 3, 3, PyTuple_GET_SIZE(__pyx_args)); {__pyx_filename = __pyx_f[0]; __pyx_lineno = 150; __pyx_clineno = __LINE__; goto __pyx_L3_error;}
+  __Pyx_RaiseArgtupleInvalid("__exit__", 1, 3, 3, PyTuple_GET_SIZE(__pyx_args)); {__pyx_filename = __pyx_f[0]; __pyx_lineno = 187; __pyx_clineno = __LINE__; goto __pyx_L3_error;}
   __pyx_L3_error:;
   __Pyx_AddTraceback("mbufferio._mbufferio.MBufferIO.__exit__", __pyx_clineno, __pyx_lineno, __pyx_filename);
   __Pyx_RefNannyFinishContext();
   return NULL;
   __pyx_L4_argument_unpacking_done:;
-  __pyx_r = __pyx_pf_9mbufferio_10_mbufferio_9MBufferIO_10__exit__(((struct __pyx_obj_9mbufferio_10_mbufferio_MBufferIO *)__pyx_v_self), __pyx_v_exc_type, __pyx_v_exc_val, __pyx_v_exc_tb);
+  __pyx_r = __pyx_pf_9mbufferio_10_mbufferio_9MBufferIO_12__exit__(((struct __pyx_obj_9mbufferio_10_mbufferio_MBufferIO *)__pyx_v_self), __pyx_v_exc_type, __pyx_v_exc_val, __pyx_v_exc_tb);
 
   /* function exit code */
   __Pyx_RefNannyFinishContext();
   return __pyx_r;
 }
 
-static PyObject *__pyx_pf_9mbufferio_10_mbufferio_9MBufferIO_10__exit__(struct __pyx_obj_9mbufferio_10_mbufferio_MBufferIO *__pyx_v_self, CYTHON_UNUSED PyObject *__pyx_v_exc_type, CYTHON_UNUSED PyObject *__pyx_v_exc_val, CYTHON_UNUSED PyObject *__pyx_v_exc_tb) {
+static PyObject *__pyx_pf_9mbufferio_10_mbufferio_9MBufferIO_12__exit__(struct __pyx_obj_9mbufferio_10_mbufferio_MBufferIO *__pyx_v_self, CYTHON_UNUSED PyObject *__pyx_v_exc_type, CYTHON_UNUSED PyObject *__pyx_v_exc_val, CYTHON_UNUSED PyObject *__pyx_v_exc_tb) {
   PyObject *__pyx_r = NULL;
   __Pyx_RefNannyDeclarations
   PyObject *__pyx_t_1 = NULL;
@@ -3223,18 +3470,18 @@ static PyObject *__pyx_pf_9mbufferio_10_mbufferio_9MBufferIO_10__exit__(struct _
   int __pyx_clineno = 0;
   __Pyx_RefNannySetupContext("__exit__", 0);
 
-  /* "mbufferio/_mbufferio.pyx":151
+  /* "mbufferio/_mbufferio.pyx":188
  * 
  *     def __exit__(self, exc_type, exc_val, exc_tb):
  *         self.close()             # <<<<<<<<<<<<<<
  * 
  *     cpdef detach(self, int64_t how_many_more_bytes=0):
  */
-  __pyx_t_1 = ((struct __pyx_vtabstruct_9mbufferio_10_mbufferio_MBufferIO *)__pyx_v_self->__pyx_vtab)->close(__pyx_v_self, 0); if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 151; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __pyx_t_1 = ((struct __pyx_vtabstruct_9mbufferio_10_mbufferio_MBufferIO *)__pyx_v_self->__pyx_vtab)->close(__pyx_v_self, 0); if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 188; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
   __Pyx_GOTREF(__pyx_t_1);
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
 
-  /* "mbufferio/_mbufferio.pyx":150
+  /* "mbufferio/_mbufferio.pyx":187
  *         return self
  * 
  *     def __exit__(self, exc_type, exc_val, exc_tb):             # <<<<<<<<<<<<<<
@@ -3255,7 +3502,7 @@ static PyObject *__pyx_pf_9mbufferio_10_mbufferio_9MBufferIO_10__exit__(struct _
   return __pyx_r;
 }
 
-/* "mbufferio/_mbufferio.pyx":153
+/* "mbufferio/_mbufferio.pyx":190
  *         self.close()
  * 
  *     cpdef detach(self, int64_t how_many_more_bytes=0):             # <<<<<<<<<<<<<<
@@ -3263,9 +3510,10 @@ static PyObject *__pyx_pf_9mbufferio_10_mbufferio_9MBufferIO_10__exit__(struct _
  *         detach(int64_t how_many_more_bytes=0)
  */
 
-static PyObject *__pyx_pw_9mbufferio_10_mbufferio_9MBufferIO_13detach(PyObject *__pyx_v_self, PyObject *__pyx_args, PyObject *__pyx_kwds); /*proto*/
+static PyObject *__pyx_pw_9mbufferio_10_mbufferio_9MBufferIO_15detach(PyObject *__pyx_v_self, PyObject *__pyx_args, PyObject *__pyx_kwds); /*proto*/
 static PyObject *__pyx_f_9mbufferio_10_mbufferio_9MBufferIO_detach(struct __pyx_obj_9mbufferio_10_mbufferio_MBufferIO *__pyx_v_self, int __pyx_skip_dispatch, struct __pyx_opt_args_9mbufferio_10_mbufferio_9MBufferIO_detach *__pyx_optional_args) {
   int64_t __pyx_v_how_many_more_bytes = ((int64_t)0);
+  void *__pyx_v_orig_buf_pointer;
   PyObject *__pyx_r = NULL;
   __Pyx_RefNannyDeclarations
   PyObject *__pyx_t_1 = NULL;
@@ -3293,11 +3541,11 @@ static PyObject *__pyx_f_9mbufferio_10_mbufferio_9MBufferIO_detach(struct __pyx_
   if (unlikely(__pyx_skip_dispatch)) ;
   /* Check if overridden in Python */
   else if (unlikely(Py_TYPE(((PyObject *)__pyx_v_self))->tp_dictoffset != 0)) {
-    __pyx_t_1 = __Pyx_PyObject_GetAttrStr(((PyObject *)__pyx_v_self), __pyx_n_s_detach); if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 153; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+    __pyx_t_1 = __Pyx_PyObject_GetAttrStr(((PyObject *)__pyx_v_self), __pyx_n_s_detach); if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 190; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
     __Pyx_GOTREF(__pyx_t_1);
-    if (!PyCFunction_Check(__pyx_t_1) || (PyCFunction_GET_FUNCTION(__pyx_t_1) != (PyCFunction)__pyx_pw_9mbufferio_10_mbufferio_9MBufferIO_13detach)) {
+    if (!PyCFunction_Check(__pyx_t_1) || (PyCFunction_GET_FUNCTION(__pyx_t_1) != (PyCFunction)__pyx_pw_9mbufferio_10_mbufferio_9MBufferIO_15detach)) {
       __Pyx_XDECREF(__pyx_r);
-      __pyx_t_3 = __Pyx_PyInt_From_int64_t(__pyx_v_how_many_more_bytes); if (unlikely(!__pyx_t_3)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 153; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+      __pyx_t_3 = __Pyx_PyInt_From_int64_t(__pyx_v_how_many_more_bytes); if (unlikely(!__pyx_t_3)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 190; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
       __Pyx_GOTREF(__pyx_t_3);
       __Pyx_INCREF(__pyx_t_1);
       __pyx_t_4 = __pyx_t_1; __pyx_t_5 = NULL;
@@ -3311,17 +3559,17 @@ static PyObject *__pyx_f_9mbufferio_10_mbufferio_9MBufferIO_detach(struct __pyx_
         }
       }
       if (!__pyx_t_5) {
-        __pyx_t_2 = __Pyx_PyObject_CallOneArg(__pyx_t_4, __pyx_t_3); if (unlikely(!__pyx_t_2)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 153; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+        __pyx_t_2 = __Pyx_PyObject_CallOneArg(__pyx_t_4, __pyx_t_3); if (unlikely(!__pyx_t_2)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 190; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
         __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
         __Pyx_GOTREF(__pyx_t_2);
       } else {
-        __pyx_t_6 = PyTuple_New(1+1); if (unlikely(!__pyx_t_6)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 153; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+        __pyx_t_6 = PyTuple_New(1+1); if (unlikely(!__pyx_t_6)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 190; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
         __Pyx_GOTREF(__pyx_t_6);
         __Pyx_GIVEREF(__pyx_t_5); PyTuple_SET_ITEM(__pyx_t_6, 0, __pyx_t_5); __pyx_t_5 = NULL;
         __Pyx_GIVEREF(__pyx_t_3);
         PyTuple_SET_ITEM(__pyx_t_6, 0+1, __pyx_t_3);
         __pyx_t_3 = 0;
-        __pyx_t_2 = __Pyx_PyObject_Call(__pyx_t_4, __pyx_t_6, NULL); if (unlikely(!__pyx_t_2)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 153; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+        __pyx_t_2 = __Pyx_PyObject_Call(__pyx_t_4, __pyx_t_6, NULL); if (unlikely(!__pyx_t_2)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 190; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
         __Pyx_GOTREF(__pyx_t_2);
         __Pyx_DECREF(__pyx_t_6); __pyx_t_6 = 0;
       }
@@ -3334,9 +3582,9 @@ static PyObject *__pyx_f_9mbufferio_10_mbufferio_9MBufferIO_detach(struct __pyx_
     __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
   }
 
-  /* "mbufferio/_mbufferio.pyx":168
- *             Allocate at least 'how_many_more_bytes' bytes more than necessary to make the copy
+  /* "mbufferio/_mbufferio.pyx":206
  *         """
+ *         cdef void* orig_buf_pointer
  *         if self.is_a_reference:             # <<<<<<<<<<<<<<
  *             self.is_a_reference = 0
  *             self.copy_buf_size = max(4096, up_power2(self.length + how_many_more_bytes))
@@ -3344,8 +3592,8 @@ static PyObject *__pyx_f_9mbufferio_10_mbufferio_9MBufferIO_detach(struct __pyx_
   __pyx_t_7 = (__pyx_v_self->is_a_reference != 0);
   if (__pyx_t_7) {
 
-    /* "mbufferio/_mbufferio.pyx":169
- *         """
+    /* "mbufferio/_mbufferio.pyx":207
+ *         cdef void* orig_buf_pointer
  *         if self.is_a_reference:
  *             self.is_a_reference = 0             # <<<<<<<<<<<<<<
  *             self.copy_buf_size = max(4096, up_power2(self.length + how_many_more_bytes))
@@ -3353,7 +3601,7 @@ static PyObject *__pyx_f_9mbufferio_10_mbufferio_9MBufferIO_detach(struct __pyx_
  */
     __pyx_v_self->is_a_reference = 0;
 
-    /* "mbufferio/_mbufferio.pyx":170
+    /* "mbufferio/_mbufferio.pyx":208
  *         if self.is_a_reference:
  *             self.is_a_reference = 0
  *             self.copy_buf_size = max(4096, up_power2(self.length + how_many_more_bytes))             # <<<<<<<<<<<<<<
@@ -3369,7 +3617,7 @@ static PyObject *__pyx_f_9mbufferio_10_mbufferio_9MBufferIO_detach(struct __pyx_
     }
     __pyx_v_self->copy_buf_size = __pyx_t_10;
 
-    /* "mbufferio/_mbufferio.pyx":171
+    /* "mbufferio/_mbufferio.pyx":209
  *             self.is_a_reference = 0
  *             self.copy_buf_size = max(4096, up_power2(self.length + how_many_more_bytes))
  *             self.copy_buf_pointer = <char*> PyMem_Malloc(self.copy_buf_size)             # <<<<<<<<<<<<<<
@@ -3378,7 +3626,7 @@ static PyObject *__pyx_f_9mbufferio_10_mbufferio_9MBufferIO_detach(struct __pyx_
  */
     __pyx_v_self->copy_buf_pointer = ((char *)PyMem_Malloc(__pyx_v_self->copy_buf_size));
 
-    /* "mbufferio/_mbufferio.pyx":172
+    /* "mbufferio/_mbufferio.pyx":210
  *             self.copy_buf_size = max(4096, up_power2(self.length + how_many_more_bytes))
  *             self.copy_buf_pointer = <char*> PyMem_Malloc(self.copy_buf_size)
  *             if self.copy_buf_pointer == NULL:             # <<<<<<<<<<<<<<
@@ -3388,20 +3636,20 @@ static PyObject *__pyx_f_9mbufferio_10_mbufferio_9MBufferIO_detach(struct __pyx_
     __pyx_t_7 = ((__pyx_v_self->copy_buf_pointer == NULL) != 0);
     if (__pyx_t_7) {
 
-      /* "mbufferio/_mbufferio.pyx":173
+      /* "mbufferio/_mbufferio.pyx":211
  *             self.copy_buf_pointer = <char*> PyMem_Malloc(self.copy_buf_size)
  *             if self.copy_buf_pointer == NULL:
  *                 raise MemoryError(u"Could not allocate enough memory when copying buf")             # <<<<<<<<<<<<<<
  *             memcpy(self.copy_buf_pointer, self.buf_pointer + self.startpos, self.length)
- *             self.buf_pointer = self.copy_buf_pointer
+ *             orig_buf_pointer = <void*> self.buf_pointer
  */
-      __pyx_t_1 = __Pyx_PyObject_Call(__pyx_builtin_MemoryError, __pyx_tuple__6, NULL); if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 173; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+      __pyx_t_1 = __Pyx_PyObject_Call(__pyx_builtin_MemoryError, __pyx_tuple__7, NULL); if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 211; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
       __Pyx_GOTREF(__pyx_t_1);
       __Pyx_Raise(__pyx_t_1, 0, 0, 0);
       __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
-      {__pyx_filename = __pyx_f[0]; __pyx_lineno = 173; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+      {__pyx_filename = __pyx_f[0]; __pyx_lineno = 211; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
 
-      /* "mbufferio/_mbufferio.pyx":172
+      /* "mbufferio/_mbufferio.pyx":210
  *             self.copy_buf_size = max(4096, up_power2(self.length + how_many_more_bytes))
  *             self.copy_buf_pointer = <char*> PyMem_Malloc(self.copy_buf_size)
  *             if self.copy_buf_pointer == NULL:             # <<<<<<<<<<<<<<
@@ -3410,18 +3658,27 @@ static PyObject *__pyx_f_9mbufferio_10_mbufferio_9MBufferIO_detach(struct __pyx_
  */
     }
 
-    /* "mbufferio/_mbufferio.pyx":174
+    /* "mbufferio/_mbufferio.pyx":212
  *             if self.copy_buf_pointer == NULL:
  *                 raise MemoryError(u"Could not allocate enough memory when copying buf")
  *             memcpy(self.copy_buf_pointer, self.buf_pointer + self.startpos, self.length)             # <<<<<<<<<<<<<<
+ *             orig_buf_pointer = <void*> self.buf_pointer
  *             self.buf_pointer = self.copy_buf_pointer
- *             self.startpos = 0
  */
     memcpy(__pyx_v_self->copy_buf_pointer, (__pyx_v_self->buf_pointer + __pyx_v_self->startpos), __pyx_v_self->length);
 
-    /* "mbufferio/_mbufferio.pyx":175
+    /* "mbufferio/_mbufferio.pyx":213
  *                 raise MemoryError(u"Could not allocate enough memory when copying buf")
  *             memcpy(self.copy_buf_pointer, self.buf_pointer + self.startpos, self.length)
+ *             orig_buf_pointer = <void*> self.buf_pointer             # <<<<<<<<<<<<<<
+ *             self.buf_pointer = self.copy_buf_pointer
+ *             self.startpos = 0
+ */
+    __pyx_v_orig_buf_pointer = ((void *)__pyx_v_self->buf_pointer);
+
+    /* "mbufferio/_mbufferio.pyx":214
+ *             memcpy(self.copy_buf_pointer, self.buf_pointer + self.startpos, self.length)
+ *             orig_buf_pointer = <void*> self.buf_pointer
  *             self.buf_pointer = self.copy_buf_pointer             # <<<<<<<<<<<<<<
  *             self.startpos = 0
  *             self.readonly = 0
@@ -3429,86 +3686,104 @@ static PyObject *__pyx_f_9mbufferio_10_mbufferio_9MBufferIO_detach(struct __pyx_
     __pyx_t_11 = __pyx_v_self->copy_buf_pointer;
     __pyx_v_self->buf_pointer = __pyx_t_11;
 
-    /* "mbufferio/_mbufferio.pyx":176
- *             memcpy(self.copy_buf_pointer, self.buf_pointer + self.startpos, self.length)
+    /* "mbufferio/_mbufferio.pyx":215
+ *             orig_buf_pointer = <void*> self.buf_pointer
  *             self.buf_pointer = self.copy_buf_pointer
  *             self.startpos = 0             # <<<<<<<<<<<<<<
  *             self.readonly = 0
- *             if self.src_view is not NULL:
+ * 
  */
     __pyx_v_self->startpos = 0;
 
-    /* "mbufferio/_mbufferio.pyx":177
+    /* "mbufferio/_mbufferio.pyx":216
  *             self.buf_pointer = self.copy_buf_pointer
  *             self.startpos = 0
  *             self.readonly = 0             # <<<<<<<<<<<<<<
- *             if self.src_view is not NULL:
- *                 # release the view on the original object
+ * 
+ *             # release the view on the original object
  */
     __pyx_v_self->readonly = 0;
 
-    /* "mbufferio/_mbufferio.pyx":178
- *             self.startpos = 0
- *             self.readonly = 0
- *             if self.src_view is not NULL:             # <<<<<<<<<<<<<<
- *                 # release the view on the original object
- *                 PyBuffer_Release(self.src_view)
+    /* "mbufferio/_mbufferio.pyx":219
+ * 
+ *             # release the view on the original object
+ *             PyBuffer_Release(self.src_view)             # <<<<<<<<<<<<<<
+ *             PyMem_Free(self.src_view)
+ *             self.src_view = NULL
  */
-    __pyx_t_7 = ((__pyx_v_self->src_view != NULL) != 0);
+    PyBuffer_Release(__pyx_v_self->src_view);
+
+    /* "mbufferio/_mbufferio.pyx":220
+ *             # release the view on the original object
+ *             PyBuffer_Release(self.src_view)
+ *             PyMem_Free(self.src_view)             # <<<<<<<<<<<<<<
+ *             self.src_view = NULL
+ *             self.original_obj = None
+ */
+    PyMem_Free(__pyx_v_self->src_view);
+
+    /* "mbufferio/_mbufferio.pyx":221
+ *             PyBuffer_Release(self.src_view)
+ *             PyMem_Free(self.src_view)
+ *             self.src_view = NULL             # <<<<<<<<<<<<<<
+ *             self.original_obj = None
+ *             if self.have_ownership:
+ */
+    __pyx_v_self->src_view = NULL;
+
+    /* "mbufferio/_mbufferio.pyx":222
+ *             PyMem_Free(self.src_view)
+ *             self.src_view = NULL
+ *             self.original_obj = None             # <<<<<<<<<<<<<<
+ *             if self.have_ownership:
+ *                 free(orig_buf_pointer)
+ */
+    __Pyx_INCREF(Py_None);
+    __Pyx_GIVEREF(Py_None);
+    __Pyx_GOTREF(__pyx_v_self->original_obj);
+    __Pyx_DECREF(__pyx_v_self->original_obj);
+    __pyx_v_self->original_obj = Py_None;
+
+    /* "mbufferio/_mbufferio.pyx":223
+ *             self.src_view = NULL
+ *             self.original_obj = None
+ *             if self.have_ownership:             # <<<<<<<<<<<<<<
+ *                 free(orig_buf_pointer)
+ *                 self.have_ownership = 0
+ */
+    __pyx_t_7 = (__pyx_v_self->have_ownership != 0);
     if (__pyx_t_7) {
 
-      /* "mbufferio/_mbufferio.pyx":180
- *             if self.src_view is not NULL:
- *                 # release the view on the original object
- *                 PyBuffer_Release(self.src_view)             # <<<<<<<<<<<<<<
- *                 PyMem_Free(self.src_view)
- *                 self.src_view = NULL
- */
-      PyBuffer_Release(__pyx_v_self->src_view);
-
-      /* "mbufferio/_mbufferio.pyx":181
- *                 # release the view on the original object
- *                 PyBuffer_Release(self.src_view)
- *                 PyMem_Free(self.src_view)             # <<<<<<<<<<<<<<
- *                 self.src_view = NULL
- *                 self.original_obj = None
- */
-      PyMem_Free(__pyx_v_self->src_view);
-
-      /* "mbufferio/_mbufferio.pyx":182
- *                 PyBuffer_Release(self.src_view)
- *                 PyMem_Free(self.src_view)
- *                 self.src_view = NULL             # <<<<<<<<<<<<<<
- *                 self.original_obj = None
+      /* "mbufferio/_mbufferio.pyx":224
+ *             self.original_obj = None
+ *             if self.have_ownership:
+ *                 free(orig_buf_pointer)             # <<<<<<<<<<<<<<
+ *                 self.have_ownership = 0
  *             return
  */
-      __pyx_v_self->src_view = NULL;
+      free(__pyx_v_orig_buf_pointer);
 
-      /* "mbufferio/_mbufferio.pyx":183
- *                 PyMem_Free(self.src_view)
- *                 self.src_view = NULL
- *                 self.original_obj = None             # <<<<<<<<<<<<<<
+      /* "mbufferio/_mbufferio.pyx":225
+ *             if self.have_ownership:
+ *                 free(orig_buf_pointer)
+ *                 self.have_ownership = 0             # <<<<<<<<<<<<<<
  *             return
  * 
  */
-      __Pyx_INCREF(Py_None);
-      __Pyx_GIVEREF(Py_None);
-      __Pyx_GOTREF(__pyx_v_self->original_obj);
-      __Pyx_DECREF(__pyx_v_self->original_obj);
-      __pyx_v_self->original_obj = Py_None;
+      __pyx_v_self->have_ownership = 0;
 
-      /* "mbufferio/_mbufferio.pyx":178
- *             self.startpos = 0
- *             self.readonly = 0
- *             if self.src_view is not NULL:             # <<<<<<<<<<<<<<
- *                 # release the view on the original object
- *                 PyBuffer_Release(self.src_view)
+      /* "mbufferio/_mbufferio.pyx":223
+ *             self.src_view = NULL
+ *             self.original_obj = None
+ *             if self.have_ownership:             # <<<<<<<<<<<<<<
+ *                 free(orig_buf_pointer)
+ *                 self.have_ownership = 0
  */
     }
 
-    /* "mbufferio/_mbufferio.pyx":184
- *                 self.src_view = NULL
- *                 self.original_obj = None
+    /* "mbufferio/_mbufferio.pyx":226
+ *                 free(orig_buf_pointer)
+ *                 self.have_ownership = 0
  *             return             # <<<<<<<<<<<<<<
  * 
  *         elif ((self.length + how_many_more_bytes) <= (self.copy_buf_size - self.startpos)) and (self.readonly == 0):
@@ -3517,16 +3792,16 @@ static PyObject *__pyx_f_9mbufferio_10_mbufferio_9MBufferIO_detach(struct __pyx_
     __pyx_r = Py_None; __Pyx_INCREF(Py_None);
     goto __pyx_L0;
 
-    /* "mbufferio/_mbufferio.pyx":168
- *             Allocate at least 'how_many_more_bytes' bytes more than necessary to make the copy
+    /* "mbufferio/_mbufferio.pyx":206
  *         """
+ *         cdef void* orig_buf_pointer
  *         if self.is_a_reference:             # <<<<<<<<<<<<<<
  *             self.is_a_reference = 0
  *             self.copy_buf_size = max(4096, up_power2(self.length + how_many_more_bytes))
  */
   }
 
-  /* "mbufferio/_mbufferio.pyx":186
+  /* "mbufferio/_mbufferio.pyx":228
  *             return
  * 
  *         elif ((self.length + how_many_more_bytes) <= (self.copy_buf_size - self.startpos)) and (self.readonly == 0):             # <<<<<<<<<<<<<<
@@ -3544,7 +3819,7 @@ static PyObject *__pyx_f_9mbufferio_10_mbufferio_9MBufferIO_detach(struct __pyx_
   __pyx_L6_bool_binop_done:;
   if (__pyx_t_7) {
 
-    /* "mbufferio/_mbufferio.pyx":188
+    /* "mbufferio/_mbufferio.pyx":230
  *         elif ((self.length + how_many_more_bytes) <= (self.copy_buf_size - self.startpos)) and (self.readonly == 0):
  *             # self is already a copy, we have enough space and is writeable
  *             return             # <<<<<<<<<<<<<<
@@ -3555,7 +3830,7 @@ static PyObject *__pyx_f_9mbufferio_10_mbufferio_9MBufferIO_detach(struct __pyx_
     __pyx_r = Py_None; __Pyx_INCREF(Py_None);
     goto __pyx_L0;
 
-    /* "mbufferio/_mbufferio.pyx":186
+    /* "mbufferio/_mbufferio.pyx":228
  *             return
  * 
  *         elif ((self.length + how_many_more_bytes) <= (self.copy_buf_size - self.startpos)) and (self.readonly == 0):             # <<<<<<<<<<<<<<
@@ -3564,7 +3839,7 @@ static PyObject *__pyx_f_9mbufferio_10_mbufferio_9MBufferIO_detach(struct __pyx_
  */
   }
 
-  /* "mbufferio/_mbufferio.pyx":192
+  /* "mbufferio/_mbufferio.pyx":234
  *         else:
  *             # grow copy_buf
  *             self.copy_buf_size = max(4096, up_power2(self.copy_buf_size + how_many_more_bytes))             # <<<<<<<<<<<<<<
@@ -3581,7 +3856,7 @@ static PyObject *__pyx_f_9mbufferio_10_mbufferio_9MBufferIO_detach(struct __pyx_
     }
     __pyx_v_self->copy_buf_size = __pyx_t_8;
 
-    /* "mbufferio/_mbufferio.pyx":193
+    /* "mbufferio/_mbufferio.pyx":235
  *             # grow copy_buf
  *             self.copy_buf_size = max(4096, up_power2(self.copy_buf_size + how_many_more_bytes))
  *             self.copy_buf_pointer = <char*> PyMem_Malloc(self.copy_buf_size)             # <<<<<<<<<<<<<<
@@ -3590,7 +3865,7 @@ static PyObject *__pyx_f_9mbufferio_10_mbufferio_9MBufferIO_detach(struct __pyx_
  */
     __pyx_v_self->copy_buf_pointer = ((char *)PyMem_Malloc(__pyx_v_self->copy_buf_size));
 
-    /* "mbufferio/_mbufferio.pyx":194
+    /* "mbufferio/_mbufferio.pyx":236
  *             self.copy_buf_size = max(4096, up_power2(self.copy_buf_size + how_many_more_bytes))
  *             self.copy_buf_pointer = <char*> PyMem_Malloc(self.copy_buf_size)
  *             if self.copy_buf_pointer == NULL:             # <<<<<<<<<<<<<<
@@ -3600,20 +3875,20 @@ static PyObject *__pyx_f_9mbufferio_10_mbufferio_9MBufferIO_detach(struct __pyx_
     __pyx_t_7 = ((__pyx_v_self->copy_buf_pointer == NULL) != 0);
     if (__pyx_t_7) {
 
-      /* "mbufferio/_mbufferio.pyx":195
+      /* "mbufferio/_mbufferio.pyx":237
  *             self.copy_buf_pointer = <char*> PyMem_Malloc(self.copy_buf_size)
  *             if self.copy_buf_pointer == NULL:
  *                 raise MemoryError(u"Could not reallocate enough memory")             # <<<<<<<<<<<<<<
  *             memcpy(self.copy_buf_pointer, self.buf_pointer + self.startpos, self.length)
  *             PyMem_Free(self.buf_pointer)
  */
-      __pyx_t_1 = __Pyx_PyObject_Call(__pyx_builtin_MemoryError, __pyx_tuple__7, NULL); if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 195; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+      __pyx_t_1 = __Pyx_PyObject_Call(__pyx_builtin_MemoryError, __pyx_tuple__8, NULL); if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 237; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
       __Pyx_GOTREF(__pyx_t_1);
       __Pyx_Raise(__pyx_t_1, 0, 0, 0);
       __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
-      {__pyx_filename = __pyx_f[0]; __pyx_lineno = 195; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+      {__pyx_filename = __pyx_f[0]; __pyx_lineno = 237; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
 
-      /* "mbufferio/_mbufferio.pyx":194
+      /* "mbufferio/_mbufferio.pyx":236
  *             self.copy_buf_size = max(4096, up_power2(self.copy_buf_size + how_many_more_bytes))
  *             self.copy_buf_pointer = <char*> PyMem_Malloc(self.copy_buf_size)
  *             if self.copy_buf_pointer == NULL:             # <<<<<<<<<<<<<<
@@ -3622,7 +3897,7 @@ static PyObject *__pyx_f_9mbufferio_10_mbufferio_9MBufferIO_detach(struct __pyx_
  */
     }
 
-    /* "mbufferio/_mbufferio.pyx":196
+    /* "mbufferio/_mbufferio.pyx":238
  *             if self.copy_buf_pointer == NULL:
  *                 raise MemoryError(u"Could not reallocate enough memory")
  *             memcpy(self.copy_buf_pointer, self.buf_pointer + self.startpos, self.length)             # <<<<<<<<<<<<<<
@@ -3631,7 +3906,7 @@ static PyObject *__pyx_f_9mbufferio_10_mbufferio_9MBufferIO_detach(struct __pyx_
  */
     memcpy(__pyx_v_self->copy_buf_pointer, (__pyx_v_self->buf_pointer + __pyx_v_self->startpos), __pyx_v_self->length);
 
-    /* "mbufferio/_mbufferio.pyx":197
+    /* "mbufferio/_mbufferio.pyx":239
  *                 raise MemoryError(u"Could not reallocate enough memory")
  *             memcpy(self.copy_buf_pointer, self.buf_pointer + self.startpos, self.length)
  *             PyMem_Free(self.buf_pointer)             # <<<<<<<<<<<<<<
@@ -3640,7 +3915,7 @@ static PyObject *__pyx_f_9mbufferio_10_mbufferio_9MBufferIO_detach(struct __pyx_
  */
     PyMem_Free(__pyx_v_self->buf_pointer);
 
-    /* "mbufferio/_mbufferio.pyx":198
+    /* "mbufferio/_mbufferio.pyx":240
  *             memcpy(self.copy_buf_pointer, self.buf_pointer + self.startpos, self.length)
  *             PyMem_Free(self.buf_pointer)
  *             self.buf_pointer = self.copy_buf_pointer             # <<<<<<<<<<<<<<
@@ -3650,7 +3925,7 @@ static PyObject *__pyx_f_9mbufferio_10_mbufferio_9MBufferIO_detach(struct __pyx_
     __pyx_t_11 = __pyx_v_self->copy_buf_pointer;
     __pyx_v_self->buf_pointer = __pyx_t_11;
 
-    /* "mbufferio/_mbufferio.pyx":199
+    /* "mbufferio/_mbufferio.pyx":241
  *             PyMem_Free(self.buf_pointer)
  *             self.buf_pointer = self.copy_buf_pointer
  *             self.startpos = 0             # <<<<<<<<<<<<<<
@@ -3659,7 +3934,7 @@ static PyObject *__pyx_f_9mbufferio_10_mbufferio_9MBufferIO_detach(struct __pyx_
  */
     __pyx_v_self->startpos = 0;
 
-    /* "mbufferio/_mbufferio.pyx":200
+    /* "mbufferio/_mbufferio.pyx":242
  *             self.buf_pointer = self.copy_buf_pointer
  *             self.startpos = 0
  *             self.readonly = 0             # <<<<<<<<<<<<<<
@@ -3668,7 +3943,7 @@ static PyObject *__pyx_f_9mbufferio_10_mbufferio_9MBufferIO_detach(struct __pyx_
  */
     __pyx_v_self->readonly = 0;
 
-    /* "mbufferio/_mbufferio.pyx":201
+    /* "mbufferio/_mbufferio.pyx":243
  *             self.startpos = 0
  *             self.readonly = 0
  *             return             # <<<<<<<<<<<<<<
@@ -3680,7 +3955,7 @@ static PyObject *__pyx_f_9mbufferio_10_mbufferio_9MBufferIO_detach(struct __pyx_
     goto __pyx_L0;
   }
 
-  /* "mbufferio/_mbufferio.pyx":153
+  /* "mbufferio/_mbufferio.pyx":190
  *         self.close()
  * 
  *     cpdef detach(self, int64_t how_many_more_bytes=0):             # <<<<<<<<<<<<<<
@@ -3705,9 +3980,9 @@ static PyObject *__pyx_f_9mbufferio_10_mbufferio_9MBufferIO_detach(struct __pyx_
 }
 
 /* Python wrapper */
-static PyObject *__pyx_pw_9mbufferio_10_mbufferio_9MBufferIO_13detach(PyObject *__pyx_v_self, PyObject *__pyx_args, PyObject *__pyx_kwds); /*proto*/
-static char __pyx_doc_9mbufferio_10_mbufferio_9MBufferIO_12detach[] = "\n        detach(int64_t how_many_more_bytes=0)\n        Detach from the object that MBufferIO represents.\n\n        If the MBufferIO is a reference, copy the referenced object to the internal buffer. From then on, 'src' and\n        the MBufferIO are independant.\n\n        If the MBufferIO is already a copy, grow the internal buffer.\n\n        Parameters\n        ----------\n        how_many_more_bytes: int64_t\n            Allocate at least 'how_many_more_bytes' bytes more than necessary to make the copy\n        ";
-static PyObject *__pyx_pw_9mbufferio_10_mbufferio_9MBufferIO_13detach(PyObject *__pyx_v_self, PyObject *__pyx_args, PyObject *__pyx_kwds) {
+static PyObject *__pyx_pw_9mbufferio_10_mbufferio_9MBufferIO_15detach(PyObject *__pyx_v_self, PyObject *__pyx_args, PyObject *__pyx_kwds); /*proto*/
+static char __pyx_doc_9mbufferio_10_mbufferio_9MBufferIO_14detach[] = "\n        detach(int64_t how_many_more_bytes=0)\n        Detach from the object that MBufferIO represents.\n\n        If the MBufferIO is a reference, copy the referenced object to the internal buffer. From then on, 'src' and\n        the MBufferIO are independant.\n\n        If the MBufferIO is already a copy, grow the internal buffer.\n\n        Parameters\n        ----------\n        how_many_more_bytes: int64_t\n            Allocate at least 'how_many_more_bytes' bytes more than necessary to make the copy\n        ";
+static PyObject *__pyx_pw_9mbufferio_10_mbufferio_9MBufferIO_15detach(PyObject *__pyx_v_self, PyObject *__pyx_args, PyObject *__pyx_kwds) {
   int64_t __pyx_v_how_many_more_bytes;
   int __pyx_lineno = 0;
   const char *__pyx_filename = NULL;
@@ -3735,7 +4010,7 @@ static PyObject *__pyx_pw_9mbufferio_10_mbufferio_9MBufferIO_13detach(PyObject *
         }
       }
       if (unlikely(kw_args > 0)) {
-        if (unlikely(__Pyx_ParseOptionalKeywords(__pyx_kwds, __pyx_pyargnames, 0, values, pos_args, "detach") < 0)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 153; __pyx_clineno = __LINE__; goto __pyx_L3_error;}
+        if (unlikely(__Pyx_ParseOptionalKeywords(__pyx_kwds, __pyx_pyargnames, 0, values, pos_args, "detach") < 0)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 190; __pyx_clineno = __LINE__; goto __pyx_L3_error;}
       }
     } else {
       switch (PyTuple_GET_SIZE(__pyx_args)) {
@@ -3745,27 +4020,27 @@ static PyObject *__pyx_pw_9mbufferio_10_mbufferio_9MBufferIO_13detach(PyObject *
       }
     }
     if (values[0]) {
-      __pyx_v_how_many_more_bytes = __Pyx_PyInt_As_int64_t(values[0]); if (unlikely((__pyx_v_how_many_more_bytes == (int64_t)-1) && PyErr_Occurred())) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 153; __pyx_clineno = __LINE__; goto __pyx_L3_error;}
+      __pyx_v_how_many_more_bytes = __Pyx_PyInt_As_int64_t(values[0]); if (unlikely((__pyx_v_how_many_more_bytes == (int64_t)-1) && PyErr_Occurred())) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 190; __pyx_clineno = __LINE__; goto __pyx_L3_error;}
     } else {
       __pyx_v_how_many_more_bytes = ((int64_t)0);
     }
   }
   goto __pyx_L4_argument_unpacking_done;
   __pyx_L5_argtuple_error:;
-  __Pyx_RaiseArgtupleInvalid("detach", 0, 0, 1, PyTuple_GET_SIZE(__pyx_args)); {__pyx_filename = __pyx_f[0]; __pyx_lineno = 153; __pyx_clineno = __LINE__; goto __pyx_L3_error;}
+  __Pyx_RaiseArgtupleInvalid("detach", 0, 0, 1, PyTuple_GET_SIZE(__pyx_args)); {__pyx_filename = __pyx_f[0]; __pyx_lineno = 190; __pyx_clineno = __LINE__; goto __pyx_L3_error;}
   __pyx_L3_error:;
   __Pyx_AddTraceback("mbufferio._mbufferio.MBufferIO.detach", __pyx_clineno, __pyx_lineno, __pyx_filename);
   __Pyx_RefNannyFinishContext();
   return NULL;
   __pyx_L4_argument_unpacking_done:;
-  __pyx_r = __pyx_pf_9mbufferio_10_mbufferio_9MBufferIO_12detach(((struct __pyx_obj_9mbufferio_10_mbufferio_MBufferIO *)__pyx_v_self), __pyx_v_how_many_more_bytes);
+  __pyx_r = __pyx_pf_9mbufferio_10_mbufferio_9MBufferIO_14detach(((struct __pyx_obj_9mbufferio_10_mbufferio_MBufferIO *)__pyx_v_self), __pyx_v_how_many_more_bytes);
 
   /* function exit code */
   __Pyx_RefNannyFinishContext();
   return __pyx_r;
 }
 
-static PyObject *__pyx_pf_9mbufferio_10_mbufferio_9MBufferIO_12detach(struct __pyx_obj_9mbufferio_10_mbufferio_MBufferIO *__pyx_v_self, int64_t __pyx_v_how_many_more_bytes) {
+static PyObject *__pyx_pf_9mbufferio_10_mbufferio_9MBufferIO_14detach(struct __pyx_obj_9mbufferio_10_mbufferio_MBufferIO *__pyx_v_self, int64_t __pyx_v_how_many_more_bytes) {
   PyObject *__pyx_r = NULL;
   __Pyx_RefNannyDeclarations
   PyObject *__pyx_t_1 = NULL;
@@ -3777,7 +4052,7 @@ static PyObject *__pyx_pf_9mbufferio_10_mbufferio_9MBufferIO_12detach(struct __p
   __Pyx_XDECREF(__pyx_r);
   __pyx_t_2.__pyx_n = 1;
   __pyx_t_2.how_many_more_bytes = __pyx_v_how_many_more_bytes;
-  __pyx_t_1 = __pyx_vtabptr_9mbufferio_10_mbufferio_MBufferIO->detach(__pyx_v_self, 1, &__pyx_t_2); if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 153; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __pyx_t_1 = __pyx_vtabptr_9mbufferio_10_mbufferio_MBufferIO->detach(__pyx_v_self, 1, &__pyx_t_2); if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 190; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
   __Pyx_GOTREF(__pyx_t_1);
   __pyx_r = __pyx_t_1;
   __pyx_t_1 = 0;
@@ -3794,7 +4069,7 @@ static PyObject *__pyx_pf_9mbufferio_10_mbufferio_9MBufferIO_12detach(struct __p
   return __pyx_r;
 }
 
-/* "mbufferio/_mbufferio.pyx":204
+/* "mbufferio/_mbufferio.pyx":246
  * 
  * 
  *     cpdef write(self, object obj_to_write):             # <<<<<<<<<<<<<<
@@ -3802,7 +4077,7 @@ static PyObject *__pyx_pf_9mbufferio_10_mbufferio_9MBufferIO_12detach(struct __p
  *         write(object obj_to_write)
  */
 
-static PyObject *__pyx_pw_9mbufferio_10_mbufferio_9MBufferIO_15write(PyObject *__pyx_v_self, PyObject *__pyx_v_obj_to_write); /*proto*/
+static PyObject *__pyx_pw_9mbufferio_10_mbufferio_9MBufferIO_17write(PyObject *__pyx_v_self, PyObject *__pyx_v_obj_to_write); /*proto*/
 static PyObject *__pyx_f_9mbufferio_10_mbufferio_9MBufferIO_write(struct __pyx_obj_9mbufferio_10_mbufferio_MBufferIO *__pyx_v_self, PyObject *__pyx_v_obj_to_write, int __pyx_skip_dispatch) {
   int __pyx_v_res;
   char *__pyx_v_obj_addr;
@@ -3842,9 +4117,9 @@ static PyObject *__pyx_f_9mbufferio_10_mbufferio_9MBufferIO_write(struct __pyx_o
   if (unlikely(__pyx_skip_dispatch)) ;
   /* Check if overridden in Python */
   else if (unlikely(Py_TYPE(((PyObject *)__pyx_v_self))->tp_dictoffset != 0)) {
-    __pyx_t_1 = __Pyx_PyObject_GetAttrStr(((PyObject *)__pyx_v_self), __pyx_n_s_write); if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 204; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+    __pyx_t_1 = __Pyx_PyObject_GetAttrStr(((PyObject *)__pyx_v_self), __pyx_n_s_write); if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 246; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
     __Pyx_GOTREF(__pyx_t_1);
-    if (!PyCFunction_Check(__pyx_t_1) || (PyCFunction_GET_FUNCTION(__pyx_t_1) != (PyCFunction)__pyx_pw_9mbufferio_10_mbufferio_9MBufferIO_15write)) {
+    if (!PyCFunction_Check(__pyx_t_1) || (PyCFunction_GET_FUNCTION(__pyx_t_1) != (PyCFunction)__pyx_pw_9mbufferio_10_mbufferio_9MBufferIO_17write)) {
       __Pyx_XDECREF(__pyx_r);
       __Pyx_INCREF(__pyx_t_1);
       __pyx_t_3 = __pyx_t_1; __pyx_t_4 = NULL;
@@ -3858,16 +4133,16 @@ static PyObject *__pyx_f_9mbufferio_10_mbufferio_9MBufferIO_write(struct __pyx_o
         }
       }
       if (!__pyx_t_4) {
-        __pyx_t_2 = __Pyx_PyObject_CallOneArg(__pyx_t_3, __pyx_v_obj_to_write); if (unlikely(!__pyx_t_2)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 204; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+        __pyx_t_2 = __Pyx_PyObject_CallOneArg(__pyx_t_3, __pyx_v_obj_to_write); if (unlikely(!__pyx_t_2)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 246; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
         __Pyx_GOTREF(__pyx_t_2);
       } else {
-        __pyx_t_5 = PyTuple_New(1+1); if (unlikely(!__pyx_t_5)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 204; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+        __pyx_t_5 = PyTuple_New(1+1); if (unlikely(!__pyx_t_5)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 246; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
         __Pyx_GOTREF(__pyx_t_5);
         __Pyx_GIVEREF(__pyx_t_4); PyTuple_SET_ITEM(__pyx_t_5, 0, __pyx_t_4); __pyx_t_4 = NULL;
         __Pyx_INCREF(__pyx_v_obj_to_write);
         __Pyx_GIVEREF(__pyx_v_obj_to_write);
         PyTuple_SET_ITEM(__pyx_t_5, 0+1, __pyx_v_obj_to_write);
-        __pyx_t_2 = __Pyx_PyObject_Call(__pyx_t_3, __pyx_t_5, NULL); if (unlikely(!__pyx_t_2)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 204; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+        __pyx_t_2 = __Pyx_PyObject_Call(__pyx_t_3, __pyx_t_5, NULL); if (unlikely(!__pyx_t_2)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 246; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
         __Pyx_GOTREF(__pyx_t_2);
         __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
       }
@@ -3880,7 +4155,7 @@ static PyObject *__pyx_f_9mbufferio_10_mbufferio_9MBufferIO_write(struct __pyx_o
     __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
   }
 
-  /* "mbufferio/_mbufferio.pyx":226
+  /* "mbufferio/_mbufferio.pyx":271
  *         how many bytes were written
  *         """
  *         if self.closed:             # <<<<<<<<<<<<<<
@@ -3890,20 +4165,20 @@ static PyObject *__pyx_f_9mbufferio_10_mbufferio_9MBufferIO_write(struct __pyx_o
   __pyx_t_6 = (__pyx_v_self->closed != 0);
   if (__pyx_t_6) {
 
-    /* "mbufferio/_mbufferio.pyx":227
+    /* "mbufferio/_mbufferio.pyx":272
  *         """
  *         if self.closed:
  *             raise ValueError(u"I/O operation on closed file.")             # <<<<<<<<<<<<<<
  * 
  *         cdef int res = 0
  */
-    __pyx_t_1 = __Pyx_PyObject_Call(__pyx_builtin_ValueError, __pyx_tuple__8, NULL); if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 227; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+    __pyx_t_1 = __Pyx_PyObject_Call(__pyx_builtin_ValueError, __pyx_tuple__9, NULL); if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 272; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
     __Pyx_GOTREF(__pyx_t_1);
     __Pyx_Raise(__pyx_t_1, 0, 0, 0);
     __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
-    {__pyx_filename = __pyx_f[0]; __pyx_lineno = 227; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+    {__pyx_filename = __pyx_f[0]; __pyx_lineno = 272; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
 
-    /* "mbufferio/_mbufferio.pyx":226
+    /* "mbufferio/_mbufferio.pyx":271
  *         how many bytes were written
  *         """
  *         if self.closed:             # <<<<<<<<<<<<<<
@@ -3912,7 +4187,7 @@ static PyObject *__pyx_f_9mbufferio_10_mbufferio_9MBufferIO_write(struct __pyx_o
  */
   }
 
-  /* "mbufferio/_mbufferio.pyx":229
+  /* "mbufferio/_mbufferio.pyx":274
  *             raise ValueError(u"I/O operation on closed file.")
  * 
  *         cdef int res = 0             # <<<<<<<<<<<<<<
@@ -3921,7 +4196,7 @@ static PyObject *__pyx_f_9mbufferio_10_mbufferio_9MBufferIO_write(struct __pyx_o
  */
   __pyx_v_res = 0;
 
-  /* "mbufferio/_mbufferio.pyx":230
+  /* "mbufferio/_mbufferio.pyx":275
  * 
  *         cdef int res = 0
  *         cdef char* obj_addr = NULL             # <<<<<<<<<<<<<<
@@ -3930,7 +4205,7 @@ static PyObject *__pyx_f_9mbufferio_10_mbufferio_9MBufferIO_write(struct __pyx_o
  */
   __pyx_v_obj_addr = NULL;
 
-  /* "mbufferio/_mbufferio.pyx":231
+  /* "mbufferio/_mbufferio.pyx":276
  *         cdef int res = 0
  *         cdef char* obj_addr = NULL
  *         cdef int64_t obj_length = 0             # <<<<<<<<<<<<<<
@@ -3939,7 +4214,7 @@ static PyObject *__pyx_f_9mbufferio_10_mbufferio_9MBufferIO_write(struct __pyx_o
  */
   __pyx_v_obj_length = 0;
 
-  /* "mbufferio/_mbufferio.pyx":232
+  /* "mbufferio/_mbufferio.pyx":277
  *         cdef char* obj_addr = NULL
  *         cdef int64_t obj_length = 0
  *         cdef Py_buffer* obj_view = NULL             # <<<<<<<<<<<<<<
@@ -3948,7 +4223,7 @@ static PyObject *__pyx_f_9mbufferio_10_mbufferio_9MBufferIO_write(struct __pyx_o
  */
   __pyx_v_obj_view = NULL;
 
-  /* "mbufferio/_mbufferio.pyx":233
+  /* "mbufferio/_mbufferio.pyx":278
  *         cdef int64_t obj_length = 0
  *         cdef Py_buffer* obj_view = NULL
  *         cdef int64_t how_many_more_bytes = 0             # <<<<<<<<<<<<<<
@@ -3957,7 +4232,7 @@ static PyObject *__pyx_f_9mbufferio_10_mbufferio_9MBufferIO_write(struct __pyx_o
  */
   __pyx_v_how_many_more_bytes = 0;
 
-  /* "mbufferio/_mbufferio.pyx":235
+  /* "mbufferio/_mbufferio.pyx":280
  *         cdef int64_t how_many_more_bytes = 0
  * 
  *         if PyUnicode_Check(obj_to_write):             # <<<<<<<<<<<<<<
@@ -3967,19 +4242,19 @@ static PyObject *__pyx_f_9mbufferio_10_mbufferio_9MBufferIO_write(struct __pyx_o
   __pyx_t_6 = (PyUnicode_Check(__pyx_v_obj_to_write) != 0);
   if (__pyx_t_6) {
 
-    /* "mbufferio/_mbufferio.pyx":236
+    /* "mbufferio/_mbufferio.pyx":281
  * 
  *         if PyUnicode_Check(obj_to_write):
  *             obj_to_write = PyUnicode_AsUTF8String(obj_to_write)             # <<<<<<<<<<<<<<
  * 
  *         # lets get the object address and length
  */
-    __pyx_t_1 = PyUnicode_AsUTF8String(__pyx_v_obj_to_write); if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 236; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+    __pyx_t_1 = PyUnicode_AsUTF8String(__pyx_v_obj_to_write); if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 281; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
     __Pyx_GOTREF(__pyx_t_1);
     __Pyx_DECREF_SET(__pyx_v_obj_to_write, __pyx_t_1);
     __pyx_t_1 = 0;
 
-    /* "mbufferio/_mbufferio.pyx":235
+    /* "mbufferio/_mbufferio.pyx":280
  *         cdef int64_t how_many_more_bytes = 0
  * 
  *         if PyUnicode_Check(obj_to_write):             # <<<<<<<<<<<<<<
@@ -3988,7 +4263,7 @@ static PyObject *__pyx_f_9mbufferio_10_mbufferio_9MBufferIO_write(struct __pyx_o
  */
   }
 
-  /* "mbufferio/_mbufferio.pyx":239
+  /* "mbufferio/_mbufferio.pyx":284
  * 
  *         # lets get the object address and length
  *         if isinstance(obj_to_write, bytes):             # <<<<<<<<<<<<<<
@@ -3999,27 +4274,27 @@ static PyObject *__pyx_f_9mbufferio_10_mbufferio_9MBufferIO_write(struct __pyx_o
   __pyx_t_7 = (__pyx_t_6 != 0);
   if (__pyx_t_7) {
 
-    /* "mbufferio/_mbufferio.pyx":240
+    /* "mbufferio/_mbufferio.pyx":285
  *         # lets get the object address and length
  *         if isinstance(obj_to_write, bytes):
  *             obj_addr = <char*> obj_to_write             # <<<<<<<<<<<<<<
  *             obj_length = len(obj_to_write)
  *         elif isinstance(obj_to_write, cy_memoryview):
  */
-    __pyx_t_8 = __Pyx_PyObject_AsString(__pyx_v_obj_to_write); if (unlikely((!__pyx_t_8) && PyErr_Occurred())) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 240; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+    __pyx_t_8 = __Pyx_PyObject_AsString(__pyx_v_obj_to_write); if (unlikely((!__pyx_t_8) && PyErr_Occurred())) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 285; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
     __pyx_v_obj_addr = ((char *)__pyx_t_8);
 
-    /* "mbufferio/_mbufferio.pyx":241
+    /* "mbufferio/_mbufferio.pyx":286
  *         if isinstance(obj_to_write, bytes):
  *             obj_addr = <char*> obj_to_write
  *             obj_length = len(obj_to_write)             # <<<<<<<<<<<<<<
  *         elif isinstance(obj_to_write, cy_memoryview):
  *             obj_addr = <char*> (<cy_memoryview>obj_to_write).get_item_pointer([])
  */
-    __pyx_t_9 = PyObject_Length(__pyx_v_obj_to_write); if (unlikely(__pyx_t_9 == -1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 241; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+    __pyx_t_9 = PyObject_Length(__pyx_v_obj_to_write); if (unlikely(__pyx_t_9 == -1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 286; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
     __pyx_v_obj_length = __pyx_t_9;
 
-    /* "mbufferio/_mbufferio.pyx":239
+    /* "mbufferio/_mbufferio.pyx":284
  * 
  *         # lets get the object address and length
  *         if isinstance(obj_to_write, bytes):             # <<<<<<<<<<<<<<
@@ -4029,7 +4304,7 @@ static PyObject *__pyx_f_9mbufferio_10_mbufferio_9MBufferIO_write(struct __pyx_o
     goto __pyx_L5;
   }
 
-  /* "mbufferio/_mbufferio.pyx":242
+  /* "mbufferio/_mbufferio.pyx":287
  *             obj_addr = <char*> obj_to_write
  *             obj_length = len(obj_to_write)
  *         elif isinstance(obj_to_write, cy_memoryview):             # <<<<<<<<<<<<<<
@@ -4040,30 +4315,30 @@ static PyObject *__pyx_f_9mbufferio_10_mbufferio_9MBufferIO_write(struct __pyx_o
   __pyx_t_6 = (__pyx_t_7 != 0);
   if (__pyx_t_6) {
 
-    /* "mbufferio/_mbufferio.pyx":243
+    /* "mbufferio/_mbufferio.pyx":288
  *             obj_length = len(obj_to_write)
  *         elif isinstance(obj_to_write, cy_memoryview):
  *             obj_addr = <char*> (<cy_memoryview>obj_to_write).get_item_pointer([])             # <<<<<<<<<<<<<<
  *             obj_length = len(obj_to_write)
  *         elif PyObject_CheckBuffer(obj_to_write):
  */
-    __pyx_t_1 = PyList_New(0); if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 243; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+    __pyx_t_1 = PyList_New(0); if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 288; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
     __Pyx_GOTREF(__pyx_t_1);
-    __pyx_t_8 = ((struct __pyx_vtabstruct_memoryview *)((struct __pyx_memoryview_obj *)__pyx_v_obj_to_write)->__pyx_vtab)->get_item_pointer(((struct __pyx_memoryview_obj *)__pyx_v_obj_to_write), __pyx_t_1); if (unlikely(__pyx_t_8 == NULL)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 243; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+    __pyx_t_8 = ((struct __pyx_vtabstruct_memoryview *)((struct __pyx_memoryview_obj *)__pyx_v_obj_to_write)->__pyx_vtab)->get_item_pointer(((struct __pyx_memoryview_obj *)__pyx_v_obj_to_write), __pyx_t_1); if (unlikely(__pyx_t_8 == NULL)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 288; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
     __pyx_v_obj_addr = ((char *)__pyx_t_8);
     __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
 
-    /* "mbufferio/_mbufferio.pyx":244
+    /* "mbufferio/_mbufferio.pyx":289
  *         elif isinstance(obj_to_write, cy_memoryview):
  *             obj_addr = <char*> (<cy_memoryview>obj_to_write).get_item_pointer([])
  *             obj_length = len(obj_to_write)             # <<<<<<<<<<<<<<
  *         elif PyObject_CheckBuffer(obj_to_write):
  *             obj_view = <Py_buffer*> PyMem_Malloc(sizeof(Py_buffer))
  */
-    __pyx_t_9 = PyObject_Length(__pyx_v_obj_to_write); if (unlikely(__pyx_t_9 == -1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 244; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+    __pyx_t_9 = PyObject_Length(__pyx_v_obj_to_write); if (unlikely(__pyx_t_9 == -1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 289; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
     __pyx_v_obj_length = __pyx_t_9;
 
-    /* "mbufferio/_mbufferio.pyx":242
+    /* "mbufferio/_mbufferio.pyx":287
  *             obj_addr = <char*> obj_to_write
  *             obj_length = len(obj_to_write)
  *         elif isinstance(obj_to_write, cy_memoryview):             # <<<<<<<<<<<<<<
@@ -4073,7 +4348,7 @@ static PyObject *__pyx_f_9mbufferio_10_mbufferio_9MBufferIO_write(struct __pyx_o
     goto __pyx_L5;
   }
 
-  /* "mbufferio/_mbufferio.pyx":245
+  /* "mbufferio/_mbufferio.pyx":290
  *             obj_addr = <char*> (<cy_memoryview>obj_to_write).get_item_pointer([])
  *             obj_length = len(obj_to_write)
  *         elif PyObject_CheckBuffer(obj_to_write):             # <<<<<<<<<<<<<<
@@ -4083,7 +4358,7 @@ static PyObject *__pyx_f_9mbufferio_10_mbufferio_9MBufferIO_write(struct __pyx_o
   __pyx_t_6 = (PyObject_CheckBuffer(__pyx_v_obj_to_write) != 0);
   if (__pyx_t_6) {
 
-    /* "mbufferio/_mbufferio.pyx":246
+    /* "mbufferio/_mbufferio.pyx":291
  *             obj_length = len(obj_to_write)
  *         elif PyObject_CheckBuffer(obj_to_write):
  *             obj_view = <Py_buffer*> PyMem_Malloc(sizeof(Py_buffer))             # <<<<<<<<<<<<<<
@@ -4092,7 +4367,7 @@ static PyObject *__pyx_f_9mbufferio_10_mbufferio_9MBufferIO_write(struct __pyx_o
  */
     __pyx_v_obj_view = ((Py_buffer *)PyMem_Malloc((sizeof(Py_buffer))));
 
-    /* "mbufferio/_mbufferio.pyx":247
+    /* "mbufferio/_mbufferio.pyx":292
  *         elif PyObject_CheckBuffer(obj_to_write):
  *             obj_view = <Py_buffer*> PyMem_Malloc(sizeof(Py_buffer))
  *             if obj_view == NULL:             # <<<<<<<<<<<<<<
@@ -4102,16 +4377,16 @@ static PyObject *__pyx_f_9mbufferio_10_mbufferio_9MBufferIO_write(struct __pyx_o
     __pyx_t_6 = ((__pyx_v_obj_view == NULL) != 0);
     if (__pyx_t_6) {
 
-      /* "mbufferio/_mbufferio.pyx":248
+      /* "mbufferio/_mbufferio.pyx":293
  *             obj_view = <Py_buffer*> PyMem_Malloc(sizeof(Py_buffer))
  *             if obj_view == NULL:
  *                 raise MemoryError             # <<<<<<<<<<<<<<
  *             res = PyObject_GetBuffer(obj_to_write, obj_view, PyBUF_SIMPLE)
  *             if res == -1:
  */
-      PyErr_NoMemory(); {__pyx_filename = __pyx_f[0]; __pyx_lineno = 248; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+      PyErr_NoMemory(); {__pyx_filename = __pyx_f[0]; __pyx_lineno = 293; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
 
-      /* "mbufferio/_mbufferio.pyx":247
+      /* "mbufferio/_mbufferio.pyx":292
  *         elif PyObject_CheckBuffer(obj_to_write):
  *             obj_view = <Py_buffer*> PyMem_Malloc(sizeof(Py_buffer))
  *             if obj_view == NULL:             # <<<<<<<<<<<<<<
@@ -4120,17 +4395,17 @@ static PyObject *__pyx_f_9mbufferio_10_mbufferio_9MBufferIO_write(struct __pyx_o
  */
     }
 
-    /* "mbufferio/_mbufferio.pyx":249
+    /* "mbufferio/_mbufferio.pyx":294
  *             if obj_view == NULL:
  *                 raise MemoryError
  *             res = PyObject_GetBuffer(obj_to_write, obj_view, PyBUF_SIMPLE)             # <<<<<<<<<<<<<<
  *             if res == -1:
  *                 PyMem_Free(obj_view)
  */
-    __pyx_t_10 = PyObject_GetBuffer(__pyx_v_obj_to_write, __pyx_v_obj_view, PyBUF_SIMPLE); if (unlikely(__pyx_t_10 == -1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 249; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+    __pyx_t_10 = PyObject_GetBuffer(__pyx_v_obj_to_write, __pyx_v_obj_view, PyBUF_SIMPLE); if (unlikely(__pyx_t_10 == -1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 294; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
     __pyx_v_res = __pyx_t_10;
 
-    /* "mbufferio/_mbufferio.pyx":250
+    /* "mbufferio/_mbufferio.pyx":295
  *                 raise MemoryError
  *             res = PyObject_GetBuffer(obj_to_write, obj_view, PyBUF_SIMPLE)
  *             if res == -1:             # <<<<<<<<<<<<<<
@@ -4140,7 +4415,7 @@ static PyObject *__pyx_f_9mbufferio_10_mbufferio_9MBufferIO_write(struct __pyx_o
     __pyx_t_6 = ((__pyx_v_res == -1L) != 0);
     if (__pyx_t_6) {
 
-      /* "mbufferio/_mbufferio.pyx":251
+      /* "mbufferio/_mbufferio.pyx":296
  *             res = PyObject_GetBuffer(obj_to_write, obj_view, PyBUF_SIMPLE)
  *             if res == -1:
  *                 PyMem_Free(obj_view)             # <<<<<<<<<<<<<<
@@ -4149,20 +4424,20 @@ static PyObject *__pyx_f_9mbufferio_10_mbufferio_9MBufferIO_write(struct __pyx_o
  */
       PyMem_Free(__pyx_v_obj_view);
 
-      /* "mbufferio/_mbufferio.pyx":252
+      /* "mbufferio/_mbufferio.pyx":297
  *             if res == -1:
  *                 PyMem_Free(obj_view)
  *                 raise RuntimeError("PyObject_GetBuffer failed")             # <<<<<<<<<<<<<<
  *             obj_addr = <char*> obj_view.buf
  *             obj_length = obj_view.len
  */
-      __pyx_t_1 = __Pyx_PyObject_Call(__pyx_builtin_RuntimeError, __pyx_tuple__9, NULL); if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 252; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+      __pyx_t_1 = __Pyx_PyObject_Call(__pyx_builtin_RuntimeError, __pyx_tuple__10, NULL); if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 297; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
       __Pyx_GOTREF(__pyx_t_1);
       __Pyx_Raise(__pyx_t_1, 0, 0, 0);
       __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
-      {__pyx_filename = __pyx_f[0]; __pyx_lineno = 252; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+      {__pyx_filename = __pyx_f[0]; __pyx_lineno = 297; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
 
-      /* "mbufferio/_mbufferio.pyx":250
+      /* "mbufferio/_mbufferio.pyx":295
  *                 raise MemoryError
  *             res = PyObject_GetBuffer(obj_to_write, obj_view, PyBUF_SIMPLE)
  *             if res == -1:             # <<<<<<<<<<<<<<
@@ -4171,7 +4446,7 @@ static PyObject *__pyx_f_9mbufferio_10_mbufferio_9MBufferIO_write(struct __pyx_o
  */
     }
 
-    /* "mbufferio/_mbufferio.pyx":253
+    /* "mbufferio/_mbufferio.pyx":298
  *                 PyMem_Free(obj_view)
  *                 raise RuntimeError("PyObject_GetBuffer failed")
  *             obj_addr = <char*> obj_view.buf             # <<<<<<<<<<<<<<
@@ -4180,7 +4455,7 @@ static PyObject *__pyx_f_9mbufferio_10_mbufferio_9MBufferIO_write(struct __pyx_o
  */
     __pyx_v_obj_addr = ((char *)__pyx_v_obj_view->buf);
 
-    /* "mbufferio/_mbufferio.pyx":254
+    /* "mbufferio/_mbufferio.pyx":299
  *                 raise RuntimeError("PyObject_GetBuffer failed")
  *             obj_addr = <char*> obj_view.buf
  *             obj_length = obj_view.len             # <<<<<<<<<<<<<<
@@ -4190,7 +4465,7 @@ static PyObject *__pyx_f_9mbufferio_10_mbufferio_9MBufferIO_write(struct __pyx_o
     __pyx_t_9 = __pyx_v_obj_view->len;
     __pyx_v_obj_length = __pyx_t_9;
 
-    /* "mbufferio/_mbufferio.pyx":245
+    /* "mbufferio/_mbufferio.pyx":290
  *             obj_addr = <char*> (<cy_memoryview>obj_to_write).get_item_pointer([])
  *             obj_length = len(obj_to_write)
  *         elif PyObject_CheckBuffer(obj_to_write):             # <<<<<<<<<<<<<<
@@ -4200,7 +4475,7 @@ static PyObject *__pyx_f_9mbufferio_10_mbufferio_9MBufferIO_write(struct __pyx_o
     goto __pyx_L5;
   }
 
-  /* "mbufferio/_mbufferio.pyx":256
+  /* "mbufferio/_mbufferio.pyx":301
  *             obj_length = obj_view.len
  *         else:
  *             obj_to_write = bytes(obj_to_write)             # <<<<<<<<<<<<<<
@@ -4208,40 +4483,40 @@ static PyObject *__pyx_f_9mbufferio_10_mbufferio_9MBufferIO_write(struct __pyx_o
  *             obj_length = len(obj_to_write)
  */
   /*else*/ {
-    __pyx_t_1 = PyTuple_New(1); if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 256; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+    __pyx_t_1 = PyTuple_New(1); if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 301; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
     __Pyx_GOTREF(__pyx_t_1);
     __Pyx_INCREF(__pyx_v_obj_to_write);
     __Pyx_GIVEREF(__pyx_v_obj_to_write);
     PyTuple_SET_ITEM(__pyx_t_1, 0, __pyx_v_obj_to_write);
-    __pyx_t_2 = __Pyx_PyObject_Call(((PyObject *)(&PyBytes_Type)), __pyx_t_1, NULL); if (unlikely(!__pyx_t_2)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 256; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+    __pyx_t_2 = __Pyx_PyObject_Call(((PyObject *)(&PyBytes_Type)), __pyx_t_1, NULL); if (unlikely(!__pyx_t_2)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 301; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
     __Pyx_GOTREF(__pyx_t_2);
     __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
     __Pyx_DECREF_SET(__pyx_v_obj_to_write, __pyx_t_2);
     __pyx_t_2 = 0;
 
-    /* "mbufferio/_mbufferio.pyx":257
+    /* "mbufferio/_mbufferio.pyx":302
  *         else:
  *             obj_to_write = bytes(obj_to_write)
  *             obj_addr = <char*> obj_to_write             # <<<<<<<<<<<<<<
  *             obj_length = len(obj_to_write)
  * 
  */
-    __pyx_t_8 = __Pyx_PyObject_AsString(__pyx_v_obj_to_write); if (unlikely((!__pyx_t_8) && PyErr_Occurred())) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 257; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+    __pyx_t_8 = __Pyx_PyObject_AsString(__pyx_v_obj_to_write); if (unlikely((!__pyx_t_8) && PyErr_Occurred())) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 302; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
     __pyx_v_obj_addr = ((char *)__pyx_t_8);
 
-    /* "mbufferio/_mbufferio.pyx":258
+    /* "mbufferio/_mbufferio.pyx":303
  *             obj_to_write = bytes(obj_to_write)
  *             obj_addr = <char*> obj_to_write
  *             obj_length = len(obj_to_write)             # <<<<<<<<<<<<<<
  * 
  *         try:
  */
-    __pyx_t_9 = PyObject_Length(__pyx_v_obj_to_write); if (unlikely(__pyx_t_9 == -1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 258; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+    __pyx_t_9 = PyObject_Length(__pyx_v_obj_to_write); if (unlikely(__pyx_t_9 == -1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 303; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
     __pyx_v_obj_length = __pyx_t_9;
   }
   __pyx_L5:;
 
-  /* "mbufferio/_mbufferio.pyx":260
+  /* "mbufferio/_mbufferio.pyx":305
  *             obj_length = len(obj_to_write)
  * 
  *         try:             # <<<<<<<<<<<<<<
@@ -4250,7 +4525,7 @@ static PyObject *__pyx_f_9mbufferio_10_mbufferio_9MBufferIO_write(struct __pyx_o
  */
   /*try:*/ {
 
-    /* "mbufferio/_mbufferio.pyx":261
+    /* "mbufferio/_mbufferio.pyx":306
  * 
  *         try:
  *             if obj_length == 0:             # <<<<<<<<<<<<<<
@@ -4260,7 +4535,7 @@ static PyObject *__pyx_f_9mbufferio_10_mbufferio_9MBufferIO_write(struct __pyx_o
     __pyx_t_6 = ((__pyx_v_obj_length == 0) != 0);
     if (__pyx_t_6) {
 
-      /* "mbufferio/_mbufferio.pyx":262
+      /* "mbufferio/_mbufferio.pyx":307
  *         try:
  *             if obj_length == 0:
  *                 return 0             # <<<<<<<<<<<<<<
@@ -4272,7 +4547,7 @@ static PyObject *__pyx_f_9mbufferio_10_mbufferio_9MBufferIO_write(struct __pyx_o
       __pyx_r = __pyx_int_0;
       goto __pyx_L8_return;
 
-      /* "mbufferio/_mbufferio.pyx":261
+      /* "mbufferio/_mbufferio.pyx":306
  * 
  *         try:
  *             if obj_length == 0:             # <<<<<<<<<<<<<<
@@ -4281,7 +4556,7 @@ static PyObject *__pyx_f_9mbufferio_10_mbufferio_9MBufferIO_write(struct __pyx_o
  */
     }
 
-    /* "mbufferio/_mbufferio.pyx":264
+    /* "mbufferio/_mbufferio.pyx":309
  *                 return 0
  * 
  *             how_many_more_bytes = max(0, obj_length + self.offset - self.length)             # <<<<<<<<<<<<<<
@@ -4297,7 +4572,7 @@ static PyObject *__pyx_f_9mbufferio_10_mbufferio_9MBufferIO_write(struct __pyx_o
     }
     __pyx_v_how_many_more_bytes = __pyx_t_13;
 
-    /* "mbufferio/_mbufferio.pyx":266
+    /* "mbufferio/_mbufferio.pyx":311
  *             how_many_more_bytes = max(0, obj_length + self.offset - self.length)
  *             # we may have to grow the buffer...
  *             if (how_many_more_bytes > 0) or bool(self.readonly):             # <<<<<<<<<<<<<<
@@ -4315,7 +4590,7 @@ static PyObject *__pyx_f_9mbufferio_10_mbufferio_9MBufferIO_write(struct __pyx_o
     __pyx_L13_bool_binop_done:;
     if (__pyx_t_6) {
 
-      /* "mbufferio/_mbufferio.pyx":267
+      /* "mbufferio/_mbufferio.pyx":312
  *             # we may have to grow the buffer...
  *             if (how_many_more_bytes > 0) or bool(self.readonly):
  *                 if self.view_count > 0:             # <<<<<<<<<<<<<<
@@ -4325,20 +4600,20 @@ static PyObject *__pyx_f_9mbufferio_10_mbufferio_9MBufferIO_write(struct __pyx_o
       __pyx_t_6 = ((__pyx_v_self->view_count > 0) != 0);
       if (__pyx_t_6) {
 
-        /* "mbufferio/_mbufferio.pyx":268
+        /* "mbufferio/_mbufferio.pyx":313
  *             if (how_many_more_bytes > 0) or bool(self.readonly):
  *                 if self.view_count > 0:
  *                     raise ValueError("Can not modify the buffer when there are active views")             # <<<<<<<<<<<<<<
  *                 self.detach(how_many_more_bytes)
  * 
  */
-        __pyx_t_2 = __Pyx_PyObject_Call(__pyx_builtin_ValueError, __pyx_tuple__10, NULL); if (unlikely(!__pyx_t_2)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 268; __pyx_clineno = __LINE__; goto __pyx_L9_error;}
+        __pyx_t_2 = __Pyx_PyObject_Call(__pyx_builtin_ValueError, __pyx_tuple__11, NULL); if (unlikely(!__pyx_t_2)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 313; __pyx_clineno = __LINE__; goto __pyx_L9_error;}
         __Pyx_GOTREF(__pyx_t_2);
         __Pyx_Raise(__pyx_t_2, 0, 0, 0);
         __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
-        {__pyx_filename = __pyx_f[0]; __pyx_lineno = 268; __pyx_clineno = __LINE__; goto __pyx_L9_error;}
+        {__pyx_filename = __pyx_f[0]; __pyx_lineno = 313; __pyx_clineno = __LINE__; goto __pyx_L9_error;}
 
-        /* "mbufferio/_mbufferio.pyx":267
+        /* "mbufferio/_mbufferio.pyx":312
  *             # we may have to grow the buffer...
  *             if (how_many_more_bytes > 0) or bool(self.readonly):
  *                 if self.view_count > 0:             # <<<<<<<<<<<<<<
@@ -4347,7 +4622,7 @@ static PyObject *__pyx_f_9mbufferio_10_mbufferio_9MBufferIO_write(struct __pyx_o
  */
       }
 
-      /* "mbufferio/_mbufferio.pyx":269
+      /* "mbufferio/_mbufferio.pyx":314
  *                 if self.view_count > 0:
  *                     raise ValueError("Can not modify the buffer when there are active views")
  *                 self.detach(how_many_more_bytes)             # <<<<<<<<<<<<<<
@@ -4356,11 +4631,11 @@ static PyObject *__pyx_f_9mbufferio_10_mbufferio_9MBufferIO_write(struct __pyx_o
  */
       __pyx_t_14.__pyx_n = 1;
       __pyx_t_14.how_many_more_bytes = __pyx_v_how_many_more_bytes;
-      __pyx_t_2 = ((struct __pyx_vtabstruct_9mbufferio_10_mbufferio_MBufferIO *)__pyx_v_self->__pyx_vtab)->detach(__pyx_v_self, 0, &__pyx_t_14); if (unlikely(!__pyx_t_2)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 269; __pyx_clineno = __LINE__; goto __pyx_L9_error;}
+      __pyx_t_2 = ((struct __pyx_vtabstruct_9mbufferio_10_mbufferio_MBufferIO *)__pyx_v_self->__pyx_vtab)->detach(__pyx_v_self, 0, &__pyx_t_14); if (unlikely(!__pyx_t_2)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 314; __pyx_clineno = __LINE__; goto __pyx_L9_error;}
       __Pyx_GOTREF(__pyx_t_2);
       __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
 
-      /* "mbufferio/_mbufferio.pyx":266
+      /* "mbufferio/_mbufferio.pyx":311
  *             how_many_more_bytes = max(0, obj_length + self.offset - self.length)
  *             # we may have to grow the buffer...
  *             if (how_many_more_bytes > 0) or bool(self.readonly):             # <<<<<<<<<<<<<<
@@ -4369,7 +4644,7 @@ static PyObject *__pyx_f_9mbufferio_10_mbufferio_9MBufferIO_write(struct __pyx_o
  */
     }
 
-    /* "mbufferio/_mbufferio.pyx":272
+    /* "mbufferio/_mbufferio.pyx":317
  * 
  *             # copy the content of obj_to_write
  *             memcpy(self.buf_pointer + self.startpos + self.offset, obj_addr, obj_length)             # <<<<<<<<<<<<<<
@@ -4378,7 +4653,7 @@ static PyObject *__pyx_f_9mbufferio_10_mbufferio_9MBufferIO_write(struct __pyx_o
  */
     memcpy(((__pyx_v_self->buf_pointer + __pyx_v_self->startpos) + __pyx_v_self->offset), __pyx_v_obj_addr, __pyx_v_obj_length);
 
-    /* "mbufferio/_mbufferio.pyx":273
+    /* "mbufferio/_mbufferio.pyx":318
  *             # copy the content of obj_to_write
  *             memcpy(self.buf_pointer + self.startpos + self.offset, obj_addr, obj_length)
  *             self.offset += obj_length             # <<<<<<<<<<<<<<
@@ -4387,7 +4662,7 @@ static PyObject *__pyx_f_9mbufferio_10_mbufferio_9MBufferIO_write(struct __pyx_o
  */
     __pyx_v_self->offset = (__pyx_v_self->offset + __pyx_v_obj_length);
 
-    /* "mbufferio/_mbufferio.pyx":274
+    /* "mbufferio/_mbufferio.pyx":319
  *             memcpy(self.buf_pointer + self.startpos + self.offset, obj_addr, obj_length)
  *             self.offset += obj_length
  *             self.length += how_many_more_bytes             # <<<<<<<<<<<<<<
@@ -4396,7 +4671,7 @@ static PyObject *__pyx_f_9mbufferio_10_mbufferio_9MBufferIO_write(struct __pyx_o
  */
     __pyx_v_self->length = (__pyx_v_self->length + __pyx_v_how_many_more_bytes);
 
-    /* "mbufferio/_mbufferio.pyx":275
+    /* "mbufferio/_mbufferio.pyx":320
  *             self.offset += obj_length
  *             self.length += how_many_more_bytes
  *             return obj_length             # <<<<<<<<<<<<<<
@@ -4404,14 +4679,14 @@ static PyObject *__pyx_f_9mbufferio_10_mbufferio_9MBufferIO_write(struct __pyx_o
  *             if obj_view is not NULL:
  */
     __Pyx_XDECREF(__pyx_r);
-    __pyx_t_2 = __Pyx_PyInt_From_int64_t(__pyx_v_obj_length); if (unlikely(!__pyx_t_2)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 275; __pyx_clineno = __LINE__; goto __pyx_L9_error;}
+    __pyx_t_2 = __Pyx_PyInt_From_int64_t(__pyx_v_obj_length); if (unlikely(!__pyx_t_2)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 320; __pyx_clineno = __LINE__; goto __pyx_L9_error;}
     __Pyx_GOTREF(__pyx_t_2);
     __pyx_r = __pyx_t_2;
     __pyx_t_2 = 0;
     goto __pyx_L8_return;
   }
 
-  /* "mbufferio/_mbufferio.pyx":277
+  /* "mbufferio/_mbufferio.pyx":322
  *             return obj_length
  *         finally:
  *             if obj_view is not NULL:             # <<<<<<<<<<<<<<
@@ -4440,7 +4715,7 @@ static PyObject *__pyx_f_9mbufferio_10_mbufferio_9MBufferIO_write(struct __pyx_o
         __pyx_t_6 = ((__pyx_v_obj_view != NULL) != 0);
         if (__pyx_t_6) {
 
-          /* "mbufferio/_mbufferio.pyx":278
+          /* "mbufferio/_mbufferio.pyx":323
  *         finally:
  *             if obj_view is not NULL:
  *                 PyBuffer_Release(obj_view)             # <<<<<<<<<<<<<<
@@ -4449,7 +4724,7 @@ static PyObject *__pyx_f_9mbufferio_10_mbufferio_9MBufferIO_write(struct __pyx_o
  */
           PyBuffer_Release(__pyx_v_obj_view);
 
-          /* "mbufferio/_mbufferio.pyx":279
+          /* "mbufferio/_mbufferio.pyx":324
  *             if obj_view is not NULL:
  *                 PyBuffer_Release(obj_view)
  *                 PyMem_Free(obj_view)             # <<<<<<<<<<<<<<
@@ -4458,7 +4733,7 @@ static PyObject *__pyx_f_9mbufferio_10_mbufferio_9MBufferIO_write(struct __pyx_o
  */
           PyMem_Free(__pyx_v_obj_view);
 
-          /* "mbufferio/_mbufferio.pyx":277
+          /* "mbufferio/_mbufferio.pyx":322
  *             return obj_length
  *         finally:
  *             if obj_view is not NULL:             # <<<<<<<<<<<<<<
@@ -4487,7 +4762,7 @@ static PyObject *__pyx_f_9mbufferio_10_mbufferio_9MBufferIO_write(struct __pyx_o
       __pyx_t_6 = ((__pyx_v_obj_view != NULL) != 0);
       if (__pyx_t_6) {
 
-        /* "mbufferio/_mbufferio.pyx":278
+        /* "mbufferio/_mbufferio.pyx":323
  *         finally:
  *             if obj_view is not NULL:
  *                 PyBuffer_Release(obj_view)             # <<<<<<<<<<<<<<
@@ -4496,7 +4771,7 @@ static PyObject *__pyx_f_9mbufferio_10_mbufferio_9MBufferIO_write(struct __pyx_o
  */
         PyBuffer_Release(__pyx_v_obj_view);
 
-        /* "mbufferio/_mbufferio.pyx":279
+        /* "mbufferio/_mbufferio.pyx":324
  *             if obj_view is not NULL:
  *                 PyBuffer_Release(obj_view)
  *                 PyMem_Free(obj_view)             # <<<<<<<<<<<<<<
@@ -4505,7 +4780,7 @@ static PyObject *__pyx_f_9mbufferio_10_mbufferio_9MBufferIO_write(struct __pyx_o
  */
         PyMem_Free(__pyx_v_obj_view);
 
-        /* "mbufferio/_mbufferio.pyx":277
+        /* "mbufferio/_mbufferio.pyx":322
  *             return obj_length
  *         finally:
  *             if obj_view is not NULL:             # <<<<<<<<<<<<<<
@@ -4519,7 +4794,7 @@ static PyObject *__pyx_f_9mbufferio_10_mbufferio_9MBufferIO_write(struct __pyx_o
     }
   }
 
-  /* "mbufferio/_mbufferio.pyx":204
+  /* "mbufferio/_mbufferio.pyx":246
  * 
  * 
  *     cpdef write(self, object obj_to_write):             # <<<<<<<<<<<<<<
@@ -4544,20 +4819,20 @@ static PyObject *__pyx_f_9mbufferio_10_mbufferio_9MBufferIO_write(struct __pyx_o
 }
 
 /* Python wrapper */
-static PyObject *__pyx_pw_9mbufferio_10_mbufferio_9MBufferIO_15write(PyObject *__pyx_v_self, PyObject *__pyx_v_obj_to_write); /*proto*/
-static char __pyx_doc_9mbufferio_10_mbufferio_9MBufferIO_14write[] = "\n        write(object obj_to_write)\n        Write the content of 'obj_to_write' into the MBufferIO.\n\n        If the MBufferIO is a reference, and the referenced object is big enough, write 'obj_to_write'\n        directly to the referenced object.\n\n        If the MBufferIO is a reference, and the referenced object is not big enough, make a copy of the referenced\n        object to the internal buffer, then write 'obj_to_write' to the internal buffer.\n\n        If the MBufferIO is a copy, write to the internal buffer.\n\n        Parameters\n        ----------\n        obj_to_write: an object that supports the buffer protocol\n            Object to write\n\n        Returns\n        -------\n        how many bytes were written\n        ";
-static PyObject *__pyx_pw_9mbufferio_10_mbufferio_9MBufferIO_15write(PyObject *__pyx_v_self, PyObject *__pyx_v_obj_to_write) {
+static PyObject *__pyx_pw_9mbufferio_10_mbufferio_9MBufferIO_17write(PyObject *__pyx_v_self, PyObject *__pyx_v_obj_to_write); /*proto*/
+static char __pyx_doc_9mbufferio_10_mbufferio_9MBufferIO_16write[] = "\n        write(object obj_to_write)\n        Write the content of 'obj_to_write' into the MBufferIO.\n\n        If the MBufferIO is a reference, and the referenced object is big enough, write 'obj_to_write'\n        directly to the referenced object.\n\n        If the MBufferIO is a reference, and the referenced object is readonly, make a copy of the referenced\n        object to the internal buffer, then write 'obj_to_write' to the internal buffer.\n\n        If the MBufferIO is a reference, and the referenced object is not big enough, make a copy of the referenced\n        object to the internal buffer, then write 'obj_to_write' to the internal buffer.\n\n        If the MBufferIO is a copy, write to the internal buffer, growing the internal buffer if necessary.\n\n        Parameters\n        ----------\n        obj_to_write: an object that supports the buffer protocol\n            Object to write\n\n        Returns\n        -------\n        how many bytes were written\n        ";
+static PyObject *__pyx_pw_9mbufferio_10_mbufferio_9MBufferIO_17write(PyObject *__pyx_v_self, PyObject *__pyx_v_obj_to_write) {
   PyObject *__pyx_r = 0;
   __Pyx_RefNannyDeclarations
   __Pyx_RefNannySetupContext("write (wrapper)", 0);
-  __pyx_r = __pyx_pf_9mbufferio_10_mbufferio_9MBufferIO_14write(((struct __pyx_obj_9mbufferio_10_mbufferio_MBufferIO *)__pyx_v_self), ((PyObject *)__pyx_v_obj_to_write));
+  __pyx_r = __pyx_pf_9mbufferio_10_mbufferio_9MBufferIO_16write(((struct __pyx_obj_9mbufferio_10_mbufferio_MBufferIO *)__pyx_v_self), ((PyObject *)__pyx_v_obj_to_write));
 
   /* function exit code */
   __Pyx_RefNannyFinishContext();
   return __pyx_r;
 }
 
-static PyObject *__pyx_pf_9mbufferio_10_mbufferio_9MBufferIO_14write(struct __pyx_obj_9mbufferio_10_mbufferio_MBufferIO *__pyx_v_self, PyObject *__pyx_v_obj_to_write) {
+static PyObject *__pyx_pf_9mbufferio_10_mbufferio_9MBufferIO_16write(struct __pyx_obj_9mbufferio_10_mbufferio_MBufferIO *__pyx_v_self, PyObject *__pyx_v_obj_to_write) {
   PyObject *__pyx_r = NULL;
   __Pyx_RefNannyDeclarations
   PyObject *__pyx_t_1 = NULL;
@@ -4566,7 +4841,7 @@ static PyObject *__pyx_pf_9mbufferio_10_mbufferio_9MBufferIO_14write(struct __py
   int __pyx_clineno = 0;
   __Pyx_RefNannySetupContext("write", 0);
   __Pyx_XDECREF(__pyx_r);
-  __pyx_t_1 = __pyx_f_9mbufferio_10_mbufferio_9MBufferIO_write(__pyx_v_self, __pyx_v_obj_to_write, 1); if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 204; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __pyx_t_1 = __pyx_f_9mbufferio_10_mbufferio_9MBufferIO_write(__pyx_v_self, __pyx_v_obj_to_write, 1); if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 246; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
   __Pyx_GOTREF(__pyx_t_1);
   __pyx_r = __pyx_t_1;
   __pyx_t_1 = 0;
@@ -4583,7 +4858,7 @@ static PyObject *__pyx_pf_9mbufferio_10_mbufferio_9MBufferIO_14write(struct __py
   return __pyx_r;
 }
 
-/* "mbufferio/_mbufferio.pyx":281
+/* "mbufferio/_mbufferio.pyx":326
  *                 PyMem_Free(obj_view)
  * 
  *     cpdef seek(self, int64_t pos, int whence=0):             # <<<<<<<<<<<<<<
@@ -4591,7 +4866,7 @@ static PyObject *__pyx_pf_9mbufferio_10_mbufferio_9MBufferIO_14write(struct __py
  *         seek(int64_t pos, int whence=0)
  */
 
-static PyObject *__pyx_pw_9mbufferio_10_mbufferio_9MBufferIO_17seek(PyObject *__pyx_v_self, PyObject *__pyx_args, PyObject *__pyx_kwds); /*proto*/
+static PyObject *__pyx_pw_9mbufferio_10_mbufferio_9MBufferIO_19seek(PyObject *__pyx_v_self, PyObject *__pyx_args, PyObject *__pyx_kwds); /*proto*/
 static PyObject *__pyx_f_9mbufferio_10_mbufferio_9MBufferIO_seek(struct __pyx_obj_9mbufferio_10_mbufferio_MBufferIO *__pyx_v_self, int64_t __pyx_v_pos, int __pyx_skip_dispatch, struct __pyx_opt_args_9mbufferio_10_mbufferio_9MBufferIO_seek *__pyx_optional_args) {
   int __pyx_v_whence = ((int)0);
   int64_t __pyx_v_frm;
@@ -4624,13 +4899,13 @@ static PyObject *__pyx_f_9mbufferio_10_mbufferio_9MBufferIO_seek(struct __pyx_ob
   if (unlikely(__pyx_skip_dispatch)) ;
   /* Check if overridden in Python */
   else if (unlikely(Py_TYPE(((PyObject *)__pyx_v_self))->tp_dictoffset != 0)) {
-    __pyx_t_1 = __Pyx_PyObject_GetAttrStr(((PyObject *)__pyx_v_self), __pyx_n_s_seek); if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 281; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+    __pyx_t_1 = __Pyx_PyObject_GetAttrStr(((PyObject *)__pyx_v_self), __pyx_n_s_seek); if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 326; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
     __Pyx_GOTREF(__pyx_t_1);
-    if (!PyCFunction_Check(__pyx_t_1) || (PyCFunction_GET_FUNCTION(__pyx_t_1) != (PyCFunction)__pyx_pw_9mbufferio_10_mbufferio_9MBufferIO_17seek)) {
+    if (!PyCFunction_Check(__pyx_t_1) || (PyCFunction_GET_FUNCTION(__pyx_t_1) != (PyCFunction)__pyx_pw_9mbufferio_10_mbufferio_9MBufferIO_19seek)) {
       __Pyx_XDECREF(__pyx_r);
-      __pyx_t_3 = __Pyx_PyInt_From_int64_t(__pyx_v_pos); if (unlikely(!__pyx_t_3)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 281; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+      __pyx_t_3 = __Pyx_PyInt_From_int64_t(__pyx_v_pos); if (unlikely(!__pyx_t_3)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 326; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
       __Pyx_GOTREF(__pyx_t_3);
-      __pyx_t_4 = __Pyx_PyInt_From_int(__pyx_v_whence); if (unlikely(!__pyx_t_4)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 281; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+      __pyx_t_4 = __Pyx_PyInt_From_int(__pyx_v_whence); if (unlikely(!__pyx_t_4)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 326; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
       __Pyx_GOTREF(__pyx_t_4);
       __Pyx_INCREF(__pyx_t_1);
       __pyx_t_5 = __pyx_t_1; __pyx_t_6 = NULL;
@@ -4645,7 +4920,7 @@ static PyObject *__pyx_f_9mbufferio_10_mbufferio_9MBufferIO_seek(struct __pyx_ob
           __pyx_t_7 = 1;
         }
       }
-      __pyx_t_8 = PyTuple_New(2+__pyx_t_7); if (unlikely(!__pyx_t_8)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 281; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+      __pyx_t_8 = PyTuple_New(2+__pyx_t_7); if (unlikely(!__pyx_t_8)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 326; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
       __Pyx_GOTREF(__pyx_t_8);
       if (__pyx_t_6) {
         __Pyx_GIVEREF(__pyx_t_6); PyTuple_SET_ITEM(__pyx_t_8, 0, __pyx_t_6); __pyx_t_6 = NULL;
@@ -4656,7 +4931,7 @@ static PyObject *__pyx_f_9mbufferio_10_mbufferio_9MBufferIO_seek(struct __pyx_ob
       PyTuple_SET_ITEM(__pyx_t_8, 1+__pyx_t_7, __pyx_t_4);
       __pyx_t_3 = 0;
       __pyx_t_4 = 0;
-      __pyx_t_2 = __Pyx_PyObject_Call(__pyx_t_5, __pyx_t_8, NULL); if (unlikely(!__pyx_t_2)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 281; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+      __pyx_t_2 = __Pyx_PyObject_Call(__pyx_t_5, __pyx_t_8, NULL); if (unlikely(!__pyx_t_2)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 326; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
       __Pyx_GOTREF(__pyx_t_2);
       __Pyx_DECREF(__pyx_t_8); __pyx_t_8 = 0;
       __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
@@ -4668,7 +4943,7 @@ static PyObject *__pyx_f_9mbufferio_10_mbufferio_9MBufferIO_seek(struct __pyx_ob
     __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
   }
 
-  /* "mbufferio/_mbufferio.pyx":298
+  /* "mbufferio/_mbufferio.pyx":343
  *         the new absolute position
  *         """
  *         if self.closed:             # <<<<<<<<<<<<<<
@@ -4678,20 +4953,20 @@ static PyObject *__pyx_f_9mbufferio_10_mbufferio_9MBufferIO_seek(struct __pyx_ob
   __pyx_t_9 = (__pyx_v_self->closed != 0);
   if (__pyx_t_9) {
 
-    /* "mbufferio/_mbufferio.pyx":299
+    /* "mbufferio/_mbufferio.pyx":344
  *         """
  *         if self.closed:
  *             raise ValueError(u"I/O operation on closed file.")             # <<<<<<<<<<<<<<
  *         cdef int64_t frm
  *         cdef int64_t final_pos
  */
-    __pyx_t_1 = __Pyx_PyObject_Call(__pyx_builtin_ValueError, __pyx_tuple__11, NULL); if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 299; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+    __pyx_t_1 = __Pyx_PyObject_Call(__pyx_builtin_ValueError, __pyx_tuple__12, NULL); if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 344; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
     __Pyx_GOTREF(__pyx_t_1);
     __Pyx_Raise(__pyx_t_1, 0, 0, 0);
     __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
-    {__pyx_filename = __pyx_f[0]; __pyx_lineno = 299; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+    {__pyx_filename = __pyx_f[0]; __pyx_lineno = 344; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
 
-    /* "mbufferio/_mbufferio.pyx":298
+    /* "mbufferio/_mbufferio.pyx":343
  *         the new absolute position
  *         """
  *         if self.closed:             # <<<<<<<<<<<<<<
@@ -4700,7 +4975,7 @@ static PyObject *__pyx_f_9mbufferio_10_mbufferio_9MBufferIO_seek(struct __pyx_ob
  */
   }
 
-  /* "mbufferio/_mbufferio.pyx":302
+  /* "mbufferio/_mbufferio.pyx":347
  *         cdef int64_t frm
  *         cdef int64_t final_pos
  *         if whence == 0:         # Start of stream             # <<<<<<<<<<<<<<
@@ -4710,7 +4985,7 @@ static PyObject *__pyx_f_9mbufferio_10_mbufferio_9MBufferIO_seek(struct __pyx_ob
   switch (__pyx_v_whence) {
     case 0:
 
-    /* "mbufferio/_mbufferio.pyx":303
+    /* "mbufferio/_mbufferio.pyx":348
  *         cdef int64_t final_pos
  *         if whence == 0:         # Start of stream
  *             frm = 0             # <<<<<<<<<<<<<<
@@ -4719,7 +4994,7 @@ static PyObject *__pyx_f_9mbufferio_10_mbufferio_9MBufferIO_seek(struct __pyx_ob
  */
     __pyx_v_frm = 0;
 
-    /* "mbufferio/_mbufferio.pyx":302
+    /* "mbufferio/_mbufferio.pyx":347
  *         cdef int64_t frm
  *         cdef int64_t final_pos
  *         if whence == 0:         # Start of stream             # <<<<<<<<<<<<<<
@@ -4728,7 +5003,7 @@ static PyObject *__pyx_f_9mbufferio_10_mbufferio_9MBufferIO_seek(struct __pyx_ob
  */
     break;
 
-    /* "mbufferio/_mbufferio.pyx":304
+    /* "mbufferio/_mbufferio.pyx":349
  *         if whence == 0:         # Start of stream
  *             frm = 0
  *         elif whence == 1:             # <<<<<<<<<<<<<<
@@ -4737,7 +5012,7 @@ static PyObject *__pyx_f_9mbufferio_10_mbufferio_9MBufferIO_seek(struct __pyx_ob
  */
     case 1:
 
-    /* "mbufferio/_mbufferio.pyx":305
+    /* "mbufferio/_mbufferio.pyx":350
  *             frm = 0
  *         elif whence == 1:
  *             frm = self.offset   # current position             # <<<<<<<<<<<<<<
@@ -4747,7 +5022,7 @@ static PyObject *__pyx_f_9mbufferio_10_mbufferio_9MBufferIO_seek(struct __pyx_ob
     __pyx_t_10 = __pyx_v_self->offset;
     __pyx_v_frm = __pyx_t_10;
 
-    /* "mbufferio/_mbufferio.pyx":304
+    /* "mbufferio/_mbufferio.pyx":349
  *         if whence == 0:         # Start of stream
  *             frm = 0
  *         elif whence == 1:             # <<<<<<<<<<<<<<
@@ -4756,7 +5031,7 @@ static PyObject *__pyx_f_9mbufferio_10_mbufferio_9MBufferIO_seek(struct __pyx_ob
  */
     break;
 
-    /* "mbufferio/_mbufferio.pyx":306
+    /* "mbufferio/_mbufferio.pyx":351
  *         elif whence == 1:
  *             frm = self.offset   # current position
  *         elif whence == 2:             # <<<<<<<<<<<<<<
@@ -4765,7 +5040,7 @@ static PyObject *__pyx_f_9mbufferio_10_mbufferio_9MBufferIO_seek(struct __pyx_ob
  */
     case 2:
 
-    /* "mbufferio/_mbufferio.pyx":307
+    /* "mbufferio/_mbufferio.pyx":352
  *             frm = self.offset   # current position
  *         elif whence == 2:
  *             frm = self.length   # end of stream             # <<<<<<<<<<<<<<
@@ -4775,7 +5050,7 @@ static PyObject *__pyx_f_9mbufferio_10_mbufferio_9MBufferIO_seek(struct __pyx_ob
     __pyx_t_10 = __pyx_v_self->length;
     __pyx_v_frm = __pyx_t_10;
 
-    /* "mbufferio/_mbufferio.pyx":306
+    /* "mbufferio/_mbufferio.pyx":351
  *         elif whence == 1:
  *             frm = self.offset   # current position
  *         elif whence == 2:             # <<<<<<<<<<<<<<
@@ -4785,22 +5060,22 @@ static PyObject *__pyx_f_9mbufferio_10_mbufferio_9MBufferIO_seek(struct __pyx_ob
     break;
     default:
 
-    /* "mbufferio/_mbufferio.pyx":309
+    /* "mbufferio/_mbufferio.pyx":354
  *             frm = self.length   # end of stream
  *         else:
  *             raise ValueError("invalid value for whence parameter")             # <<<<<<<<<<<<<<
  *         final_pos = frm + pos
  *         final_pos = max(0, final_pos)
  */
-    __pyx_t_1 = __Pyx_PyObject_Call(__pyx_builtin_ValueError, __pyx_tuple__12, NULL); if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 309; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+    __pyx_t_1 = __Pyx_PyObject_Call(__pyx_builtin_ValueError, __pyx_tuple__13, NULL); if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 354; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
     __Pyx_GOTREF(__pyx_t_1);
     __Pyx_Raise(__pyx_t_1, 0, 0, 0);
     __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
-    {__pyx_filename = __pyx_f[0]; __pyx_lineno = 309; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+    {__pyx_filename = __pyx_f[0]; __pyx_lineno = 354; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
     break;
   }
 
-  /* "mbufferio/_mbufferio.pyx":310
+  /* "mbufferio/_mbufferio.pyx":355
  *         else:
  *             raise ValueError("invalid value for whence parameter")
  *         final_pos = frm + pos             # <<<<<<<<<<<<<<
@@ -4809,7 +5084,7 @@ static PyObject *__pyx_f_9mbufferio_10_mbufferio_9MBufferIO_seek(struct __pyx_ob
  */
   __pyx_v_final_pos = (__pyx_v_frm + __pyx_v_pos);
 
-  /* "mbufferio/_mbufferio.pyx":311
+  /* "mbufferio/_mbufferio.pyx":356
  *             raise ValueError("invalid value for whence parameter")
  *         final_pos = frm + pos
  *         final_pos = max(0, final_pos)             # <<<<<<<<<<<<<<
@@ -4825,7 +5100,7 @@ static PyObject *__pyx_f_9mbufferio_10_mbufferio_9MBufferIO_seek(struct __pyx_ob
   }
   __pyx_v_final_pos = __pyx_t_12;
 
-  /* "mbufferio/_mbufferio.pyx":312
+  /* "mbufferio/_mbufferio.pyx":357
  *         final_pos = frm + pos
  *         final_pos = max(0, final_pos)
  *         final_pos = min(self.length, final_pos)             # <<<<<<<<<<<<<<
@@ -4841,7 +5116,7 @@ static PyObject *__pyx_f_9mbufferio_10_mbufferio_9MBufferIO_seek(struct __pyx_ob
   }
   __pyx_v_final_pos = __pyx_t_13;
 
-  /* "mbufferio/_mbufferio.pyx":313
+  /* "mbufferio/_mbufferio.pyx":358
  *         final_pos = max(0, final_pos)
  *         final_pos = min(self.length, final_pos)
  *         self.offset = final_pos             # <<<<<<<<<<<<<<
@@ -4850,7 +5125,7 @@ static PyObject *__pyx_f_9mbufferio_10_mbufferio_9MBufferIO_seek(struct __pyx_ob
  */
   __pyx_v_self->offset = __pyx_v_final_pos;
 
-  /* "mbufferio/_mbufferio.pyx":314
+  /* "mbufferio/_mbufferio.pyx":359
  *         final_pos = min(self.length, final_pos)
  *         self.offset = final_pos
  *         return final_pos             # <<<<<<<<<<<<<<
@@ -4858,13 +5133,13 @@ static PyObject *__pyx_f_9mbufferio_10_mbufferio_9MBufferIO_seek(struct __pyx_ob
  *     cpdef bytes read(self, int64_t n=-1):
  */
   __Pyx_XDECREF(__pyx_r);
-  __pyx_t_1 = __Pyx_PyInt_From_int64_t(__pyx_v_final_pos); if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 314; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __pyx_t_1 = __Pyx_PyInt_From_int64_t(__pyx_v_final_pos); if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 359; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
   __Pyx_GOTREF(__pyx_t_1);
   __pyx_r = __pyx_t_1;
   __pyx_t_1 = 0;
   goto __pyx_L0;
 
-  /* "mbufferio/_mbufferio.pyx":281
+  /* "mbufferio/_mbufferio.pyx":326
  *                 PyMem_Free(obj_view)
  * 
  *     cpdef seek(self, int64_t pos, int whence=0):             # <<<<<<<<<<<<<<
@@ -4890,9 +5165,9 @@ static PyObject *__pyx_f_9mbufferio_10_mbufferio_9MBufferIO_seek(struct __pyx_ob
 }
 
 /* Python wrapper */
-static PyObject *__pyx_pw_9mbufferio_10_mbufferio_9MBufferIO_17seek(PyObject *__pyx_v_self, PyObject *__pyx_args, PyObject *__pyx_kwds); /*proto*/
-static char __pyx_doc_9mbufferio_10_mbufferio_9MBufferIO_16seek[] = "\n        seek(int64_t pos, int whence=0)\n        Change the stream position to the given byte offset. offset is interpreted relative to the position indicated\n        by whence.\n\n        Parameters\n        ----------\n        pos: int64_t\n            offset\n        whence: int\n            0 (start of the stream), 1 (current stream position) or 2 (end of the stream)\n\n        Returns\n        -------\n        the new absolute position\n        ";
-static PyObject *__pyx_pw_9mbufferio_10_mbufferio_9MBufferIO_17seek(PyObject *__pyx_v_self, PyObject *__pyx_args, PyObject *__pyx_kwds) {
+static PyObject *__pyx_pw_9mbufferio_10_mbufferio_9MBufferIO_19seek(PyObject *__pyx_v_self, PyObject *__pyx_args, PyObject *__pyx_kwds); /*proto*/
+static char __pyx_doc_9mbufferio_10_mbufferio_9MBufferIO_18seek[] = "\n        seek(int64_t pos, int whence=0)\n        Change the stream position to the given byte offset. offset is interpreted relative to the position indicated\n        by whence.\n\n        Parameters\n        ----------\n        pos: int64_t\n            offset\n        whence: int\n            0 (start of the stream), 1 (current stream position) or 2 (end of the stream)\n\n        Returns\n        -------\n        the new absolute position\n        ";
+static PyObject *__pyx_pw_9mbufferio_10_mbufferio_9MBufferIO_19seek(PyObject *__pyx_v_self, PyObject *__pyx_args, PyObject *__pyx_kwds) {
   int64_t __pyx_v_pos;
   int __pyx_v_whence;
   int __pyx_lineno = 0;
@@ -4925,7 +5200,7 @@ static PyObject *__pyx_pw_9mbufferio_10_mbufferio_9MBufferIO_17seek(PyObject *__
         }
       }
       if (unlikely(kw_args > 0)) {
-        if (unlikely(__Pyx_ParseOptionalKeywords(__pyx_kwds, __pyx_pyargnames, 0, values, pos_args, "seek") < 0)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 281; __pyx_clineno = __LINE__; goto __pyx_L3_error;}
+        if (unlikely(__Pyx_ParseOptionalKeywords(__pyx_kwds, __pyx_pyargnames, 0, values, pos_args, "seek") < 0)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 326; __pyx_clineno = __LINE__; goto __pyx_L3_error;}
       }
     } else {
       switch (PyTuple_GET_SIZE(__pyx_args)) {
@@ -4935,29 +5210,29 @@ static PyObject *__pyx_pw_9mbufferio_10_mbufferio_9MBufferIO_17seek(PyObject *__
         default: goto __pyx_L5_argtuple_error;
       }
     }
-    __pyx_v_pos = __Pyx_PyInt_As_int64_t(values[0]); if (unlikely((__pyx_v_pos == (int64_t)-1) && PyErr_Occurred())) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 281; __pyx_clineno = __LINE__; goto __pyx_L3_error;}
+    __pyx_v_pos = __Pyx_PyInt_As_int64_t(values[0]); if (unlikely((__pyx_v_pos == (int64_t)-1) && PyErr_Occurred())) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 326; __pyx_clineno = __LINE__; goto __pyx_L3_error;}
     if (values[1]) {
-      __pyx_v_whence = __Pyx_PyInt_As_int(values[1]); if (unlikely((__pyx_v_whence == (int)-1) && PyErr_Occurred())) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 281; __pyx_clineno = __LINE__; goto __pyx_L3_error;}
+      __pyx_v_whence = __Pyx_PyInt_As_int(values[1]); if (unlikely((__pyx_v_whence == (int)-1) && PyErr_Occurred())) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 326; __pyx_clineno = __LINE__; goto __pyx_L3_error;}
     } else {
       __pyx_v_whence = ((int)0);
     }
   }
   goto __pyx_L4_argument_unpacking_done;
   __pyx_L5_argtuple_error:;
-  __Pyx_RaiseArgtupleInvalid("seek", 0, 1, 2, PyTuple_GET_SIZE(__pyx_args)); {__pyx_filename = __pyx_f[0]; __pyx_lineno = 281; __pyx_clineno = __LINE__; goto __pyx_L3_error;}
+  __Pyx_RaiseArgtupleInvalid("seek", 0, 1, 2, PyTuple_GET_SIZE(__pyx_args)); {__pyx_filename = __pyx_f[0]; __pyx_lineno = 326; __pyx_clineno = __LINE__; goto __pyx_L3_error;}
   __pyx_L3_error:;
   __Pyx_AddTraceback("mbufferio._mbufferio.MBufferIO.seek", __pyx_clineno, __pyx_lineno, __pyx_filename);
   __Pyx_RefNannyFinishContext();
   return NULL;
   __pyx_L4_argument_unpacking_done:;
-  __pyx_r = __pyx_pf_9mbufferio_10_mbufferio_9MBufferIO_16seek(((struct __pyx_obj_9mbufferio_10_mbufferio_MBufferIO *)__pyx_v_self), __pyx_v_pos, __pyx_v_whence);
+  __pyx_r = __pyx_pf_9mbufferio_10_mbufferio_9MBufferIO_18seek(((struct __pyx_obj_9mbufferio_10_mbufferio_MBufferIO *)__pyx_v_self), __pyx_v_pos, __pyx_v_whence);
 
   /* function exit code */
   __Pyx_RefNannyFinishContext();
   return __pyx_r;
 }
 
-static PyObject *__pyx_pf_9mbufferio_10_mbufferio_9MBufferIO_16seek(struct __pyx_obj_9mbufferio_10_mbufferio_MBufferIO *__pyx_v_self, int64_t __pyx_v_pos, int __pyx_v_whence) {
+static PyObject *__pyx_pf_9mbufferio_10_mbufferio_9MBufferIO_18seek(struct __pyx_obj_9mbufferio_10_mbufferio_MBufferIO *__pyx_v_self, int64_t __pyx_v_pos, int __pyx_v_whence) {
   PyObject *__pyx_r = NULL;
   __Pyx_RefNannyDeclarations
   PyObject *__pyx_t_1 = NULL;
@@ -4969,7 +5244,7 @@ static PyObject *__pyx_pf_9mbufferio_10_mbufferio_9MBufferIO_16seek(struct __pyx
   __Pyx_XDECREF(__pyx_r);
   __pyx_t_2.__pyx_n = 1;
   __pyx_t_2.whence = __pyx_v_whence;
-  __pyx_t_1 = __pyx_vtabptr_9mbufferio_10_mbufferio_MBufferIO->seek(__pyx_v_self, __pyx_v_pos, 1, &__pyx_t_2); if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 281; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __pyx_t_1 = __pyx_vtabptr_9mbufferio_10_mbufferio_MBufferIO->seek(__pyx_v_self, __pyx_v_pos, 1, &__pyx_t_2); if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 326; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
   __Pyx_GOTREF(__pyx_t_1);
   __pyx_r = __pyx_t_1;
   __pyx_t_1 = 0;
@@ -4986,7 +5261,7 @@ static PyObject *__pyx_pf_9mbufferio_10_mbufferio_9MBufferIO_16seek(struct __pyx
   return __pyx_r;
 }
 
-/* "mbufferio/_mbufferio.pyx":316
+/* "mbufferio/_mbufferio.pyx":361
  *         return final_pos
  * 
  *     cpdef bytes read(self, int64_t n=-1):             # <<<<<<<<<<<<<<
@@ -4994,7 +5269,7 @@ static PyObject *__pyx_pf_9mbufferio_10_mbufferio_9MBufferIO_16seek(struct __pyx
  *         read(int64_t n=-1)
  */
 
-static PyObject *__pyx_pw_9mbufferio_10_mbufferio_9MBufferIO_19read(PyObject *__pyx_v_self, PyObject *__pyx_args, PyObject *__pyx_kwds); /*proto*/
+static PyObject *__pyx_pw_9mbufferio_10_mbufferio_9MBufferIO_21read(PyObject *__pyx_v_self, PyObject *__pyx_args, PyObject *__pyx_kwds); /*proto*/
 static PyObject *__pyx_f_9mbufferio_10_mbufferio_9MBufferIO_read(struct __pyx_obj_9mbufferio_10_mbufferio_MBufferIO *__pyx_v_self, int __pyx_skip_dispatch, struct __pyx_opt_args_9mbufferio_10_mbufferio_9MBufferIO_read *__pyx_optional_args) {
   int64_t __pyx_v_n = ((int64_t)-1L);
   int64_t __pyx_v_to_read;
@@ -5025,11 +5300,11 @@ static PyObject *__pyx_f_9mbufferio_10_mbufferio_9MBufferIO_read(struct __pyx_ob
   if (unlikely(__pyx_skip_dispatch)) ;
   /* Check if overridden in Python */
   else if (unlikely(Py_TYPE(((PyObject *)__pyx_v_self))->tp_dictoffset != 0)) {
-    __pyx_t_1 = __Pyx_PyObject_GetAttrStr(((PyObject *)__pyx_v_self), __pyx_n_s_read); if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 316; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+    __pyx_t_1 = __Pyx_PyObject_GetAttrStr(((PyObject *)__pyx_v_self), __pyx_n_s_read); if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 361; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
     __Pyx_GOTREF(__pyx_t_1);
-    if (!PyCFunction_Check(__pyx_t_1) || (PyCFunction_GET_FUNCTION(__pyx_t_1) != (PyCFunction)__pyx_pw_9mbufferio_10_mbufferio_9MBufferIO_19read)) {
+    if (!PyCFunction_Check(__pyx_t_1) || (PyCFunction_GET_FUNCTION(__pyx_t_1) != (PyCFunction)__pyx_pw_9mbufferio_10_mbufferio_9MBufferIO_21read)) {
       __Pyx_XDECREF(__pyx_r);
-      __pyx_t_3 = __Pyx_PyInt_From_int64_t(__pyx_v_n); if (unlikely(!__pyx_t_3)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 316; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+      __pyx_t_3 = __Pyx_PyInt_From_int64_t(__pyx_v_n); if (unlikely(!__pyx_t_3)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 361; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
       __Pyx_GOTREF(__pyx_t_3);
       __Pyx_INCREF(__pyx_t_1);
       __pyx_t_4 = __pyx_t_1; __pyx_t_5 = NULL;
@@ -5043,22 +5318,22 @@ static PyObject *__pyx_f_9mbufferio_10_mbufferio_9MBufferIO_read(struct __pyx_ob
         }
       }
       if (!__pyx_t_5) {
-        __pyx_t_2 = __Pyx_PyObject_CallOneArg(__pyx_t_4, __pyx_t_3); if (unlikely(!__pyx_t_2)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 316; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+        __pyx_t_2 = __Pyx_PyObject_CallOneArg(__pyx_t_4, __pyx_t_3); if (unlikely(!__pyx_t_2)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 361; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
         __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
         __Pyx_GOTREF(__pyx_t_2);
       } else {
-        __pyx_t_6 = PyTuple_New(1+1); if (unlikely(!__pyx_t_6)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 316; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+        __pyx_t_6 = PyTuple_New(1+1); if (unlikely(!__pyx_t_6)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 361; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
         __Pyx_GOTREF(__pyx_t_6);
         __Pyx_GIVEREF(__pyx_t_5); PyTuple_SET_ITEM(__pyx_t_6, 0, __pyx_t_5); __pyx_t_5 = NULL;
         __Pyx_GIVEREF(__pyx_t_3);
         PyTuple_SET_ITEM(__pyx_t_6, 0+1, __pyx_t_3);
         __pyx_t_3 = 0;
-        __pyx_t_2 = __Pyx_PyObject_Call(__pyx_t_4, __pyx_t_6, NULL); if (unlikely(!__pyx_t_2)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 316; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+        __pyx_t_2 = __Pyx_PyObject_Call(__pyx_t_4, __pyx_t_6, NULL); if (unlikely(!__pyx_t_2)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 361; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
         __Pyx_GOTREF(__pyx_t_2);
         __Pyx_DECREF(__pyx_t_6); __pyx_t_6 = 0;
       }
       __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
-      if (!(likely(PyBytes_CheckExact(__pyx_t_2))||((__pyx_t_2) == Py_None)||(PyErr_Format(PyExc_TypeError, "Expected %.16s, got %.200s", "bytes", Py_TYPE(__pyx_t_2)->tp_name), 0))) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 316; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+      if (!(likely(PyBytes_CheckExact(__pyx_t_2))||((__pyx_t_2) == Py_None)||(PyErr_Format(PyExc_TypeError, "Expected %.16s, got %.200s", "bytes", Py_TYPE(__pyx_t_2)->tp_name), 0))) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 361; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
       __pyx_r = ((PyObject*)__pyx_t_2);
       __pyx_t_2 = 0;
       __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
@@ -5067,7 +5342,7 @@ static PyObject *__pyx_f_9mbufferio_10_mbufferio_9MBufferIO_read(struct __pyx_ob
     __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
   }
 
-  /* "mbufferio/_mbufferio.pyx":330
+  /* "mbufferio/_mbufferio.pyx":375
  *         read bytes
  *         """
  *         if self.closed:             # <<<<<<<<<<<<<<
@@ -5077,20 +5352,20 @@ static PyObject *__pyx_f_9mbufferio_10_mbufferio_9MBufferIO_read(struct __pyx_ob
   __pyx_t_7 = (__pyx_v_self->closed != 0);
   if (__pyx_t_7) {
 
-    /* "mbufferio/_mbufferio.pyx":331
+    /* "mbufferio/_mbufferio.pyx":376
  *         """
  *         if self.closed:
  *             raise ValueError(u"I/O operation on closed file.")             # <<<<<<<<<<<<<<
  *         if n == -1:
  *             return self.readall()
  */
-    __pyx_t_1 = __Pyx_PyObject_Call(__pyx_builtin_ValueError, __pyx_tuple__13, NULL); if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 331; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+    __pyx_t_1 = __Pyx_PyObject_Call(__pyx_builtin_ValueError, __pyx_tuple__14, NULL); if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 376; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
     __Pyx_GOTREF(__pyx_t_1);
     __Pyx_Raise(__pyx_t_1, 0, 0, 0);
     __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
-    {__pyx_filename = __pyx_f[0]; __pyx_lineno = 331; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+    {__pyx_filename = __pyx_f[0]; __pyx_lineno = 376; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
 
-    /* "mbufferio/_mbufferio.pyx":330
+    /* "mbufferio/_mbufferio.pyx":375
  *         read bytes
  *         """
  *         if self.closed:             # <<<<<<<<<<<<<<
@@ -5099,7 +5374,7 @@ static PyObject *__pyx_f_9mbufferio_10_mbufferio_9MBufferIO_read(struct __pyx_ob
  */
   }
 
-  /* "mbufferio/_mbufferio.pyx":332
+  /* "mbufferio/_mbufferio.pyx":377
  *         if self.closed:
  *             raise ValueError(u"I/O operation on closed file.")
  *         if n == -1:             # <<<<<<<<<<<<<<
@@ -5109,7 +5384,7 @@ static PyObject *__pyx_f_9mbufferio_10_mbufferio_9MBufferIO_read(struct __pyx_ob
   __pyx_t_7 = ((__pyx_v_n == -1L) != 0);
   if (__pyx_t_7) {
 
-    /* "mbufferio/_mbufferio.pyx":333
+    /* "mbufferio/_mbufferio.pyx":378
  *             raise ValueError(u"I/O operation on closed file.")
  *         if n == -1:
  *             return self.readall()             # <<<<<<<<<<<<<<
@@ -5117,13 +5392,13 @@ static PyObject *__pyx_f_9mbufferio_10_mbufferio_9MBufferIO_read(struct __pyx_ob
  *             return b''
  */
     __Pyx_XDECREF(__pyx_r);
-    __pyx_t_1 = ((struct __pyx_vtabstruct_9mbufferio_10_mbufferio_MBufferIO *)__pyx_v_self->__pyx_vtab)->readall(__pyx_v_self, 0); if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 333; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+    __pyx_t_1 = ((struct __pyx_vtabstruct_9mbufferio_10_mbufferio_MBufferIO *)__pyx_v_self->__pyx_vtab)->readall(__pyx_v_self, 0); if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 378; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
     __Pyx_GOTREF(__pyx_t_1);
     __pyx_r = ((PyObject*)__pyx_t_1);
     __pyx_t_1 = 0;
     goto __pyx_L0;
 
-    /* "mbufferio/_mbufferio.pyx":332
+    /* "mbufferio/_mbufferio.pyx":377
  *         if self.closed:
  *             raise ValueError(u"I/O operation on closed file.")
  *         if n == -1:             # <<<<<<<<<<<<<<
@@ -5132,7 +5407,7 @@ static PyObject *__pyx_f_9mbufferio_10_mbufferio_9MBufferIO_read(struct __pyx_ob
  */
   }
 
-  /* "mbufferio/_mbufferio.pyx":334
+  /* "mbufferio/_mbufferio.pyx":379
  *         if n == -1:
  *             return self.readall()
  *         if n == 0 or self.offset >= self.length:             # <<<<<<<<<<<<<<
@@ -5150,7 +5425,7 @@ static PyObject *__pyx_f_9mbufferio_10_mbufferio_9MBufferIO_read(struct __pyx_ob
   __pyx_L6_bool_binop_done:;
   if (__pyx_t_7) {
 
-    /* "mbufferio/_mbufferio.pyx":335
+    /* "mbufferio/_mbufferio.pyx":380
  *             return self.readall()
  *         if n == 0 or self.offset >= self.length:
  *             return b''             # <<<<<<<<<<<<<<
@@ -5158,11 +5433,11 @@ static PyObject *__pyx_f_9mbufferio_10_mbufferio_9MBufferIO_read(struct __pyx_ob
  *         cdef int64_t to_read = min(n, self.length - self.offset)
  */
     __Pyx_XDECREF(__pyx_r);
-    __Pyx_INCREF(__pyx_kp_b__14);
-    __pyx_r = __pyx_kp_b__14;
+    __Pyx_INCREF(__pyx_kp_b__15);
+    __pyx_r = __pyx_kp_b__15;
     goto __pyx_L0;
 
-    /* "mbufferio/_mbufferio.pyx":334
+    /* "mbufferio/_mbufferio.pyx":379
  *         if n == -1:
  *             return self.readall()
  *         if n == 0 or self.offset >= self.length:             # <<<<<<<<<<<<<<
@@ -5171,7 +5446,7 @@ static PyObject *__pyx_f_9mbufferio_10_mbufferio_9MBufferIO_read(struct __pyx_ob
  */
   }
 
-  /* "mbufferio/_mbufferio.pyx":337
+  /* "mbufferio/_mbufferio.pyx":382
  *             return b''
  * 
  *         cdef int64_t to_read = min(n, self.length - self.offset)             # <<<<<<<<<<<<<<
@@ -5187,7 +5462,7 @@ static PyObject *__pyx_f_9mbufferio_10_mbufferio_9MBufferIO_read(struct __pyx_ob
   }
   __pyx_v_to_read = __pyx_t_11;
 
-  /* "mbufferio/_mbufferio.pyx":339
+  /* "mbufferio/_mbufferio.pyx":384
  *         cdef int64_t to_read = min(n, self.length - self.offset)
  *         cdef int64_t current_offset
  *         current_offset, self.offset = self.offset, self.offset + to_read             # <<<<<<<<<<<<<<
@@ -5199,7 +5474,7 @@ static PyObject *__pyx_f_9mbufferio_10_mbufferio_9MBufferIO_read(struct __pyx_ob
   __pyx_v_current_offset = __pyx_t_11;
   __pyx_v_self->offset = __pyx_t_9;
 
-  /* "mbufferio/_mbufferio.pyx":340
+  /* "mbufferio/_mbufferio.pyx":385
  *         cdef int64_t current_offset
  *         current_offset, self.offset = self.offset, self.offset + to_read
  *         return <bytes> (self.buf_pointer[self.startpos + current_offset:self.startpos + self.offset])             # <<<<<<<<<<<<<<
@@ -5207,14 +5482,14 @@ static PyObject *__pyx_f_9mbufferio_10_mbufferio_9MBufferIO_read(struct __pyx_ob
  *     cpdef bytes readl(self, int64_t n=-1):
  */
   __Pyx_XDECREF(__pyx_r);
-  __pyx_t_1 = __Pyx_PyBytes_FromStringAndSize(__pyx_v_self->buf_pointer + (__pyx_v_self->startpos + __pyx_v_current_offset), (__pyx_v_self->startpos + __pyx_v_self->offset) - (__pyx_v_self->startpos + __pyx_v_current_offset)); if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 340; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __pyx_t_1 = __Pyx_PyBytes_FromStringAndSize(__pyx_v_self->buf_pointer + (__pyx_v_self->startpos + __pyx_v_current_offset), (__pyx_v_self->startpos + __pyx_v_self->offset) - (__pyx_v_self->startpos + __pyx_v_current_offset)); if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 385; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
   __Pyx_GOTREF(__pyx_t_1);
   __Pyx_INCREF(((PyObject*)__pyx_t_1));
   __pyx_r = ((PyObject*)__pyx_t_1);
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
   goto __pyx_L0;
 
-  /* "mbufferio/_mbufferio.pyx":316
+  /* "mbufferio/_mbufferio.pyx":361
  *         return final_pos
  * 
  *     cpdef bytes read(self, int64_t n=-1):             # <<<<<<<<<<<<<<
@@ -5239,9 +5514,9 @@ static PyObject *__pyx_f_9mbufferio_10_mbufferio_9MBufferIO_read(struct __pyx_ob
 }
 
 /* Python wrapper */
-static PyObject *__pyx_pw_9mbufferio_10_mbufferio_9MBufferIO_19read(PyObject *__pyx_v_self, PyObject *__pyx_args, PyObject *__pyx_kwds); /*proto*/
-static char __pyx_doc_9mbufferio_10_mbufferio_9MBufferIO_18read[] = "\n        read(int64_t n=-1)\n        Read up to n bytes from the MBufferIO and return them.\n\n        Parameters\n        ----------\n        n: int64_t\n            how many bytes to read or -1 to read all that's available\n\n        Returns\n        -------\n        read bytes\n        ";
-static PyObject *__pyx_pw_9mbufferio_10_mbufferio_9MBufferIO_19read(PyObject *__pyx_v_self, PyObject *__pyx_args, PyObject *__pyx_kwds) {
+static PyObject *__pyx_pw_9mbufferio_10_mbufferio_9MBufferIO_21read(PyObject *__pyx_v_self, PyObject *__pyx_args, PyObject *__pyx_kwds); /*proto*/
+static char __pyx_doc_9mbufferio_10_mbufferio_9MBufferIO_20read[] = "\n        read(int64_t n=-1)\n        Read up to n bytes from the MBufferIO and return them.\n\n        Parameters\n        ----------\n        n: int64_t\n            how many bytes to read or -1 to read all that's available\n\n        Returns\n        -------\n        read bytes\n        ";
+static PyObject *__pyx_pw_9mbufferio_10_mbufferio_9MBufferIO_21read(PyObject *__pyx_v_self, PyObject *__pyx_args, PyObject *__pyx_kwds) {
   int64_t __pyx_v_n;
   int __pyx_lineno = 0;
   const char *__pyx_filename = NULL;
@@ -5269,7 +5544,7 @@ static PyObject *__pyx_pw_9mbufferio_10_mbufferio_9MBufferIO_19read(PyObject *__
         }
       }
       if (unlikely(kw_args > 0)) {
-        if (unlikely(__Pyx_ParseOptionalKeywords(__pyx_kwds, __pyx_pyargnames, 0, values, pos_args, "read") < 0)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 316; __pyx_clineno = __LINE__; goto __pyx_L3_error;}
+        if (unlikely(__Pyx_ParseOptionalKeywords(__pyx_kwds, __pyx_pyargnames, 0, values, pos_args, "read") < 0)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 361; __pyx_clineno = __LINE__; goto __pyx_L3_error;}
       }
     } else {
       switch (PyTuple_GET_SIZE(__pyx_args)) {
@@ -5279,27 +5554,27 @@ static PyObject *__pyx_pw_9mbufferio_10_mbufferio_9MBufferIO_19read(PyObject *__
       }
     }
     if (values[0]) {
-      __pyx_v_n = __Pyx_PyInt_As_int64_t(values[0]); if (unlikely((__pyx_v_n == (int64_t)-1) && PyErr_Occurred())) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 316; __pyx_clineno = __LINE__; goto __pyx_L3_error;}
+      __pyx_v_n = __Pyx_PyInt_As_int64_t(values[0]); if (unlikely((__pyx_v_n == (int64_t)-1) && PyErr_Occurred())) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 361; __pyx_clineno = __LINE__; goto __pyx_L3_error;}
     } else {
       __pyx_v_n = ((int64_t)-1L);
     }
   }
   goto __pyx_L4_argument_unpacking_done;
   __pyx_L5_argtuple_error:;
-  __Pyx_RaiseArgtupleInvalid("read", 0, 0, 1, PyTuple_GET_SIZE(__pyx_args)); {__pyx_filename = __pyx_f[0]; __pyx_lineno = 316; __pyx_clineno = __LINE__; goto __pyx_L3_error;}
+  __Pyx_RaiseArgtupleInvalid("read", 0, 0, 1, PyTuple_GET_SIZE(__pyx_args)); {__pyx_filename = __pyx_f[0]; __pyx_lineno = 361; __pyx_clineno = __LINE__; goto __pyx_L3_error;}
   __pyx_L3_error:;
   __Pyx_AddTraceback("mbufferio._mbufferio.MBufferIO.read", __pyx_clineno, __pyx_lineno, __pyx_filename);
   __Pyx_RefNannyFinishContext();
   return NULL;
   __pyx_L4_argument_unpacking_done:;
-  __pyx_r = __pyx_pf_9mbufferio_10_mbufferio_9MBufferIO_18read(((struct __pyx_obj_9mbufferio_10_mbufferio_MBufferIO *)__pyx_v_self), __pyx_v_n);
+  __pyx_r = __pyx_pf_9mbufferio_10_mbufferio_9MBufferIO_20read(((struct __pyx_obj_9mbufferio_10_mbufferio_MBufferIO *)__pyx_v_self), __pyx_v_n);
 
   /* function exit code */
   __Pyx_RefNannyFinishContext();
   return __pyx_r;
 }
 
-static PyObject *__pyx_pf_9mbufferio_10_mbufferio_9MBufferIO_18read(struct __pyx_obj_9mbufferio_10_mbufferio_MBufferIO *__pyx_v_self, int64_t __pyx_v_n) {
+static PyObject *__pyx_pf_9mbufferio_10_mbufferio_9MBufferIO_20read(struct __pyx_obj_9mbufferio_10_mbufferio_MBufferIO *__pyx_v_self, int64_t __pyx_v_n) {
   PyObject *__pyx_r = NULL;
   __Pyx_RefNannyDeclarations
   PyObject *__pyx_t_1 = NULL;
@@ -5311,7 +5586,7 @@ static PyObject *__pyx_pf_9mbufferio_10_mbufferio_9MBufferIO_18read(struct __pyx
   __Pyx_XDECREF(__pyx_r);
   __pyx_t_2.__pyx_n = 1;
   __pyx_t_2.n = __pyx_v_n;
-  __pyx_t_1 = __pyx_vtabptr_9mbufferio_10_mbufferio_MBufferIO->read(__pyx_v_self, 1, &__pyx_t_2); if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 316; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __pyx_t_1 = __pyx_vtabptr_9mbufferio_10_mbufferio_MBufferIO->read(__pyx_v_self, 1, &__pyx_t_2); if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 361; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
   __Pyx_GOTREF(__pyx_t_1);
   __pyx_r = __pyx_t_1;
   __pyx_t_1 = 0;
@@ -5328,7 +5603,7 @@ static PyObject *__pyx_pf_9mbufferio_10_mbufferio_9MBufferIO_18read(struct __pyx
   return __pyx_r;
 }
 
-/* "mbufferio/_mbufferio.pyx":342
+/* "mbufferio/_mbufferio.pyx":387
  *         return <bytes> (self.buf_pointer[self.startpos + current_offset:self.startpos + self.offset])
  * 
  *     cpdef bytes readl(self, int64_t n=-1):             # <<<<<<<<<<<<<<
@@ -5336,7 +5611,7 @@ static PyObject *__pyx_pf_9mbufferio_10_mbufferio_9MBufferIO_18read(struct __pyx
  *         readl(self, int64_t n=-1)
  */
 
-static PyObject *__pyx_pw_9mbufferio_10_mbufferio_9MBufferIO_21readl(PyObject *__pyx_v_self, PyObject *__pyx_args, PyObject *__pyx_kwds); /*proto*/
+static PyObject *__pyx_pw_9mbufferio_10_mbufferio_9MBufferIO_23readl(PyObject *__pyx_v_self, PyObject *__pyx_args, PyObject *__pyx_kwds); /*proto*/
 static PyObject *__pyx_f_9mbufferio_10_mbufferio_9MBufferIO_readl(struct __pyx_obj_9mbufferio_10_mbufferio_MBufferIO *__pyx_v_self, int __pyx_skip_dispatch, struct __pyx_opt_args_9mbufferio_10_mbufferio_9MBufferIO_readl *__pyx_optional_args) {
   int64_t __pyx_v_n = ((int64_t)-1L);
   PyObject *__pyx_r = NULL;
@@ -5362,11 +5637,11 @@ static PyObject *__pyx_f_9mbufferio_10_mbufferio_9MBufferIO_readl(struct __pyx_o
   if (unlikely(__pyx_skip_dispatch)) ;
   /* Check if overridden in Python */
   else if (unlikely(Py_TYPE(((PyObject *)__pyx_v_self))->tp_dictoffset != 0)) {
-    __pyx_t_1 = __Pyx_PyObject_GetAttrStr(((PyObject *)__pyx_v_self), __pyx_n_s_readl); if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 342; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+    __pyx_t_1 = __Pyx_PyObject_GetAttrStr(((PyObject *)__pyx_v_self), __pyx_n_s_readl); if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 387; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
     __Pyx_GOTREF(__pyx_t_1);
-    if (!PyCFunction_Check(__pyx_t_1) || (PyCFunction_GET_FUNCTION(__pyx_t_1) != (PyCFunction)__pyx_pw_9mbufferio_10_mbufferio_9MBufferIO_21readl)) {
+    if (!PyCFunction_Check(__pyx_t_1) || (PyCFunction_GET_FUNCTION(__pyx_t_1) != (PyCFunction)__pyx_pw_9mbufferio_10_mbufferio_9MBufferIO_23readl)) {
       __Pyx_XDECREF(__pyx_r);
-      __pyx_t_3 = __Pyx_PyInt_From_int64_t(__pyx_v_n); if (unlikely(!__pyx_t_3)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 342; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+      __pyx_t_3 = __Pyx_PyInt_From_int64_t(__pyx_v_n); if (unlikely(!__pyx_t_3)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 387; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
       __Pyx_GOTREF(__pyx_t_3);
       __Pyx_INCREF(__pyx_t_1);
       __pyx_t_4 = __pyx_t_1; __pyx_t_5 = NULL;
@@ -5380,22 +5655,22 @@ static PyObject *__pyx_f_9mbufferio_10_mbufferio_9MBufferIO_readl(struct __pyx_o
         }
       }
       if (!__pyx_t_5) {
-        __pyx_t_2 = __Pyx_PyObject_CallOneArg(__pyx_t_4, __pyx_t_3); if (unlikely(!__pyx_t_2)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 342; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+        __pyx_t_2 = __Pyx_PyObject_CallOneArg(__pyx_t_4, __pyx_t_3); if (unlikely(!__pyx_t_2)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 387; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
         __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
         __Pyx_GOTREF(__pyx_t_2);
       } else {
-        __pyx_t_6 = PyTuple_New(1+1); if (unlikely(!__pyx_t_6)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 342; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+        __pyx_t_6 = PyTuple_New(1+1); if (unlikely(!__pyx_t_6)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 387; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
         __Pyx_GOTREF(__pyx_t_6);
         __Pyx_GIVEREF(__pyx_t_5); PyTuple_SET_ITEM(__pyx_t_6, 0, __pyx_t_5); __pyx_t_5 = NULL;
         __Pyx_GIVEREF(__pyx_t_3);
         PyTuple_SET_ITEM(__pyx_t_6, 0+1, __pyx_t_3);
         __pyx_t_3 = 0;
-        __pyx_t_2 = __Pyx_PyObject_Call(__pyx_t_4, __pyx_t_6, NULL); if (unlikely(!__pyx_t_2)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 342; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+        __pyx_t_2 = __Pyx_PyObject_Call(__pyx_t_4, __pyx_t_6, NULL); if (unlikely(!__pyx_t_2)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 387; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
         __Pyx_GOTREF(__pyx_t_2);
         __Pyx_DECREF(__pyx_t_6); __pyx_t_6 = 0;
       }
       __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
-      if (!(likely(PyBytes_CheckExact(__pyx_t_2))||((__pyx_t_2) == Py_None)||(PyErr_Format(PyExc_TypeError, "Expected %.16s, got %.200s", "bytes", Py_TYPE(__pyx_t_2)->tp_name), 0))) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 342; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+      if (!(likely(PyBytes_CheckExact(__pyx_t_2))||((__pyx_t_2) == Py_None)||(PyErr_Format(PyExc_TypeError, "Expected %.16s, got %.200s", "bytes", Py_TYPE(__pyx_t_2)->tp_name), 0))) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 387; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
       __pyx_r = ((PyObject*)__pyx_t_2);
       __pyx_t_2 = 0;
       __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
@@ -5404,7 +5679,7 @@ static PyObject *__pyx_f_9mbufferio_10_mbufferio_9MBufferIO_readl(struct __pyx_o
     __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
   }
 
-  /* "mbufferio/_mbufferio.pyx":347
+  /* "mbufferio/_mbufferio.pyx":392
  *         Synonym for the 'read' method
  *         """
  *         if self.closed:             # <<<<<<<<<<<<<<
@@ -5414,20 +5689,20 @@ static PyObject *__pyx_f_9mbufferio_10_mbufferio_9MBufferIO_readl(struct __pyx_o
   __pyx_t_7 = (__pyx_v_self->closed != 0);
   if (__pyx_t_7) {
 
-    /* "mbufferio/_mbufferio.pyx":348
+    /* "mbufferio/_mbufferio.pyx":393
  *         """
  *         if self.closed:
  *             raise ValueError(u"I/O operation on closed file.")             # <<<<<<<<<<<<<<
  *         return self.read(n)
  * 
  */
-    __pyx_t_1 = __Pyx_PyObject_Call(__pyx_builtin_ValueError, __pyx_tuple__15, NULL); if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 348; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+    __pyx_t_1 = __Pyx_PyObject_Call(__pyx_builtin_ValueError, __pyx_tuple__16, NULL); if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 393; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
     __Pyx_GOTREF(__pyx_t_1);
     __Pyx_Raise(__pyx_t_1, 0, 0, 0);
     __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
-    {__pyx_filename = __pyx_f[0]; __pyx_lineno = 348; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+    {__pyx_filename = __pyx_f[0]; __pyx_lineno = 393; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
 
-    /* "mbufferio/_mbufferio.pyx":347
+    /* "mbufferio/_mbufferio.pyx":392
  *         Synonym for the 'read' method
  *         """
  *         if self.closed:             # <<<<<<<<<<<<<<
@@ -5436,7 +5711,7 @@ static PyObject *__pyx_f_9mbufferio_10_mbufferio_9MBufferIO_readl(struct __pyx_o
  */
   }
 
-  /* "mbufferio/_mbufferio.pyx":349
+  /* "mbufferio/_mbufferio.pyx":394
  *         if self.closed:
  *             raise ValueError(u"I/O operation on closed file.")
  *         return self.read(n)             # <<<<<<<<<<<<<<
@@ -5446,13 +5721,13 @@ static PyObject *__pyx_f_9mbufferio_10_mbufferio_9MBufferIO_readl(struct __pyx_o
   __Pyx_XDECREF(__pyx_r);
   __pyx_t_8.__pyx_n = 1;
   __pyx_t_8.n = __pyx_v_n;
-  __pyx_t_1 = ((struct __pyx_vtabstruct_9mbufferio_10_mbufferio_MBufferIO *)__pyx_v_self->__pyx_vtab)->read(__pyx_v_self, 0, &__pyx_t_8); if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 349; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __pyx_t_1 = ((struct __pyx_vtabstruct_9mbufferio_10_mbufferio_MBufferIO *)__pyx_v_self->__pyx_vtab)->read(__pyx_v_self, 0, &__pyx_t_8); if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 394; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
   __Pyx_GOTREF(__pyx_t_1);
   __pyx_r = ((PyObject*)__pyx_t_1);
   __pyx_t_1 = 0;
   goto __pyx_L0;
 
-  /* "mbufferio/_mbufferio.pyx":342
+  /* "mbufferio/_mbufferio.pyx":387
  *         return <bytes> (self.buf_pointer[self.startpos + current_offset:self.startpos + self.offset])
  * 
  *     cpdef bytes readl(self, int64_t n=-1):             # <<<<<<<<<<<<<<
@@ -5477,9 +5752,9 @@ static PyObject *__pyx_f_9mbufferio_10_mbufferio_9MBufferIO_readl(struct __pyx_o
 }
 
 /* Python wrapper */
-static PyObject *__pyx_pw_9mbufferio_10_mbufferio_9MBufferIO_21readl(PyObject *__pyx_v_self, PyObject *__pyx_args, PyObject *__pyx_kwds); /*proto*/
-static char __pyx_doc_9mbufferio_10_mbufferio_9MBufferIO_20readl[] = "\n        readl(self, int64_t n=-1)\n        Synonym for the 'read' method\n        ";
-static PyObject *__pyx_pw_9mbufferio_10_mbufferio_9MBufferIO_21readl(PyObject *__pyx_v_self, PyObject *__pyx_args, PyObject *__pyx_kwds) {
+static PyObject *__pyx_pw_9mbufferio_10_mbufferio_9MBufferIO_23readl(PyObject *__pyx_v_self, PyObject *__pyx_args, PyObject *__pyx_kwds); /*proto*/
+static char __pyx_doc_9mbufferio_10_mbufferio_9MBufferIO_22readl[] = "\n        readl(self, int64_t n=-1)\n        Synonym for the 'read' method\n        ";
+static PyObject *__pyx_pw_9mbufferio_10_mbufferio_9MBufferIO_23readl(PyObject *__pyx_v_self, PyObject *__pyx_args, PyObject *__pyx_kwds) {
   int64_t __pyx_v_n;
   int __pyx_lineno = 0;
   const char *__pyx_filename = NULL;
@@ -5507,7 +5782,7 @@ static PyObject *__pyx_pw_9mbufferio_10_mbufferio_9MBufferIO_21readl(PyObject *_
         }
       }
       if (unlikely(kw_args > 0)) {
-        if (unlikely(__Pyx_ParseOptionalKeywords(__pyx_kwds, __pyx_pyargnames, 0, values, pos_args, "readl") < 0)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 342; __pyx_clineno = __LINE__; goto __pyx_L3_error;}
+        if (unlikely(__Pyx_ParseOptionalKeywords(__pyx_kwds, __pyx_pyargnames, 0, values, pos_args, "readl") < 0)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 387; __pyx_clineno = __LINE__; goto __pyx_L3_error;}
       }
     } else {
       switch (PyTuple_GET_SIZE(__pyx_args)) {
@@ -5517,27 +5792,27 @@ static PyObject *__pyx_pw_9mbufferio_10_mbufferio_9MBufferIO_21readl(PyObject *_
       }
     }
     if (values[0]) {
-      __pyx_v_n = __Pyx_PyInt_As_int64_t(values[0]); if (unlikely((__pyx_v_n == (int64_t)-1) && PyErr_Occurred())) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 342; __pyx_clineno = __LINE__; goto __pyx_L3_error;}
+      __pyx_v_n = __Pyx_PyInt_As_int64_t(values[0]); if (unlikely((__pyx_v_n == (int64_t)-1) && PyErr_Occurred())) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 387; __pyx_clineno = __LINE__; goto __pyx_L3_error;}
     } else {
       __pyx_v_n = ((int64_t)-1L);
     }
   }
   goto __pyx_L4_argument_unpacking_done;
   __pyx_L5_argtuple_error:;
-  __Pyx_RaiseArgtupleInvalid("readl", 0, 0, 1, PyTuple_GET_SIZE(__pyx_args)); {__pyx_filename = __pyx_f[0]; __pyx_lineno = 342; __pyx_clineno = __LINE__; goto __pyx_L3_error;}
+  __Pyx_RaiseArgtupleInvalid("readl", 0, 0, 1, PyTuple_GET_SIZE(__pyx_args)); {__pyx_filename = __pyx_f[0]; __pyx_lineno = 387; __pyx_clineno = __LINE__; goto __pyx_L3_error;}
   __pyx_L3_error:;
   __Pyx_AddTraceback("mbufferio._mbufferio.MBufferIO.readl", __pyx_clineno, __pyx_lineno, __pyx_filename);
   __Pyx_RefNannyFinishContext();
   return NULL;
   __pyx_L4_argument_unpacking_done:;
-  __pyx_r = __pyx_pf_9mbufferio_10_mbufferio_9MBufferIO_20readl(((struct __pyx_obj_9mbufferio_10_mbufferio_MBufferIO *)__pyx_v_self), __pyx_v_n);
+  __pyx_r = __pyx_pf_9mbufferio_10_mbufferio_9MBufferIO_22readl(((struct __pyx_obj_9mbufferio_10_mbufferio_MBufferIO *)__pyx_v_self), __pyx_v_n);
 
   /* function exit code */
   __Pyx_RefNannyFinishContext();
   return __pyx_r;
 }
 
-static PyObject *__pyx_pf_9mbufferio_10_mbufferio_9MBufferIO_20readl(struct __pyx_obj_9mbufferio_10_mbufferio_MBufferIO *__pyx_v_self, int64_t __pyx_v_n) {
+static PyObject *__pyx_pf_9mbufferio_10_mbufferio_9MBufferIO_22readl(struct __pyx_obj_9mbufferio_10_mbufferio_MBufferIO *__pyx_v_self, int64_t __pyx_v_n) {
   PyObject *__pyx_r = NULL;
   __Pyx_RefNannyDeclarations
   PyObject *__pyx_t_1 = NULL;
@@ -5549,7 +5824,7 @@ static PyObject *__pyx_pf_9mbufferio_10_mbufferio_9MBufferIO_20readl(struct __py
   __Pyx_XDECREF(__pyx_r);
   __pyx_t_2.__pyx_n = 1;
   __pyx_t_2.n = __pyx_v_n;
-  __pyx_t_1 = __pyx_vtabptr_9mbufferio_10_mbufferio_MBufferIO->readl(__pyx_v_self, 1, &__pyx_t_2); if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 342; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __pyx_t_1 = __pyx_vtabptr_9mbufferio_10_mbufferio_MBufferIO->readl(__pyx_v_self, 1, &__pyx_t_2); if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 387; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
   __Pyx_GOTREF(__pyx_t_1);
   __pyx_r = __pyx_t_1;
   __pyx_t_1 = 0;
@@ -5566,7 +5841,7 @@ static PyObject *__pyx_pf_9mbufferio_10_mbufferio_9MBufferIO_20readl(struct __py
   return __pyx_r;
 }
 
-/* "mbufferio/_mbufferio.pyx":351
+/* "mbufferio/_mbufferio.pyx":396
  *         return self.read(n)
  * 
  *     cpdef bytes readline(self, int64_t limit=-1):             # <<<<<<<<<<<<<<
@@ -5574,7 +5849,7 @@ static PyObject *__pyx_pf_9mbufferio_10_mbufferio_9MBufferIO_20readl(struct __py
  *         readline(int64_t limit=-1)
  */
 
-static PyObject *__pyx_pw_9mbufferio_10_mbufferio_9MBufferIO_23readline(PyObject *__pyx_v_self, PyObject *__pyx_args, PyObject *__pyx_kwds); /*proto*/
+static PyObject *__pyx_pw_9mbufferio_10_mbufferio_9MBufferIO_25readline(PyObject *__pyx_v_self, PyObject *__pyx_args, PyObject *__pyx_kwds); /*proto*/
 static PyObject *__pyx_f_9mbufferio_10_mbufferio_9MBufferIO_readline(struct __pyx_obj_9mbufferio_10_mbufferio_MBufferIO *__pyx_v_self, int __pyx_skip_dispatch, struct __pyx_opt_args_9mbufferio_10_mbufferio_9MBufferIO_readline *__pyx_optional_args) {
   int64_t __pyx_v_limit = ((int64_t)-1L);
   int64_t __pyx_v_current_position;
@@ -5609,11 +5884,11 @@ static PyObject *__pyx_f_9mbufferio_10_mbufferio_9MBufferIO_readline(struct __py
   if (unlikely(__pyx_skip_dispatch)) ;
   /* Check if overridden in Python */
   else if (unlikely(Py_TYPE(((PyObject *)__pyx_v_self))->tp_dictoffset != 0)) {
-    __pyx_t_1 = __Pyx_PyObject_GetAttrStr(((PyObject *)__pyx_v_self), __pyx_n_s_readline); if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 351; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+    __pyx_t_1 = __Pyx_PyObject_GetAttrStr(((PyObject *)__pyx_v_self), __pyx_n_s_readline); if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 396; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
     __Pyx_GOTREF(__pyx_t_1);
-    if (!PyCFunction_Check(__pyx_t_1) || (PyCFunction_GET_FUNCTION(__pyx_t_1) != (PyCFunction)__pyx_pw_9mbufferio_10_mbufferio_9MBufferIO_23readline)) {
+    if (!PyCFunction_Check(__pyx_t_1) || (PyCFunction_GET_FUNCTION(__pyx_t_1) != (PyCFunction)__pyx_pw_9mbufferio_10_mbufferio_9MBufferIO_25readline)) {
       __Pyx_XDECREF(__pyx_r);
-      __pyx_t_3 = __Pyx_PyInt_From_int64_t(__pyx_v_limit); if (unlikely(!__pyx_t_3)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 351; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+      __pyx_t_3 = __Pyx_PyInt_From_int64_t(__pyx_v_limit); if (unlikely(!__pyx_t_3)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 396; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
       __Pyx_GOTREF(__pyx_t_3);
       __Pyx_INCREF(__pyx_t_1);
       __pyx_t_4 = __pyx_t_1; __pyx_t_5 = NULL;
@@ -5627,22 +5902,22 @@ static PyObject *__pyx_f_9mbufferio_10_mbufferio_9MBufferIO_readline(struct __py
         }
       }
       if (!__pyx_t_5) {
-        __pyx_t_2 = __Pyx_PyObject_CallOneArg(__pyx_t_4, __pyx_t_3); if (unlikely(!__pyx_t_2)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 351; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+        __pyx_t_2 = __Pyx_PyObject_CallOneArg(__pyx_t_4, __pyx_t_3); if (unlikely(!__pyx_t_2)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 396; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
         __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
         __Pyx_GOTREF(__pyx_t_2);
       } else {
-        __pyx_t_6 = PyTuple_New(1+1); if (unlikely(!__pyx_t_6)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 351; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+        __pyx_t_6 = PyTuple_New(1+1); if (unlikely(!__pyx_t_6)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 396; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
         __Pyx_GOTREF(__pyx_t_6);
         __Pyx_GIVEREF(__pyx_t_5); PyTuple_SET_ITEM(__pyx_t_6, 0, __pyx_t_5); __pyx_t_5 = NULL;
         __Pyx_GIVEREF(__pyx_t_3);
         PyTuple_SET_ITEM(__pyx_t_6, 0+1, __pyx_t_3);
         __pyx_t_3 = 0;
-        __pyx_t_2 = __Pyx_PyObject_Call(__pyx_t_4, __pyx_t_6, NULL); if (unlikely(!__pyx_t_2)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 351; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+        __pyx_t_2 = __Pyx_PyObject_Call(__pyx_t_4, __pyx_t_6, NULL); if (unlikely(!__pyx_t_2)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 396; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
         __Pyx_GOTREF(__pyx_t_2);
         __Pyx_DECREF(__pyx_t_6); __pyx_t_6 = 0;
       }
       __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
-      if (!(likely(PyBytes_CheckExact(__pyx_t_2))||((__pyx_t_2) == Py_None)||(PyErr_Format(PyExc_TypeError, "Expected %.16s, got %.200s", "bytes", Py_TYPE(__pyx_t_2)->tp_name), 0))) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 351; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+      if (!(likely(PyBytes_CheckExact(__pyx_t_2))||((__pyx_t_2) == Py_None)||(PyErr_Format(PyExc_TypeError, "Expected %.16s, got %.200s", "bytes", Py_TYPE(__pyx_t_2)->tp_name), 0))) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 396; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
       __pyx_r = ((PyObject*)__pyx_t_2);
       __pyx_t_2 = 0;
       __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
@@ -5651,7 +5926,7 @@ static PyObject *__pyx_f_9mbufferio_10_mbufferio_9MBufferIO_readline(struct __py
     __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
   }
 
-  /* "mbufferio/_mbufferio.pyx":364
+  /* "mbufferio/_mbufferio.pyx":409
  *         Bytes read
  *         """
  *         if self.closed:             # <<<<<<<<<<<<<<
@@ -5661,20 +5936,20 @@ static PyObject *__pyx_f_9mbufferio_10_mbufferio_9MBufferIO_readline(struct __py
   __pyx_t_7 = (__pyx_v_self->closed != 0);
   if (__pyx_t_7) {
 
-    /* "mbufferio/_mbufferio.pyx":365
+    /* "mbufferio/_mbufferio.pyx":410
  *         """
  *         if self.closed:
  *             raise ValueError(u"I/O operation on closed file.")             # <<<<<<<<<<<<<<
  *         if self.offset == self.length or limit == 0:
  *             return b''
  */
-    __pyx_t_1 = __Pyx_PyObject_Call(__pyx_builtin_ValueError, __pyx_tuple__16, NULL); if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 365; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+    __pyx_t_1 = __Pyx_PyObject_Call(__pyx_builtin_ValueError, __pyx_tuple__17, NULL); if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 410; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
     __Pyx_GOTREF(__pyx_t_1);
     __Pyx_Raise(__pyx_t_1, 0, 0, 0);
     __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
-    {__pyx_filename = __pyx_f[0]; __pyx_lineno = 365; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+    {__pyx_filename = __pyx_f[0]; __pyx_lineno = 410; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
 
-    /* "mbufferio/_mbufferio.pyx":364
+    /* "mbufferio/_mbufferio.pyx":409
  *         Bytes read
  *         """
  *         if self.closed:             # <<<<<<<<<<<<<<
@@ -5683,7 +5958,7 @@ static PyObject *__pyx_f_9mbufferio_10_mbufferio_9MBufferIO_readline(struct __py
  */
   }
 
-  /* "mbufferio/_mbufferio.pyx":366
+  /* "mbufferio/_mbufferio.pyx":411
  *         if self.closed:
  *             raise ValueError(u"I/O operation on closed file.")
  *         if self.offset == self.length or limit == 0:             # <<<<<<<<<<<<<<
@@ -5701,7 +5976,7 @@ static PyObject *__pyx_f_9mbufferio_10_mbufferio_9MBufferIO_readline(struct __py
   __pyx_L5_bool_binop_done:;
   if (__pyx_t_7) {
 
-    /* "mbufferio/_mbufferio.pyx":367
+    /* "mbufferio/_mbufferio.pyx":412
  *             raise ValueError(u"I/O operation on closed file.")
  *         if self.offset == self.length or limit == 0:
  *             return b''             # <<<<<<<<<<<<<<
@@ -5709,11 +5984,11 @@ static PyObject *__pyx_f_9mbufferio_10_mbufferio_9MBufferIO_readline(struct __py
  *         if limit == 1:
  */
     __Pyx_XDECREF(__pyx_r);
-    __Pyx_INCREF(__pyx_kp_b__14);
-    __pyx_r = __pyx_kp_b__14;
+    __Pyx_INCREF(__pyx_kp_b__15);
+    __pyx_r = __pyx_kp_b__15;
     goto __pyx_L0;
 
-    /* "mbufferio/_mbufferio.pyx":366
+    /* "mbufferio/_mbufferio.pyx":411
  *         if self.closed:
  *             raise ValueError(u"I/O operation on closed file.")
  *         if self.offset == self.length or limit == 0:             # <<<<<<<<<<<<<<
@@ -5722,7 +5997,7 @@ static PyObject *__pyx_f_9mbufferio_10_mbufferio_9MBufferIO_readline(struct __py
  */
   }
 
-  /* "mbufferio/_mbufferio.pyx":369
+  /* "mbufferio/_mbufferio.pyx":414
  *             return b''
  * 
  *         if limit == 1:             # <<<<<<<<<<<<<<
@@ -5732,7 +6007,7 @@ static PyObject *__pyx_f_9mbufferio_10_mbufferio_9MBufferIO_readline(struct __py
   __pyx_t_7 = ((__pyx_v_limit == 1) != 0);
   if (__pyx_t_7) {
 
-    /* "mbufferio/_mbufferio.pyx":370
+    /* "mbufferio/_mbufferio.pyx":415
  * 
  *         if limit == 1:
  *             return self.read(1)             # <<<<<<<<<<<<<<
@@ -5742,13 +6017,13 @@ static PyObject *__pyx_f_9mbufferio_10_mbufferio_9MBufferIO_readline(struct __py
     __Pyx_XDECREF(__pyx_r);
     __pyx_t_9.__pyx_n = 1;
     __pyx_t_9.n = 1;
-    __pyx_t_1 = ((struct __pyx_vtabstruct_9mbufferio_10_mbufferio_MBufferIO *)__pyx_v_self->__pyx_vtab)->read(__pyx_v_self, 0, &__pyx_t_9); if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 370; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+    __pyx_t_1 = ((struct __pyx_vtabstruct_9mbufferio_10_mbufferio_MBufferIO *)__pyx_v_self->__pyx_vtab)->read(__pyx_v_self, 0, &__pyx_t_9); if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 415; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
     __Pyx_GOTREF(__pyx_t_1);
     __pyx_r = ((PyObject*)__pyx_t_1);
     __pyx_t_1 = 0;
     goto __pyx_L0;
 
-    /* "mbufferio/_mbufferio.pyx":369
+    /* "mbufferio/_mbufferio.pyx":414
  *             return b''
  * 
  *         if limit == 1:             # <<<<<<<<<<<<<<
@@ -5757,7 +6032,7 @@ static PyObject *__pyx_f_9mbufferio_10_mbufferio_9MBufferIO_readline(struct __py
  */
   }
 
-  /* "mbufferio/_mbufferio.pyx":372
+  /* "mbufferio/_mbufferio.pyx":417
  *             return self.read(1)
  * 
  *         cdef int64_t current_position = self.offset             # <<<<<<<<<<<<<<
@@ -5767,7 +6042,7 @@ static PyObject *__pyx_f_9mbufferio_10_mbufferio_9MBufferIO_readline(struct __py
   __pyx_t_10 = __pyx_v_self->offset;
   __pyx_v_current_position = __pyx_t_10;
 
-  /* "mbufferio/_mbufferio.pyx":373
+  /* "mbufferio/_mbufferio.pyx":418
  * 
  *         cdef int64_t current_position = self.offset
  *         cdef int64_t max_length = min(self.length - self.offset, limit) if limit > 1 else (self.length - self.offset)             # <<<<<<<<<<<<<<
@@ -5788,7 +6063,7 @@ static PyObject *__pyx_f_9mbufferio_10_mbufferio_9MBufferIO_readline(struct __py
   }
   __pyx_v_max_length = __pyx_t_10;
 
-  /* "mbufferio/_mbufferio.pyx":374
+  /* "mbufferio/_mbufferio.pyx":419
  *         cdef int64_t current_position = self.offset
  *         cdef int64_t max_length = min(self.length - self.offset, limit) if limit > 1 else (self.length - self.offset)
  *         cdef int64_t len_to_read = 1             # <<<<<<<<<<<<<<
@@ -5797,7 +6072,7 @@ static PyObject *__pyx_f_9mbufferio_10_mbufferio_9MBufferIO_readline(struct __py
  */
   __pyx_v_len_to_read = 1;
 
-  /* "mbufferio/_mbufferio.pyx":376
+  /* "mbufferio/_mbufferio.pyx":421
  *         cdef int64_t len_to_read = 1
  *         cdef int64_t current_offset
  *         while self.buf_pointer[self.startpos + current_position] != b"\n" and len_to_read < max_length:             # <<<<<<<<<<<<<<
@@ -5816,7 +6091,7 @@ static PyObject *__pyx_f_9mbufferio_10_mbufferio_9MBufferIO_readline(struct __py
     __pyx_L10_bool_binop_done:;
     if (!__pyx_t_7) break;
 
-    /* "mbufferio/_mbufferio.pyx":377
+    /* "mbufferio/_mbufferio.pyx":422
  *         cdef int64_t current_offset
  *         while self.buf_pointer[self.startpos + current_position] != b"\n" and len_to_read < max_length:
  *             current_position += 1             # <<<<<<<<<<<<<<
@@ -5825,7 +6100,7 @@ static PyObject *__pyx_f_9mbufferio_10_mbufferio_9MBufferIO_readline(struct __py
  */
     __pyx_v_current_position = (__pyx_v_current_position + 1);
 
-    /* "mbufferio/_mbufferio.pyx":378
+    /* "mbufferio/_mbufferio.pyx":423
  *         while self.buf_pointer[self.startpos + current_position] != b"\n" and len_to_read < max_length:
  *             current_position += 1
  *             len_to_read += 1             # <<<<<<<<<<<<<<
@@ -5835,7 +6110,7 @@ static PyObject *__pyx_f_9mbufferio_10_mbufferio_9MBufferIO_readline(struct __py
     __pyx_v_len_to_read = (__pyx_v_len_to_read + 1);
   }
 
-  /* "mbufferio/_mbufferio.pyx":379
+  /* "mbufferio/_mbufferio.pyx":424
  *             current_position += 1
  *             len_to_read += 1
  *         current_offset, self.offset = self.offset, self.offset + len_to_read             # <<<<<<<<<<<<<<
@@ -5847,7 +6122,7 @@ static PyObject *__pyx_f_9mbufferio_10_mbufferio_9MBufferIO_readline(struct __py
   __pyx_v_current_offset = __pyx_t_10;
   __pyx_v_self->offset = __pyx_t_13;
 
-  /* "mbufferio/_mbufferio.pyx":380
+  /* "mbufferio/_mbufferio.pyx":425
  *             len_to_read += 1
  *         current_offset, self.offset = self.offset, self.offset + len_to_read
  *         return <bytes> (self.buf_pointer[self.startpos + current_offset:self.startpos + self.offset])             # <<<<<<<<<<<<<<
@@ -5855,14 +6130,14 @@ static PyObject *__pyx_f_9mbufferio_10_mbufferio_9MBufferIO_readline(struct __py
  *     cpdef bytes readall(self):
  */
   __Pyx_XDECREF(__pyx_r);
-  __pyx_t_1 = __Pyx_PyBytes_FromStringAndSize(__pyx_v_self->buf_pointer + (__pyx_v_self->startpos + __pyx_v_current_offset), (__pyx_v_self->startpos + __pyx_v_self->offset) - (__pyx_v_self->startpos + __pyx_v_current_offset)); if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 380; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __pyx_t_1 = __Pyx_PyBytes_FromStringAndSize(__pyx_v_self->buf_pointer + (__pyx_v_self->startpos + __pyx_v_current_offset), (__pyx_v_self->startpos + __pyx_v_self->offset) - (__pyx_v_self->startpos + __pyx_v_current_offset)); if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 425; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
   __Pyx_GOTREF(__pyx_t_1);
   __Pyx_INCREF(((PyObject*)__pyx_t_1));
   __pyx_r = ((PyObject*)__pyx_t_1);
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
   goto __pyx_L0;
 
-  /* "mbufferio/_mbufferio.pyx":351
+  /* "mbufferio/_mbufferio.pyx":396
  *         return self.read(n)
  * 
  *     cpdef bytes readline(self, int64_t limit=-1):             # <<<<<<<<<<<<<<
@@ -5887,9 +6162,9 @@ static PyObject *__pyx_f_9mbufferio_10_mbufferio_9MBufferIO_readline(struct __py
 }
 
 /* Python wrapper */
-static PyObject *__pyx_pw_9mbufferio_10_mbufferio_9MBufferIO_23readline(PyObject *__pyx_v_self, PyObject *__pyx_args, PyObject *__pyx_kwds); /*proto*/
-static char __pyx_doc_9mbufferio_10_mbufferio_9MBufferIO_22readline[] = "\n        readline(int64_t limit=-1)\n        Read and return one line from the stream. If 'limit' is specified, at most 'limit' bytes will be read.\n\n        Parameters\n        ----------\n        limit: maximum number of bytes to read (or -1 for no limit)\n\n        Returns\n        -------\n        Bytes read\n        ";
-static PyObject *__pyx_pw_9mbufferio_10_mbufferio_9MBufferIO_23readline(PyObject *__pyx_v_self, PyObject *__pyx_args, PyObject *__pyx_kwds) {
+static PyObject *__pyx_pw_9mbufferio_10_mbufferio_9MBufferIO_25readline(PyObject *__pyx_v_self, PyObject *__pyx_args, PyObject *__pyx_kwds); /*proto*/
+static char __pyx_doc_9mbufferio_10_mbufferio_9MBufferIO_24readline[] = "\n        readline(int64_t limit=-1)\n        Read and return one line from the stream. If 'limit' is specified, at most 'limit' bytes will be read.\n\n        Parameters\n        ----------\n        limit: maximum number of bytes to read (or -1 for no limit)\n\n        Returns\n        -------\n        Bytes read\n        ";
+static PyObject *__pyx_pw_9mbufferio_10_mbufferio_9MBufferIO_25readline(PyObject *__pyx_v_self, PyObject *__pyx_args, PyObject *__pyx_kwds) {
   int64_t __pyx_v_limit;
   int __pyx_lineno = 0;
   const char *__pyx_filename = NULL;
@@ -5917,7 +6192,7 @@ static PyObject *__pyx_pw_9mbufferio_10_mbufferio_9MBufferIO_23readline(PyObject
         }
       }
       if (unlikely(kw_args > 0)) {
-        if (unlikely(__Pyx_ParseOptionalKeywords(__pyx_kwds, __pyx_pyargnames, 0, values, pos_args, "readline") < 0)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 351; __pyx_clineno = __LINE__; goto __pyx_L3_error;}
+        if (unlikely(__Pyx_ParseOptionalKeywords(__pyx_kwds, __pyx_pyargnames, 0, values, pos_args, "readline") < 0)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 396; __pyx_clineno = __LINE__; goto __pyx_L3_error;}
       }
     } else {
       switch (PyTuple_GET_SIZE(__pyx_args)) {
@@ -5927,27 +6202,27 @@ static PyObject *__pyx_pw_9mbufferio_10_mbufferio_9MBufferIO_23readline(PyObject
       }
     }
     if (values[0]) {
-      __pyx_v_limit = __Pyx_PyInt_As_int64_t(values[0]); if (unlikely((__pyx_v_limit == (int64_t)-1) && PyErr_Occurred())) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 351; __pyx_clineno = __LINE__; goto __pyx_L3_error;}
+      __pyx_v_limit = __Pyx_PyInt_As_int64_t(values[0]); if (unlikely((__pyx_v_limit == (int64_t)-1) && PyErr_Occurred())) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 396; __pyx_clineno = __LINE__; goto __pyx_L3_error;}
     } else {
       __pyx_v_limit = ((int64_t)-1L);
     }
   }
   goto __pyx_L4_argument_unpacking_done;
   __pyx_L5_argtuple_error:;
-  __Pyx_RaiseArgtupleInvalid("readline", 0, 0, 1, PyTuple_GET_SIZE(__pyx_args)); {__pyx_filename = __pyx_f[0]; __pyx_lineno = 351; __pyx_clineno = __LINE__; goto __pyx_L3_error;}
+  __Pyx_RaiseArgtupleInvalid("readline", 0, 0, 1, PyTuple_GET_SIZE(__pyx_args)); {__pyx_filename = __pyx_f[0]; __pyx_lineno = 396; __pyx_clineno = __LINE__; goto __pyx_L3_error;}
   __pyx_L3_error:;
   __Pyx_AddTraceback("mbufferio._mbufferio.MBufferIO.readline", __pyx_clineno, __pyx_lineno, __pyx_filename);
   __Pyx_RefNannyFinishContext();
   return NULL;
   __pyx_L4_argument_unpacking_done:;
-  __pyx_r = __pyx_pf_9mbufferio_10_mbufferio_9MBufferIO_22readline(((struct __pyx_obj_9mbufferio_10_mbufferio_MBufferIO *)__pyx_v_self), __pyx_v_limit);
+  __pyx_r = __pyx_pf_9mbufferio_10_mbufferio_9MBufferIO_24readline(((struct __pyx_obj_9mbufferio_10_mbufferio_MBufferIO *)__pyx_v_self), __pyx_v_limit);
 
   /* function exit code */
   __Pyx_RefNannyFinishContext();
   return __pyx_r;
 }
 
-static PyObject *__pyx_pf_9mbufferio_10_mbufferio_9MBufferIO_22readline(struct __pyx_obj_9mbufferio_10_mbufferio_MBufferIO *__pyx_v_self, int64_t __pyx_v_limit) {
+static PyObject *__pyx_pf_9mbufferio_10_mbufferio_9MBufferIO_24readline(struct __pyx_obj_9mbufferio_10_mbufferio_MBufferIO *__pyx_v_self, int64_t __pyx_v_limit) {
   PyObject *__pyx_r = NULL;
   __Pyx_RefNannyDeclarations
   PyObject *__pyx_t_1 = NULL;
@@ -5959,7 +6234,7 @@ static PyObject *__pyx_pf_9mbufferio_10_mbufferio_9MBufferIO_22readline(struct _
   __Pyx_XDECREF(__pyx_r);
   __pyx_t_2.__pyx_n = 1;
   __pyx_t_2.limit = __pyx_v_limit;
-  __pyx_t_1 = __pyx_vtabptr_9mbufferio_10_mbufferio_MBufferIO->readline(__pyx_v_self, 1, &__pyx_t_2); if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 351; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __pyx_t_1 = __pyx_vtabptr_9mbufferio_10_mbufferio_MBufferIO->readline(__pyx_v_self, 1, &__pyx_t_2); if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 396; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
   __Pyx_GOTREF(__pyx_t_1);
   __pyx_r = __pyx_t_1;
   __pyx_t_1 = 0;
@@ -5976,7 +6251,7 @@ static PyObject *__pyx_pf_9mbufferio_10_mbufferio_9MBufferIO_22readline(struct _
   return __pyx_r;
 }
 
-/* "mbufferio/_mbufferio.pyx":382
+/* "mbufferio/_mbufferio.pyx":427
  *         return <bytes> (self.buf_pointer[self.startpos + current_offset:self.startpos + self.offset])
  * 
  *     cpdef bytes readall(self):             # <<<<<<<<<<<<<<
@@ -5984,7 +6259,7 @@ static PyObject *__pyx_pf_9mbufferio_10_mbufferio_9MBufferIO_22readline(struct _
  *         readall()
  */
 
-static PyObject *__pyx_pw_9mbufferio_10_mbufferio_9MBufferIO_25readall(PyObject *__pyx_v_self, CYTHON_UNUSED PyObject *unused); /*proto*/
+static PyObject *__pyx_pw_9mbufferio_10_mbufferio_9MBufferIO_27readall(PyObject *__pyx_v_self, CYTHON_UNUSED PyObject *unused); /*proto*/
 static PyObject *__pyx_f_9mbufferio_10_mbufferio_9MBufferIO_readall(struct __pyx_obj_9mbufferio_10_mbufferio_MBufferIO *__pyx_v_self, int __pyx_skip_dispatch) {
   int64_t __pyx_v_current_offset;
   PyObject *__pyx_r = NULL;
@@ -6004,9 +6279,9 @@ static PyObject *__pyx_f_9mbufferio_10_mbufferio_9MBufferIO_readall(struct __pyx
   if (unlikely(__pyx_skip_dispatch)) ;
   /* Check if overridden in Python */
   else if (unlikely(Py_TYPE(((PyObject *)__pyx_v_self))->tp_dictoffset != 0)) {
-    __pyx_t_1 = __Pyx_PyObject_GetAttrStr(((PyObject *)__pyx_v_self), __pyx_n_s_readall); if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 382; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+    __pyx_t_1 = __Pyx_PyObject_GetAttrStr(((PyObject *)__pyx_v_self), __pyx_n_s_readall); if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 427; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
     __Pyx_GOTREF(__pyx_t_1);
-    if (!PyCFunction_Check(__pyx_t_1) || (PyCFunction_GET_FUNCTION(__pyx_t_1) != (PyCFunction)__pyx_pw_9mbufferio_10_mbufferio_9MBufferIO_25readall)) {
+    if (!PyCFunction_Check(__pyx_t_1) || (PyCFunction_GET_FUNCTION(__pyx_t_1) != (PyCFunction)__pyx_pw_9mbufferio_10_mbufferio_9MBufferIO_27readall)) {
       __Pyx_XDECREF(__pyx_r);
       __Pyx_INCREF(__pyx_t_1);
       __pyx_t_3 = __pyx_t_1; __pyx_t_4 = NULL;
@@ -6020,14 +6295,14 @@ static PyObject *__pyx_f_9mbufferio_10_mbufferio_9MBufferIO_readall(struct __pyx
         }
       }
       if (__pyx_t_4) {
-        __pyx_t_2 = __Pyx_PyObject_CallOneArg(__pyx_t_3, __pyx_t_4); if (unlikely(!__pyx_t_2)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 382; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+        __pyx_t_2 = __Pyx_PyObject_CallOneArg(__pyx_t_3, __pyx_t_4); if (unlikely(!__pyx_t_2)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 427; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
         __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
       } else {
-        __pyx_t_2 = __Pyx_PyObject_CallNoArg(__pyx_t_3); if (unlikely(!__pyx_t_2)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 382; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+        __pyx_t_2 = __Pyx_PyObject_CallNoArg(__pyx_t_3); if (unlikely(!__pyx_t_2)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 427; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
       }
       __Pyx_GOTREF(__pyx_t_2);
       __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
-      if (!(likely(PyBytes_CheckExact(__pyx_t_2))||((__pyx_t_2) == Py_None)||(PyErr_Format(PyExc_TypeError, "Expected %.16s, got %.200s", "bytes", Py_TYPE(__pyx_t_2)->tp_name), 0))) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 382; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+      if (!(likely(PyBytes_CheckExact(__pyx_t_2))||((__pyx_t_2) == Py_None)||(PyErr_Format(PyExc_TypeError, "Expected %.16s, got %.200s", "bytes", Py_TYPE(__pyx_t_2)->tp_name), 0))) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 427; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
       __pyx_r = ((PyObject*)__pyx_t_2);
       __pyx_t_2 = 0;
       __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
@@ -6036,7 +6311,7 @@ static PyObject *__pyx_f_9mbufferio_10_mbufferio_9MBufferIO_readall(struct __pyx
     __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
   }
 
-  /* "mbufferio/_mbufferio.pyx":391
+  /* "mbufferio/_mbufferio.pyx":436
  *         bytes read
  *         """
  *         if self.closed:             # <<<<<<<<<<<<<<
@@ -6046,20 +6321,20 @@ static PyObject *__pyx_f_9mbufferio_10_mbufferio_9MBufferIO_readall(struct __pyx
   __pyx_t_5 = (__pyx_v_self->closed != 0);
   if (__pyx_t_5) {
 
-    /* "mbufferio/_mbufferio.pyx":392
+    /* "mbufferio/_mbufferio.pyx":437
  *         """
  *         if self.closed:
  *             raise ValueError(u"I/O operation on closed file.")             # <<<<<<<<<<<<<<
  *         if self.length == self.offset:
  *             return b''
  */
-    __pyx_t_1 = __Pyx_PyObject_Call(__pyx_builtin_ValueError, __pyx_tuple__17, NULL); if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 392; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+    __pyx_t_1 = __Pyx_PyObject_Call(__pyx_builtin_ValueError, __pyx_tuple__18, NULL); if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 437; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
     __Pyx_GOTREF(__pyx_t_1);
     __Pyx_Raise(__pyx_t_1, 0, 0, 0);
     __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
-    {__pyx_filename = __pyx_f[0]; __pyx_lineno = 392; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+    {__pyx_filename = __pyx_f[0]; __pyx_lineno = 437; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
 
-    /* "mbufferio/_mbufferio.pyx":391
+    /* "mbufferio/_mbufferio.pyx":436
  *         bytes read
  *         """
  *         if self.closed:             # <<<<<<<<<<<<<<
@@ -6068,7 +6343,7 @@ static PyObject *__pyx_f_9mbufferio_10_mbufferio_9MBufferIO_readall(struct __pyx
  */
   }
 
-  /* "mbufferio/_mbufferio.pyx":393
+  /* "mbufferio/_mbufferio.pyx":438
  *         if self.closed:
  *             raise ValueError(u"I/O operation on closed file.")
  *         if self.length == self.offset:             # <<<<<<<<<<<<<<
@@ -6078,7 +6353,7 @@ static PyObject *__pyx_f_9mbufferio_10_mbufferio_9MBufferIO_readall(struct __pyx
   __pyx_t_5 = ((__pyx_v_self->length == __pyx_v_self->offset) != 0);
   if (__pyx_t_5) {
 
-    /* "mbufferio/_mbufferio.pyx":394
+    /* "mbufferio/_mbufferio.pyx":439
  *             raise ValueError(u"I/O operation on closed file.")
  *         if self.length == self.offset:
  *             return b''             # <<<<<<<<<<<<<<
@@ -6086,11 +6361,11 @@ static PyObject *__pyx_f_9mbufferio_10_mbufferio_9MBufferIO_readall(struct __pyx
  *         current_offset, self.offset = self.offset, self.length
  */
     __Pyx_XDECREF(__pyx_r);
-    __Pyx_INCREF(__pyx_kp_b__14);
-    __pyx_r = __pyx_kp_b__14;
+    __Pyx_INCREF(__pyx_kp_b__15);
+    __pyx_r = __pyx_kp_b__15;
     goto __pyx_L0;
 
-    /* "mbufferio/_mbufferio.pyx":393
+    /* "mbufferio/_mbufferio.pyx":438
  *         if self.closed:
  *             raise ValueError(u"I/O operation on closed file.")
  *         if self.length == self.offset:             # <<<<<<<<<<<<<<
@@ -6099,7 +6374,7 @@ static PyObject *__pyx_f_9mbufferio_10_mbufferio_9MBufferIO_readall(struct __pyx
  */
   }
 
-  /* "mbufferio/_mbufferio.pyx":396
+  /* "mbufferio/_mbufferio.pyx":441
  *             return b''
  *         cdef int64_t current_offset
  *         current_offset, self.offset = self.offset, self.length             # <<<<<<<<<<<<<<
@@ -6111,22 +6386,22 @@ static PyObject *__pyx_f_9mbufferio_10_mbufferio_9MBufferIO_readall(struct __pyx
   __pyx_v_current_offset = __pyx_t_6;
   __pyx_v_self->offset = __pyx_t_7;
 
-  /* "mbufferio/_mbufferio.pyx":397
+  /* "mbufferio/_mbufferio.pyx":442
  *         cdef int64_t current_offset
  *         current_offset, self.offset = self.offset, self.length
  *         return <bytes> (self.buf_pointer[self.startpos + current_offset:self.startpos + self.offset])             # <<<<<<<<<<<<<<
  * 
- *     def __str__(self):
+ *     def __len__(self):
  */
   __Pyx_XDECREF(__pyx_r);
-  __pyx_t_1 = __Pyx_PyBytes_FromStringAndSize(__pyx_v_self->buf_pointer + (__pyx_v_self->startpos + __pyx_v_current_offset), (__pyx_v_self->startpos + __pyx_v_self->offset) - (__pyx_v_self->startpos + __pyx_v_current_offset)); if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 397; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __pyx_t_1 = __Pyx_PyBytes_FromStringAndSize(__pyx_v_self->buf_pointer + (__pyx_v_self->startpos + __pyx_v_current_offset), (__pyx_v_self->startpos + __pyx_v_self->offset) - (__pyx_v_self->startpos + __pyx_v_current_offset)); if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 442; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
   __Pyx_GOTREF(__pyx_t_1);
   __Pyx_INCREF(((PyObject*)__pyx_t_1));
   __pyx_r = ((PyObject*)__pyx_t_1);
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
   goto __pyx_L0;
 
-  /* "mbufferio/_mbufferio.pyx":382
+  /* "mbufferio/_mbufferio.pyx":427
  *         return <bytes> (self.buf_pointer[self.startpos + current_offset:self.startpos + self.offset])
  * 
  *     cpdef bytes readall(self):             # <<<<<<<<<<<<<<
@@ -6149,20 +6424,20 @@ static PyObject *__pyx_f_9mbufferio_10_mbufferio_9MBufferIO_readall(struct __pyx
 }
 
 /* Python wrapper */
-static PyObject *__pyx_pw_9mbufferio_10_mbufferio_9MBufferIO_25readall(PyObject *__pyx_v_self, CYTHON_UNUSED PyObject *unused); /*proto*/
-static char __pyx_doc_9mbufferio_10_mbufferio_9MBufferIO_24readall[] = "\n        readall()\n        Read and return all the bytes from the stream\n\n        Returns\n        -------\n        bytes read\n        ";
-static PyObject *__pyx_pw_9mbufferio_10_mbufferio_9MBufferIO_25readall(PyObject *__pyx_v_self, CYTHON_UNUSED PyObject *unused) {
+static PyObject *__pyx_pw_9mbufferio_10_mbufferio_9MBufferIO_27readall(PyObject *__pyx_v_self, CYTHON_UNUSED PyObject *unused); /*proto*/
+static char __pyx_doc_9mbufferio_10_mbufferio_9MBufferIO_26readall[] = "\n        readall()\n        Read and return all the bytes from the stream\n\n        Returns\n        -------\n        bytes read\n        ";
+static PyObject *__pyx_pw_9mbufferio_10_mbufferio_9MBufferIO_27readall(PyObject *__pyx_v_self, CYTHON_UNUSED PyObject *unused) {
   PyObject *__pyx_r = 0;
   __Pyx_RefNannyDeclarations
   __Pyx_RefNannySetupContext("readall (wrapper)", 0);
-  __pyx_r = __pyx_pf_9mbufferio_10_mbufferio_9MBufferIO_24readall(((struct __pyx_obj_9mbufferio_10_mbufferio_MBufferIO *)__pyx_v_self));
+  __pyx_r = __pyx_pf_9mbufferio_10_mbufferio_9MBufferIO_26readall(((struct __pyx_obj_9mbufferio_10_mbufferio_MBufferIO *)__pyx_v_self));
 
   /* function exit code */
   __Pyx_RefNannyFinishContext();
   return __pyx_r;
 }
 
-static PyObject *__pyx_pf_9mbufferio_10_mbufferio_9MBufferIO_24readall(struct __pyx_obj_9mbufferio_10_mbufferio_MBufferIO *__pyx_v_self) {
+static PyObject *__pyx_pf_9mbufferio_10_mbufferio_9MBufferIO_26readall(struct __pyx_obj_9mbufferio_10_mbufferio_MBufferIO *__pyx_v_self) {
   PyObject *__pyx_r = NULL;
   __Pyx_RefNannyDeclarations
   PyObject *__pyx_t_1 = NULL;
@@ -6171,7 +6446,7 @@ static PyObject *__pyx_pf_9mbufferio_10_mbufferio_9MBufferIO_24readall(struct __
   int __pyx_clineno = 0;
   __Pyx_RefNannySetupContext("readall", 0);
   __Pyx_XDECREF(__pyx_r);
-  __pyx_t_1 = __pyx_f_9mbufferio_10_mbufferio_9MBufferIO_readall(__pyx_v_self, 1); if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 382; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __pyx_t_1 = __pyx_f_9mbufferio_10_mbufferio_9MBufferIO_readall(__pyx_v_self, 1); if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 427; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
   __Pyx_GOTREF(__pyx_t_1);
   __pyx_r = __pyx_t_1;
   __pyx_t_1 = 0;
@@ -6188,288 +6463,8 @@ static PyObject *__pyx_pf_9mbufferio_10_mbufferio_9MBufferIO_24readall(struct __
   return __pyx_r;
 }
 
-/* "mbufferio/_mbufferio.pyx":399
+/* "mbufferio/_mbufferio.pyx":444
  *         return <bytes> (self.buf_pointer[self.startpos + current_offset:self.startpos + self.offset])
- * 
- *     def __str__(self):             # <<<<<<<<<<<<<<
- *         if self.closed:
- *             return b''
- */
-
-/* Python wrapper */
-static PyObject *__pyx_pw_9mbufferio_10_mbufferio_9MBufferIO_27__str__(PyObject *__pyx_v_self); /*proto*/
-static PyObject *__pyx_pw_9mbufferio_10_mbufferio_9MBufferIO_27__str__(PyObject *__pyx_v_self) {
-  PyObject *__pyx_r = 0;
-  __Pyx_RefNannyDeclarations
-  __Pyx_RefNannySetupContext("__str__ (wrapper)", 0);
-  __pyx_r = __pyx_pf_9mbufferio_10_mbufferio_9MBufferIO_26__str__(((struct __pyx_obj_9mbufferio_10_mbufferio_MBufferIO *)__pyx_v_self));
-
-  /* function exit code */
-  __Pyx_RefNannyFinishContext();
-  return __pyx_r;
-}
-
-static PyObject *__pyx_pf_9mbufferio_10_mbufferio_9MBufferIO_26__str__(struct __pyx_obj_9mbufferio_10_mbufferio_MBufferIO *__pyx_v_self) {
-  PyObject *__pyx_r = NULL;
-  __Pyx_RefNannyDeclarations
-  int __pyx_t_1;
-  PyObject *__pyx_t_2 = NULL;
-  int __pyx_lineno = 0;
-  const char *__pyx_filename = NULL;
-  int __pyx_clineno = 0;
-  __Pyx_RefNannySetupContext("__str__", 0);
-
-  /* "mbufferio/_mbufferio.pyx":400
- * 
- *     def __str__(self):
- *         if self.closed:             # <<<<<<<<<<<<<<
- *             return b''
- *         return <bytes> self.buf_pointer[self.startpos:self.startpos + self.length]
- */
-  __pyx_t_1 = (__pyx_v_self->closed != 0);
-  if (__pyx_t_1) {
-
-    /* "mbufferio/_mbufferio.pyx":401
- *     def __str__(self):
- *         if self.closed:
- *             return b''             # <<<<<<<<<<<<<<
- *         return <bytes> self.buf_pointer[self.startpos:self.startpos + self.length]
- * 
- */
-    __Pyx_XDECREF(__pyx_r);
-    __Pyx_INCREF(__pyx_kp_b__14);
-    __pyx_r = __pyx_kp_b__14;
-    goto __pyx_L0;
-
-    /* "mbufferio/_mbufferio.pyx":400
- * 
- *     def __str__(self):
- *         if self.closed:             # <<<<<<<<<<<<<<
- *             return b''
- *         return <bytes> self.buf_pointer[self.startpos:self.startpos + self.length]
- */
-  }
-
-  /* "mbufferio/_mbufferio.pyx":402
- *         if self.closed:
- *             return b''
- *         return <bytes> self.buf_pointer[self.startpos:self.startpos + self.length]             # <<<<<<<<<<<<<<
- * 
- *     cpdef bytes getvalue(self):
- */
-  __Pyx_XDECREF(__pyx_r);
-  __pyx_t_2 = __Pyx_PyBytes_FromStringAndSize(__pyx_v_self->buf_pointer + __pyx_v_self->startpos, (__pyx_v_self->startpos + __pyx_v_self->length) - __pyx_v_self->startpos); if (unlikely(!__pyx_t_2)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 402; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
-  __Pyx_GOTREF(__pyx_t_2);
-  __Pyx_INCREF(((PyObject*)__pyx_t_2));
-  __pyx_r = __pyx_t_2;
-  __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
-  goto __pyx_L0;
-
-  /* "mbufferio/_mbufferio.pyx":399
- *         return <bytes> (self.buf_pointer[self.startpos + current_offset:self.startpos + self.offset])
- * 
- *     def __str__(self):             # <<<<<<<<<<<<<<
- *         if self.closed:
- *             return b''
- */
-
-  /* function exit code */
-  __pyx_L1_error:;
-  __Pyx_XDECREF(__pyx_t_2);
-  __Pyx_AddTraceback("mbufferio._mbufferio.MBufferIO.__str__", __pyx_clineno, __pyx_lineno, __pyx_filename);
-  __pyx_r = NULL;
-  __pyx_L0:;
-  __Pyx_XGIVEREF(__pyx_r);
-  __Pyx_RefNannyFinishContext();
-  return __pyx_r;
-}
-
-/* "mbufferio/_mbufferio.pyx":404
- *         return <bytes> self.buf_pointer[self.startpos:self.startpos + self.length]
- * 
- *     cpdef bytes getvalue(self):             # <<<<<<<<<<<<<<
- *         """
- *         getvalue()
- */
-
-static PyObject *__pyx_pw_9mbufferio_10_mbufferio_9MBufferIO_29getvalue(PyObject *__pyx_v_self, CYTHON_UNUSED PyObject *unused); /*proto*/
-static PyObject *__pyx_f_9mbufferio_10_mbufferio_9MBufferIO_getvalue(struct __pyx_obj_9mbufferio_10_mbufferio_MBufferIO *__pyx_v_self, int __pyx_skip_dispatch) {
-  PyObject *__pyx_r = NULL;
-  __Pyx_RefNannyDeclarations
-  PyObject *__pyx_t_1 = NULL;
-  PyObject *__pyx_t_2 = NULL;
-  PyObject *__pyx_t_3 = NULL;
-  PyObject *__pyx_t_4 = NULL;
-  int __pyx_t_5;
-  int __pyx_lineno = 0;
-  const char *__pyx_filename = NULL;
-  int __pyx_clineno = 0;
-  __Pyx_RefNannySetupContext("getvalue", 0);
-  /* Check if called by wrapper */
-  if (unlikely(__pyx_skip_dispatch)) ;
-  /* Check if overridden in Python */
-  else if (unlikely(Py_TYPE(((PyObject *)__pyx_v_self))->tp_dictoffset != 0)) {
-    __pyx_t_1 = __Pyx_PyObject_GetAttrStr(((PyObject *)__pyx_v_self), __pyx_n_s_getvalue); if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 404; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
-    __Pyx_GOTREF(__pyx_t_1);
-    if (!PyCFunction_Check(__pyx_t_1) || (PyCFunction_GET_FUNCTION(__pyx_t_1) != (PyCFunction)__pyx_pw_9mbufferio_10_mbufferio_9MBufferIO_29getvalue)) {
-      __Pyx_XDECREF(__pyx_r);
-      __Pyx_INCREF(__pyx_t_1);
-      __pyx_t_3 = __pyx_t_1; __pyx_t_4 = NULL;
-      if (CYTHON_COMPILING_IN_CPYTHON && unlikely(PyMethod_Check(__pyx_t_3))) {
-        __pyx_t_4 = PyMethod_GET_SELF(__pyx_t_3);
-        if (likely(__pyx_t_4)) {
-          PyObject* function = PyMethod_GET_FUNCTION(__pyx_t_3);
-          __Pyx_INCREF(__pyx_t_4);
-          __Pyx_INCREF(function);
-          __Pyx_DECREF_SET(__pyx_t_3, function);
-        }
-      }
-      if (__pyx_t_4) {
-        __pyx_t_2 = __Pyx_PyObject_CallOneArg(__pyx_t_3, __pyx_t_4); if (unlikely(!__pyx_t_2)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 404; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
-        __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
-      } else {
-        __pyx_t_2 = __Pyx_PyObject_CallNoArg(__pyx_t_3); if (unlikely(!__pyx_t_2)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 404; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
-      }
-      __Pyx_GOTREF(__pyx_t_2);
-      __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
-      if (!(likely(PyBytes_CheckExact(__pyx_t_2))||((__pyx_t_2) == Py_None)||(PyErr_Format(PyExc_TypeError, "Expected %.16s, got %.200s", "bytes", Py_TYPE(__pyx_t_2)->tp_name), 0))) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 404; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
-      __pyx_r = ((PyObject*)__pyx_t_2);
-      __pyx_t_2 = 0;
-      __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
-      goto __pyx_L0;
-    }
-    __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
-  }
-
-  /* "mbufferio/_mbufferio.pyx":413
- *         bytes
- *         """
- *         if self.closed:             # <<<<<<<<<<<<<<
- *             raise ValueError(u"I/O operation on closed file.")
- *         return self.__str__()
- */
-  __pyx_t_5 = (__pyx_v_self->closed != 0);
-  if (__pyx_t_5) {
-
-    /* "mbufferio/_mbufferio.pyx":414
- *         """
- *         if self.closed:
- *             raise ValueError(u"I/O operation on closed file.")             # <<<<<<<<<<<<<<
- *         return self.__str__()
- * 
- */
-    __pyx_t_1 = __Pyx_PyObject_Call(__pyx_builtin_ValueError, __pyx_tuple__18, NULL); if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 414; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
-    __Pyx_GOTREF(__pyx_t_1);
-    __Pyx_Raise(__pyx_t_1, 0, 0, 0);
-    __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
-    {__pyx_filename = __pyx_f[0]; __pyx_lineno = 414; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
-
-    /* "mbufferio/_mbufferio.pyx":413
- *         bytes
- *         """
- *         if self.closed:             # <<<<<<<<<<<<<<
- *             raise ValueError(u"I/O operation on closed file.")
- *         return self.__str__()
- */
-  }
-
-  /* "mbufferio/_mbufferio.pyx":415
- *         if self.closed:
- *             raise ValueError(u"I/O operation on closed file.")
- *         return self.__str__()             # <<<<<<<<<<<<<<
- * 
- *     def __len__(self):
- */
-  __Pyx_XDECREF(__pyx_r);
-  __pyx_t_2 = __Pyx_PyObject_GetAttrStr(((PyObject *)__pyx_v_self), __pyx_n_s_str); if (unlikely(!__pyx_t_2)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 415; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
-  __Pyx_GOTREF(__pyx_t_2);
-  __pyx_t_3 = NULL;
-  if (CYTHON_COMPILING_IN_CPYTHON && likely(PyMethod_Check(__pyx_t_2))) {
-    __pyx_t_3 = PyMethod_GET_SELF(__pyx_t_2);
-    if (likely(__pyx_t_3)) {
-      PyObject* function = PyMethod_GET_FUNCTION(__pyx_t_2);
-      __Pyx_INCREF(__pyx_t_3);
-      __Pyx_INCREF(function);
-      __Pyx_DECREF_SET(__pyx_t_2, function);
-    }
-  }
-  if (__pyx_t_3) {
-    __pyx_t_1 = __Pyx_PyObject_CallOneArg(__pyx_t_2, __pyx_t_3); if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 415; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
-    __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
-  } else {
-    __pyx_t_1 = __Pyx_PyObject_CallNoArg(__pyx_t_2); if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 415; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
-  }
-  __Pyx_GOTREF(__pyx_t_1);
-  __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
-  if (!(likely(PyBytes_CheckExact(__pyx_t_1))||((__pyx_t_1) == Py_None)||(PyErr_Format(PyExc_TypeError, "Expected %.16s, got %.200s", "bytes", Py_TYPE(__pyx_t_1)->tp_name), 0))) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 415; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
-  __pyx_r = ((PyObject*)__pyx_t_1);
-  __pyx_t_1 = 0;
-  goto __pyx_L0;
-
-  /* "mbufferio/_mbufferio.pyx":404
- *         return <bytes> self.buf_pointer[self.startpos:self.startpos + self.length]
- * 
- *     cpdef bytes getvalue(self):             # <<<<<<<<<<<<<<
- *         """
- *         getvalue()
- */
-
-  /* function exit code */
-  __pyx_L1_error:;
-  __Pyx_XDECREF(__pyx_t_1);
-  __Pyx_XDECREF(__pyx_t_2);
-  __Pyx_XDECREF(__pyx_t_3);
-  __Pyx_XDECREF(__pyx_t_4);
-  __Pyx_AddTraceback("mbufferio._mbufferio.MBufferIO.getvalue", __pyx_clineno, __pyx_lineno, __pyx_filename);
-  __pyx_r = 0;
-  __pyx_L0:;
-  __Pyx_XGIVEREF(__pyx_r);
-  __Pyx_RefNannyFinishContext();
-  return __pyx_r;
-}
-
-/* Python wrapper */
-static PyObject *__pyx_pw_9mbufferio_10_mbufferio_9MBufferIO_29getvalue(PyObject *__pyx_v_self, CYTHON_UNUSED PyObject *unused); /*proto*/
-static char __pyx_doc_9mbufferio_10_mbufferio_9MBufferIO_28getvalue[] = "\n        getvalue()\n        Return bytes containing the entire contents of the MBufferIO.\n\n        Returns\n        -------\n        bytes\n        ";
-static PyObject *__pyx_pw_9mbufferio_10_mbufferio_9MBufferIO_29getvalue(PyObject *__pyx_v_self, CYTHON_UNUSED PyObject *unused) {
-  PyObject *__pyx_r = 0;
-  __Pyx_RefNannyDeclarations
-  __Pyx_RefNannySetupContext("getvalue (wrapper)", 0);
-  __pyx_r = __pyx_pf_9mbufferio_10_mbufferio_9MBufferIO_28getvalue(((struct __pyx_obj_9mbufferio_10_mbufferio_MBufferIO *)__pyx_v_self));
-
-  /* function exit code */
-  __Pyx_RefNannyFinishContext();
-  return __pyx_r;
-}
-
-static PyObject *__pyx_pf_9mbufferio_10_mbufferio_9MBufferIO_28getvalue(struct __pyx_obj_9mbufferio_10_mbufferio_MBufferIO *__pyx_v_self) {
-  PyObject *__pyx_r = NULL;
-  __Pyx_RefNannyDeclarations
-  PyObject *__pyx_t_1 = NULL;
-  int __pyx_lineno = 0;
-  const char *__pyx_filename = NULL;
-  int __pyx_clineno = 0;
-  __Pyx_RefNannySetupContext("getvalue", 0);
-  __Pyx_XDECREF(__pyx_r);
-  __pyx_t_1 = __pyx_f_9mbufferio_10_mbufferio_9MBufferIO_getvalue(__pyx_v_self, 1); if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 404; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
-  __Pyx_GOTREF(__pyx_t_1);
-  __pyx_r = __pyx_t_1;
-  __pyx_t_1 = 0;
-  goto __pyx_L0;
-
-  /* function exit code */
-  __pyx_L1_error:;
-  __Pyx_XDECREF(__pyx_t_1);
-  __Pyx_AddTraceback("mbufferio._mbufferio.MBufferIO.getvalue", __pyx_clineno, __pyx_lineno, __pyx_filename);
-  __pyx_r = NULL;
-  __pyx_L0:;
-  __Pyx_XGIVEREF(__pyx_r);
-  __Pyx_RefNannyFinishContext();
-  return __pyx_r;
-}
-
-/* "mbufferio/_mbufferio.pyx":417
- *         return self.__str__()
  * 
  *     def __len__(self):             # <<<<<<<<<<<<<<
  *         if self.closed:
@@ -6477,25 +6472,25 @@ static PyObject *__pyx_pf_9mbufferio_10_mbufferio_9MBufferIO_28getvalue(struct _
  */
 
 /* Python wrapper */
-static Py_ssize_t __pyx_pw_9mbufferio_10_mbufferio_9MBufferIO_31__len__(PyObject *__pyx_v_self); /*proto*/
-static Py_ssize_t __pyx_pw_9mbufferio_10_mbufferio_9MBufferIO_31__len__(PyObject *__pyx_v_self) {
+static Py_ssize_t __pyx_pw_9mbufferio_10_mbufferio_9MBufferIO_29__len__(PyObject *__pyx_v_self); /*proto*/
+static Py_ssize_t __pyx_pw_9mbufferio_10_mbufferio_9MBufferIO_29__len__(PyObject *__pyx_v_self) {
   Py_ssize_t __pyx_r;
   __Pyx_RefNannyDeclarations
   __Pyx_RefNannySetupContext("__len__ (wrapper)", 0);
-  __pyx_r = __pyx_pf_9mbufferio_10_mbufferio_9MBufferIO_30__len__(((struct __pyx_obj_9mbufferio_10_mbufferio_MBufferIO *)__pyx_v_self));
+  __pyx_r = __pyx_pf_9mbufferio_10_mbufferio_9MBufferIO_28__len__(((struct __pyx_obj_9mbufferio_10_mbufferio_MBufferIO *)__pyx_v_self));
 
   /* function exit code */
   __Pyx_RefNannyFinishContext();
   return __pyx_r;
 }
 
-static Py_ssize_t __pyx_pf_9mbufferio_10_mbufferio_9MBufferIO_30__len__(struct __pyx_obj_9mbufferio_10_mbufferio_MBufferIO *__pyx_v_self) {
+static Py_ssize_t __pyx_pf_9mbufferio_10_mbufferio_9MBufferIO_28__len__(struct __pyx_obj_9mbufferio_10_mbufferio_MBufferIO *__pyx_v_self) {
   Py_ssize_t __pyx_r;
   __Pyx_RefNannyDeclarations
   int __pyx_t_1;
   __Pyx_RefNannySetupContext("__len__", 0);
 
-  /* "mbufferio/_mbufferio.pyx":418
+  /* "mbufferio/_mbufferio.pyx":445
  * 
  *     def __len__(self):
  *         if self.closed:             # <<<<<<<<<<<<<<
@@ -6505,7 +6500,7 @@ static Py_ssize_t __pyx_pf_9mbufferio_10_mbufferio_9MBufferIO_30__len__(struct _
   __pyx_t_1 = (__pyx_v_self->closed != 0);
   if (__pyx_t_1) {
 
-    /* "mbufferio/_mbufferio.pyx":419
+    /* "mbufferio/_mbufferio.pyx":446
  *     def __len__(self):
  *         if self.closed:
  *             return 0             # <<<<<<<<<<<<<<
@@ -6515,7 +6510,7 @@ static Py_ssize_t __pyx_pf_9mbufferio_10_mbufferio_9MBufferIO_30__len__(struct _
     __pyx_r = 0;
     goto __pyx_L0;
 
-    /* "mbufferio/_mbufferio.pyx":418
+    /* "mbufferio/_mbufferio.pyx":445
  * 
  *     def __len__(self):
  *         if self.closed:             # <<<<<<<<<<<<<<
@@ -6524,7 +6519,7 @@ static Py_ssize_t __pyx_pf_9mbufferio_10_mbufferio_9MBufferIO_30__len__(struct _
  */
   }
 
-  /* "mbufferio/_mbufferio.pyx":420
+  /* "mbufferio/_mbufferio.pyx":447
  *         if self.closed:
  *             return 0
  *         return self.length             # <<<<<<<<<<<<<<
@@ -6534,8 +6529,8 @@ static Py_ssize_t __pyx_pf_9mbufferio_10_mbufferio_9MBufferIO_30__len__(struct _
   __pyx_r = __pyx_v_self->length;
   goto __pyx_L0;
 
-  /* "mbufferio/_mbufferio.pyx":417
- *         return self.__str__()
+  /* "mbufferio/_mbufferio.pyx":444
+ *         return <bytes> (self.buf_pointer[self.startpos + current_offset:self.startpos + self.offset])
  * 
  *     def __len__(self):             # <<<<<<<<<<<<<<
  *         if self.closed:
@@ -6548,7 +6543,7 @@ static Py_ssize_t __pyx_pf_9mbufferio_10_mbufferio_9MBufferIO_30__len__(struct _
   return __pyx_r;
 }
 
-/* "mbufferio/_mbufferio.pyx":422
+/* "mbufferio/_mbufferio.pyx":449
  *         return self.length
  * 
  *     cpdef extend(self, object obj_to_write):             # <<<<<<<<<<<<<<
@@ -6556,7 +6551,7 @@ static Py_ssize_t __pyx_pf_9mbufferio_10_mbufferio_9MBufferIO_30__len__(struct _
  *         extend(obj_to_write)`
  */
 
-static PyObject *__pyx_pw_9mbufferio_10_mbufferio_9MBufferIO_33extend(PyObject *__pyx_v_self, PyObject *__pyx_v_obj_to_write); /*proto*/
+static PyObject *__pyx_pw_9mbufferio_10_mbufferio_9MBufferIO_31extend(PyObject *__pyx_v_self, PyObject *__pyx_v_obj_to_write); /*proto*/
 static PyObject *__pyx_f_9mbufferio_10_mbufferio_9MBufferIO_extend(struct __pyx_obj_9mbufferio_10_mbufferio_MBufferIO *__pyx_v_self, PyObject *__pyx_v_obj_to_write, int __pyx_skip_dispatch) {
   PyObject *__pyx_r = NULL;
   __Pyx_RefNannyDeclarations
@@ -6575,9 +6570,9 @@ static PyObject *__pyx_f_9mbufferio_10_mbufferio_9MBufferIO_extend(struct __pyx_
   if (unlikely(__pyx_skip_dispatch)) ;
   /* Check if overridden in Python */
   else if (unlikely(Py_TYPE(((PyObject *)__pyx_v_self))->tp_dictoffset != 0)) {
-    __pyx_t_1 = __Pyx_PyObject_GetAttrStr(((PyObject *)__pyx_v_self), __pyx_n_s_extend); if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 422; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+    __pyx_t_1 = __Pyx_PyObject_GetAttrStr(((PyObject *)__pyx_v_self), __pyx_n_s_extend); if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 449; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
     __Pyx_GOTREF(__pyx_t_1);
-    if (!PyCFunction_Check(__pyx_t_1) || (PyCFunction_GET_FUNCTION(__pyx_t_1) != (PyCFunction)__pyx_pw_9mbufferio_10_mbufferio_9MBufferIO_33extend)) {
+    if (!PyCFunction_Check(__pyx_t_1) || (PyCFunction_GET_FUNCTION(__pyx_t_1) != (PyCFunction)__pyx_pw_9mbufferio_10_mbufferio_9MBufferIO_31extend)) {
       __Pyx_XDECREF(__pyx_r);
       __Pyx_INCREF(__pyx_t_1);
       __pyx_t_3 = __pyx_t_1; __pyx_t_4 = NULL;
@@ -6591,16 +6586,16 @@ static PyObject *__pyx_f_9mbufferio_10_mbufferio_9MBufferIO_extend(struct __pyx_
         }
       }
       if (!__pyx_t_4) {
-        __pyx_t_2 = __Pyx_PyObject_CallOneArg(__pyx_t_3, __pyx_v_obj_to_write); if (unlikely(!__pyx_t_2)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 422; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+        __pyx_t_2 = __Pyx_PyObject_CallOneArg(__pyx_t_3, __pyx_v_obj_to_write); if (unlikely(!__pyx_t_2)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 449; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
         __Pyx_GOTREF(__pyx_t_2);
       } else {
-        __pyx_t_5 = PyTuple_New(1+1); if (unlikely(!__pyx_t_5)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 422; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+        __pyx_t_5 = PyTuple_New(1+1); if (unlikely(!__pyx_t_5)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 449; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
         __Pyx_GOTREF(__pyx_t_5);
         __Pyx_GIVEREF(__pyx_t_4); PyTuple_SET_ITEM(__pyx_t_5, 0, __pyx_t_4); __pyx_t_4 = NULL;
         __Pyx_INCREF(__pyx_v_obj_to_write);
         __Pyx_GIVEREF(__pyx_v_obj_to_write);
         PyTuple_SET_ITEM(__pyx_t_5, 0+1, __pyx_v_obj_to_write);
-        __pyx_t_2 = __Pyx_PyObject_Call(__pyx_t_3, __pyx_t_5, NULL); if (unlikely(!__pyx_t_2)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 422; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+        __pyx_t_2 = __Pyx_PyObject_Call(__pyx_t_3, __pyx_t_5, NULL); if (unlikely(!__pyx_t_2)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 449; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
         __Pyx_GOTREF(__pyx_t_2);
         __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
       }
@@ -6613,7 +6608,7 @@ static PyObject *__pyx_f_9mbufferio_10_mbufferio_9MBufferIO_extend(struct __pyx_
     __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
   }
 
-  /* "mbufferio/_mbufferio.pyx":435
+  /* "mbufferio/_mbufferio.pyx":462
  *         Number of bytes written
  *         """
  *         if self.closed:             # <<<<<<<<<<<<<<
@@ -6623,20 +6618,20 @@ static PyObject *__pyx_f_9mbufferio_10_mbufferio_9MBufferIO_extend(struct __pyx_
   __pyx_t_6 = (__pyx_v_self->closed != 0);
   if (__pyx_t_6) {
 
-    /* "mbufferio/_mbufferio.pyx":436
+    /* "mbufferio/_mbufferio.pyx":463
  *         """
  *         if self.closed:
  *             raise ValueError(u"I/O operation on closed file.")             # <<<<<<<<<<<<<<
  *         self.seek(0, 2)
  *         return self.write(obj_to_write)
  */
-    __pyx_t_1 = __Pyx_PyObject_Call(__pyx_builtin_ValueError, __pyx_tuple__19, NULL); if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 436; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+    __pyx_t_1 = __Pyx_PyObject_Call(__pyx_builtin_ValueError, __pyx_tuple__19, NULL); if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 463; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
     __Pyx_GOTREF(__pyx_t_1);
     __Pyx_Raise(__pyx_t_1, 0, 0, 0);
     __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
-    {__pyx_filename = __pyx_f[0]; __pyx_lineno = 436; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+    {__pyx_filename = __pyx_f[0]; __pyx_lineno = 463; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
 
-    /* "mbufferio/_mbufferio.pyx":435
+    /* "mbufferio/_mbufferio.pyx":462
  *         Number of bytes written
  *         """
  *         if self.closed:             # <<<<<<<<<<<<<<
@@ -6645,7 +6640,7 @@ static PyObject *__pyx_f_9mbufferio_10_mbufferio_9MBufferIO_extend(struct __pyx_
  */
   }
 
-  /* "mbufferio/_mbufferio.pyx":437
+  /* "mbufferio/_mbufferio.pyx":464
  *         if self.closed:
  *             raise ValueError(u"I/O operation on closed file.")
  *         self.seek(0, 2)             # <<<<<<<<<<<<<<
@@ -6654,11 +6649,11 @@ static PyObject *__pyx_f_9mbufferio_10_mbufferio_9MBufferIO_extend(struct __pyx_
  */
   __pyx_t_7.__pyx_n = 1;
   __pyx_t_7.whence = 2;
-  __pyx_t_1 = ((struct __pyx_vtabstruct_9mbufferio_10_mbufferio_MBufferIO *)__pyx_v_self->__pyx_vtab)->seek(__pyx_v_self, 0, 0, &__pyx_t_7); if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 437; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __pyx_t_1 = ((struct __pyx_vtabstruct_9mbufferio_10_mbufferio_MBufferIO *)__pyx_v_self->__pyx_vtab)->seek(__pyx_v_self, 0, 0, &__pyx_t_7); if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 464; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
   __Pyx_GOTREF(__pyx_t_1);
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
 
-  /* "mbufferio/_mbufferio.pyx":438
+  /* "mbufferio/_mbufferio.pyx":465
  *             raise ValueError(u"I/O operation on closed file.")
  *         self.seek(0, 2)
  *         return self.write(obj_to_write)             # <<<<<<<<<<<<<<
@@ -6666,13 +6661,13 @@ static PyObject *__pyx_f_9mbufferio_10_mbufferio_9MBufferIO_extend(struct __pyx_
  *     cpdef readinto(self, object destination):
  */
   __Pyx_XDECREF(__pyx_r);
-  __pyx_t_1 = ((struct __pyx_vtabstruct_9mbufferio_10_mbufferio_MBufferIO *)__pyx_v_self->__pyx_vtab)->write(__pyx_v_self, __pyx_v_obj_to_write, 0); if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 438; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __pyx_t_1 = ((struct __pyx_vtabstruct_9mbufferio_10_mbufferio_MBufferIO *)__pyx_v_self->__pyx_vtab)->write(__pyx_v_self, __pyx_v_obj_to_write, 0); if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 465; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
   __Pyx_GOTREF(__pyx_t_1);
   __pyx_r = __pyx_t_1;
   __pyx_t_1 = 0;
   goto __pyx_L0;
 
-  /* "mbufferio/_mbufferio.pyx":422
+  /* "mbufferio/_mbufferio.pyx":449
  *         return self.length
  * 
  *     cpdef extend(self, object obj_to_write):             # <<<<<<<<<<<<<<
@@ -6696,20 +6691,20 @@ static PyObject *__pyx_f_9mbufferio_10_mbufferio_9MBufferIO_extend(struct __pyx_
 }
 
 /* Python wrapper */
-static PyObject *__pyx_pw_9mbufferio_10_mbufferio_9MBufferIO_33extend(PyObject *__pyx_v_self, PyObject *__pyx_v_obj_to_write); /*proto*/
-static char __pyx_doc_9mbufferio_10_mbufferio_9MBufferIO_32extend[] = "\n        extend(obj_to_write)`\n        Writes 'obj_to_write' to the end of the MBufferIO\n\n        Parameters\n        ----------\n        obj_to_write: an object that supports the buffer protocol\n\n        Returns\n        -------\n        Number of bytes written\n        ";
-static PyObject *__pyx_pw_9mbufferio_10_mbufferio_9MBufferIO_33extend(PyObject *__pyx_v_self, PyObject *__pyx_v_obj_to_write) {
+static PyObject *__pyx_pw_9mbufferio_10_mbufferio_9MBufferIO_31extend(PyObject *__pyx_v_self, PyObject *__pyx_v_obj_to_write); /*proto*/
+static char __pyx_doc_9mbufferio_10_mbufferio_9MBufferIO_30extend[] = "\n        extend(obj_to_write)`\n        Writes 'obj_to_write' to the end of the MBufferIO\n\n        Parameters\n        ----------\n        obj_to_write: an object that supports the buffer protocol\n\n        Returns\n        -------\n        Number of bytes written\n        ";
+static PyObject *__pyx_pw_9mbufferio_10_mbufferio_9MBufferIO_31extend(PyObject *__pyx_v_self, PyObject *__pyx_v_obj_to_write) {
   PyObject *__pyx_r = 0;
   __Pyx_RefNannyDeclarations
   __Pyx_RefNannySetupContext("extend (wrapper)", 0);
-  __pyx_r = __pyx_pf_9mbufferio_10_mbufferio_9MBufferIO_32extend(((struct __pyx_obj_9mbufferio_10_mbufferio_MBufferIO *)__pyx_v_self), ((PyObject *)__pyx_v_obj_to_write));
+  __pyx_r = __pyx_pf_9mbufferio_10_mbufferio_9MBufferIO_30extend(((struct __pyx_obj_9mbufferio_10_mbufferio_MBufferIO *)__pyx_v_self), ((PyObject *)__pyx_v_obj_to_write));
 
   /* function exit code */
   __Pyx_RefNannyFinishContext();
   return __pyx_r;
 }
 
-static PyObject *__pyx_pf_9mbufferio_10_mbufferio_9MBufferIO_32extend(struct __pyx_obj_9mbufferio_10_mbufferio_MBufferIO *__pyx_v_self, PyObject *__pyx_v_obj_to_write) {
+static PyObject *__pyx_pf_9mbufferio_10_mbufferio_9MBufferIO_30extend(struct __pyx_obj_9mbufferio_10_mbufferio_MBufferIO *__pyx_v_self, PyObject *__pyx_v_obj_to_write) {
   PyObject *__pyx_r = NULL;
   __Pyx_RefNannyDeclarations
   PyObject *__pyx_t_1 = NULL;
@@ -6718,7 +6713,7 @@ static PyObject *__pyx_pf_9mbufferio_10_mbufferio_9MBufferIO_32extend(struct __p
   int __pyx_clineno = 0;
   __Pyx_RefNannySetupContext("extend", 0);
   __Pyx_XDECREF(__pyx_r);
-  __pyx_t_1 = __pyx_f_9mbufferio_10_mbufferio_9MBufferIO_extend(__pyx_v_self, __pyx_v_obj_to_write, 1); if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 422; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __pyx_t_1 = __pyx_f_9mbufferio_10_mbufferio_9MBufferIO_extend(__pyx_v_self, __pyx_v_obj_to_write, 1); if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 449; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
   __Pyx_GOTREF(__pyx_t_1);
   __pyx_r = __pyx_t_1;
   __pyx_t_1 = 0;
@@ -6735,7 +6730,7 @@ static PyObject *__pyx_pf_9mbufferio_10_mbufferio_9MBufferIO_32extend(struct __p
   return __pyx_r;
 }
 
-/* "mbufferio/_mbufferio.pyx":440
+/* "mbufferio/_mbufferio.pyx":467
  *         return self.write(obj_to_write)
  * 
  *     cpdef readinto(self, object destination):             # <<<<<<<<<<<<<<
@@ -6743,7 +6738,7 @@ static PyObject *__pyx_pf_9mbufferio_10_mbufferio_9MBufferIO_32extend(struct __p
  *         readinto(destination)
  */
 
-static PyObject *__pyx_pw_9mbufferio_10_mbufferio_9MBufferIO_35readinto(PyObject *__pyx_v_self, PyObject *__pyx_v_destination); /*proto*/
+static PyObject *__pyx_pw_9mbufferio_10_mbufferio_9MBufferIO_33readinto(PyObject *__pyx_v_self, PyObject *__pyx_v_destination); /*proto*/
 static PyObject *__pyx_f_9mbufferio_10_mbufferio_9MBufferIO_readinto(struct __pyx_obj_9mbufferio_10_mbufferio_MBufferIO *__pyx_v_self, PyObject *__pyx_v_destination, int __pyx_skip_dispatch) {
   Py_buffer *__pyx_v_dest_view;
   int64_t __pyx_v_dest_len;
@@ -6776,9 +6771,9 @@ static PyObject *__pyx_f_9mbufferio_10_mbufferio_9MBufferIO_readinto(struct __py
   if (unlikely(__pyx_skip_dispatch)) ;
   /* Check if overridden in Python */
   else if (unlikely(Py_TYPE(((PyObject *)__pyx_v_self))->tp_dictoffset != 0)) {
-    __pyx_t_1 = __Pyx_PyObject_GetAttrStr(((PyObject *)__pyx_v_self), __pyx_n_s_readinto); if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 440; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+    __pyx_t_1 = __Pyx_PyObject_GetAttrStr(((PyObject *)__pyx_v_self), __pyx_n_s_readinto); if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 467; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
     __Pyx_GOTREF(__pyx_t_1);
-    if (!PyCFunction_Check(__pyx_t_1) || (PyCFunction_GET_FUNCTION(__pyx_t_1) != (PyCFunction)__pyx_pw_9mbufferio_10_mbufferio_9MBufferIO_35readinto)) {
+    if (!PyCFunction_Check(__pyx_t_1) || (PyCFunction_GET_FUNCTION(__pyx_t_1) != (PyCFunction)__pyx_pw_9mbufferio_10_mbufferio_9MBufferIO_33readinto)) {
       __Pyx_XDECREF(__pyx_r);
       __Pyx_INCREF(__pyx_t_1);
       __pyx_t_3 = __pyx_t_1; __pyx_t_4 = NULL;
@@ -6792,16 +6787,16 @@ static PyObject *__pyx_f_9mbufferio_10_mbufferio_9MBufferIO_readinto(struct __py
         }
       }
       if (!__pyx_t_4) {
-        __pyx_t_2 = __Pyx_PyObject_CallOneArg(__pyx_t_3, __pyx_v_destination); if (unlikely(!__pyx_t_2)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 440; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+        __pyx_t_2 = __Pyx_PyObject_CallOneArg(__pyx_t_3, __pyx_v_destination); if (unlikely(!__pyx_t_2)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 467; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
         __Pyx_GOTREF(__pyx_t_2);
       } else {
-        __pyx_t_5 = PyTuple_New(1+1); if (unlikely(!__pyx_t_5)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 440; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+        __pyx_t_5 = PyTuple_New(1+1); if (unlikely(!__pyx_t_5)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 467; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
         __Pyx_GOTREF(__pyx_t_5);
         __Pyx_GIVEREF(__pyx_t_4); PyTuple_SET_ITEM(__pyx_t_5, 0, __pyx_t_4); __pyx_t_4 = NULL;
         __Pyx_INCREF(__pyx_v_destination);
         __Pyx_GIVEREF(__pyx_v_destination);
         PyTuple_SET_ITEM(__pyx_t_5, 0+1, __pyx_v_destination);
-        __pyx_t_2 = __Pyx_PyObject_Call(__pyx_t_3, __pyx_t_5, NULL); if (unlikely(!__pyx_t_2)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 440; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+        __pyx_t_2 = __Pyx_PyObject_Call(__pyx_t_3, __pyx_t_5, NULL); if (unlikely(!__pyx_t_2)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 467; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
         __Pyx_GOTREF(__pyx_t_2);
         __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
       }
@@ -6814,7 +6809,7 @@ static PyObject *__pyx_f_9mbufferio_10_mbufferio_9MBufferIO_readinto(struct __py
     __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
   }
 
-  /* "mbufferio/_mbufferio.pyx":453
+  /* "mbufferio/_mbufferio.pyx":480
  *         number of read bytes
  *         """
  *         if not PyObject_CheckBuffer(destination):             # <<<<<<<<<<<<<<
@@ -6824,20 +6819,20 @@ static PyObject *__pyx_f_9mbufferio_10_mbufferio_9MBufferIO_readinto(struct __py
   __pyx_t_6 = ((!(PyObject_CheckBuffer(__pyx_v_destination) != 0)) != 0);
   if (__pyx_t_6) {
 
-    /* "mbufferio/_mbufferio.pyx":454
+    /* "mbufferio/_mbufferio.pyx":481
  *         """
  *         if not PyObject_CheckBuffer(destination):
  *             raise TypeError("exportto: parameter 'destination' must support the buffer protocol")             # <<<<<<<<<<<<<<
  * 
  *         cdef Py_buffer* dest_view
  */
-    __pyx_t_1 = __Pyx_PyObject_Call(__pyx_builtin_TypeError, __pyx_tuple__20, NULL); if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 454; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+    __pyx_t_1 = __Pyx_PyObject_Call(__pyx_builtin_TypeError, __pyx_tuple__20, NULL); if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 481; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
     __Pyx_GOTREF(__pyx_t_1);
     __Pyx_Raise(__pyx_t_1, 0, 0, 0);
     __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
-    {__pyx_filename = __pyx_f[0]; __pyx_lineno = 454; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+    {__pyx_filename = __pyx_f[0]; __pyx_lineno = 481; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
 
-    /* "mbufferio/_mbufferio.pyx":453
+    /* "mbufferio/_mbufferio.pyx":480
  *         number of read bytes
  *         """
  *         if not PyObject_CheckBuffer(destination):             # <<<<<<<<<<<<<<
@@ -6846,7 +6841,7 @@ static PyObject *__pyx_f_9mbufferio_10_mbufferio_9MBufferIO_readinto(struct __py
  */
   }
 
-  /* "mbufferio/_mbufferio.pyx":460
+  /* "mbufferio/_mbufferio.pyx":487
  *         cdef char* dest_addr
  * 
  *         dest_view = <Py_buffer*> PyMem_Malloc(sizeof(Py_buffer))             # <<<<<<<<<<<<<<
@@ -6855,7 +6850,7 @@ static PyObject *__pyx_f_9mbufferio_10_mbufferio_9MBufferIO_readinto(struct __py
  */
   __pyx_v_dest_view = ((Py_buffer *)PyMem_Malloc((sizeof(Py_buffer))));
 
-  /* "mbufferio/_mbufferio.pyx":461
+  /* "mbufferio/_mbufferio.pyx":488
  * 
  *         dest_view = <Py_buffer*> PyMem_Malloc(sizeof(Py_buffer))
  *         if dest_view == NULL:             # <<<<<<<<<<<<<<
@@ -6865,16 +6860,16 @@ static PyObject *__pyx_f_9mbufferio_10_mbufferio_9MBufferIO_readinto(struct __py
   __pyx_t_6 = ((__pyx_v_dest_view == NULL) != 0);
   if (__pyx_t_6) {
 
-    /* "mbufferio/_mbufferio.pyx":462
+    /* "mbufferio/_mbufferio.pyx":489
  *         dest_view = <Py_buffer*> PyMem_Malloc(sizeof(Py_buffer))
  *         if dest_view == NULL:
  *             raise MemoryError             # <<<<<<<<<<<<<<
  *         if PyObject_GetBuffer(destination, dest_view, PyBUF_SIMPLE) == -1:
  *             PyMem_Free(dest_view)
  */
-    PyErr_NoMemory(); {__pyx_filename = __pyx_f[0]; __pyx_lineno = 462; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+    PyErr_NoMemory(); {__pyx_filename = __pyx_f[0]; __pyx_lineno = 489; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
 
-    /* "mbufferio/_mbufferio.pyx":461
+    /* "mbufferio/_mbufferio.pyx":488
  * 
  *         dest_view = <Py_buffer*> PyMem_Malloc(sizeof(Py_buffer))
  *         if dest_view == NULL:             # <<<<<<<<<<<<<<
@@ -6883,18 +6878,18 @@ static PyObject *__pyx_f_9mbufferio_10_mbufferio_9MBufferIO_readinto(struct __py
  */
   }
 
-  /* "mbufferio/_mbufferio.pyx":463
+  /* "mbufferio/_mbufferio.pyx":490
  *         if dest_view == NULL:
  *             raise MemoryError
  *         if PyObject_GetBuffer(destination, dest_view, PyBUF_SIMPLE) == -1:             # <<<<<<<<<<<<<<
  *             PyMem_Free(dest_view)
  *             raise RuntimeError("PyObject_GetBuffer failed")
  */
-  __pyx_t_7 = PyObject_GetBuffer(__pyx_v_destination, __pyx_v_dest_view, PyBUF_SIMPLE); if (unlikely(__pyx_t_7 == -1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 463; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __pyx_t_7 = PyObject_GetBuffer(__pyx_v_destination, __pyx_v_dest_view, PyBUF_SIMPLE); if (unlikely(__pyx_t_7 == -1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 490; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
   __pyx_t_6 = ((__pyx_t_7 == -1L) != 0);
   if (__pyx_t_6) {
 
-    /* "mbufferio/_mbufferio.pyx":464
+    /* "mbufferio/_mbufferio.pyx":491
  *             raise MemoryError
  *         if PyObject_GetBuffer(destination, dest_view, PyBUF_SIMPLE) == -1:
  *             PyMem_Free(dest_view)             # <<<<<<<<<<<<<<
@@ -6903,20 +6898,20 @@ static PyObject *__pyx_f_9mbufferio_10_mbufferio_9MBufferIO_readinto(struct __py
  */
     PyMem_Free(__pyx_v_dest_view);
 
-    /* "mbufferio/_mbufferio.pyx":465
+    /* "mbufferio/_mbufferio.pyx":492
  *         if PyObject_GetBuffer(destination, dest_view, PyBUF_SIMPLE) == -1:
  *             PyMem_Free(dest_view)
  *             raise RuntimeError("PyObject_GetBuffer failed")             # <<<<<<<<<<<<<<
  *         dest_addr = <char*> dest_view.buf
  *         dest_len = min(<int64_t> dest_view.len, self.length - self.offset)
  */
-    __pyx_t_1 = __Pyx_PyObject_Call(__pyx_builtin_RuntimeError, __pyx_tuple__21, NULL); if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 465; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+    __pyx_t_1 = __Pyx_PyObject_Call(__pyx_builtin_RuntimeError, __pyx_tuple__21, NULL); if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 492; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
     __Pyx_GOTREF(__pyx_t_1);
     __Pyx_Raise(__pyx_t_1, 0, 0, 0);
     __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
-    {__pyx_filename = __pyx_f[0]; __pyx_lineno = 465; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+    {__pyx_filename = __pyx_f[0]; __pyx_lineno = 492; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
 
-    /* "mbufferio/_mbufferio.pyx":463
+    /* "mbufferio/_mbufferio.pyx":490
  *         if dest_view == NULL:
  *             raise MemoryError
  *         if PyObject_GetBuffer(destination, dest_view, PyBUF_SIMPLE) == -1:             # <<<<<<<<<<<<<<
@@ -6925,7 +6920,7 @@ static PyObject *__pyx_f_9mbufferio_10_mbufferio_9MBufferIO_readinto(struct __py
  */
   }
 
-  /* "mbufferio/_mbufferio.pyx":466
+  /* "mbufferio/_mbufferio.pyx":493
  *             PyMem_Free(dest_view)
  *             raise RuntimeError("PyObject_GetBuffer failed")
  *         dest_addr = <char*> dest_view.buf             # <<<<<<<<<<<<<<
@@ -6934,7 +6929,7 @@ static PyObject *__pyx_f_9mbufferio_10_mbufferio_9MBufferIO_readinto(struct __py
  */
   __pyx_v_dest_addr = ((char *)__pyx_v_dest_view->buf);
 
-  /* "mbufferio/_mbufferio.pyx":467
+  /* "mbufferio/_mbufferio.pyx":494
  *             raise RuntimeError("PyObject_GetBuffer failed")
  *         dest_addr = <char*> dest_view.buf
  *         dest_len = min(<int64_t> dest_view.len, self.length - self.offset)             # <<<<<<<<<<<<<<
@@ -6950,7 +6945,7 @@ static PyObject *__pyx_f_9mbufferio_10_mbufferio_9MBufferIO_readinto(struct __py
   }
   __pyx_v_dest_len = __pyx_t_10;
 
-  /* "mbufferio/_mbufferio.pyx":468
+  /* "mbufferio/_mbufferio.pyx":495
  *         dest_addr = <char*> dest_view.buf
  *         dest_len = min(<int64_t> dest_view.len, self.length - self.offset)
  *         try:             # <<<<<<<<<<<<<<
@@ -6959,7 +6954,7 @@ static PyObject *__pyx_f_9mbufferio_10_mbufferio_9MBufferIO_readinto(struct __py
  */
   /*try:*/ {
 
-    /* "mbufferio/_mbufferio.pyx":469
+    /* "mbufferio/_mbufferio.pyx":496
  *         dest_len = min(<int64_t> dest_view.len, self.length - self.offset)
  *         try:
  *             if dest_len == 0:             # <<<<<<<<<<<<<<
@@ -6969,7 +6964,7 @@ static PyObject *__pyx_f_9mbufferio_10_mbufferio_9MBufferIO_readinto(struct __py
     __pyx_t_6 = ((__pyx_v_dest_len == 0) != 0);
     if (__pyx_t_6) {
 
-      /* "mbufferio/_mbufferio.pyx":470
+      /* "mbufferio/_mbufferio.pyx":497
  *         try:
  *             if dest_len == 0:
  *                 return 0             # <<<<<<<<<<<<<<
@@ -6981,7 +6976,7 @@ static PyObject *__pyx_f_9mbufferio_10_mbufferio_9MBufferIO_readinto(struct __py
       __pyx_r = __pyx_int_0;
       goto __pyx_L6_return;
 
-      /* "mbufferio/_mbufferio.pyx":469
+      /* "mbufferio/_mbufferio.pyx":496
  *         dest_len = min(<int64_t> dest_view.len, self.length - self.offset)
  *         try:
  *             if dest_len == 0:             # <<<<<<<<<<<<<<
@@ -6990,7 +6985,7 @@ static PyObject *__pyx_f_9mbufferio_10_mbufferio_9MBufferIO_readinto(struct __py
  */
     }
 
-    /* "mbufferio/_mbufferio.pyx":471
+    /* "mbufferio/_mbufferio.pyx":498
  *             if dest_len == 0:
  *                 return 0
  *             if dest_view.readonly:             # <<<<<<<<<<<<<<
@@ -7000,20 +6995,20 @@ static PyObject *__pyx_f_9mbufferio_10_mbufferio_9MBufferIO_readinto(struct __py
     __pyx_t_6 = (__pyx_v_dest_view->readonly != 0);
     if (__pyx_t_6) {
 
-      /* "mbufferio/_mbufferio.pyx":472
+      /* "mbufferio/_mbufferio.pyx":499
  *                 return 0
  *             if dest_view.readonly:
  *                 raise TypeError("destination is read-only")             # <<<<<<<<<<<<<<
  * 
  *             memcpy(dest_addr, self.buf_pointer + self.startpos + self.offset, dest_len)
  */
-      __pyx_t_1 = __Pyx_PyObject_Call(__pyx_builtin_TypeError, __pyx_tuple__22, NULL); if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 472; __pyx_clineno = __LINE__; goto __pyx_L7_error;}
+      __pyx_t_1 = __Pyx_PyObject_Call(__pyx_builtin_TypeError, __pyx_tuple__22, NULL); if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 499; __pyx_clineno = __LINE__; goto __pyx_L7_error;}
       __Pyx_GOTREF(__pyx_t_1);
       __Pyx_Raise(__pyx_t_1, 0, 0, 0);
       __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
-      {__pyx_filename = __pyx_f[0]; __pyx_lineno = 472; __pyx_clineno = __LINE__; goto __pyx_L7_error;}
+      {__pyx_filename = __pyx_f[0]; __pyx_lineno = 499; __pyx_clineno = __LINE__; goto __pyx_L7_error;}
 
-      /* "mbufferio/_mbufferio.pyx":471
+      /* "mbufferio/_mbufferio.pyx":498
  *             if dest_len == 0:
  *                 return 0
  *             if dest_view.readonly:             # <<<<<<<<<<<<<<
@@ -7022,7 +7017,7 @@ static PyObject *__pyx_f_9mbufferio_10_mbufferio_9MBufferIO_readinto(struct __py
  */
     }
 
-    /* "mbufferio/_mbufferio.pyx":474
+    /* "mbufferio/_mbufferio.pyx":501
  *                 raise TypeError("destination is read-only")
  * 
  *             memcpy(dest_addr, self.buf_pointer + self.startpos + self.offset, dest_len)             # <<<<<<<<<<<<<<
@@ -7031,7 +7026,7 @@ static PyObject *__pyx_f_9mbufferio_10_mbufferio_9MBufferIO_readinto(struct __py
  */
     memcpy(__pyx_v_dest_addr, ((__pyx_v_self->buf_pointer + __pyx_v_self->startpos) + __pyx_v_self->offset), __pyx_v_dest_len);
 
-    /* "mbufferio/_mbufferio.pyx":475
+    /* "mbufferio/_mbufferio.pyx":502
  * 
  *             memcpy(dest_addr, self.buf_pointer + self.startpos + self.offset, dest_len)
  *             self.offset += dest_len             # <<<<<<<<<<<<<<
@@ -7040,7 +7035,7 @@ static PyObject *__pyx_f_9mbufferio_10_mbufferio_9MBufferIO_readinto(struct __py
  */
     __pyx_v_self->offset = (__pyx_v_self->offset + __pyx_v_dest_len);
 
-    /* "mbufferio/_mbufferio.pyx":476
+    /* "mbufferio/_mbufferio.pyx":503
  *             memcpy(dest_addr, self.buf_pointer + self.startpos + self.offset, dest_len)
  *             self.offset += dest_len
  *             return dest_len             # <<<<<<<<<<<<<<
@@ -7048,14 +7043,14 @@ static PyObject *__pyx_f_9mbufferio_10_mbufferio_9MBufferIO_readinto(struct __py
  *         finally:
  */
     __Pyx_XDECREF(__pyx_r);
-    __pyx_t_1 = __Pyx_PyInt_From_int64_t(__pyx_v_dest_len); if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 476; __pyx_clineno = __LINE__; goto __pyx_L7_error;}
+    __pyx_t_1 = __Pyx_PyInt_From_int64_t(__pyx_v_dest_len); if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 503; __pyx_clineno = __LINE__; goto __pyx_L7_error;}
     __Pyx_GOTREF(__pyx_t_1);
     __pyx_r = __pyx_t_1;
     __pyx_t_1 = 0;
     goto __pyx_L6_return;
   }
 
-  /* "mbufferio/_mbufferio.pyx":479
+  /* "mbufferio/_mbufferio.pyx":506
  * 
  *         finally:
  *             if dest_view is not NULL:             # <<<<<<<<<<<<<<
@@ -7084,7 +7079,7 @@ static PyObject *__pyx_f_9mbufferio_10_mbufferio_9MBufferIO_readinto(struct __py
         __pyx_t_6 = ((__pyx_v_dest_view != NULL) != 0);
         if (__pyx_t_6) {
 
-          /* "mbufferio/_mbufferio.pyx":480
+          /* "mbufferio/_mbufferio.pyx":507
  *         finally:
  *             if dest_view is not NULL:
  *                 PyBuffer_Release(dest_view)             # <<<<<<<<<<<<<<
@@ -7093,7 +7088,7 @@ static PyObject *__pyx_f_9mbufferio_10_mbufferio_9MBufferIO_readinto(struct __py
  */
           PyBuffer_Release(__pyx_v_dest_view);
 
-          /* "mbufferio/_mbufferio.pyx":481
+          /* "mbufferio/_mbufferio.pyx":508
  *             if dest_view is not NULL:
  *                 PyBuffer_Release(dest_view)
  *                 PyMem_Free(dest_view)             # <<<<<<<<<<<<<<
@@ -7102,7 +7097,7 @@ static PyObject *__pyx_f_9mbufferio_10_mbufferio_9MBufferIO_readinto(struct __py
  */
           PyMem_Free(__pyx_v_dest_view);
 
-          /* "mbufferio/_mbufferio.pyx":479
+          /* "mbufferio/_mbufferio.pyx":506
  * 
  *         finally:
  *             if dest_view is not NULL:             # <<<<<<<<<<<<<<
@@ -7131,7 +7126,7 @@ static PyObject *__pyx_f_9mbufferio_10_mbufferio_9MBufferIO_readinto(struct __py
       __pyx_t_6 = ((__pyx_v_dest_view != NULL) != 0);
       if (__pyx_t_6) {
 
-        /* "mbufferio/_mbufferio.pyx":480
+        /* "mbufferio/_mbufferio.pyx":507
  *         finally:
  *             if dest_view is not NULL:
  *                 PyBuffer_Release(dest_view)             # <<<<<<<<<<<<<<
@@ -7140,7 +7135,7 @@ static PyObject *__pyx_f_9mbufferio_10_mbufferio_9MBufferIO_readinto(struct __py
  */
         PyBuffer_Release(__pyx_v_dest_view);
 
-        /* "mbufferio/_mbufferio.pyx":481
+        /* "mbufferio/_mbufferio.pyx":508
  *             if dest_view is not NULL:
  *                 PyBuffer_Release(dest_view)
  *                 PyMem_Free(dest_view)             # <<<<<<<<<<<<<<
@@ -7149,7 +7144,7 @@ static PyObject *__pyx_f_9mbufferio_10_mbufferio_9MBufferIO_readinto(struct __py
  */
         PyMem_Free(__pyx_v_dest_view);
 
-        /* "mbufferio/_mbufferio.pyx":479
+        /* "mbufferio/_mbufferio.pyx":506
  * 
  *         finally:
  *             if dest_view is not NULL:             # <<<<<<<<<<<<<<
@@ -7163,7 +7158,7 @@ static PyObject *__pyx_f_9mbufferio_10_mbufferio_9MBufferIO_readinto(struct __py
     }
   }
 
-  /* "mbufferio/_mbufferio.pyx":440
+  /* "mbufferio/_mbufferio.pyx":467
  *         return self.write(obj_to_write)
  * 
  *     cpdef readinto(self, object destination):             # <<<<<<<<<<<<<<
@@ -7187,20 +7182,20 @@ static PyObject *__pyx_f_9mbufferio_10_mbufferio_9MBufferIO_readinto(struct __py
 }
 
 /* Python wrapper */
-static PyObject *__pyx_pw_9mbufferio_10_mbufferio_9MBufferIO_35readinto(PyObject *__pyx_v_self, PyObject *__pyx_v_destination); /*proto*/
-static char __pyx_doc_9mbufferio_10_mbufferio_9MBufferIO_34readinto[] = "\n        readinto(destination)\n        Read up to len(destination) bytes from the MBufferIO into 'destination' and return the number of bytes read.\n\n        Parameters\n        ----------\n        destination: any object that supports the buffer protocol\n\n        Returns\n        -------\n        number of read bytes\n        ";
-static PyObject *__pyx_pw_9mbufferio_10_mbufferio_9MBufferIO_35readinto(PyObject *__pyx_v_self, PyObject *__pyx_v_destination) {
+static PyObject *__pyx_pw_9mbufferio_10_mbufferio_9MBufferIO_33readinto(PyObject *__pyx_v_self, PyObject *__pyx_v_destination); /*proto*/
+static char __pyx_doc_9mbufferio_10_mbufferio_9MBufferIO_32readinto[] = "\n        readinto(destination)\n        Read up to len(destination) bytes from the MBufferIO into 'destination' and return the number of bytes read.\n\n        Parameters\n        ----------\n        destination: any object that supports the buffer protocol\n\n        Returns\n        -------\n        number of read bytes\n        ";
+static PyObject *__pyx_pw_9mbufferio_10_mbufferio_9MBufferIO_33readinto(PyObject *__pyx_v_self, PyObject *__pyx_v_destination) {
   PyObject *__pyx_r = 0;
   __Pyx_RefNannyDeclarations
   __Pyx_RefNannySetupContext("readinto (wrapper)", 0);
-  __pyx_r = __pyx_pf_9mbufferio_10_mbufferio_9MBufferIO_34readinto(((struct __pyx_obj_9mbufferio_10_mbufferio_MBufferIO *)__pyx_v_self), ((PyObject *)__pyx_v_destination));
+  __pyx_r = __pyx_pf_9mbufferio_10_mbufferio_9MBufferIO_32readinto(((struct __pyx_obj_9mbufferio_10_mbufferio_MBufferIO *)__pyx_v_self), ((PyObject *)__pyx_v_destination));
 
   /* function exit code */
   __Pyx_RefNannyFinishContext();
   return __pyx_r;
 }
 
-static PyObject *__pyx_pf_9mbufferio_10_mbufferio_9MBufferIO_34readinto(struct __pyx_obj_9mbufferio_10_mbufferio_MBufferIO *__pyx_v_self, PyObject *__pyx_v_destination) {
+static PyObject *__pyx_pf_9mbufferio_10_mbufferio_9MBufferIO_32readinto(struct __pyx_obj_9mbufferio_10_mbufferio_MBufferIO *__pyx_v_self, PyObject *__pyx_v_destination) {
   PyObject *__pyx_r = NULL;
   __Pyx_RefNannyDeclarations
   PyObject *__pyx_t_1 = NULL;
@@ -7209,7 +7204,7 @@ static PyObject *__pyx_pf_9mbufferio_10_mbufferio_9MBufferIO_34readinto(struct _
   int __pyx_clineno = 0;
   __Pyx_RefNannySetupContext("readinto", 0);
   __Pyx_XDECREF(__pyx_r);
-  __pyx_t_1 = __pyx_f_9mbufferio_10_mbufferio_9MBufferIO_readinto(__pyx_v_self, __pyx_v_destination, 1); if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 440; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __pyx_t_1 = __pyx_f_9mbufferio_10_mbufferio_9MBufferIO_readinto(__pyx_v_self, __pyx_v_destination, 1); if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 467; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
   __Pyx_GOTREF(__pyx_t_1);
   __pyx_r = __pyx_t_1;
   __pyx_t_1 = 0;
@@ -7226,7 +7221,7 @@ static PyObject *__pyx_pf_9mbufferio_10_mbufferio_9MBufferIO_34readinto(struct _
   return __pyx_r;
 }
 
-/* "mbufferio/_mbufferio.pyx":485
+/* "mbufferio/_mbufferio.pyx":512
  * 
  * 
  *     cpdef exportto(self, object destination):             # <<<<<<<<<<<<<<
@@ -7234,7 +7229,7 @@ static PyObject *__pyx_pf_9mbufferio_10_mbufferio_9MBufferIO_34readinto(struct _
  *         exportto(destination)
  */
 
-static PyObject *__pyx_pw_9mbufferio_10_mbufferio_9MBufferIO_37exportto(PyObject *__pyx_v_self, PyObject *__pyx_v_destination); /*proto*/
+static PyObject *__pyx_pw_9mbufferio_10_mbufferio_9MBufferIO_35exportto(PyObject *__pyx_v_self, PyObject *__pyx_v_destination); /*proto*/
 static PyObject *__pyx_f_9mbufferio_10_mbufferio_9MBufferIO_exportto(struct __pyx_obj_9mbufferio_10_mbufferio_MBufferIO *__pyx_v_self, PyObject *__pyx_v_destination, int __pyx_skip_dispatch) {
   Py_buffer *__pyx_v_dest_view;
   int64_t __pyx_v_dest_len;
@@ -7267,9 +7262,9 @@ static PyObject *__pyx_f_9mbufferio_10_mbufferio_9MBufferIO_exportto(struct __py
   if (unlikely(__pyx_skip_dispatch)) ;
   /* Check if overridden in Python */
   else if (unlikely(Py_TYPE(((PyObject *)__pyx_v_self))->tp_dictoffset != 0)) {
-    __pyx_t_1 = __Pyx_PyObject_GetAttrStr(((PyObject *)__pyx_v_self), __pyx_n_s_exportto); if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 485; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+    __pyx_t_1 = __Pyx_PyObject_GetAttrStr(((PyObject *)__pyx_v_self), __pyx_n_s_exportto); if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 512; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
     __Pyx_GOTREF(__pyx_t_1);
-    if (!PyCFunction_Check(__pyx_t_1) || (PyCFunction_GET_FUNCTION(__pyx_t_1) != (PyCFunction)__pyx_pw_9mbufferio_10_mbufferio_9MBufferIO_37exportto)) {
+    if (!PyCFunction_Check(__pyx_t_1) || (PyCFunction_GET_FUNCTION(__pyx_t_1) != (PyCFunction)__pyx_pw_9mbufferio_10_mbufferio_9MBufferIO_35exportto)) {
       __Pyx_XDECREF(__pyx_r);
       __Pyx_INCREF(__pyx_t_1);
       __pyx_t_3 = __pyx_t_1; __pyx_t_4 = NULL;
@@ -7283,16 +7278,16 @@ static PyObject *__pyx_f_9mbufferio_10_mbufferio_9MBufferIO_exportto(struct __py
         }
       }
       if (!__pyx_t_4) {
-        __pyx_t_2 = __Pyx_PyObject_CallOneArg(__pyx_t_3, __pyx_v_destination); if (unlikely(!__pyx_t_2)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 485; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+        __pyx_t_2 = __Pyx_PyObject_CallOneArg(__pyx_t_3, __pyx_v_destination); if (unlikely(!__pyx_t_2)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 512; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
         __Pyx_GOTREF(__pyx_t_2);
       } else {
-        __pyx_t_5 = PyTuple_New(1+1); if (unlikely(!__pyx_t_5)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 485; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+        __pyx_t_5 = PyTuple_New(1+1); if (unlikely(!__pyx_t_5)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 512; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
         __Pyx_GOTREF(__pyx_t_5);
         __Pyx_GIVEREF(__pyx_t_4); PyTuple_SET_ITEM(__pyx_t_5, 0, __pyx_t_4); __pyx_t_4 = NULL;
         __Pyx_INCREF(__pyx_v_destination);
         __Pyx_GIVEREF(__pyx_v_destination);
         PyTuple_SET_ITEM(__pyx_t_5, 0+1, __pyx_v_destination);
-        __pyx_t_2 = __Pyx_PyObject_Call(__pyx_t_3, __pyx_t_5, NULL); if (unlikely(!__pyx_t_2)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 485; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+        __pyx_t_2 = __Pyx_PyObject_Call(__pyx_t_3, __pyx_t_5, NULL); if (unlikely(!__pyx_t_2)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 512; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
         __Pyx_GOTREF(__pyx_t_2);
         __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
       }
@@ -7305,7 +7300,7 @@ static PyObject *__pyx_f_9mbufferio_10_mbufferio_9MBufferIO_exportto(struct __py
     __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
   }
 
-  /* "mbufferio/_mbufferio.pyx":500
+  /* "mbufferio/_mbufferio.pyx":527
  *         """
  * 
  *         if not PyObject_CheckBuffer(destination):             # <<<<<<<<<<<<<<
@@ -7315,20 +7310,20 @@ static PyObject *__pyx_f_9mbufferio_10_mbufferio_9MBufferIO_exportto(struct __py
   __pyx_t_6 = ((!(PyObject_CheckBuffer(__pyx_v_destination) != 0)) != 0);
   if (__pyx_t_6) {
 
-    /* "mbufferio/_mbufferio.pyx":501
+    /* "mbufferio/_mbufferio.pyx":528
  * 
  *         if not PyObject_CheckBuffer(destination):
  *             raise TypeError("exportto: parameter 'destination' must support the buffer protocol")             # <<<<<<<<<<<<<<
  * 
  *         cdef Py_buffer* dest_view
  */
-    __pyx_t_1 = __Pyx_PyObject_Call(__pyx_builtin_TypeError, __pyx_tuple__23, NULL); if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 501; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+    __pyx_t_1 = __Pyx_PyObject_Call(__pyx_builtin_TypeError, __pyx_tuple__23, NULL); if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 528; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
     __Pyx_GOTREF(__pyx_t_1);
     __Pyx_Raise(__pyx_t_1, 0, 0, 0);
     __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
-    {__pyx_filename = __pyx_f[0]; __pyx_lineno = 501; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+    {__pyx_filename = __pyx_f[0]; __pyx_lineno = 528; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
 
-    /* "mbufferio/_mbufferio.pyx":500
+    /* "mbufferio/_mbufferio.pyx":527
  *         """
  * 
  *         if not PyObject_CheckBuffer(destination):             # <<<<<<<<<<<<<<
@@ -7337,7 +7332,7 @@ static PyObject *__pyx_f_9mbufferio_10_mbufferio_9MBufferIO_exportto(struct __py
  */
   }
 
-  /* "mbufferio/_mbufferio.pyx":507
+  /* "mbufferio/_mbufferio.pyx":534
  *         cdef char* dest_addr
  * 
  *         dest_view = <Py_buffer*> PyMem_Malloc(sizeof(Py_buffer))             # <<<<<<<<<<<<<<
@@ -7346,7 +7341,7 @@ static PyObject *__pyx_f_9mbufferio_10_mbufferio_9MBufferIO_exportto(struct __py
  */
   __pyx_v_dest_view = ((Py_buffer *)PyMem_Malloc((sizeof(Py_buffer))));
 
-  /* "mbufferio/_mbufferio.pyx":508
+  /* "mbufferio/_mbufferio.pyx":535
  * 
  *         dest_view = <Py_buffer*> PyMem_Malloc(sizeof(Py_buffer))
  *         if dest_view == NULL:             # <<<<<<<<<<<<<<
@@ -7356,16 +7351,16 @@ static PyObject *__pyx_f_9mbufferio_10_mbufferio_9MBufferIO_exportto(struct __py
   __pyx_t_6 = ((__pyx_v_dest_view == NULL) != 0);
   if (__pyx_t_6) {
 
-    /* "mbufferio/_mbufferio.pyx":509
+    /* "mbufferio/_mbufferio.pyx":536
  *         dest_view = <Py_buffer*> PyMem_Malloc(sizeof(Py_buffer))
  *         if dest_view == NULL:
  *             raise MemoryError             # <<<<<<<<<<<<<<
  *         if PyObject_GetBuffer(destination, dest_view, PyBUF_SIMPLE) == -1:
  *             PyMem_Free(dest_view)
  */
-    PyErr_NoMemory(); {__pyx_filename = __pyx_f[0]; __pyx_lineno = 509; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+    PyErr_NoMemory(); {__pyx_filename = __pyx_f[0]; __pyx_lineno = 536; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
 
-    /* "mbufferio/_mbufferio.pyx":508
+    /* "mbufferio/_mbufferio.pyx":535
  * 
  *         dest_view = <Py_buffer*> PyMem_Malloc(sizeof(Py_buffer))
  *         if dest_view == NULL:             # <<<<<<<<<<<<<<
@@ -7374,18 +7369,18 @@ static PyObject *__pyx_f_9mbufferio_10_mbufferio_9MBufferIO_exportto(struct __py
  */
   }
 
-  /* "mbufferio/_mbufferio.pyx":510
+  /* "mbufferio/_mbufferio.pyx":537
  *         if dest_view == NULL:
  *             raise MemoryError
  *         if PyObject_GetBuffer(destination, dest_view, PyBUF_SIMPLE) == -1:             # <<<<<<<<<<<<<<
  *             PyMem_Free(dest_view)
  *             raise RuntimeError("PyObject_GetBuffer failed")
  */
-  __pyx_t_7 = PyObject_GetBuffer(__pyx_v_destination, __pyx_v_dest_view, PyBUF_SIMPLE); if (unlikely(__pyx_t_7 == -1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 510; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __pyx_t_7 = PyObject_GetBuffer(__pyx_v_destination, __pyx_v_dest_view, PyBUF_SIMPLE); if (unlikely(__pyx_t_7 == -1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 537; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
   __pyx_t_6 = ((__pyx_t_7 == -1L) != 0);
   if (__pyx_t_6) {
 
-    /* "mbufferio/_mbufferio.pyx":511
+    /* "mbufferio/_mbufferio.pyx":538
  *             raise MemoryError
  *         if PyObject_GetBuffer(destination, dest_view, PyBUF_SIMPLE) == -1:
  *             PyMem_Free(dest_view)             # <<<<<<<<<<<<<<
@@ -7394,20 +7389,20 @@ static PyObject *__pyx_f_9mbufferio_10_mbufferio_9MBufferIO_exportto(struct __py
  */
     PyMem_Free(__pyx_v_dest_view);
 
-    /* "mbufferio/_mbufferio.pyx":512
+    /* "mbufferio/_mbufferio.pyx":539
  *         if PyObject_GetBuffer(destination, dest_view, PyBUF_SIMPLE) == -1:
  *             PyMem_Free(dest_view)
  *             raise RuntimeError("PyObject_GetBuffer failed")             # <<<<<<<<<<<<<<
  *         dest_addr = <char*> dest_view.buf
  *         dest_len = min(<int64_t> dest_view.len, self.length)
  */
-    __pyx_t_1 = __Pyx_PyObject_Call(__pyx_builtin_RuntimeError, __pyx_tuple__24, NULL); if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 512; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+    __pyx_t_1 = __Pyx_PyObject_Call(__pyx_builtin_RuntimeError, __pyx_tuple__24, NULL); if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 539; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
     __Pyx_GOTREF(__pyx_t_1);
     __Pyx_Raise(__pyx_t_1, 0, 0, 0);
     __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
-    {__pyx_filename = __pyx_f[0]; __pyx_lineno = 512; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+    {__pyx_filename = __pyx_f[0]; __pyx_lineno = 539; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
 
-    /* "mbufferio/_mbufferio.pyx":510
+    /* "mbufferio/_mbufferio.pyx":537
  *         if dest_view == NULL:
  *             raise MemoryError
  *         if PyObject_GetBuffer(destination, dest_view, PyBUF_SIMPLE) == -1:             # <<<<<<<<<<<<<<
@@ -7416,7 +7411,7 @@ static PyObject *__pyx_f_9mbufferio_10_mbufferio_9MBufferIO_exportto(struct __py
  */
   }
 
-  /* "mbufferio/_mbufferio.pyx":513
+  /* "mbufferio/_mbufferio.pyx":540
  *             PyMem_Free(dest_view)
  *             raise RuntimeError("PyObject_GetBuffer failed")
  *         dest_addr = <char*> dest_view.buf             # <<<<<<<<<<<<<<
@@ -7425,7 +7420,7 @@ static PyObject *__pyx_f_9mbufferio_10_mbufferio_9MBufferIO_exportto(struct __py
  */
   __pyx_v_dest_addr = ((char *)__pyx_v_dest_view->buf);
 
-  /* "mbufferio/_mbufferio.pyx":514
+  /* "mbufferio/_mbufferio.pyx":541
  *             raise RuntimeError("PyObject_GetBuffer failed")
  *         dest_addr = <char*> dest_view.buf
  *         dest_len = min(<int64_t> dest_view.len, self.length)             # <<<<<<<<<<<<<<
@@ -7441,7 +7436,7 @@ static PyObject *__pyx_f_9mbufferio_10_mbufferio_9MBufferIO_exportto(struct __py
   }
   __pyx_v_dest_len = __pyx_t_10;
 
-  /* "mbufferio/_mbufferio.pyx":515
+  /* "mbufferio/_mbufferio.pyx":542
  *         dest_addr = <char*> dest_view.buf
  *         dest_len = min(<int64_t> dest_view.len, self.length)
  *         try:             # <<<<<<<<<<<<<<
@@ -7450,7 +7445,7 @@ static PyObject *__pyx_f_9mbufferio_10_mbufferio_9MBufferIO_exportto(struct __py
  */
   /*try:*/ {
 
-    /* "mbufferio/_mbufferio.pyx":516
+    /* "mbufferio/_mbufferio.pyx":543
  *         dest_len = min(<int64_t> dest_view.len, self.length)
  *         try:
  *             if dest_len == 0:             # <<<<<<<<<<<<<<
@@ -7460,7 +7455,7 @@ static PyObject *__pyx_f_9mbufferio_10_mbufferio_9MBufferIO_exportto(struct __py
     __pyx_t_6 = ((__pyx_v_dest_len == 0) != 0);
     if (__pyx_t_6) {
 
-      /* "mbufferio/_mbufferio.pyx":517
+      /* "mbufferio/_mbufferio.pyx":544
  *         try:
  *             if dest_len == 0:
  *                 return 0             # <<<<<<<<<<<<<<
@@ -7472,7 +7467,7 @@ static PyObject *__pyx_f_9mbufferio_10_mbufferio_9MBufferIO_exportto(struct __py
       __pyx_r = __pyx_int_0;
       goto __pyx_L6_return;
 
-      /* "mbufferio/_mbufferio.pyx":516
+      /* "mbufferio/_mbufferio.pyx":543
  *         dest_len = min(<int64_t> dest_view.len, self.length)
  *         try:
  *             if dest_len == 0:             # <<<<<<<<<<<<<<
@@ -7481,7 +7476,7 @@ static PyObject *__pyx_f_9mbufferio_10_mbufferio_9MBufferIO_exportto(struct __py
  */
     }
 
-    /* "mbufferio/_mbufferio.pyx":518
+    /* "mbufferio/_mbufferio.pyx":545
  *             if dest_len == 0:
  *                 return 0
  *             if dest_view.readonly:             # <<<<<<<<<<<<<<
@@ -7491,20 +7486,20 @@ static PyObject *__pyx_f_9mbufferio_10_mbufferio_9MBufferIO_exportto(struct __py
     __pyx_t_6 = (__pyx_v_dest_view->readonly != 0);
     if (__pyx_t_6) {
 
-      /* "mbufferio/_mbufferio.pyx":519
+      /* "mbufferio/_mbufferio.pyx":546
  *                 return 0
  *             if dest_view.readonly:
  *                 raise TypeError("destination is read-only")             # <<<<<<<<<<<<<<
  * 
  *             memcpy(dest_addr, self.buf_pointer + self.startpos, dest_len)
  */
-      __pyx_t_1 = __Pyx_PyObject_Call(__pyx_builtin_TypeError, __pyx_tuple__25, NULL); if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 519; __pyx_clineno = __LINE__; goto __pyx_L7_error;}
+      __pyx_t_1 = __Pyx_PyObject_Call(__pyx_builtin_TypeError, __pyx_tuple__25, NULL); if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 546; __pyx_clineno = __LINE__; goto __pyx_L7_error;}
       __Pyx_GOTREF(__pyx_t_1);
       __Pyx_Raise(__pyx_t_1, 0, 0, 0);
       __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
-      {__pyx_filename = __pyx_f[0]; __pyx_lineno = 519; __pyx_clineno = __LINE__; goto __pyx_L7_error;}
+      {__pyx_filename = __pyx_f[0]; __pyx_lineno = 546; __pyx_clineno = __LINE__; goto __pyx_L7_error;}
 
-      /* "mbufferio/_mbufferio.pyx":518
+      /* "mbufferio/_mbufferio.pyx":545
  *             if dest_len == 0:
  *                 return 0
  *             if dest_view.readonly:             # <<<<<<<<<<<<<<
@@ -7513,7 +7508,7 @@ static PyObject *__pyx_f_9mbufferio_10_mbufferio_9MBufferIO_exportto(struct __py
  */
     }
 
-    /* "mbufferio/_mbufferio.pyx":521
+    /* "mbufferio/_mbufferio.pyx":548
  *                 raise TypeError("destination is read-only")
  * 
  *             memcpy(dest_addr, self.buf_pointer + self.startpos, dest_len)             # <<<<<<<<<<<<<<
@@ -7522,7 +7517,7 @@ static PyObject *__pyx_f_9mbufferio_10_mbufferio_9MBufferIO_exportto(struct __py
  */
     memcpy(__pyx_v_dest_addr, (__pyx_v_self->buf_pointer + __pyx_v_self->startpos), __pyx_v_dest_len);
 
-    /* "mbufferio/_mbufferio.pyx":523
+    /* "mbufferio/_mbufferio.pyx":550
  *             memcpy(dest_addr, self.buf_pointer + self.startpos, dest_len)
  * 
  *             return dest_len             # <<<<<<<<<<<<<<
@@ -7530,14 +7525,14 @@ static PyObject *__pyx_f_9mbufferio_10_mbufferio_9MBufferIO_exportto(struct __py
  *             if dest_view is not NULL:
  */
     __Pyx_XDECREF(__pyx_r);
-    __pyx_t_1 = __Pyx_PyInt_From_int64_t(__pyx_v_dest_len); if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 523; __pyx_clineno = __LINE__; goto __pyx_L7_error;}
+    __pyx_t_1 = __Pyx_PyInt_From_int64_t(__pyx_v_dest_len); if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 550; __pyx_clineno = __LINE__; goto __pyx_L7_error;}
     __Pyx_GOTREF(__pyx_t_1);
     __pyx_r = __pyx_t_1;
     __pyx_t_1 = 0;
     goto __pyx_L6_return;
   }
 
-  /* "mbufferio/_mbufferio.pyx":525
+  /* "mbufferio/_mbufferio.pyx":552
  *             return dest_len
  *         finally:
  *             if dest_view is not NULL:             # <<<<<<<<<<<<<<
@@ -7566,7 +7561,7 @@ static PyObject *__pyx_f_9mbufferio_10_mbufferio_9MBufferIO_exportto(struct __py
         __pyx_t_6 = ((__pyx_v_dest_view != NULL) != 0);
         if (__pyx_t_6) {
 
-          /* "mbufferio/_mbufferio.pyx":526
+          /* "mbufferio/_mbufferio.pyx":553
  *         finally:
  *             if dest_view is not NULL:
  *                 PyBuffer_Release(dest_view)             # <<<<<<<<<<<<<<
@@ -7575,7 +7570,7 @@ static PyObject *__pyx_f_9mbufferio_10_mbufferio_9MBufferIO_exportto(struct __py
  */
           PyBuffer_Release(__pyx_v_dest_view);
 
-          /* "mbufferio/_mbufferio.pyx":527
+          /* "mbufferio/_mbufferio.pyx":554
  *             if dest_view is not NULL:
  *                 PyBuffer_Release(dest_view)
  *                 PyMem_Free(dest_view)             # <<<<<<<<<<<<<<
@@ -7584,7 +7579,7 @@ static PyObject *__pyx_f_9mbufferio_10_mbufferio_9MBufferIO_exportto(struct __py
  */
           PyMem_Free(__pyx_v_dest_view);
 
-          /* "mbufferio/_mbufferio.pyx":525
+          /* "mbufferio/_mbufferio.pyx":552
  *             return dest_len
  *         finally:
  *             if dest_view is not NULL:             # <<<<<<<<<<<<<<
@@ -7613,7 +7608,7 @@ static PyObject *__pyx_f_9mbufferio_10_mbufferio_9MBufferIO_exportto(struct __py
       __pyx_t_6 = ((__pyx_v_dest_view != NULL) != 0);
       if (__pyx_t_6) {
 
-        /* "mbufferio/_mbufferio.pyx":526
+        /* "mbufferio/_mbufferio.pyx":553
  *         finally:
  *             if dest_view is not NULL:
  *                 PyBuffer_Release(dest_view)             # <<<<<<<<<<<<<<
@@ -7622,7 +7617,7 @@ static PyObject *__pyx_f_9mbufferio_10_mbufferio_9MBufferIO_exportto(struct __py
  */
         PyBuffer_Release(__pyx_v_dest_view);
 
-        /* "mbufferio/_mbufferio.pyx":527
+        /* "mbufferio/_mbufferio.pyx":554
  *             if dest_view is not NULL:
  *                 PyBuffer_Release(dest_view)
  *                 PyMem_Free(dest_view)             # <<<<<<<<<<<<<<
@@ -7631,7 +7626,7 @@ static PyObject *__pyx_f_9mbufferio_10_mbufferio_9MBufferIO_exportto(struct __py
  */
         PyMem_Free(__pyx_v_dest_view);
 
-        /* "mbufferio/_mbufferio.pyx":525
+        /* "mbufferio/_mbufferio.pyx":552
  *             return dest_len
  *         finally:
  *             if dest_view is not NULL:             # <<<<<<<<<<<<<<
@@ -7645,7 +7640,7 @@ static PyObject *__pyx_f_9mbufferio_10_mbufferio_9MBufferIO_exportto(struct __py
     }
   }
 
-  /* "mbufferio/_mbufferio.pyx":485
+  /* "mbufferio/_mbufferio.pyx":512
  * 
  * 
  *     cpdef exportto(self, object destination):             # <<<<<<<<<<<<<<
@@ -7669,20 +7664,20 @@ static PyObject *__pyx_f_9mbufferio_10_mbufferio_9MBufferIO_exportto(struct __py
 }
 
 /* Python wrapper */
-static PyObject *__pyx_pw_9mbufferio_10_mbufferio_9MBufferIO_37exportto(PyObject *__pyx_v_self, PyObject *__pyx_v_destination); /*proto*/
-static char __pyx_doc_9mbufferio_10_mbufferio_9MBufferIO_36exportto[] = "\n        exportto(destination)\n        Copy the content of the MBufferIO to 'destination'. At most len(destination) bytes will be copied.\n\n        Parameters\n        ----------\n        destination: a writeable object that supports the buffer protocol\n            where to copy the MBufferIO\n\n        Returns\n        -------\n        How many bytes copied\n        ";
-static PyObject *__pyx_pw_9mbufferio_10_mbufferio_9MBufferIO_37exportto(PyObject *__pyx_v_self, PyObject *__pyx_v_destination) {
+static PyObject *__pyx_pw_9mbufferio_10_mbufferio_9MBufferIO_35exportto(PyObject *__pyx_v_self, PyObject *__pyx_v_destination); /*proto*/
+static char __pyx_doc_9mbufferio_10_mbufferio_9MBufferIO_34exportto[] = "\n        exportto(destination)\n        Copy the content of the MBufferIO to 'destination'. At most len(destination) bytes will be copied.\n\n        Parameters\n        ----------\n        destination: a writeable object that supports the buffer protocol\n            where to copy the MBufferIO\n\n        Returns\n        -------\n        How many bytes copied\n        ";
+static PyObject *__pyx_pw_9mbufferio_10_mbufferio_9MBufferIO_35exportto(PyObject *__pyx_v_self, PyObject *__pyx_v_destination) {
   PyObject *__pyx_r = 0;
   __Pyx_RefNannyDeclarations
   __Pyx_RefNannySetupContext("exportto (wrapper)", 0);
-  __pyx_r = __pyx_pf_9mbufferio_10_mbufferio_9MBufferIO_36exportto(((struct __pyx_obj_9mbufferio_10_mbufferio_MBufferIO *)__pyx_v_self), ((PyObject *)__pyx_v_destination));
+  __pyx_r = __pyx_pf_9mbufferio_10_mbufferio_9MBufferIO_34exportto(((struct __pyx_obj_9mbufferio_10_mbufferio_MBufferIO *)__pyx_v_self), ((PyObject *)__pyx_v_destination));
 
   /* function exit code */
   __Pyx_RefNannyFinishContext();
   return __pyx_r;
 }
 
-static PyObject *__pyx_pf_9mbufferio_10_mbufferio_9MBufferIO_36exportto(struct __pyx_obj_9mbufferio_10_mbufferio_MBufferIO *__pyx_v_self, PyObject *__pyx_v_destination) {
+static PyObject *__pyx_pf_9mbufferio_10_mbufferio_9MBufferIO_34exportto(struct __pyx_obj_9mbufferio_10_mbufferio_MBufferIO *__pyx_v_self, PyObject *__pyx_v_destination) {
   PyObject *__pyx_r = NULL;
   __Pyx_RefNannyDeclarations
   PyObject *__pyx_t_1 = NULL;
@@ -7691,7 +7686,7 @@ static PyObject *__pyx_pf_9mbufferio_10_mbufferio_9MBufferIO_36exportto(struct _
   int __pyx_clineno = 0;
   __Pyx_RefNannySetupContext("exportto", 0);
   __Pyx_XDECREF(__pyx_r);
-  __pyx_t_1 = __pyx_f_9mbufferio_10_mbufferio_9MBufferIO_exportto(__pyx_v_self, __pyx_v_destination, 1); if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 485; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __pyx_t_1 = __pyx_f_9mbufferio_10_mbufferio_9MBufferIO_exportto(__pyx_v_self, __pyx_v_destination, 1); if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 512; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
   __Pyx_GOTREF(__pyx_t_1);
   __pyx_r = __pyx_t_1;
   __pyx_t_1 = 0;
@@ -7708,7 +7703,7 @@ static PyObject *__pyx_pf_9mbufferio_10_mbufferio_9MBufferIO_36exportto(struct _
   return __pyx_r;
 }
 
-/* "mbufferio/_mbufferio.pyx":529
+/* "mbufferio/_mbufferio.pyx":556
  *                 PyMem_Free(dest_view)
  * 
  *     cpdef tobytearray(self):             # <<<<<<<<<<<<<<
@@ -7716,7 +7711,7 @@ static PyObject *__pyx_pf_9mbufferio_10_mbufferio_9MBufferIO_36exportto(struct _
  *         tobytearray()
  */
 
-static PyObject *__pyx_pw_9mbufferio_10_mbufferio_9MBufferIO_39tobytearray(PyObject *__pyx_v_self, CYTHON_UNUSED PyObject *unused); /*proto*/
+static PyObject *__pyx_pw_9mbufferio_10_mbufferio_9MBufferIO_37tobytearray(PyObject *__pyx_v_self, CYTHON_UNUSED PyObject *unused); /*proto*/
 static PyObject *__pyx_f_9mbufferio_10_mbufferio_9MBufferIO_tobytearray(struct __pyx_obj_9mbufferio_10_mbufferio_MBufferIO *__pyx_v_self, int __pyx_skip_dispatch) {
   PyObject *__pyx_v_temp = NULL;
   PyObject *__pyx_r = NULL;
@@ -7734,9 +7729,9 @@ static PyObject *__pyx_f_9mbufferio_10_mbufferio_9MBufferIO_tobytearray(struct _
   if (unlikely(__pyx_skip_dispatch)) ;
   /* Check if overridden in Python */
   else if (unlikely(Py_TYPE(((PyObject *)__pyx_v_self))->tp_dictoffset != 0)) {
-    __pyx_t_1 = __Pyx_PyObject_GetAttrStr(((PyObject *)__pyx_v_self), __pyx_n_s_tobytearray); if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 529; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+    __pyx_t_1 = __Pyx_PyObject_GetAttrStr(((PyObject *)__pyx_v_self), __pyx_n_s_tobytearray); if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 556; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
     __Pyx_GOTREF(__pyx_t_1);
-    if (!PyCFunction_Check(__pyx_t_1) || (PyCFunction_GET_FUNCTION(__pyx_t_1) != (PyCFunction)__pyx_pw_9mbufferio_10_mbufferio_9MBufferIO_39tobytearray)) {
+    if (!PyCFunction_Check(__pyx_t_1) || (PyCFunction_GET_FUNCTION(__pyx_t_1) != (PyCFunction)__pyx_pw_9mbufferio_10_mbufferio_9MBufferIO_37tobytearray)) {
       __Pyx_XDECREF(__pyx_r);
       __Pyx_INCREF(__pyx_t_1);
       __pyx_t_3 = __pyx_t_1; __pyx_t_4 = NULL;
@@ -7750,10 +7745,10 @@ static PyObject *__pyx_f_9mbufferio_10_mbufferio_9MBufferIO_tobytearray(struct _
         }
       }
       if (__pyx_t_4) {
-        __pyx_t_2 = __Pyx_PyObject_CallOneArg(__pyx_t_3, __pyx_t_4); if (unlikely(!__pyx_t_2)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 529; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+        __pyx_t_2 = __Pyx_PyObject_CallOneArg(__pyx_t_3, __pyx_t_4); if (unlikely(!__pyx_t_2)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 556; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
         __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
       } else {
-        __pyx_t_2 = __Pyx_PyObject_CallNoArg(__pyx_t_3); if (unlikely(!__pyx_t_2)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 529; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+        __pyx_t_2 = __Pyx_PyObject_CallNoArg(__pyx_t_3); if (unlikely(!__pyx_t_2)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 556; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
       }
       __Pyx_GOTREF(__pyx_t_2);
       __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
@@ -7765,7 +7760,7 @@ static PyObject *__pyx_f_9mbufferio_10_mbufferio_9MBufferIO_tobytearray(struct _
     __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
   }
 
-  /* "mbufferio/_mbufferio.pyx":534
+  /* "mbufferio/_mbufferio.pyx":561
  *         Returns a copy of the MBufferIO content as a bytearray
  *         """
  *         if self.length == 0:             # <<<<<<<<<<<<<<
@@ -7775,7 +7770,7 @@ static PyObject *__pyx_f_9mbufferio_10_mbufferio_9MBufferIO_tobytearray(struct _
   __pyx_t_5 = ((__pyx_v_self->length == 0) != 0);
   if (__pyx_t_5) {
 
-    /* "mbufferio/_mbufferio.pyx":535
+    /* "mbufferio/_mbufferio.pyx":562
  *         """
  *         if self.length == 0:
  *             return bytearray()             # <<<<<<<<<<<<<<
@@ -7783,13 +7778,13 @@ static PyObject *__pyx_f_9mbufferio_10_mbufferio_9MBufferIO_tobytearray(struct _
  *         self.exportto(temp)
  */
     __Pyx_XDECREF(__pyx_r);
-    __pyx_t_1 = __Pyx_PyObject_Call(((PyObject *)(&PyByteArray_Type)), __pyx_empty_tuple, NULL); if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 535; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+    __pyx_t_1 = __Pyx_PyObject_Call(((PyObject *)(&PyByteArray_Type)), __pyx_empty_tuple, NULL); if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 562; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
     __Pyx_GOTREF(__pyx_t_1);
     __pyx_r = __pyx_t_1;
     __pyx_t_1 = 0;
     goto __pyx_L0;
 
-    /* "mbufferio/_mbufferio.pyx":534
+    /* "mbufferio/_mbufferio.pyx":561
  *         Returns a copy of the MBufferIO content as a bytearray
  *         """
  *         if self.length == 0:             # <<<<<<<<<<<<<<
@@ -7798,38 +7793,38 @@ static PyObject *__pyx_f_9mbufferio_10_mbufferio_9MBufferIO_tobytearray(struct _
  */
   }
 
-  /* "mbufferio/_mbufferio.pyx":536
+  /* "mbufferio/_mbufferio.pyx":563
  *         if self.length == 0:
  *             return bytearray()
  *         temp = bytearray(self.length)             # <<<<<<<<<<<<<<
  *         self.exportto(temp)
  *         return temp
  */
-  __pyx_t_1 = __Pyx_PyInt_From_int64_t(__pyx_v_self->length); if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 536; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __pyx_t_1 = __Pyx_PyInt_From_int64_t(__pyx_v_self->length); if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 563; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
   __Pyx_GOTREF(__pyx_t_1);
-  __pyx_t_2 = PyTuple_New(1); if (unlikely(!__pyx_t_2)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 536; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __pyx_t_2 = PyTuple_New(1); if (unlikely(!__pyx_t_2)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 563; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
   __Pyx_GOTREF(__pyx_t_2);
   __Pyx_GIVEREF(__pyx_t_1);
   PyTuple_SET_ITEM(__pyx_t_2, 0, __pyx_t_1);
   __pyx_t_1 = 0;
-  __pyx_t_1 = __Pyx_PyObject_Call(((PyObject *)(&PyByteArray_Type)), __pyx_t_2, NULL); if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 536; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __pyx_t_1 = __Pyx_PyObject_Call(((PyObject *)(&PyByteArray_Type)), __pyx_t_2, NULL); if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 563; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
   __Pyx_GOTREF(__pyx_t_1);
   __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
   __pyx_v_temp = ((PyObject*)__pyx_t_1);
   __pyx_t_1 = 0;
 
-  /* "mbufferio/_mbufferio.pyx":537
+  /* "mbufferio/_mbufferio.pyx":564
  *             return bytearray()
  *         temp = bytearray(self.length)
  *         self.exportto(temp)             # <<<<<<<<<<<<<<
  *         return temp
  * 
  */
-  __pyx_t_1 = ((struct __pyx_vtabstruct_9mbufferio_10_mbufferio_MBufferIO *)__pyx_v_self->__pyx_vtab)->exportto(__pyx_v_self, __pyx_v_temp, 0); if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 537; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __pyx_t_1 = ((struct __pyx_vtabstruct_9mbufferio_10_mbufferio_MBufferIO *)__pyx_v_self->__pyx_vtab)->exportto(__pyx_v_self, __pyx_v_temp, 0); if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 564; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
   __Pyx_GOTREF(__pyx_t_1);
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
 
-  /* "mbufferio/_mbufferio.pyx":538
+  /* "mbufferio/_mbufferio.pyx":565
  *         temp = bytearray(self.length)
  *         self.exportto(temp)
  *         return temp             # <<<<<<<<<<<<<<
@@ -7841,7 +7836,7 @@ static PyObject *__pyx_f_9mbufferio_10_mbufferio_9MBufferIO_tobytearray(struct _
   __pyx_r = __pyx_v_temp;
   goto __pyx_L0;
 
-  /* "mbufferio/_mbufferio.pyx":529
+  /* "mbufferio/_mbufferio.pyx":556
  *                 PyMem_Free(dest_view)
  * 
  *     cpdef tobytearray(self):             # <<<<<<<<<<<<<<
@@ -7865,20 +7860,20 @@ static PyObject *__pyx_f_9mbufferio_10_mbufferio_9MBufferIO_tobytearray(struct _
 }
 
 /* Python wrapper */
-static PyObject *__pyx_pw_9mbufferio_10_mbufferio_9MBufferIO_39tobytearray(PyObject *__pyx_v_self, CYTHON_UNUSED PyObject *unused); /*proto*/
-static char __pyx_doc_9mbufferio_10_mbufferio_9MBufferIO_38tobytearray[] = "\n        tobytearray()\n        Returns a copy of the MBufferIO content as a bytearray\n        ";
-static PyObject *__pyx_pw_9mbufferio_10_mbufferio_9MBufferIO_39tobytearray(PyObject *__pyx_v_self, CYTHON_UNUSED PyObject *unused) {
+static PyObject *__pyx_pw_9mbufferio_10_mbufferio_9MBufferIO_37tobytearray(PyObject *__pyx_v_self, CYTHON_UNUSED PyObject *unused); /*proto*/
+static char __pyx_doc_9mbufferio_10_mbufferio_9MBufferIO_36tobytearray[] = "\n        tobytearray()\n        Returns a copy of the MBufferIO content as a bytearray\n        ";
+static PyObject *__pyx_pw_9mbufferio_10_mbufferio_9MBufferIO_37tobytearray(PyObject *__pyx_v_self, CYTHON_UNUSED PyObject *unused) {
   PyObject *__pyx_r = 0;
   __Pyx_RefNannyDeclarations
   __Pyx_RefNannySetupContext("tobytearray (wrapper)", 0);
-  __pyx_r = __pyx_pf_9mbufferio_10_mbufferio_9MBufferIO_38tobytearray(((struct __pyx_obj_9mbufferio_10_mbufferio_MBufferIO *)__pyx_v_self));
+  __pyx_r = __pyx_pf_9mbufferio_10_mbufferio_9MBufferIO_36tobytearray(((struct __pyx_obj_9mbufferio_10_mbufferio_MBufferIO *)__pyx_v_self));
 
   /* function exit code */
   __Pyx_RefNannyFinishContext();
   return __pyx_r;
 }
 
-static PyObject *__pyx_pf_9mbufferio_10_mbufferio_9MBufferIO_38tobytearray(struct __pyx_obj_9mbufferio_10_mbufferio_MBufferIO *__pyx_v_self) {
+static PyObject *__pyx_pf_9mbufferio_10_mbufferio_9MBufferIO_36tobytearray(struct __pyx_obj_9mbufferio_10_mbufferio_MBufferIO *__pyx_v_self) {
   PyObject *__pyx_r = NULL;
   __Pyx_RefNannyDeclarations
   PyObject *__pyx_t_1 = NULL;
@@ -7887,7 +7882,7 @@ static PyObject *__pyx_pf_9mbufferio_10_mbufferio_9MBufferIO_38tobytearray(struc
   int __pyx_clineno = 0;
   __Pyx_RefNannySetupContext("tobytearray", 0);
   __Pyx_XDECREF(__pyx_r);
-  __pyx_t_1 = __pyx_f_9mbufferio_10_mbufferio_9MBufferIO_tobytearray(__pyx_v_self, 1); if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 529; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __pyx_t_1 = __pyx_f_9mbufferio_10_mbufferio_9MBufferIO_tobytearray(__pyx_v_self, 1); if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 556; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
   __Pyx_GOTREF(__pyx_t_1);
   __pyx_r = __pyx_t_1;
   __pyx_t_1 = 0;
@@ -7904,7 +7899,7 @@ static PyObject *__pyx_pf_9mbufferio_10_mbufferio_9MBufferIO_38tobytearray(struc
   return __pyx_r;
 }
 
-/* "mbufferio/_mbufferio.pyx":540
+/* "mbufferio/_mbufferio.pyx":567
  *         return temp
  * 
  *     cpdef tobytes(self):             # <<<<<<<<<<<<<<
@@ -7912,7 +7907,7 @@ static PyObject *__pyx_pf_9mbufferio_10_mbufferio_9MBufferIO_38tobytearray(struc
  *         tobytes()
  */
 
-static PyObject *__pyx_pw_9mbufferio_10_mbufferio_9MBufferIO_41tobytes(PyObject *__pyx_v_self, CYTHON_UNUSED PyObject *unused); /*proto*/
+static PyObject *__pyx_pw_9mbufferio_10_mbufferio_9MBufferIO_39tobytes(PyObject *__pyx_v_self, CYTHON_UNUSED PyObject *unused); /*proto*/
 static PyObject *__pyx_f_9mbufferio_10_mbufferio_9MBufferIO_tobytes(struct __pyx_obj_9mbufferio_10_mbufferio_MBufferIO *__pyx_v_self, int __pyx_skip_dispatch) {
   PyObject *__pyx_r = NULL;
   __Pyx_RefNannyDeclarations
@@ -7928,9 +7923,9 @@ static PyObject *__pyx_f_9mbufferio_10_mbufferio_9MBufferIO_tobytes(struct __pyx
   if (unlikely(__pyx_skip_dispatch)) ;
   /* Check if overridden in Python */
   else if (unlikely(Py_TYPE(((PyObject *)__pyx_v_self))->tp_dictoffset != 0)) {
-    __pyx_t_1 = __Pyx_PyObject_GetAttrStr(((PyObject *)__pyx_v_self), __pyx_n_s_tobytes); if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 540; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+    __pyx_t_1 = __Pyx_PyObject_GetAttrStr(((PyObject *)__pyx_v_self), __pyx_n_s_tobytes); if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 567; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
     __Pyx_GOTREF(__pyx_t_1);
-    if (!PyCFunction_Check(__pyx_t_1) || (PyCFunction_GET_FUNCTION(__pyx_t_1) != (PyCFunction)__pyx_pw_9mbufferio_10_mbufferio_9MBufferIO_41tobytes)) {
+    if (!PyCFunction_Check(__pyx_t_1) || (PyCFunction_GET_FUNCTION(__pyx_t_1) != (PyCFunction)__pyx_pw_9mbufferio_10_mbufferio_9MBufferIO_39tobytes)) {
       __Pyx_XDECREF(__pyx_r);
       __Pyx_INCREF(__pyx_t_1);
       __pyx_t_3 = __pyx_t_1; __pyx_t_4 = NULL;
@@ -7944,10 +7939,10 @@ static PyObject *__pyx_f_9mbufferio_10_mbufferio_9MBufferIO_tobytes(struct __pyx
         }
       }
       if (__pyx_t_4) {
-        __pyx_t_2 = __Pyx_PyObject_CallOneArg(__pyx_t_3, __pyx_t_4); if (unlikely(!__pyx_t_2)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 540; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+        __pyx_t_2 = __Pyx_PyObject_CallOneArg(__pyx_t_3, __pyx_t_4); if (unlikely(!__pyx_t_2)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 567; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
         __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
       } else {
-        __pyx_t_2 = __Pyx_PyObject_CallNoArg(__pyx_t_3); if (unlikely(!__pyx_t_2)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 540; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+        __pyx_t_2 = __Pyx_PyObject_CallNoArg(__pyx_t_3); if (unlikely(!__pyx_t_2)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 567; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
       }
       __Pyx_GOTREF(__pyx_t_2);
       __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
@@ -7959,27 +7954,39 @@ static PyObject *__pyx_f_9mbufferio_10_mbufferio_9MBufferIO_tobytes(struct __pyx
     __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
   }
 
-  /* "mbufferio/_mbufferio.pyx":545
- *         Returns a copy of the MBufferIO content as a 'bytes' object
+  /* "mbufferio/_mbufferio.pyx":572
+ *         Return 'bytes' containing the entire content of the MBufferIO.
  *         """
- *         return bytes(self)             # <<<<<<<<<<<<<<
+ *         return self.__bytes__()             # <<<<<<<<<<<<<<
  * 
- *     cpdef fileno(self):
+ *     cpdef bytes getvalue(self):
  */
   __Pyx_XDECREF(__pyx_r);
-  __pyx_t_1 = PyTuple_New(1); if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 545; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
-  __Pyx_GOTREF(__pyx_t_1);
-  __Pyx_INCREF(((PyObject *)__pyx_v_self));
-  __Pyx_GIVEREF(((PyObject *)__pyx_v_self));
-  PyTuple_SET_ITEM(__pyx_t_1, 0, ((PyObject *)__pyx_v_self));
-  __pyx_t_2 = __Pyx_PyObject_Call(((PyObject *)(&PyBytes_Type)), __pyx_t_1, NULL); if (unlikely(!__pyx_t_2)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 545; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __pyx_t_2 = __Pyx_PyObject_GetAttrStr(((PyObject *)__pyx_v_self), __pyx_n_s_bytes); if (unlikely(!__pyx_t_2)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 572; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
   __Pyx_GOTREF(__pyx_t_2);
-  __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
-  __pyx_r = __pyx_t_2;
-  __pyx_t_2 = 0;
+  __pyx_t_3 = NULL;
+  if (CYTHON_COMPILING_IN_CPYTHON && likely(PyMethod_Check(__pyx_t_2))) {
+    __pyx_t_3 = PyMethod_GET_SELF(__pyx_t_2);
+    if (likely(__pyx_t_3)) {
+      PyObject* function = PyMethod_GET_FUNCTION(__pyx_t_2);
+      __Pyx_INCREF(__pyx_t_3);
+      __Pyx_INCREF(function);
+      __Pyx_DECREF_SET(__pyx_t_2, function);
+    }
+  }
+  if (__pyx_t_3) {
+    __pyx_t_1 = __Pyx_PyObject_CallOneArg(__pyx_t_2, __pyx_t_3); if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 572; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+    __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
+  } else {
+    __pyx_t_1 = __Pyx_PyObject_CallNoArg(__pyx_t_2); if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 572; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  }
+  __Pyx_GOTREF(__pyx_t_1);
+  __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
+  __pyx_r = __pyx_t_1;
+  __pyx_t_1 = 0;
   goto __pyx_L0;
 
-  /* "mbufferio/_mbufferio.pyx":540
+  /* "mbufferio/_mbufferio.pyx":567
  *         return temp
  * 
  *     cpdef tobytes(self):             # <<<<<<<<<<<<<<
@@ -8002,20 +8009,20 @@ static PyObject *__pyx_f_9mbufferio_10_mbufferio_9MBufferIO_tobytes(struct __pyx
 }
 
 /* Python wrapper */
-static PyObject *__pyx_pw_9mbufferio_10_mbufferio_9MBufferIO_41tobytes(PyObject *__pyx_v_self, CYTHON_UNUSED PyObject *unused); /*proto*/
-static char __pyx_doc_9mbufferio_10_mbufferio_9MBufferIO_40tobytes[] = "\n        tobytes()\n        Returns a copy of the MBufferIO content as a 'bytes' object\n        ";
-static PyObject *__pyx_pw_9mbufferio_10_mbufferio_9MBufferIO_41tobytes(PyObject *__pyx_v_self, CYTHON_UNUSED PyObject *unused) {
+static PyObject *__pyx_pw_9mbufferio_10_mbufferio_9MBufferIO_39tobytes(PyObject *__pyx_v_self, CYTHON_UNUSED PyObject *unused); /*proto*/
+static char __pyx_doc_9mbufferio_10_mbufferio_9MBufferIO_38tobytes[] = "\n        tobytes()\n        Return 'bytes' containing the entire content of the MBufferIO.\n        ";
+static PyObject *__pyx_pw_9mbufferio_10_mbufferio_9MBufferIO_39tobytes(PyObject *__pyx_v_self, CYTHON_UNUSED PyObject *unused) {
   PyObject *__pyx_r = 0;
   __Pyx_RefNannyDeclarations
   __Pyx_RefNannySetupContext("tobytes (wrapper)", 0);
-  __pyx_r = __pyx_pf_9mbufferio_10_mbufferio_9MBufferIO_40tobytes(((struct __pyx_obj_9mbufferio_10_mbufferio_MBufferIO *)__pyx_v_self));
+  __pyx_r = __pyx_pf_9mbufferio_10_mbufferio_9MBufferIO_38tobytes(((struct __pyx_obj_9mbufferio_10_mbufferio_MBufferIO *)__pyx_v_self));
 
   /* function exit code */
   __Pyx_RefNannyFinishContext();
   return __pyx_r;
 }
 
-static PyObject *__pyx_pf_9mbufferio_10_mbufferio_9MBufferIO_40tobytes(struct __pyx_obj_9mbufferio_10_mbufferio_MBufferIO *__pyx_v_self) {
+static PyObject *__pyx_pf_9mbufferio_10_mbufferio_9MBufferIO_38tobytes(struct __pyx_obj_9mbufferio_10_mbufferio_MBufferIO *__pyx_v_self) {
   PyObject *__pyx_r = NULL;
   __Pyx_RefNannyDeclarations
   PyObject *__pyx_t_1 = NULL;
@@ -8024,7 +8031,7 @@ static PyObject *__pyx_pf_9mbufferio_10_mbufferio_9MBufferIO_40tobytes(struct __
   int __pyx_clineno = 0;
   __Pyx_RefNannySetupContext("tobytes", 0);
   __Pyx_XDECREF(__pyx_r);
-  __pyx_t_1 = __pyx_f_9mbufferio_10_mbufferio_9MBufferIO_tobytes(__pyx_v_self, 1); if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 540; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __pyx_t_1 = __pyx_f_9mbufferio_10_mbufferio_9MBufferIO_tobytes(__pyx_v_self, 1); if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 567; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
   __Pyx_GOTREF(__pyx_t_1);
   __pyx_r = __pyx_t_1;
   __pyx_t_1 = 0;
@@ -8041,15 +8048,456 @@ static PyObject *__pyx_pf_9mbufferio_10_mbufferio_9MBufferIO_40tobytes(struct __
   return __pyx_r;
 }
 
-/* "mbufferio/_mbufferio.pyx":547
- *         return bytes(self)
+/* "mbufferio/_mbufferio.pyx":574
+ *         return self.__bytes__()
+ * 
+ *     cpdef bytes getvalue(self):             # <<<<<<<<<<<<<<
+ *         """
+ *         getvalue()
+ */
+
+static PyObject *__pyx_pw_9mbufferio_10_mbufferio_9MBufferIO_41getvalue(PyObject *__pyx_v_self, CYTHON_UNUSED PyObject *unused); /*proto*/
+static PyObject *__pyx_f_9mbufferio_10_mbufferio_9MBufferIO_getvalue(struct __pyx_obj_9mbufferio_10_mbufferio_MBufferIO *__pyx_v_self, int __pyx_skip_dispatch) {
+  PyObject *__pyx_r = NULL;
+  __Pyx_RefNannyDeclarations
+  PyObject *__pyx_t_1 = NULL;
+  PyObject *__pyx_t_2 = NULL;
+  PyObject *__pyx_t_3 = NULL;
+  PyObject *__pyx_t_4 = NULL;
+  int __pyx_lineno = 0;
+  const char *__pyx_filename = NULL;
+  int __pyx_clineno = 0;
+  __Pyx_RefNannySetupContext("getvalue", 0);
+  /* Check if called by wrapper */
+  if (unlikely(__pyx_skip_dispatch)) ;
+  /* Check if overridden in Python */
+  else if (unlikely(Py_TYPE(((PyObject *)__pyx_v_self))->tp_dictoffset != 0)) {
+    __pyx_t_1 = __Pyx_PyObject_GetAttrStr(((PyObject *)__pyx_v_self), __pyx_n_s_getvalue); if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 574; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+    __Pyx_GOTREF(__pyx_t_1);
+    if (!PyCFunction_Check(__pyx_t_1) || (PyCFunction_GET_FUNCTION(__pyx_t_1) != (PyCFunction)__pyx_pw_9mbufferio_10_mbufferio_9MBufferIO_41getvalue)) {
+      __Pyx_XDECREF(__pyx_r);
+      __Pyx_INCREF(__pyx_t_1);
+      __pyx_t_3 = __pyx_t_1; __pyx_t_4 = NULL;
+      if (CYTHON_COMPILING_IN_CPYTHON && unlikely(PyMethod_Check(__pyx_t_3))) {
+        __pyx_t_4 = PyMethod_GET_SELF(__pyx_t_3);
+        if (likely(__pyx_t_4)) {
+          PyObject* function = PyMethod_GET_FUNCTION(__pyx_t_3);
+          __Pyx_INCREF(__pyx_t_4);
+          __Pyx_INCREF(function);
+          __Pyx_DECREF_SET(__pyx_t_3, function);
+        }
+      }
+      if (__pyx_t_4) {
+        __pyx_t_2 = __Pyx_PyObject_CallOneArg(__pyx_t_3, __pyx_t_4); if (unlikely(!__pyx_t_2)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 574; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+        __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
+      } else {
+        __pyx_t_2 = __Pyx_PyObject_CallNoArg(__pyx_t_3); if (unlikely(!__pyx_t_2)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 574; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+      }
+      __Pyx_GOTREF(__pyx_t_2);
+      __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
+      if (!(likely(PyBytes_CheckExact(__pyx_t_2))||((__pyx_t_2) == Py_None)||(PyErr_Format(PyExc_TypeError, "Expected %.16s, got %.200s", "bytes", Py_TYPE(__pyx_t_2)->tp_name), 0))) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 574; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+      __pyx_r = ((PyObject*)__pyx_t_2);
+      __pyx_t_2 = 0;
+      __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
+      goto __pyx_L0;
+    }
+    __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
+  }
+
+  /* "mbufferio/_mbufferio.pyx":579
+ *         Return 'bytes' containing the entire content of the MBufferIO.
+ *         """
+ *         return self.__bytes__()             # <<<<<<<<<<<<<<
+ * 
+ *     def __bytes__(self):
+ */
+  __Pyx_XDECREF(__pyx_r);
+  __pyx_t_2 = __Pyx_PyObject_GetAttrStr(((PyObject *)__pyx_v_self), __pyx_n_s_bytes); if (unlikely(!__pyx_t_2)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 579; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __Pyx_GOTREF(__pyx_t_2);
+  __pyx_t_3 = NULL;
+  if (CYTHON_COMPILING_IN_CPYTHON && likely(PyMethod_Check(__pyx_t_2))) {
+    __pyx_t_3 = PyMethod_GET_SELF(__pyx_t_2);
+    if (likely(__pyx_t_3)) {
+      PyObject* function = PyMethod_GET_FUNCTION(__pyx_t_2);
+      __Pyx_INCREF(__pyx_t_3);
+      __Pyx_INCREF(function);
+      __Pyx_DECREF_SET(__pyx_t_2, function);
+    }
+  }
+  if (__pyx_t_3) {
+    __pyx_t_1 = __Pyx_PyObject_CallOneArg(__pyx_t_2, __pyx_t_3); if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 579; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+    __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
+  } else {
+    __pyx_t_1 = __Pyx_PyObject_CallNoArg(__pyx_t_2); if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 579; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  }
+  __Pyx_GOTREF(__pyx_t_1);
+  __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
+  if (!(likely(PyBytes_CheckExact(__pyx_t_1))||((__pyx_t_1) == Py_None)||(PyErr_Format(PyExc_TypeError, "Expected %.16s, got %.200s", "bytes", Py_TYPE(__pyx_t_1)->tp_name), 0))) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 579; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __pyx_r = ((PyObject*)__pyx_t_1);
+  __pyx_t_1 = 0;
+  goto __pyx_L0;
+
+  /* "mbufferio/_mbufferio.pyx":574
+ *         return self.__bytes__()
+ * 
+ *     cpdef bytes getvalue(self):             # <<<<<<<<<<<<<<
+ *         """
+ *         getvalue()
+ */
+
+  /* function exit code */
+  __pyx_L1_error:;
+  __Pyx_XDECREF(__pyx_t_1);
+  __Pyx_XDECREF(__pyx_t_2);
+  __Pyx_XDECREF(__pyx_t_3);
+  __Pyx_XDECREF(__pyx_t_4);
+  __Pyx_AddTraceback("mbufferio._mbufferio.MBufferIO.getvalue", __pyx_clineno, __pyx_lineno, __pyx_filename);
+  __pyx_r = 0;
+  __pyx_L0:;
+  __Pyx_XGIVEREF(__pyx_r);
+  __Pyx_RefNannyFinishContext();
+  return __pyx_r;
+}
+
+/* Python wrapper */
+static PyObject *__pyx_pw_9mbufferio_10_mbufferio_9MBufferIO_41getvalue(PyObject *__pyx_v_self, CYTHON_UNUSED PyObject *unused); /*proto*/
+static char __pyx_doc_9mbufferio_10_mbufferio_9MBufferIO_40getvalue[] = "\n        getvalue()\n        Return 'bytes' containing the entire content of the MBufferIO.\n        ";
+static PyObject *__pyx_pw_9mbufferio_10_mbufferio_9MBufferIO_41getvalue(PyObject *__pyx_v_self, CYTHON_UNUSED PyObject *unused) {
+  PyObject *__pyx_r = 0;
+  __Pyx_RefNannyDeclarations
+  __Pyx_RefNannySetupContext("getvalue (wrapper)", 0);
+  __pyx_r = __pyx_pf_9mbufferio_10_mbufferio_9MBufferIO_40getvalue(((struct __pyx_obj_9mbufferio_10_mbufferio_MBufferIO *)__pyx_v_self));
+
+  /* function exit code */
+  __Pyx_RefNannyFinishContext();
+  return __pyx_r;
+}
+
+static PyObject *__pyx_pf_9mbufferio_10_mbufferio_9MBufferIO_40getvalue(struct __pyx_obj_9mbufferio_10_mbufferio_MBufferIO *__pyx_v_self) {
+  PyObject *__pyx_r = NULL;
+  __Pyx_RefNannyDeclarations
+  PyObject *__pyx_t_1 = NULL;
+  int __pyx_lineno = 0;
+  const char *__pyx_filename = NULL;
+  int __pyx_clineno = 0;
+  __Pyx_RefNannySetupContext("getvalue", 0);
+  __Pyx_XDECREF(__pyx_r);
+  __pyx_t_1 = __pyx_f_9mbufferio_10_mbufferio_9MBufferIO_getvalue(__pyx_v_self, 1); if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 574; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __Pyx_GOTREF(__pyx_t_1);
+  __pyx_r = __pyx_t_1;
+  __pyx_t_1 = 0;
+  goto __pyx_L0;
+
+  /* function exit code */
+  __pyx_L1_error:;
+  __Pyx_XDECREF(__pyx_t_1);
+  __Pyx_AddTraceback("mbufferio._mbufferio.MBufferIO.getvalue", __pyx_clineno, __pyx_lineno, __pyx_filename);
+  __pyx_r = NULL;
+  __pyx_L0:;
+  __Pyx_XGIVEREF(__pyx_r);
+  __Pyx_RefNannyFinishContext();
+  return __pyx_r;
+}
+
+/* "mbufferio/_mbufferio.pyx":581
+ *         return self.__bytes__()
+ * 
+ *     def __bytes__(self):             # <<<<<<<<<<<<<<
+ *         if self.closed:
+ *             return b''
+ */
+
+/* Python wrapper */
+static PyObject *__pyx_pw_9mbufferio_10_mbufferio_9MBufferIO_43__bytes__(PyObject *__pyx_v_self, CYTHON_UNUSED PyObject *unused); /*proto*/
+static PyObject *__pyx_pw_9mbufferio_10_mbufferio_9MBufferIO_43__bytes__(PyObject *__pyx_v_self, CYTHON_UNUSED PyObject *unused) {
+  PyObject *__pyx_r = 0;
+  __Pyx_RefNannyDeclarations
+  __Pyx_RefNannySetupContext("__bytes__ (wrapper)", 0);
+  __pyx_r = __pyx_pf_9mbufferio_10_mbufferio_9MBufferIO_42__bytes__(((struct __pyx_obj_9mbufferio_10_mbufferio_MBufferIO *)__pyx_v_self));
+
+  /* function exit code */
+  __Pyx_RefNannyFinishContext();
+  return __pyx_r;
+}
+
+static PyObject *__pyx_pf_9mbufferio_10_mbufferio_9MBufferIO_42__bytes__(struct __pyx_obj_9mbufferio_10_mbufferio_MBufferIO *__pyx_v_self) {
+  PyObject *__pyx_r = NULL;
+  __Pyx_RefNannyDeclarations
+  int __pyx_t_1;
+  PyObject *__pyx_t_2 = NULL;
+  int __pyx_lineno = 0;
+  const char *__pyx_filename = NULL;
+  int __pyx_clineno = 0;
+  __Pyx_RefNannySetupContext("__bytes__", 0);
+
+  /* "mbufferio/_mbufferio.pyx":582
+ * 
+ *     def __bytes__(self):
+ *         if self.closed:             # <<<<<<<<<<<<<<
+ *             return b''
+ *         return <bytes> self.buf_pointer[self.startpos:self.startpos + self.length]
+ */
+  __pyx_t_1 = (__pyx_v_self->closed != 0);
+  if (__pyx_t_1) {
+
+    /* "mbufferio/_mbufferio.pyx":583
+ *     def __bytes__(self):
+ *         if self.closed:
+ *             return b''             # <<<<<<<<<<<<<<
+ *         return <bytes> self.buf_pointer[self.startpos:self.startpos + self.length]
+ * 
+ */
+    __Pyx_XDECREF(__pyx_r);
+    __Pyx_INCREF(__pyx_kp_b__15);
+    __pyx_r = __pyx_kp_b__15;
+    goto __pyx_L0;
+
+    /* "mbufferio/_mbufferio.pyx":582
+ * 
+ *     def __bytes__(self):
+ *         if self.closed:             # <<<<<<<<<<<<<<
+ *             return b''
+ *         return <bytes> self.buf_pointer[self.startpos:self.startpos + self.length]
+ */
+  }
+
+  /* "mbufferio/_mbufferio.pyx":584
+ *         if self.closed:
+ *             return b''
+ *         return <bytes> self.buf_pointer[self.startpos:self.startpos + self.length]             # <<<<<<<<<<<<<<
+ * 
+ *     def __str__(self):
+ */
+  __Pyx_XDECREF(__pyx_r);
+  __pyx_t_2 = __Pyx_PyBytes_FromStringAndSize(__pyx_v_self->buf_pointer + __pyx_v_self->startpos, (__pyx_v_self->startpos + __pyx_v_self->length) - __pyx_v_self->startpos); if (unlikely(!__pyx_t_2)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 584; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __Pyx_GOTREF(__pyx_t_2);
+  __Pyx_INCREF(((PyObject*)__pyx_t_2));
+  __pyx_r = __pyx_t_2;
+  __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
+  goto __pyx_L0;
+
+  /* "mbufferio/_mbufferio.pyx":581
+ *         return self.__bytes__()
+ * 
+ *     def __bytes__(self):             # <<<<<<<<<<<<<<
+ *         if self.closed:
+ *             return b''
+ */
+
+  /* function exit code */
+  __pyx_L1_error:;
+  __Pyx_XDECREF(__pyx_t_2);
+  __Pyx_AddTraceback("mbufferio._mbufferio.MBufferIO.__bytes__", __pyx_clineno, __pyx_lineno, __pyx_filename);
+  __pyx_r = NULL;
+  __pyx_L0:;
+  __Pyx_XGIVEREF(__pyx_r);
+  __Pyx_RefNannyFinishContext();
+  return __pyx_r;
+}
+
+/* "mbufferio/_mbufferio.pyx":586
+ *         return <bytes> self.buf_pointer[self.startpos:self.startpos + self.length]
+ * 
+ *     def __str__(self):             # <<<<<<<<<<<<<<
+ *         return repr(self)
+ * 
+ */
+
+/* Python wrapper */
+static PyObject *__pyx_pw_9mbufferio_10_mbufferio_9MBufferIO_45__str__(PyObject *__pyx_v_self); /*proto*/
+static PyObject *__pyx_pw_9mbufferio_10_mbufferio_9MBufferIO_45__str__(PyObject *__pyx_v_self) {
+  PyObject *__pyx_r = 0;
+  __Pyx_RefNannyDeclarations
+  __Pyx_RefNannySetupContext("__str__ (wrapper)", 0);
+  __pyx_r = __pyx_pf_9mbufferio_10_mbufferio_9MBufferIO_44__str__(((struct __pyx_obj_9mbufferio_10_mbufferio_MBufferIO *)__pyx_v_self));
+
+  /* function exit code */
+  __Pyx_RefNannyFinishContext();
+  return __pyx_r;
+}
+
+static PyObject *__pyx_pf_9mbufferio_10_mbufferio_9MBufferIO_44__str__(struct __pyx_obj_9mbufferio_10_mbufferio_MBufferIO *__pyx_v_self) {
+  PyObject *__pyx_r = NULL;
+  __Pyx_RefNannyDeclarations
+  PyObject *__pyx_t_1 = NULL;
+  int __pyx_lineno = 0;
+  const char *__pyx_filename = NULL;
+  int __pyx_clineno = 0;
+  __Pyx_RefNannySetupContext("__str__", 0);
+
+  /* "mbufferio/_mbufferio.pyx":587
+ * 
+ *     def __str__(self):
+ *         return repr(self)             # <<<<<<<<<<<<<<
+ * 
+ *     def __repr__(self):
+ */
+  __Pyx_XDECREF(__pyx_r);
+  __pyx_t_1 = PyObject_Repr(((PyObject *)__pyx_v_self)); if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 587; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __Pyx_GOTREF(__pyx_t_1);
+  __pyx_r = __pyx_t_1;
+  __pyx_t_1 = 0;
+  goto __pyx_L0;
+
+  /* "mbufferio/_mbufferio.pyx":586
+ *         return <bytes> self.buf_pointer[self.startpos:self.startpos + self.length]
+ * 
+ *     def __str__(self):             # <<<<<<<<<<<<<<
+ *         return repr(self)
+ * 
+ */
+
+  /* function exit code */
+  __pyx_L1_error:;
+  __Pyx_XDECREF(__pyx_t_1);
+  __Pyx_AddTraceback("mbufferio._mbufferio.MBufferIO.__str__", __pyx_clineno, __pyx_lineno, __pyx_filename);
+  __pyx_r = NULL;
+  __pyx_L0:;
+  __Pyx_XGIVEREF(__pyx_r);
+  __Pyx_RefNannyFinishContext();
+  return __pyx_r;
+}
+
+/* "mbufferio/_mbufferio.pyx":589
+ *         return repr(self)
+ * 
+ *     def __repr__(self):             # <<<<<<<<<<<<<<
+ *         if self.closed:
+ *             return u"MBufferIO (closed)"
+ */
+
+/* Python wrapper */
+static PyObject *__pyx_pw_9mbufferio_10_mbufferio_9MBufferIO_47__repr__(PyObject *__pyx_v_self); /*proto*/
+static PyObject *__pyx_pw_9mbufferio_10_mbufferio_9MBufferIO_47__repr__(PyObject *__pyx_v_self) {
+  PyObject *__pyx_r = 0;
+  __Pyx_RefNannyDeclarations
+  __Pyx_RefNannySetupContext("__repr__ (wrapper)", 0);
+  __pyx_r = __pyx_pf_9mbufferio_10_mbufferio_9MBufferIO_46__repr__(((struct __pyx_obj_9mbufferio_10_mbufferio_MBufferIO *)__pyx_v_self));
+
+  /* function exit code */
+  __Pyx_RefNannyFinishContext();
+  return __pyx_r;
+}
+
+static PyObject *__pyx_pf_9mbufferio_10_mbufferio_9MBufferIO_46__repr__(struct __pyx_obj_9mbufferio_10_mbufferio_MBufferIO *__pyx_v_self) {
+  PyObject *__pyx_r = NULL;
+  __Pyx_RefNannyDeclarations
+  int __pyx_t_1;
+  PyObject *__pyx_t_2 = NULL;
+  PyObject *__pyx_t_3 = NULL;
+  PyObject *__pyx_t_4 = NULL;
+  PyObject *__pyx_t_5 = NULL;
+  PyObject *__pyx_t_6 = NULL;
+  int __pyx_lineno = 0;
+  const char *__pyx_filename = NULL;
+  int __pyx_clineno = 0;
+  __Pyx_RefNannySetupContext("__repr__", 0);
+
+  /* "mbufferio/_mbufferio.pyx":590
+ * 
+ *     def __repr__(self):
+ *         if self.closed:             # <<<<<<<<<<<<<<
+ *             return u"MBufferIO (closed)"
+ *         return u"MBufferIO({} bytes long)".format(self.length)
+ */
+  __pyx_t_1 = (__pyx_v_self->closed != 0);
+  if (__pyx_t_1) {
+
+    /* "mbufferio/_mbufferio.pyx":591
+ *     def __repr__(self):
+ *         if self.closed:
+ *             return u"MBufferIO (closed)"             # <<<<<<<<<<<<<<
+ *         return u"MBufferIO({} bytes long)".format(self.length)
+ * 
+ */
+    __Pyx_XDECREF(__pyx_r);
+    __Pyx_INCREF(__pyx_kp_u_MBufferIO_closed);
+    __pyx_r = __pyx_kp_u_MBufferIO_closed;
+    goto __pyx_L0;
+
+    /* "mbufferio/_mbufferio.pyx":590
+ * 
+ *     def __repr__(self):
+ *         if self.closed:             # <<<<<<<<<<<<<<
+ *             return u"MBufferIO (closed)"
+ *         return u"MBufferIO({} bytes long)".format(self.length)
+ */
+  }
+
+  /* "mbufferio/_mbufferio.pyx":592
+ *         if self.closed:
+ *             return u"MBufferIO (closed)"
+ *         return u"MBufferIO({} bytes long)".format(self.length)             # <<<<<<<<<<<<<<
+ * 
+ *     cpdef fileno(self):
+ */
+  __Pyx_XDECREF(__pyx_r);
+  __pyx_t_3 = __Pyx_PyObject_GetAttrStr(__pyx_kp_u_MBufferIO_bytes_long, __pyx_n_s_format); if (unlikely(!__pyx_t_3)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 592; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __Pyx_GOTREF(__pyx_t_3);
+  __pyx_t_4 = __Pyx_PyInt_From_int64_t(__pyx_v_self->length); if (unlikely(!__pyx_t_4)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 592; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __Pyx_GOTREF(__pyx_t_4);
+  __pyx_t_5 = NULL;
+  if (CYTHON_COMPILING_IN_CPYTHON && likely(PyMethod_Check(__pyx_t_3))) {
+    __pyx_t_5 = PyMethod_GET_SELF(__pyx_t_3);
+    if (likely(__pyx_t_5)) {
+      PyObject* function = PyMethod_GET_FUNCTION(__pyx_t_3);
+      __Pyx_INCREF(__pyx_t_5);
+      __Pyx_INCREF(function);
+      __Pyx_DECREF_SET(__pyx_t_3, function);
+    }
+  }
+  if (!__pyx_t_5) {
+    __pyx_t_2 = __Pyx_PyObject_CallOneArg(__pyx_t_3, __pyx_t_4); if (unlikely(!__pyx_t_2)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 592; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+    __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
+    __Pyx_GOTREF(__pyx_t_2);
+  } else {
+    __pyx_t_6 = PyTuple_New(1+1); if (unlikely(!__pyx_t_6)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 592; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+    __Pyx_GOTREF(__pyx_t_6);
+    __Pyx_GIVEREF(__pyx_t_5); PyTuple_SET_ITEM(__pyx_t_6, 0, __pyx_t_5); __pyx_t_5 = NULL;
+    __Pyx_GIVEREF(__pyx_t_4);
+    PyTuple_SET_ITEM(__pyx_t_6, 0+1, __pyx_t_4);
+    __pyx_t_4 = 0;
+    __pyx_t_2 = __Pyx_PyObject_Call(__pyx_t_3, __pyx_t_6, NULL); if (unlikely(!__pyx_t_2)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 592; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+    __Pyx_GOTREF(__pyx_t_2);
+    __Pyx_DECREF(__pyx_t_6); __pyx_t_6 = 0;
+  }
+  __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
+  __pyx_r = __pyx_t_2;
+  __pyx_t_2 = 0;
+  goto __pyx_L0;
+
+  /* "mbufferio/_mbufferio.pyx":589
+ *         return repr(self)
+ * 
+ *     def __repr__(self):             # <<<<<<<<<<<<<<
+ *         if self.closed:
+ *             return u"MBufferIO (closed)"
+ */
+
+  /* function exit code */
+  __pyx_L1_error:;
+  __Pyx_XDECREF(__pyx_t_2);
+  __Pyx_XDECREF(__pyx_t_3);
+  __Pyx_XDECREF(__pyx_t_4);
+  __Pyx_XDECREF(__pyx_t_5);
+  __Pyx_XDECREF(__pyx_t_6);
+  __Pyx_AddTraceback("mbufferio._mbufferio.MBufferIO.__repr__", __pyx_clineno, __pyx_lineno, __pyx_filename);
+  __pyx_r = NULL;
+  __pyx_L0:;
+  __Pyx_XGIVEREF(__pyx_r);
+  __Pyx_RefNannyFinishContext();
+  return __pyx_r;
+}
+
+/* "mbufferio/_mbufferio.pyx":594
+ *         return u"MBufferIO({} bytes long)".format(self.length)
  * 
  *     cpdef fileno(self):             # <<<<<<<<<<<<<<
  *         """
  *         fileno()
  */
 
-static PyObject *__pyx_pw_9mbufferio_10_mbufferio_9MBufferIO_43fileno(PyObject *__pyx_v_self, CYTHON_UNUSED PyObject *unused); /*proto*/
+static PyObject *__pyx_pw_9mbufferio_10_mbufferio_9MBufferIO_49fileno(PyObject *__pyx_v_self, CYTHON_UNUSED PyObject *unused); /*proto*/
 static PyObject *__pyx_f_9mbufferio_10_mbufferio_9MBufferIO_fileno(CYTHON_UNUSED struct __pyx_obj_9mbufferio_10_mbufferio_MBufferIO *__pyx_v_self, int __pyx_skip_dispatch) {
   PyObject *__pyx_r = NULL;
   __Pyx_RefNannyDeclarations
@@ -8065,9 +8513,9 @@ static PyObject *__pyx_f_9mbufferio_10_mbufferio_9MBufferIO_fileno(CYTHON_UNUSED
   if (unlikely(__pyx_skip_dispatch)) ;
   /* Check if overridden in Python */
   else if (unlikely(Py_TYPE(((PyObject *)__pyx_v_self))->tp_dictoffset != 0)) {
-    __pyx_t_1 = __Pyx_PyObject_GetAttrStr(((PyObject *)__pyx_v_self), __pyx_n_s_fileno); if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 547; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+    __pyx_t_1 = __Pyx_PyObject_GetAttrStr(((PyObject *)__pyx_v_self), __pyx_n_s_fileno); if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 594; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
     __Pyx_GOTREF(__pyx_t_1);
-    if (!PyCFunction_Check(__pyx_t_1) || (PyCFunction_GET_FUNCTION(__pyx_t_1) != (PyCFunction)__pyx_pw_9mbufferio_10_mbufferio_9MBufferIO_43fileno)) {
+    if (!PyCFunction_Check(__pyx_t_1) || (PyCFunction_GET_FUNCTION(__pyx_t_1) != (PyCFunction)__pyx_pw_9mbufferio_10_mbufferio_9MBufferIO_49fileno)) {
       __Pyx_XDECREF(__pyx_r);
       __Pyx_INCREF(__pyx_t_1);
       __pyx_t_3 = __pyx_t_1; __pyx_t_4 = NULL;
@@ -8081,10 +8529,10 @@ static PyObject *__pyx_f_9mbufferio_10_mbufferio_9MBufferIO_fileno(CYTHON_UNUSED
         }
       }
       if (__pyx_t_4) {
-        __pyx_t_2 = __Pyx_PyObject_CallOneArg(__pyx_t_3, __pyx_t_4); if (unlikely(!__pyx_t_2)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 547; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+        __pyx_t_2 = __Pyx_PyObject_CallOneArg(__pyx_t_3, __pyx_t_4); if (unlikely(!__pyx_t_2)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 594; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
         __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
       } else {
-        __pyx_t_2 = __Pyx_PyObject_CallNoArg(__pyx_t_3); if (unlikely(!__pyx_t_2)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 547; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+        __pyx_t_2 = __Pyx_PyObject_CallNoArg(__pyx_t_3); if (unlikely(!__pyx_t_2)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 594; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
       }
       __Pyx_GOTREF(__pyx_t_2);
       __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
@@ -8096,21 +8544,21 @@ static PyObject *__pyx_f_9mbufferio_10_mbufferio_9MBufferIO_fileno(CYTHON_UNUSED
     __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
   }
 
-  /* "mbufferio/_mbufferio.pyx":552
+  /* "mbufferio/_mbufferio.pyx":599
  *         Always raise IOError
  *         """
  *         raise IOError(u"The IO object does not use a file descriptor")             # <<<<<<<<<<<<<<
  * 
  *     cpdef flush(self):
  */
-  __pyx_t_1 = __Pyx_PyObject_Call(__pyx_builtin_IOError, __pyx_tuple__26, NULL); if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 552; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __pyx_t_1 = __Pyx_PyObject_Call(__pyx_builtin_IOError, __pyx_tuple__26, NULL); if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 599; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
   __Pyx_GOTREF(__pyx_t_1);
   __Pyx_Raise(__pyx_t_1, 0, 0, 0);
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
-  {__pyx_filename = __pyx_f[0]; __pyx_lineno = 552; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  {__pyx_filename = __pyx_f[0]; __pyx_lineno = 599; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
 
-  /* "mbufferio/_mbufferio.pyx":547
- *         return bytes(self)
+  /* "mbufferio/_mbufferio.pyx":594
+ *         return u"MBufferIO({} bytes long)".format(self.length)
  * 
  *     cpdef fileno(self):             # <<<<<<<<<<<<<<
  *         """
@@ -8132,20 +8580,20 @@ static PyObject *__pyx_f_9mbufferio_10_mbufferio_9MBufferIO_fileno(CYTHON_UNUSED
 }
 
 /* Python wrapper */
-static PyObject *__pyx_pw_9mbufferio_10_mbufferio_9MBufferIO_43fileno(PyObject *__pyx_v_self, CYTHON_UNUSED PyObject *unused); /*proto*/
-static char __pyx_doc_9mbufferio_10_mbufferio_9MBufferIO_42fileno[] = "\n        fileno()\n        Always raise IOError\n        ";
-static PyObject *__pyx_pw_9mbufferio_10_mbufferio_9MBufferIO_43fileno(PyObject *__pyx_v_self, CYTHON_UNUSED PyObject *unused) {
+static PyObject *__pyx_pw_9mbufferio_10_mbufferio_9MBufferIO_49fileno(PyObject *__pyx_v_self, CYTHON_UNUSED PyObject *unused); /*proto*/
+static char __pyx_doc_9mbufferio_10_mbufferio_9MBufferIO_48fileno[] = "\n        fileno()\n        Always raise IOError\n        ";
+static PyObject *__pyx_pw_9mbufferio_10_mbufferio_9MBufferIO_49fileno(PyObject *__pyx_v_self, CYTHON_UNUSED PyObject *unused) {
   PyObject *__pyx_r = 0;
   __Pyx_RefNannyDeclarations
   __Pyx_RefNannySetupContext("fileno (wrapper)", 0);
-  __pyx_r = __pyx_pf_9mbufferio_10_mbufferio_9MBufferIO_42fileno(((struct __pyx_obj_9mbufferio_10_mbufferio_MBufferIO *)__pyx_v_self));
+  __pyx_r = __pyx_pf_9mbufferio_10_mbufferio_9MBufferIO_48fileno(((struct __pyx_obj_9mbufferio_10_mbufferio_MBufferIO *)__pyx_v_self));
 
   /* function exit code */
   __Pyx_RefNannyFinishContext();
   return __pyx_r;
 }
 
-static PyObject *__pyx_pf_9mbufferio_10_mbufferio_9MBufferIO_42fileno(struct __pyx_obj_9mbufferio_10_mbufferio_MBufferIO *__pyx_v_self) {
+static PyObject *__pyx_pf_9mbufferio_10_mbufferio_9MBufferIO_48fileno(struct __pyx_obj_9mbufferio_10_mbufferio_MBufferIO *__pyx_v_self) {
   PyObject *__pyx_r = NULL;
   __Pyx_RefNannyDeclarations
   PyObject *__pyx_t_1 = NULL;
@@ -8154,7 +8602,7 @@ static PyObject *__pyx_pf_9mbufferio_10_mbufferio_9MBufferIO_42fileno(struct __p
   int __pyx_clineno = 0;
   __Pyx_RefNannySetupContext("fileno", 0);
   __Pyx_XDECREF(__pyx_r);
-  __pyx_t_1 = __pyx_f_9mbufferio_10_mbufferio_9MBufferIO_fileno(__pyx_v_self, 1); if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 547; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __pyx_t_1 = __pyx_f_9mbufferio_10_mbufferio_9MBufferIO_fileno(__pyx_v_self, 1); if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 594; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
   __Pyx_GOTREF(__pyx_t_1);
   __pyx_r = __pyx_t_1;
   __pyx_t_1 = 0;
@@ -8171,7 +8619,7 @@ static PyObject *__pyx_pf_9mbufferio_10_mbufferio_9MBufferIO_42fileno(struct __p
   return __pyx_r;
 }
 
-/* "mbufferio/_mbufferio.pyx":554
+/* "mbufferio/_mbufferio.pyx":601
  *         raise IOError(u"The IO object does not use a file descriptor")
  * 
  *     cpdef flush(self):             # <<<<<<<<<<<<<<
@@ -8179,7 +8627,7 @@ static PyObject *__pyx_pf_9mbufferio_10_mbufferio_9MBufferIO_42fileno(struct __p
  *         flush()
  */
 
-static PyObject *__pyx_pw_9mbufferio_10_mbufferio_9MBufferIO_45flush(PyObject *__pyx_v_self, CYTHON_UNUSED PyObject *unused); /*proto*/
+static PyObject *__pyx_pw_9mbufferio_10_mbufferio_9MBufferIO_51flush(PyObject *__pyx_v_self, CYTHON_UNUSED PyObject *unused); /*proto*/
 static PyObject *__pyx_f_9mbufferio_10_mbufferio_9MBufferIO_flush(struct __pyx_obj_9mbufferio_10_mbufferio_MBufferIO *__pyx_v_self, int __pyx_skip_dispatch) {
   PyObject *__pyx_r = NULL;
   __Pyx_RefNannyDeclarations
@@ -8196,9 +8644,9 @@ static PyObject *__pyx_f_9mbufferio_10_mbufferio_9MBufferIO_flush(struct __pyx_o
   if (unlikely(__pyx_skip_dispatch)) ;
   /* Check if overridden in Python */
   else if (unlikely(Py_TYPE(((PyObject *)__pyx_v_self))->tp_dictoffset != 0)) {
-    __pyx_t_1 = __Pyx_PyObject_GetAttrStr(((PyObject *)__pyx_v_self), __pyx_n_s_flush); if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 554; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+    __pyx_t_1 = __Pyx_PyObject_GetAttrStr(((PyObject *)__pyx_v_self), __pyx_n_s_flush); if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 601; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
     __Pyx_GOTREF(__pyx_t_1);
-    if (!PyCFunction_Check(__pyx_t_1) || (PyCFunction_GET_FUNCTION(__pyx_t_1) != (PyCFunction)__pyx_pw_9mbufferio_10_mbufferio_9MBufferIO_45flush)) {
+    if (!PyCFunction_Check(__pyx_t_1) || (PyCFunction_GET_FUNCTION(__pyx_t_1) != (PyCFunction)__pyx_pw_9mbufferio_10_mbufferio_9MBufferIO_51flush)) {
       __Pyx_XDECREF(__pyx_r);
       __Pyx_INCREF(__pyx_t_1);
       __pyx_t_3 = __pyx_t_1; __pyx_t_4 = NULL;
@@ -8212,10 +8660,10 @@ static PyObject *__pyx_f_9mbufferio_10_mbufferio_9MBufferIO_flush(struct __pyx_o
         }
       }
       if (__pyx_t_4) {
-        __pyx_t_2 = __Pyx_PyObject_CallOneArg(__pyx_t_3, __pyx_t_4); if (unlikely(!__pyx_t_2)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 554; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+        __pyx_t_2 = __Pyx_PyObject_CallOneArg(__pyx_t_3, __pyx_t_4); if (unlikely(!__pyx_t_2)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 601; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
         __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
       } else {
-        __pyx_t_2 = __Pyx_PyObject_CallNoArg(__pyx_t_3); if (unlikely(!__pyx_t_2)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 554; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+        __pyx_t_2 = __Pyx_PyObject_CallNoArg(__pyx_t_3); if (unlikely(!__pyx_t_2)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 601; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
       }
       __Pyx_GOTREF(__pyx_t_2);
       __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
@@ -8227,7 +8675,7 @@ static PyObject *__pyx_f_9mbufferio_10_mbufferio_9MBufferIO_flush(struct __pyx_o
     __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
   }
 
-  /* "mbufferio/_mbufferio.pyx":559
+  /* "mbufferio/_mbufferio.pyx":606
  *         Do nothing
  *         """
  *         if self.closed:             # <<<<<<<<<<<<<<
@@ -8237,20 +8685,20 @@ static PyObject *__pyx_f_9mbufferio_10_mbufferio_9MBufferIO_flush(struct __pyx_o
   __pyx_t_5 = (__pyx_v_self->closed != 0);
   if (__pyx_t_5) {
 
-    /* "mbufferio/_mbufferio.pyx":560
+    /* "mbufferio/_mbufferio.pyx":607
  *         """
  *         if self.closed:
  *             raise ValueError(u"I/O operation on closed file.")             # <<<<<<<<<<<<<<
  * 
  *     cpdef isatty(self):
  */
-    __pyx_t_1 = __Pyx_PyObject_Call(__pyx_builtin_ValueError, __pyx_tuple__27, NULL); if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 560; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+    __pyx_t_1 = __Pyx_PyObject_Call(__pyx_builtin_ValueError, __pyx_tuple__27, NULL); if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 607; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
     __Pyx_GOTREF(__pyx_t_1);
     __Pyx_Raise(__pyx_t_1, 0, 0, 0);
     __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
-    {__pyx_filename = __pyx_f[0]; __pyx_lineno = 560; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+    {__pyx_filename = __pyx_f[0]; __pyx_lineno = 607; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
 
-    /* "mbufferio/_mbufferio.pyx":559
+    /* "mbufferio/_mbufferio.pyx":606
  *         Do nothing
  *         """
  *         if self.closed:             # <<<<<<<<<<<<<<
@@ -8259,7 +8707,7 @@ static PyObject *__pyx_f_9mbufferio_10_mbufferio_9MBufferIO_flush(struct __pyx_o
  */
   }
 
-  /* "mbufferio/_mbufferio.pyx":554
+  /* "mbufferio/_mbufferio.pyx":601
  *         raise IOError(u"The IO object does not use a file descriptor")
  * 
  *     cpdef flush(self):             # <<<<<<<<<<<<<<
@@ -8284,20 +8732,20 @@ static PyObject *__pyx_f_9mbufferio_10_mbufferio_9MBufferIO_flush(struct __pyx_o
 }
 
 /* Python wrapper */
-static PyObject *__pyx_pw_9mbufferio_10_mbufferio_9MBufferIO_45flush(PyObject *__pyx_v_self, CYTHON_UNUSED PyObject *unused); /*proto*/
-static char __pyx_doc_9mbufferio_10_mbufferio_9MBufferIO_44flush[] = "\n        flush()\n        Do nothing\n        ";
-static PyObject *__pyx_pw_9mbufferio_10_mbufferio_9MBufferIO_45flush(PyObject *__pyx_v_self, CYTHON_UNUSED PyObject *unused) {
+static PyObject *__pyx_pw_9mbufferio_10_mbufferio_9MBufferIO_51flush(PyObject *__pyx_v_self, CYTHON_UNUSED PyObject *unused); /*proto*/
+static char __pyx_doc_9mbufferio_10_mbufferio_9MBufferIO_50flush[] = "\n        flush()\n        Do nothing\n        ";
+static PyObject *__pyx_pw_9mbufferio_10_mbufferio_9MBufferIO_51flush(PyObject *__pyx_v_self, CYTHON_UNUSED PyObject *unused) {
   PyObject *__pyx_r = 0;
   __Pyx_RefNannyDeclarations
   __Pyx_RefNannySetupContext("flush (wrapper)", 0);
-  __pyx_r = __pyx_pf_9mbufferio_10_mbufferio_9MBufferIO_44flush(((struct __pyx_obj_9mbufferio_10_mbufferio_MBufferIO *)__pyx_v_self));
+  __pyx_r = __pyx_pf_9mbufferio_10_mbufferio_9MBufferIO_50flush(((struct __pyx_obj_9mbufferio_10_mbufferio_MBufferIO *)__pyx_v_self));
 
   /* function exit code */
   __Pyx_RefNannyFinishContext();
   return __pyx_r;
 }
 
-static PyObject *__pyx_pf_9mbufferio_10_mbufferio_9MBufferIO_44flush(struct __pyx_obj_9mbufferio_10_mbufferio_MBufferIO *__pyx_v_self) {
+static PyObject *__pyx_pf_9mbufferio_10_mbufferio_9MBufferIO_50flush(struct __pyx_obj_9mbufferio_10_mbufferio_MBufferIO *__pyx_v_self) {
   PyObject *__pyx_r = NULL;
   __Pyx_RefNannyDeclarations
   PyObject *__pyx_t_1 = NULL;
@@ -8306,7 +8754,7 @@ static PyObject *__pyx_pf_9mbufferio_10_mbufferio_9MBufferIO_44flush(struct __py
   int __pyx_clineno = 0;
   __Pyx_RefNannySetupContext("flush", 0);
   __Pyx_XDECREF(__pyx_r);
-  __pyx_t_1 = __pyx_f_9mbufferio_10_mbufferio_9MBufferIO_flush(__pyx_v_self, 1); if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 554; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __pyx_t_1 = __pyx_f_9mbufferio_10_mbufferio_9MBufferIO_flush(__pyx_v_self, 1); if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 601; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
   __Pyx_GOTREF(__pyx_t_1);
   __pyx_r = __pyx_t_1;
   __pyx_t_1 = 0;
@@ -8323,7 +8771,7 @@ static PyObject *__pyx_pf_9mbufferio_10_mbufferio_9MBufferIO_44flush(struct __py
   return __pyx_r;
 }
 
-/* "mbufferio/_mbufferio.pyx":562
+/* "mbufferio/_mbufferio.pyx":609
  *             raise ValueError(u"I/O operation on closed file.")
  * 
  *     cpdef isatty(self):             # <<<<<<<<<<<<<<
@@ -8331,7 +8779,7 @@ static PyObject *__pyx_pf_9mbufferio_10_mbufferio_9MBufferIO_44flush(struct __py
  *         isatty()
  */
 
-static PyObject *__pyx_pw_9mbufferio_10_mbufferio_9MBufferIO_47isatty(PyObject *__pyx_v_self, CYTHON_UNUSED PyObject *unused); /*proto*/
+static PyObject *__pyx_pw_9mbufferio_10_mbufferio_9MBufferIO_53isatty(PyObject *__pyx_v_self, CYTHON_UNUSED PyObject *unused); /*proto*/
 static PyObject *__pyx_f_9mbufferio_10_mbufferio_9MBufferIO_isatty(CYTHON_UNUSED struct __pyx_obj_9mbufferio_10_mbufferio_MBufferIO *__pyx_v_self, int __pyx_skip_dispatch) {
   PyObject *__pyx_r = NULL;
   __Pyx_RefNannyDeclarations
@@ -8347,9 +8795,9 @@ static PyObject *__pyx_f_9mbufferio_10_mbufferio_9MBufferIO_isatty(CYTHON_UNUSED
   if (unlikely(__pyx_skip_dispatch)) ;
   /* Check if overridden in Python */
   else if (unlikely(Py_TYPE(((PyObject *)__pyx_v_self))->tp_dictoffset != 0)) {
-    __pyx_t_1 = __Pyx_PyObject_GetAttrStr(((PyObject *)__pyx_v_self), __pyx_n_s_isatty); if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 562; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+    __pyx_t_1 = __Pyx_PyObject_GetAttrStr(((PyObject *)__pyx_v_self), __pyx_n_s_isatty); if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 609; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
     __Pyx_GOTREF(__pyx_t_1);
-    if (!PyCFunction_Check(__pyx_t_1) || (PyCFunction_GET_FUNCTION(__pyx_t_1) != (PyCFunction)__pyx_pw_9mbufferio_10_mbufferio_9MBufferIO_47isatty)) {
+    if (!PyCFunction_Check(__pyx_t_1) || (PyCFunction_GET_FUNCTION(__pyx_t_1) != (PyCFunction)__pyx_pw_9mbufferio_10_mbufferio_9MBufferIO_53isatty)) {
       __Pyx_XDECREF(__pyx_r);
       __Pyx_INCREF(__pyx_t_1);
       __pyx_t_3 = __pyx_t_1; __pyx_t_4 = NULL;
@@ -8363,10 +8811,10 @@ static PyObject *__pyx_f_9mbufferio_10_mbufferio_9MBufferIO_isatty(CYTHON_UNUSED
         }
       }
       if (__pyx_t_4) {
-        __pyx_t_2 = __Pyx_PyObject_CallOneArg(__pyx_t_3, __pyx_t_4); if (unlikely(!__pyx_t_2)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 562; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+        __pyx_t_2 = __Pyx_PyObject_CallOneArg(__pyx_t_3, __pyx_t_4); if (unlikely(!__pyx_t_2)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 609; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
         __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
       } else {
-        __pyx_t_2 = __Pyx_PyObject_CallNoArg(__pyx_t_3); if (unlikely(!__pyx_t_2)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 562; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+        __pyx_t_2 = __Pyx_PyObject_CallNoArg(__pyx_t_3); if (unlikely(!__pyx_t_2)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 609; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
       }
       __Pyx_GOTREF(__pyx_t_2);
       __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
@@ -8378,7 +8826,7 @@ static PyObject *__pyx_f_9mbufferio_10_mbufferio_9MBufferIO_isatty(CYTHON_UNUSED
     __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
   }
 
-  /* "mbufferio/_mbufferio.pyx":567
+  /* "mbufferio/_mbufferio.pyx":614
  *         Returns False
  *         """
  *         return False             # <<<<<<<<<<<<<<
@@ -8390,7 +8838,7 @@ static PyObject *__pyx_f_9mbufferio_10_mbufferio_9MBufferIO_isatty(CYTHON_UNUSED
   __pyx_r = Py_False;
   goto __pyx_L0;
 
-  /* "mbufferio/_mbufferio.pyx":562
+  /* "mbufferio/_mbufferio.pyx":609
  *             raise ValueError(u"I/O operation on closed file.")
  * 
  *     cpdef isatty(self):             # <<<<<<<<<<<<<<
@@ -8413,20 +8861,20 @@ static PyObject *__pyx_f_9mbufferio_10_mbufferio_9MBufferIO_isatty(CYTHON_UNUSED
 }
 
 /* Python wrapper */
-static PyObject *__pyx_pw_9mbufferio_10_mbufferio_9MBufferIO_47isatty(PyObject *__pyx_v_self, CYTHON_UNUSED PyObject *unused); /*proto*/
-static char __pyx_doc_9mbufferio_10_mbufferio_9MBufferIO_46isatty[] = "\n        isatty()\n        Returns False\n        ";
-static PyObject *__pyx_pw_9mbufferio_10_mbufferio_9MBufferIO_47isatty(PyObject *__pyx_v_self, CYTHON_UNUSED PyObject *unused) {
+static PyObject *__pyx_pw_9mbufferio_10_mbufferio_9MBufferIO_53isatty(PyObject *__pyx_v_self, CYTHON_UNUSED PyObject *unused); /*proto*/
+static char __pyx_doc_9mbufferio_10_mbufferio_9MBufferIO_52isatty[] = "\n        isatty()\n        Returns False\n        ";
+static PyObject *__pyx_pw_9mbufferio_10_mbufferio_9MBufferIO_53isatty(PyObject *__pyx_v_self, CYTHON_UNUSED PyObject *unused) {
   PyObject *__pyx_r = 0;
   __Pyx_RefNannyDeclarations
   __Pyx_RefNannySetupContext("isatty (wrapper)", 0);
-  __pyx_r = __pyx_pf_9mbufferio_10_mbufferio_9MBufferIO_46isatty(((struct __pyx_obj_9mbufferio_10_mbufferio_MBufferIO *)__pyx_v_self));
+  __pyx_r = __pyx_pf_9mbufferio_10_mbufferio_9MBufferIO_52isatty(((struct __pyx_obj_9mbufferio_10_mbufferio_MBufferIO *)__pyx_v_self));
 
   /* function exit code */
   __Pyx_RefNannyFinishContext();
   return __pyx_r;
 }
 
-static PyObject *__pyx_pf_9mbufferio_10_mbufferio_9MBufferIO_46isatty(struct __pyx_obj_9mbufferio_10_mbufferio_MBufferIO *__pyx_v_self) {
+static PyObject *__pyx_pf_9mbufferio_10_mbufferio_9MBufferIO_52isatty(struct __pyx_obj_9mbufferio_10_mbufferio_MBufferIO *__pyx_v_self) {
   PyObject *__pyx_r = NULL;
   __Pyx_RefNannyDeclarations
   PyObject *__pyx_t_1 = NULL;
@@ -8435,7 +8883,7 @@ static PyObject *__pyx_pf_9mbufferio_10_mbufferio_9MBufferIO_46isatty(struct __p
   int __pyx_clineno = 0;
   __Pyx_RefNannySetupContext("isatty", 0);
   __Pyx_XDECREF(__pyx_r);
-  __pyx_t_1 = __pyx_f_9mbufferio_10_mbufferio_9MBufferIO_isatty(__pyx_v_self, 1); if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 562; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __pyx_t_1 = __pyx_f_9mbufferio_10_mbufferio_9MBufferIO_isatty(__pyx_v_self, 1); if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 609; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
   __Pyx_GOTREF(__pyx_t_1);
   __pyx_r = __pyx_t_1;
   __pyx_t_1 = 0;
@@ -8452,7 +8900,7 @@ static PyObject *__pyx_pf_9mbufferio_10_mbufferio_9MBufferIO_46isatty(struct __p
   return __pyx_r;
 }
 
-/* "mbufferio/_mbufferio.pyx":569
+/* "mbufferio/_mbufferio.pyx":616
  *         return False
  * 
  *     cpdef readable(self):             # <<<<<<<<<<<<<<
@@ -8460,7 +8908,7 @@ static PyObject *__pyx_pf_9mbufferio_10_mbufferio_9MBufferIO_46isatty(struct __p
  *         readable()
  */
 
-static PyObject *__pyx_pw_9mbufferio_10_mbufferio_9MBufferIO_49readable(PyObject *__pyx_v_self, CYTHON_UNUSED PyObject *unused); /*proto*/
+static PyObject *__pyx_pw_9mbufferio_10_mbufferio_9MBufferIO_55readable(PyObject *__pyx_v_self, CYTHON_UNUSED PyObject *unused); /*proto*/
 static PyObject *__pyx_f_9mbufferio_10_mbufferio_9MBufferIO_readable(struct __pyx_obj_9mbufferio_10_mbufferio_MBufferIO *__pyx_v_self, int __pyx_skip_dispatch) {
   PyObject *__pyx_r = NULL;
   __Pyx_RefNannyDeclarations
@@ -8476,9 +8924,9 @@ static PyObject *__pyx_f_9mbufferio_10_mbufferio_9MBufferIO_readable(struct __py
   if (unlikely(__pyx_skip_dispatch)) ;
   /* Check if overridden in Python */
   else if (unlikely(Py_TYPE(((PyObject *)__pyx_v_self))->tp_dictoffset != 0)) {
-    __pyx_t_1 = __Pyx_PyObject_GetAttrStr(((PyObject *)__pyx_v_self), __pyx_n_s_readable); if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 569; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+    __pyx_t_1 = __Pyx_PyObject_GetAttrStr(((PyObject *)__pyx_v_self), __pyx_n_s_readable); if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 616; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
     __Pyx_GOTREF(__pyx_t_1);
-    if (!PyCFunction_Check(__pyx_t_1) || (PyCFunction_GET_FUNCTION(__pyx_t_1) != (PyCFunction)__pyx_pw_9mbufferio_10_mbufferio_9MBufferIO_49readable)) {
+    if (!PyCFunction_Check(__pyx_t_1) || (PyCFunction_GET_FUNCTION(__pyx_t_1) != (PyCFunction)__pyx_pw_9mbufferio_10_mbufferio_9MBufferIO_55readable)) {
       __Pyx_XDECREF(__pyx_r);
       __Pyx_INCREF(__pyx_t_1);
       __pyx_t_3 = __pyx_t_1; __pyx_t_4 = NULL;
@@ -8492,10 +8940,10 @@ static PyObject *__pyx_f_9mbufferio_10_mbufferio_9MBufferIO_readable(struct __py
         }
       }
       if (__pyx_t_4) {
-        __pyx_t_2 = __Pyx_PyObject_CallOneArg(__pyx_t_3, __pyx_t_4); if (unlikely(!__pyx_t_2)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 569; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+        __pyx_t_2 = __Pyx_PyObject_CallOneArg(__pyx_t_3, __pyx_t_4); if (unlikely(!__pyx_t_2)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 616; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
         __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
       } else {
-        __pyx_t_2 = __Pyx_PyObject_CallNoArg(__pyx_t_3); if (unlikely(!__pyx_t_2)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 569; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+        __pyx_t_2 = __Pyx_PyObject_CallNoArg(__pyx_t_3); if (unlikely(!__pyx_t_2)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 616; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
       }
       __Pyx_GOTREF(__pyx_t_2);
       __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
@@ -8507,7 +8955,7 @@ static PyObject *__pyx_f_9mbufferio_10_mbufferio_9MBufferIO_readable(struct __py
     __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
   }
 
-  /* "mbufferio/_mbufferio.pyx":574
+  /* "mbufferio/_mbufferio.pyx":621
  *         True if the MBufferIO is not closed
  *         """
  *         return not self.closed             # <<<<<<<<<<<<<<
@@ -8515,13 +8963,13 @@ static PyObject *__pyx_f_9mbufferio_10_mbufferio_9MBufferIO_readable(struct __py
  *     cpdef seekable(self):
  */
   __Pyx_XDECREF(__pyx_r);
-  __pyx_t_1 = __Pyx_PyBool_FromLong((!(__pyx_v_self->closed != 0))); if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 574; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __pyx_t_1 = __Pyx_PyBool_FromLong((!(__pyx_v_self->closed != 0))); if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 621; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
   __Pyx_GOTREF(__pyx_t_1);
   __pyx_r = __pyx_t_1;
   __pyx_t_1 = 0;
   goto __pyx_L0;
 
-  /* "mbufferio/_mbufferio.pyx":569
+  /* "mbufferio/_mbufferio.pyx":616
  *         return False
  * 
  *     cpdef readable(self):             # <<<<<<<<<<<<<<
@@ -8544,20 +8992,20 @@ static PyObject *__pyx_f_9mbufferio_10_mbufferio_9MBufferIO_readable(struct __py
 }
 
 /* Python wrapper */
-static PyObject *__pyx_pw_9mbufferio_10_mbufferio_9MBufferIO_49readable(PyObject *__pyx_v_self, CYTHON_UNUSED PyObject *unused); /*proto*/
-static char __pyx_doc_9mbufferio_10_mbufferio_9MBufferIO_48readable[] = "\n        readable()\n        True if the MBufferIO is not closed\n        ";
-static PyObject *__pyx_pw_9mbufferio_10_mbufferio_9MBufferIO_49readable(PyObject *__pyx_v_self, CYTHON_UNUSED PyObject *unused) {
+static PyObject *__pyx_pw_9mbufferio_10_mbufferio_9MBufferIO_55readable(PyObject *__pyx_v_self, CYTHON_UNUSED PyObject *unused); /*proto*/
+static char __pyx_doc_9mbufferio_10_mbufferio_9MBufferIO_54readable[] = "\n        readable()\n        True if the MBufferIO is not closed\n        ";
+static PyObject *__pyx_pw_9mbufferio_10_mbufferio_9MBufferIO_55readable(PyObject *__pyx_v_self, CYTHON_UNUSED PyObject *unused) {
   PyObject *__pyx_r = 0;
   __Pyx_RefNannyDeclarations
   __Pyx_RefNannySetupContext("readable (wrapper)", 0);
-  __pyx_r = __pyx_pf_9mbufferio_10_mbufferio_9MBufferIO_48readable(((struct __pyx_obj_9mbufferio_10_mbufferio_MBufferIO *)__pyx_v_self));
+  __pyx_r = __pyx_pf_9mbufferio_10_mbufferio_9MBufferIO_54readable(((struct __pyx_obj_9mbufferio_10_mbufferio_MBufferIO *)__pyx_v_self));
 
   /* function exit code */
   __Pyx_RefNannyFinishContext();
   return __pyx_r;
 }
 
-static PyObject *__pyx_pf_9mbufferio_10_mbufferio_9MBufferIO_48readable(struct __pyx_obj_9mbufferio_10_mbufferio_MBufferIO *__pyx_v_self) {
+static PyObject *__pyx_pf_9mbufferio_10_mbufferio_9MBufferIO_54readable(struct __pyx_obj_9mbufferio_10_mbufferio_MBufferIO *__pyx_v_self) {
   PyObject *__pyx_r = NULL;
   __Pyx_RefNannyDeclarations
   PyObject *__pyx_t_1 = NULL;
@@ -8566,7 +9014,7 @@ static PyObject *__pyx_pf_9mbufferio_10_mbufferio_9MBufferIO_48readable(struct _
   int __pyx_clineno = 0;
   __Pyx_RefNannySetupContext("readable", 0);
   __Pyx_XDECREF(__pyx_r);
-  __pyx_t_1 = __pyx_f_9mbufferio_10_mbufferio_9MBufferIO_readable(__pyx_v_self, 1); if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 569; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __pyx_t_1 = __pyx_f_9mbufferio_10_mbufferio_9MBufferIO_readable(__pyx_v_self, 1); if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 616; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
   __Pyx_GOTREF(__pyx_t_1);
   __pyx_r = __pyx_t_1;
   __pyx_t_1 = 0;
@@ -8583,7 +9031,7 @@ static PyObject *__pyx_pf_9mbufferio_10_mbufferio_9MBufferIO_48readable(struct _
   return __pyx_r;
 }
 
-/* "mbufferio/_mbufferio.pyx":576
+/* "mbufferio/_mbufferio.pyx":623
  *         return not self.closed
  * 
  *     cpdef seekable(self):             # <<<<<<<<<<<<<<
@@ -8591,7 +9039,7 @@ static PyObject *__pyx_pf_9mbufferio_10_mbufferio_9MBufferIO_48readable(struct _
  *         seekable()
  */
 
-static PyObject *__pyx_pw_9mbufferio_10_mbufferio_9MBufferIO_51seekable(PyObject *__pyx_v_self, CYTHON_UNUSED PyObject *unused); /*proto*/
+static PyObject *__pyx_pw_9mbufferio_10_mbufferio_9MBufferIO_57seekable(PyObject *__pyx_v_self, CYTHON_UNUSED PyObject *unused); /*proto*/
 static PyObject *__pyx_f_9mbufferio_10_mbufferio_9MBufferIO_seekable(struct __pyx_obj_9mbufferio_10_mbufferio_MBufferIO *__pyx_v_self, int __pyx_skip_dispatch) {
   PyObject *__pyx_r = NULL;
   __Pyx_RefNannyDeclarations
@@ -8607,9 +9055,9 @@ static PyObject *__pyx_f_9mbufferio_10_mbufferio_9MBufferIO_seekable(struct __py
   if (unlikely(__pyx_skip_dispatch)) ;
   /* Check if overridden in Python */
   else if (unlikely(Py_TYPE(((PyObject *)__pyx_v_self))->tp_dictoffset != 0)) {
-    __pyx_t_1 = __Pyx_PyObject_GetAttrStr(((PyObject *)__pyx_v_self), __pyx_n_s_seekable); if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 576; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+    __pyx_t_1 = __Pyx_PyObject_GetAttrStr(((PyObject *)__pyx_v_self), __pyx_n_s_seekable); if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 623; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
     __Pyx_GOTREF(__pyx_t_1);
-    if (!PyCFunction_Check(__pyx_t_1) || (PyCFunction_GET_FUNCTION(__pyx_t_1) != (PyCFunction)__pyx_pw_9mbufferio_10_mbufferio_9MBufferIO_51seekable)) {
+    if (!PyCFunction_Check(__pyx_t_1) || (PyCFunction_GET_FUNCTION(__pyx_t_1) != (PyCFunction)__pyx_pw_9mbufferio_10_mbufferio_9MBufferIO_57seekable)) {
       __Pyx_XDECREF(__pyx_r);
       __Pyx_INCREF(__pyx_t_1);
       __pyx_t_3 = __pyx_t_1; __pyx_t_4 = NULL;
@@ -8623,10 +9071,10 @@ static PyObject *__pyx_f_9mbufferio_10_mbufferio_9MBufferIO_seekable(struct __py
         }
       }
       if (__pyx_t_4) {
-        __pyx_t_2 = __Pyx_PyObject_CallOneArg(__pyx_t_3, __pyx_t_4); if (unlikely(!__pyx_t_2)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 576; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+        __pyx_t_2 = __Pyx_PyObject_CallOneArg(__pyx_t_3, __pyx_t_4); if (unlikely(!__pyx_t_2)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 623; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
         __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
       } else {
-        __pyx_t_2 = __Pyx_PyObject_CallNoArg(__pyx_t_3); if (unlikely(!__pyx_t_2)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 576; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+        __pyx_t_2 = __Pyx_PyObject_CallNoArg(__pyx_t_3); if (unlikely(!__pyx_t_2)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 623; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
       }
       __Pyx_GOTREF(__pyx_t_2);
       __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
@@ -8638,7 +9086,7 @@ static PyObject *__pyx_f_9mbufferio_10_mbufferio_9MBufferIO_seekable(struct __py
     __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
   }
 
-  /* "mbufferio/_mbufferio.pyx":581
+  /* "mbufferio/_mbufferio.pyx":628
  *         True if the MBufferIO is not closed
  *         """
  *         return not self.closed             # <<<<<<<<<<<<<<
@@ -8646,13 +9094,13 @@ static PyObject *__pyx_f_9mbufferio_10_mbufferio_9MBufferIO_seekable(struct __py
  *     cpdef tell(self):
  */
   __Pyx_XDECREF(__pyx_r);
-  __pyx_t_1 = __Pyx_PyBool_FromLong((!(__pyx_v_self->closed != 0))); if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 581; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __pyx_t_1 = __Pyx_PyBool_FromLong((!(__pyx_v_self->closed != 0))); if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 628; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
   __Pyx_GOTREF(__pyx_t_1);
   __pyx_r = __pyx_t_1;
   __pyx_t_1 = 0;
   goto __pyx_L0;
 
-  /* "mbufferio/_mbufferio.pyx":576
+  /* "mbufferio/_mbufferio.pyx":623
  *         return not self.closed
  * 
  *     cpdef seekable(self):             # <<<<<<<<<<<<<<
@@ -8675,20 +9123,20 @@ static PyObject *__pyx_f_9mbufferio_10_mbufferio_9MBufferIO_seekable(struct __py
 }
 
 /* Python wrapper */
-static PyObject *__pyx_pw_9mbufferio_10_mbufferio_9MBufferIO_51seekable(PyObject *__pyx_v_self, CYTHON_UNUSED PyObject *unused); /*proto*/
-static char __pyx_doc_9mbufferio_10_mbufferio_9MBufferIO_50seekable[] = "\n        seekable()\n        True if the MBufferIO is not closed\n        ";
-static PyObject *__pyx_pw_9mbufferio_10_mbufferio_9MBufferIO_51seekable(PyObject *__pyx_v_self, CYTHON_UNUSED PyObject *unused) {
+static PyObject *__pyx_pw_9mbufferio_10_mbufferio_9MBufferIO_57seekable(PyObject *__pyx_v_self, CYTHON_UNUSED PyObject *unused); /*proto*/
+static char __pyx_doc_9mbufferio_10_mbufferio_9MBufferIO_56seekable[] = "\n        seekable()\n        True if the MBufferIO is not closed\n        ";
+static PyObject *__pyx_pw_9mbufferio_10_mbufferio_9MBufferIO_57seekable(PyObject *__pyx_v_self, CYTHON_UNUSED PyObject *unused) {
   PyObject *__pyx_r = 0;
   __Pyx_RefNannyDeclarations
   __Pyx_RefNannySetupContext("seekable (wrapper)", 0);
-  __pyx_r = __pyx_pf_9mbufferio_10_mbufferio_9MBufferIO_50seekable(((struct __pyx_obj_9mbufferio_10_mbufferio_MBufferIO *)__pyx_v_self));
+  __pyx_r = __pyx_pf_9mbufferio_10_mbufferio_9MBufferIO_56seekable(((struct __pyx_obj_9mbufferio_10_mbufferio_MBufferIO *)__pyx_v_self));
 
   /* function exit code */
   __Pyx_RefNannyFinishContext();
   return __pyx_r;
 }
 
-static PyObject *__pyx_pf_9mbufferio_10_mbufferio_9MBufferIO_50seekable(struct __pyx_obj_9mbufferio_10_mbufferio_MBufferIO *__pyx_v_self) {
+static PyObject *__pyx_pf_9mbufferio_10_mbufferio_9MBufferIO_56seekable(struct __pyx_obj_9mbufferio_10_mbufferio_MBufferIO *__pyx_v_self) {
   PyObject *__pyx_r = NULL;
   __Pyx_RefNannyDeclarations
   PyObject *__pyx_t_1 = NULL;
@@ -8697,7 +9145,7 @@ static PyObject *__pyx_pf_9mbufferio_10_mbufferio_9MBufferIO_50seekable(struct _
   int __pyx_clineno = 0;
   __Pyx_RefNannySetupContext("seekable", 0);
   __Pyx_XDECREF(__pyx_r);
-  __pyx_t_1 = __pyx_f_9mbufferio_10_mbufferio_9MBufferIO_seekable(__pyx_v_self, 1); if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 576; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __pyx_t_1 = __pyx_f_9mbufferio_10_mbufferio_9MBufferIO_seekable(__pyx_v_self, 1); if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 623; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
   __Pyx_GOTREF(__pyx_t_1);
   __pyx_r = __pyx_t_1;
   __pyx_t_1 = 0;
@@ -8714,7 +9162,7 @@ static PyObject *__pyx_pf_9mbufferio_10_mbufferio_9MBufferIO_50seekable(struct _
   return __pyx_r;
 }
 
-/* "mbufferio/_mbufferio.pyx":583
+/* "mbufferio/_mbufferio.pyx":630
  *         return not self.closed
  * 
  *     cpdef tell(self):             # <<<<<<<<<<<<<<
@@ -8722,7 +9170,7 @@ static PyObject *__pyx_pf_9mbufferio_10_mbufferio_9MBufferIO_50seekable(struct _
  *         tell()
  */
 
-static PyObject *__pyx_pw_9mbufferio_10_mbufferio_9MBufferIO_53tell(PyObject *__pyx_v_self, CYTHON_UNUSED PyObject *unused); /*proto*/
+static PyObject *__pyx_pw_9mbufferio_10_mbufferio_9MBufferIO_59tell(PyObject *__pyx_v_self, CYTHON_UNUSED PyObject *unused); /*proto*/
 static PyObject *__pyx_f_9mbufferio_10_mbufferio_9MBufferIO_tell(struct __pyx_obj_9mbufferio_10_mbufferio_MBufferIO *__pyx_v_self, int __pyx_skip_dispatch) {
   PyObject *__pyx_r = NULL;
   __Pyx_RefNannyDeclarations
@@ -8739,9 +9187,9 @@ static PyObject *__pyx_f_9mbufferio_10_mbufferio_9MBufferIO_tell(struct __pyx_ob
   if (unlikely(__pyx_skip_dispatch)) ;
   /* Check if overridden in Python */
   else if (unlikely(Py_TYPE(((PyObject *)__pyx_v_self))->tp_dictoffset != 0)) {
-    __pyx_t_1 = __Pyx_PyObject_GetAttrStr(((PyObject *)__pyx_v_self), __pyx_n_s_tell); if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 583; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+    __pyx_t_1 = __Pyx_PyObject_GetAttrStr(((PyObject *)__pyx_v_self), __pyx_n_s_tell); if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 630; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
     __Pyx_GOTREF(__pyx_t_1);
-    if (!PyCFunction_Check(__pyx_t_1) || (PyCFunction_GET_FUNCTION(__pyx_t_1) != (PyCFunction)__pyx_pw_9mbufferio_10_mbufferio_9MBufferIO_53tell)) {
+    if (!PyCFunction_Check(__pyx_t_1) || (PyCFunction_GET_FUNCTION(__pyx_t_1) != (PyCFunction)__pyx_pw_9mbufferio_10_mbufferio_9MBufferIO_59tell)) {
       __Pyx_XDECREF(__pyx_r);
       __Pyx_INCREF(__pyx_t_1);
       __pyx_t_3 = __pyx_t_1; __pyx_t_4 = NULL;
@@ -8755,10 +9203,10 @@ static PyObject *__pyx_f_9mbufferio_10_mbufferio_9MBufferIO_tell(struct __pyx_ob
         }
       }
       if (__pyx_t_4) {
-        __pyx_t_2 = __Pyx_PyObject_CallOneArg(__pyx_t_3, __pyx_t_4); if (unlikely(!__pyx_t_2)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 583; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+        __pyx_t_2 = __Pyx_PyObject_CallOneArg(__pyx_t_3, __pyx_t_4); if (unlikely(!__pyx_t_2)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 630; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
         __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
       } else {
-        __pyx_t_2 = __Pyx_PyObject_CallNoArg(__pyx_t_3); if (unlikely(!__pyx_t_2)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 583; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+        __pyx_t_2 = __Pyx_PyObject_CallNoArg(__pyx_t_3); if (unlikely(!__pyx_t_2)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 630; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
       }
       __Pyx_GOTREF(__pyx_t_2);
       __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
@@ -8770,7 +9218,7 @@ static PyObject *__pyx_f_9mbufferio_10_mbufferio_9MBufferIO_tell(struct __pyx_ob
     __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
   }
 
-  /* "mbufferio/_mbufferio.pyx":588
+  /* "mbufferio/_mbufferio.pyx":635
  *         Return the current stream position
  *         """
  *         if self.closed:             # <<<<<<<<<<<<<<
@@ -8780,20 +9228,20 @@ static PyObject *__pyx_f_9mbufferio_10_mbufferio_9MBufferIO_tell(struct __pyx_ob
   __pyx_t_5 = (__pyx_v_self->closed != 0);
   if (__pyx_t_5) {
 
-    /* "mbufferio/_mbufferio.pyx":589
+    /* "mbufferio/_mbufferio.pyx":636
  *         """
  *         if self.closed:
  *             raise ValueError(u"I/O operation on closed file.")             # <<<<<<<<<<<<<<
  *         return self.offset
  * 
  */
-    __pyx_t_1 = __Pyx_PyObject_Call(__pyx_builtin_ValueError, __pyx_tuple__28, NULL); if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 589; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+    __pyx_t_1 = __Pyx_PyObject_Call(__pyx_builtin_ValueError, __pyx_tuple__28, NULL); if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 636; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
     __Pyx_GOTREF(__pyx_t_1);
     __Pyx_Raise(__pyx_t_1, 0, 0, 0);
     __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
-    {__pyx_filename = __pyx_f[0]; __pyx_lineno = 589; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+    {__pyx_filename = __pyx_f[0]; __pyx_lineno = 636; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
 
-    /* "mbufferio/_mbufferio.pyx":588
+    /* "mbufferio/_mbufferio.pyx":635
  *         Return the current stream position
  *         """
  *         if self.closed:             # <<<<<<<<<<<<<<
@@ -8802,7 +9250,7 @@ static PyObject *__pyx_f_9mbufferio_10_mbufferio_9MBufferIO_tell(struct __pyx_ob
  */
   }
 
-  /* "mbufferio/_mbufferio.pyx":590
+  /* "mbufferio/_mbufferio.pyx":637
  *         if self.closed:
  *             raise ValueError(u"I/O operation on closed file.")
  *         return self.offset             # <<<<<<<<<<<<<<
@@ -8810,13 +9258,13 @@ static PyObject *__pyx_f_9mbufferio_10_mbufferio_9MBufferIO_tell(struct __pyx_ob
  *     cpdef writable(self):
  */
   __Pyx_XDECREF(__pyx_r);
-  __pyx_t_1 = __Pyx_PyInt_From_int64_t(__pyx_v_self->offset); if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 590; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __pyx_t_1 = __Pyx_PyInt_From_int64_t(__pyx_v_self->offset); if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 637; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
   __Pyx_GOTREF(__pyx_t_1);
   __pyx_r = __pyx_t_1;
   __pyx_t_1 = 0;
   goto __pyx_L0;
 
-  /* "mbufferio/_mbufferio.pyx":583
+  /* "mbufferio/_mbufferio.pyx":630
  *         return not self.closed
  * 
  *     cpdef tell(self):             # <<<<<<<<<<<<<<
@@ -8839,20 +9287,20 @@ static PyObject *__pyx_f_9mbufferio_10_mbufferio_9MBufferIO_tell(struct __pyx_ob
 }
 
 /* Python wrapper */
-static PyObject *__pyx_pw_9mbufferio_10_mbufferio_9MBufferIO_53tell(PyObject *__pyx_v_self, CYTHON_UNUSED PyObject *unused); /*proto*/
-static char __pyx_doc_9mbufferio_10_mbufferio_9MBufferIO_52tell[] = "\n        tell()\n        Return the current stream position\n        ";
-static PyObject *__pyx_pw_9mbufferio_10_mbufferio_9MBufferIO_53tell(PyObject *__pyx_v_self, CYTHON_UNUSED PyObject *unused) {
+static PyObject *__pyx_pw_9mbufferio_10_mbufferio_9MBufferIO_59tell(PyObject *__pyx_v_self, CYTHON_UNUSED PyObject *unused); /*proto*/
+static char __pyx_doc_9mbufferio_10_mbufferio_9MBufferIO_58tell[] = "\n        tell()\n        Return the current stream position\n        ";
+static PyObject *__pyx_pw_9mbufferio_10_mbufferio_9MBufferIO_59tell(PyObject *__pyx_v_self, CYTHON_UNUSED PyObject *unused) {
   PyObject *__pyx_r = 0;
   __Pyx_RefNannyDeclarations
   __Pyx_RefNannySetupContext("tell (wrapper)", 0);
-  __pyx_r = __pyx_pf_9mbufferio_10_mbufferio_9MBufferIO_52tell(((struct __pyx_obj_9mbufferio_10_mbufferio_MBufferIO *)__pyx_v_self));
+  __pyx_r = __pyx_pf_9mbufferio_10_mbufferio_9MBufferIO_58tell(((struct __pyx_obj_9mbufferio_10_mbufferio_MBufferIO *)__pyx_v_self));
 
   /* function exit code */
   __Pyx_RefNannyFinishContext();
   return __pyx_r;
 }
 
-static PyObject *__pyx_pf_9mbufferio_10_mbufferio_9MBufferIO_52tell(struct __pyx_obj_9mbufferio_10_mbufferio_MBufferIO *__pyx_v_self) {
+static PyObject *__pyx_pf_9mbufferio_10_mbufferio_9MBufferIO_58tell(struct __pyx_obj_9mbufferio_10_mbufferio_MBufferIO *__pyx_v_self) {
   PyObject *__pyx_r = NULL;
   __Pyx_RefNannyDeclarations
   PyObject *__pyx_t_1 = NULL;
@@ -8861,7 +9309,7 @@ static PyObject *__pyx_pf_9mbufferio_10_mbufferio_9MBufferIO_52tell(struct __pyx
   int __pyx_clineno = 0;
   __Pyx_RefNannySetupContext("tell", 0);
   __Pyx_XDECREF(__pyx_r);
-  __pyx_t_1 = __pyx_f_9mbufferio_10_mbufferio_9MBufferIO_tell(__pyx_v_self, 1); if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 583; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __pyx_t_1 = __pyx_f_9mbufferio_10_mbufferio_9MBufferIO_tell(__pyx_v_self, 1); if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 630; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
   __Pyx_GOTREF(__pyx_t_1);
   __pyx_r = __pyx_t_1;
   __pyx_t_1 = 0;
@@ -8878,7 +9326,7 @@ static PyObject *__pyx_pf_9mbufferio_10_mbufferio_9MBufferIO_52tell(struct __pyx
   return __pyx_r;
 }
 
-/* "mbufferio/_mbufferio.pyx":592
+/* "mbufferio/_mbufferio.pyx":639
  *         return self.offset
  * 
  *     cpdef writable(self):             # <<<<<<<<<<<<<<
@@ -8886,7 +9334,7 @@ static PyObject *__pyx_pf_9mbufferio_10_mbufferio_9MBufferIO_52tell(struct __pyx
  *         writable()
  */
 
-static PyObject *__pyx_pw_9mbufferio_10_mbufferio_9MBufferIO_55writable(PyObject *__pyx_v_self, CYTHON_UNUSED PyObject *unused); /*proto*/
+static PyObject *__pyx_pw_9mbufferio_10_mbufferio_9MBufferIO_61writable(PyObject *__pyx_v_self, CYTHON_UNUSED PyObject *unused); /*proto*/
 static PyObject *__pyx_f_9mbufferio_10_mbufferio_9MBufferIO_writable(struct __pyx_obj_9mbufferio_10_mbufferio_MBufferIO *__pyx_v_self, int __pyx_skip_dispatch) {
   PyObject *__pyx_r = NULL;
   __Pyx_RefNannyDeclarations
@@ -8903,9 +9351,9 @@ static PyObject *__pyx_f_9mbufferio_10_mbufferio_9MBufferIO_writable(struct __py
   if (unlikely(__pyx_skip_dispatch)) ;
   /* Check if overridden in Python */
   else if (unlikely(Py_TYPE(((PyObject *)__pyx_v_self))->tp_dictoffset != 0)) {
-    __pyx_t_1 = __Pyx_PyObject_GetAttrStr(((PyObject *)__pyx_v_self), __pyx_n_s_writable); if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 592; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+    __pyx_t_1 = __Pyx_PyObject_GetAttrStr(((PyObject *)__pyx_v_self), __pyx_n_s_writable); if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 639; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
     __Pyx_GOTREF(__pyx_t_1);
-    if (!PyCFunction_Check(__pyx_t_1) || (PyCFunction_GET_FUNCTION(__pyx_t_1) != (PyCFunction)__pyx_pw_9mbufferio_10_mbufferio_9MBufferIO_55writable)) {
+    if (!PyCFunction_Check(__pyx_t_1) || (PyCFunction_GET_FUNCTION(__pyx_t_1) != (PyCFunction)__pyx_pw_9mbufferio_10_mbufferio_9MBufferIO_61writable)) {
       __Pyx_XDECREF(__pyx_r);
       __Pyx_INCREF(__pyx_t_1);
       __pyx_t_3 = __pyx_t_1; __pyx_t_4 = NULL;
@@ -8919,10 +9367,10 @@ static PyObject *__pyx_f_9mbufferio_10_mbufferio_9MBufferIO_writable(struct __py
         }
       }
       if (__pyx_t_4) {
-        __pyx_t_2 = __Pyx_PyObject_CallOneArg(__pyx_t_3, __pyx_t_4); if (unlikely(!__pyx_t_2)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 592; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+        __pyx_t_2 = __Pyx_PyObject_CallOneArg(__pyx_t_3, __pyx_t_4); if (unlikely(!__pyx_t_2)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 639; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
         __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
       } else {
-        __pyx_t_2 = __Pyx_PyObject_CallNoArg(__pyx_t_3); if (unlikely(!__pyx_t_2)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 592; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+        __pyx_t_2 = __Pyx_PyObject_CallNoArg(__pyx_t_3); if (unlikely(!__pyx_t_2)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 639; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
       }
       __Pyx_GOTREF(__pyx_t_2);
       __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
@@ -8934,7 +9382,7 @@ static PyObject *__pyx_f_9mbufferio_10_mbufferio_9MBufferIO_writable(struct __py
     __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
   }
 
-  /* "mbufferio/_mbufferio.pyx":599
+  /* "mbufferio/_mbufferio.pyx":646
  *         If the MBufferIO is a copy, returns True.
  *         """
  *         if self.closed:             # <<<<<<<<<<<<<<
@@ -8944,7 +9392,7 @@ static PyObject *__pyx_f_9mbufferio_10_mbufferio_9MBufferIO_writable(struct __py
   __pyx_t_5 = (__pyx_v_self->closed != 0);
   if (__pyx_t_5) {
 
-    /* "mbufferio/_mbufferio.pyx":600
+    /* "mbufferio/_mbufferio.pyx":647
  *         """
  *         if self.closed:
  *             return False             # <<<<<<<<<<<<<<
@@ -8956,7 +9404,7 @@ static PyObject *__pyx_f_9mbufferio_10_mbufferio_9MBufferIO_writable(struct __py
     __pyx_r = Py_False;
     goto __pyx_L0;
 
-    /* "mbufferio/_mbufferio.pyx":599
+    /* "mbufferio/_mbufferio.pyx":646
  *         If the MBufferIO is a copy, returns True.
  *         """
  *         if self.closed:             # <<<<<<<<<<<<<<
@@ -8965,7 +9413,7 @@ static PyObject *__pyx_f_9mbufferio_10_mbufferio_9MBufferIO_writable(struct __py
  */
   }
 
-  /* "mbufferio/_mbufferio.pyx":601
+  /* "mbufferio/_mbufferio.pyx":648
  *         if self.closed:
  *             return False
  *         return not self.readonly             # <<<<<<<<<<<<<<
@@ -8973,13 +9421,13 @@ static PyObject *__pyx_f_9mbufferio_10_mbufferio_9MBufferIO_writable(struct __py
  *     cpdef writelines(self, lines):
  */
   __Pyx_XDECREF(__pyx_r);
-  __pyx_t_1 = __Pyx_PyBool_FromLong((!(__pyx_v_self->readonly != 0))); if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 601; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __pyx_t_1 = __Pyx_PyBool_FromLong((!(__pyx_v_self->readonly != 0))); if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 648; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
   __Pyx_GOTREF(__pyx_t_1);
   __pyx_r = __pyx_t_1;
   __pyx_t_1 = 0;
   goto __pyx_L0;
 
-  /* "mbufferio/_mbufferio.pyx":592
+  /* "mbufferio/_mbufferio.pyx":639
  *         return self.offset
  * 
  *     cpdef writable(self):             # <<<<<<<<<<<<<<
@@ -9002,20 +9450,20 @@ static PyObject *__pyx_f_9mbufferio_10_mbufferio_9MBufferIO_writable(struct __py
 }
 
 /* Python wrapper */
-static PyObject *__pyx_pw_9mbufferio_10_mbufferio_9MBufferIO_55writable(PyObject *__pyx_v_self, CYTHON_UNUSED PyObject *unused); /*proto*/
-static char __pyx_doc_9mbufferio_10_mbufferio_9MBufferIO_54writable[] = "\n        writable()\n        If the MBufferIO is a reference, tells if the referenced object is writeable.\n\n        If the MBufferIO is a copy, returns True.\n        ";
-static PyObject *__pyx_pw_9mbufferio_10_mbufferio_9MBufferIO_55writable(PyObject *__pyx_v_self, CYTHON_UNUSED PyObject *unused) {
+static PyObject *__pyx_pw_9mbufferio_10_mbufferio_9MBufferIO_61writable(PyObject *__pyx_v_self, CYTHON_UNUSED PyObject *unused); /*proto*/
+static char __pyx_doc_9mbufferio_10_mbufferio_9MBufferIO_60writable[] = "\n        writable()\n        If the MBufferIO is a reference, tells if the referenced object is writeable.\n\n        If the MBufferIO is a copy, returns True.\n        ";
+static PyObject *__pyx_pw_9mbufferio_10_mbufferio_9MBufferIO_61writable(PyObject *__pyx_v_self, CYTHON_UNUSED PyObject *unused) {
   PyObject *__pyx_r = 0;
   __Pyx_RefNannyDeclarations
   __Pyx_RefNannySetupContext("writable (wrapper)", 0);
-  __pyx_r = __pyx_pf_9mbufferio_10_mbufferio_9MBufferIO_54writable(((struct __pyx_obj_9mbufferio_10_mbufferio_MBufferIO *)__pyx_v_self));
+  __pyx_r = __pyx_pf_9mbufferio_10_mbufferio_9MBufferIO_60writable(((struct __pyx_obj_9mbufferio_10_mbufferio_MBufferIO *)__pyx_v_self));
 
   /* function exit code */
   __Pyx_RefNannyFinishContext();
   return __pyx_r;
 }
 
-static PyObject *__pyx_pf_9mbufferio_10_mbufferio_9MBufferIO_54writable(struct __pyx_obj_9mbufferio_10_mbufferio_MBufferIO *__pyx_v_self) {
+static PyObject *__pyx_pf_9mbufferio_10_mbufferio_9MBufferIO_60writable(struct __pyx_obj_9mbufferio_10_mbufferio_MBufferIO *__pyx_v_self) {
   PyObject *__pyx_r = NULL;
   __Pyx_RefNannyDeclarations
   PyObject *__pyx_t_1 = NULL;
@@ -9024,7 +9472,7 @@ static PyObject *__pyx_pf_9mbufferio_10_mbufferio_9MBufferIO_54writable(struct _
   int __pyx_clineno = 0;
   __Pyx_RefNannySetupContext("writable", 0);
   __Pyx_XDECREF(__pyx_r);
-  __pyx_t_1 = __pyx_f_9mbufferio_10_mbufferio_9MBufferIO_writable(__pyx_v_self, 1); if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 592; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __pyx_t_1 = __pyx_f_9mbufferio_10_mbufferio_9MBufferIO_writable(__pyx_v_self, 1); if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 639; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
   __Pyx_GOTREF(__pyx_t_1);
   __pyx_r = __pyx_t_1;
   __pyx_t_1 = 0;
@@ -9041,7 +9489,7 @@ static PyObject *__pyx_pf_9mbufferio_10_mbufferio_9MBufferIO_54writable(struct _
   return __pyx_r;
 }
 
-/* "mbufferio/_mbufferio.pyx":603
+/* "mbufferio/_mbufferio.pyx":650
  *         return not self.readonly
  * 
  *     cpdef writelines(self, lines):             # <<<<<<<<<<<<<<
@@ -9049,7 +9497,7 @@ static PyObject *__pyx_pf_9mbufferio_10_mbufferio_9MBufferIO_54writable(struct _
  *         writelines(lines)
  */
 
-static PyObject *__pyx_pw_9mbufferio_10_mbufferio_9MBufferIO_57writelines(PyObject *__pyx_v_self, PyObject *__pyx_v_lines); /*proto*/
+static PyObject *__pyx_pw_9mbufferio_10_mbufferio_9MBufferIO_63writelines(PyObject *__pyx_v_self, PyObject *__pyx_v_lines); /*proto*/
 static PyObject *__pyx_f_9mbufferio_10_mbufferio_9MBufferIO_writelines(struct __pyx_obj_9mbufferio_10_mbufferio_MBufferIO *__pyx_v_self, PyObject *__pyx_v_lines, int __pyx_skip_dispatch) {
   PyObject *__pyx_v_line = NULL;
   PyObject *__pyx_r = NULL;
@@ -9070,9 +9518,9 @@ static PyObject *__pyx_f_9mbufferio_10_mbufferio_9MBufferIO_writelines(struct __
   if (unlikely(__pyx_skip_dispatch)) ;
   /* Check if overridden in Python */
   else if (unlikely(Py_TYPE(((PyObject *)__pyx_v_self))->tp_dictoffset != 0)) {
-    __pyx_t_1 = __Pyx_PyObject_GetAttrStr(((PyObject *)__pyx_v_self), __pyx_n_s_writelines); if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 603; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+    __pyx_t_1 = __Pyx_PyObject_GetAttrStr(((PyObject *)__pyx_v_self), __pyx_n_s_writelines); if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 650; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
     __Pyx_GOTREF(__pyx_t_1);
-    if (!PyCFunction_Check(__pyx_t_1) || (PyCFunction_GET_FUNCTION(__pyx_t_1) != (PyCFunction)__pyx_pw_9mbufferio_10_mbufferio_9MBufferIO_57writelines)) {
+    if (!PyCFunction_Check(__pyx_t_1) || (PyCFunction_GET_FUNCTION(__pyx_t_1) != (PyCFunction)__pyx_pw_9mbufferio_10_mbufferio_9MBufferIO_63writelines)) {
       __Pyx_XDECREF(__pyx_r);
       __Pyx_INCREF(__pyx_t_1);
       __pyx_t_3 = __pyx_t_1; __pyx_t_4 = NULL;
@@ -9086,16 +9534,16 @@ static PyObject *__pyx_f_9mbufferio_10_mbufferio_9MBufferIO_writelines(struct __
         }
       }
       if (!__pyx_t_4) {
-        __pyx_t_2 = __Pyx_PyObject_CallOneArg(__pyx_t_3, __pyx_v_lines); if (unlikely(!__pyx_t_2)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 603; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+        __pyx_t_2 = __Pyx_PyObject_CallOneArg(__pyx_t_3, __pyx_v_lines); if (unlikely(!__pyx_t_2)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 650; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
         __Pyx_GOTREF(__pyx_t_2);
       } else {
-        __pyx_t_5 = PyTuple_New(1+1); if (unlikely(!__pyx_t_5)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 603; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+        __pyx_t_5 = PyTuple_New(1+1); if (unlikely(!__pyx_t_5)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 650; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
         __Pyx_GOTREF(__pyx_t_5);
         __Pyx_GIVEREF(__pyx_t_4); PyTuple_SET_ITEM(__pyx_t_5, 0, __pyx_t_4); __pyx_t_4 = NULL;
         __Pyx_INCREF(__pyx_v_lines);
         __Pyx_GIVEREF(__pyx_v_lines);
         PyTuple_SET_ITEM(__pyx_t_5, 0+1, __pyx_v_lines);
-        __pyx_t_2 = __Pyx_PyObject_Call(__pyx_t_3, __pyx_t_5, NULL); if (unlikely(!__pyx_t_2)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 603; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+        __pyx_t_2 = __Pyx_PyObject_Call(__pyx_t_3, __pyx_t_5, NULL); if (unlikely(!__pyx_t_2)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 650; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
         __Pyx_GOTREF(__pyx_t_2);
         __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
       }
@@ -9108,7 +9556,7 @@ static PyObject *__pyx_f_9mbufferio_10_mbufferio_9MBufferIO_writelines(struct __
     __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
   }
 
-  /* "mbufferio/_mbufferio.pyx":612
+  /* "mbufferio/_mbufferio.pyx":659
  *         lines: an iterable
  *         """
  *         if self.closed:             # <<<<<<<<<<<<<<
@@ -9118,20 +9566,20 @@ static PyObject *__pyx_f_9mbufferio_10_mbufferio_9MBufferIO_writelines(struct __
   __pyx_t_6 = (__pyx_v_self->closed != 0);
   if (__pyx_t_6) {
 
-    /* "mbufferio/_mbufferio.pyx":613
+    /* "mbufferio/_mbufferio.pyx":660
  *         """
  *         if self.closed:
  *             raise ValueError(u"I/O operation on closed file.")             # <<<<<<<<<<<<<<
  *         if self.view_count > 0:
  *             raise ValueError("Can not modify the buffer when there are active views")
  */
-    __pyx_t_1 = __Pyx_PyObject_Call(__pyx_builtin_ValueError, __pyx_tuple__29, NULL); if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 613; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+    __pyx_t_1 = __Pyx_PyObject_Call(__pyx_builtin_ValueError, __pyx_tuple__29, NULL); if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 660; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
     __Pyx_GOTREF(__pyx_t_1);
     __Pyx_Raise(__pyx_t_1, 0, 0, 0);
     __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
-    {__pyx_filename = __pyx_f[0]; __pyx_lineno = 613; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+    {__pyx_filename = __pyx_f[0]; __pyx_lineno = 660; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
 
-    /* "mbufferio/_mbufferio.pyx":612
+    /* "mbufferio/_mbufferio.pyx":659
  *         lines: an iterable
  *         """
  *         if self.closed:             # <<<<<<<<<<<<<<
@@ -9140,7 +9588,7 @@ static PyObject *__pyx_f_9mbufferio_10_mbufferio_9MBufferIO_writelines(struct __
  */
   }
 
-  /* "mbufferio/_mbufferio.pyx":614
+  /* "mbufferio/_mbufferio.pyx":661
  *         if self.closed:
  *             raise ValueError(u"I/O operation on closed file.")
  *         if self.view_count > 0:             # <<<<<<<<<<<<<<
@@ -9150,20 +9598,20 @@ static PyObject *__pyx_f_9mbufferio_10_mbufferio_9MBufferIO_writelines(struct __
   __pyx_t_6 = ((__pyx_v_self->view_count > 0) != 0);
   if (__pyx_t_6) {
 
-    /* "mbufferio/_mbufferio.pyx":615
+    /* "mbufferio/_mbufferio.pyx":662
  *             raise ValueError(u"I/O operation on closed file.")
  *         if self.view_count > 0:
  *             raise ValueError("Can not modify the buffer when there are active views")             # <<<<<<<<<<<<<<
  *         # Write a list of lines to the stream. Line separators are not added, so it is usual for each of the lines
  *         # provided to have a line separator at the end.
  */
-    __pyx_t_1 = __Pyx_PyObject_Call(__pyx_builtin_ValueError, __pyx_tuple__30, NULL); if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 615; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+    __pyx_t_1 = __Pyx_PyObject_Call(__pyx_builtin_ValueError, __pyx_tuple__30, NULL); if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 662; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
     __Pyx_GOTREF(__pyx_t_1);
     __Pyx_Raise(__pyx_t_1, 0, 0, 0);
     __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
-    {__pyx_filename = __pyx_f[0]; __pyx_lineno = 615; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+    {__pyx_filename = __pyx_f[0]; __pyx_lineno = 662; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
 
-    /* "mbufferio/_mbufferio.pyx":614
+    /* "mbufferio/_mbufferio.pyx":661
  *         if self.closed:
  *             raise ValueError(u"I/O operation on closed file.")
  *         if self.view_count > 0:             # <<<<<<<<<<<<<<
@@ -9172,7 +9620,7 @@ static PyObject *__pyx_f_9mbufferio_10_mbufferio_9MBufferIO_writelines(struct __
  */
   }
 
-  /* "mbufferio/_mbufferio.pyx":618
+  /* "mbufferio/_mbufferio.pyx":665
  *         # Write a list of lines to the stream. Line separators are not added, so it is usual for each of the lines
  *         # provided to have a line separator at the end.
  *         for line in lines:             # <<<<<<<<<<<<<<
@@ -9183,26 +9631,26 @@ static PyObject *__pyx_f_9mbufferio_10_mbufferio_9MBufferIO_writelines(struct __
     __pyx_t_1 = __pyx_v_lines; __Pyx_INCREF(__pyx_t_1); __pyx_t_7 = 0;
     __pyx_t_8 = NULL;
   } else {
-    __pyx_t_7 = -1; __pyx_t_1 = PyObject_GetIter(__pyx_v_lines); if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 618; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+    __pyx_t_7 = -1; __pyx_t_1 = PyObject_GetIter(__pyx_v_lines); if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 665; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
     __Pyx_GOTREF(__pyx_t_1);
-    __pyx_t_8 = Py_TYPE(__pyx_t_1)->tp_iternext; if (unlikely(!__pyx_t_8)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 618; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+    __pyx_t_8 = Py_TYPE(__pyx_t_1)->tp_iternext; if (unlikely(!__pyx_t_8)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 665; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
   }
   for (;;) {
     if (likely(!__pyx_t_8)) {
       if (likely(PyList_CheckExact(__pyx_t_1))) {
         if (__pyx_t_7 >= PyList_GET_SIZE(__pyx_t_1)) break;
         #if CYTHON_COMPILING_IN_CPYTHON
-        __pyx_t_2 = PyList_GET_ITEM(__pyx_t_1, __pyx_t_7); __Pyx_INCREF(__pyx_t_2); __pyx_t_7++; if (unlikely(0 < 0)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 618; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+        __pyx_t_2 = PyList_GET_ITEM(__pyx_t_1, __pyx_t_7); __Pyx_INCREF(__pyx_t_2); __pyx_t_7++; if (unlikely(0 < 0)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 665; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
         #else
-        __pyx_t_2 = PySequence_ITEM(__pyx_t_1, __pyx_t_7); __pyx_t_7++; if (unlikely(!__pyx_t_2)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 618; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+        __pyx_t_2 = PySequence_ITEM(__pyx_t_1, __pyx_t_7); __pyx_t_7++; if (unlikely(!__pyx_t_2)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 665; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
         __Pyx_GOTREF(__pyx_t_2);
         #endif
       } else {
         if (__pyx_t_7 >= PyTuple_GET_SIZE(__pyx_t_1)) break;
         #if CYTHON_COMPILING_IN_CPYTHON
-        __pyx_t_2 = PyTuple_GET_ITEM(__pyx_t_1, __pyx_t_7); __Pyx_INCREF(__pyx_t_2); __pyx_t_7++; if (unlikely(0 < 0)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 618; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+        __pyx_t_2 = PyTuple_GET_ITEM(__pyx_t_1, __pyx_t_7); __Pyx_INCREF(__pyx_t_2); __pyx_t_7++; if (unlikely(0 < 0)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 665; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
         #else
-        __pyx_t_2 = PySequence_ITEM(__pyx_t_1, __pyx_t_7); __pyx_t_7++; if (unlikely(!__pyx_t_2)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 618; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+        __pyx_t_2 = PySequence_ITEM(__pyx_t_1, __pyx_t_7); __pyx_t_7++; if (unlikely(!__pyx_t_2)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 665; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
         __Pyx_GOTREF(__pyx_t_2);
         #endif
       }
@@ -9212,7 +9660,7 @@ static PyObject *__pyx_f_9mbufferio_10_mbufferio_9MBufferIO_writelines(struct __
         PyObject* exc_type = PyErr_Occurred();
         if (exc_type) {
           if (likely(exc_type == PyExc_StopIteration || PyErr_GivenExceptionMatches(exc_type, PyExc_StopIteration))) PyErr_Clear();
-          else {__pyx_filename = __pyx_f[0]; __pyx_lineno = 618; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+          else {__pyx_filename = __pyx_f[0]; __pyx_lineno = 665; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
         }
         break;
       }
@@ -9221,18 +9669,18 @@ static PyObject *__pyx_f_9mbufferio_10_mbufferio_9MBufferIO_writelines(struct __
     __Pyx_XDECREF_SET(__pyx_v_line, __pyx_t_2);
     __pyx_t_2 = 0;
 
-    /* "mbufferio/_mbufferio.pyx":619
+    /* "mbufferio/_mbufferio.pyx":666
  *         # provided to have a line separator at the end.
  *         for line in lines:
  *             self.write(line)             # <<<<<<<<<<<<<<
  * 
  *     cpdef readlines(self, int64_t hint=-1):
  */
-    __pyx_t_2 = ((struct __pyx_vtabstruct_9mbufferio_10_mbufferio_MBufferIO *)__pyx_v_self->__pyx_vtab)->write(__pyx_v_self, __pyx_v_line, 0); if (unlikely(!__pyx_t_2)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 619; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+    __pyx_t_2 = ((struct __pyx_vtabstruct_9mbufferio_10_mbufferio_MBufferIO *)__pyx_v_self->__pyx_vtab)->write(__pyx_v_self, __pyx_v_line, 0); if (unlikely(!__pyx_t_2)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 666; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
     __Pyx_GOTREF(__pyx_t_2);
     __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
 
-    /* "mbufferio/_mbufferio.pyx":618
+    /* "mbufferio/_mbufferio.pyx":665
  *         # Write a list of lines to the stream. Line separators are not added, so it is usual for each of the lines
  *         # provided to have a line separator at the end.
  *         for line in lines:             # <<<<<<<<<<<<<<
@@ -9242,7 +9690,7 @@ static PyObject *__pyx_f_9mbufferio_10_mbufferio_9MBufferIO_writelines(struct __
   }
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
 
-  /* "mbufferio/_mbufferio.pyx":603
+  /* "mbufferio/_mbufferio.pyx":650
  *         return not self.readonly
  * 
  *     cpdef writelines(self, lines):             # <<<<<<<<<<<<<<
@@ -9269,20 +9717,20 @@ static PyObject *__pyx_f_9mbufferio_10_mbufferio_9MBufferIO_writelines(struct __
 }
 
 /* Python wrapper */
-static PyObject *__pyx_pw_9mbufferio_10_mbufferio_9MBufferIO_57writelines(PyObject *__pyx_v_self, PyObject *__pyx_v_lines); /*proto*/
-static char __pyx_doc_9mbufferio_10_mbufferio_9MBufferIO_56writelines[] = "\n        writelines(lines)\n        Write a list of lines to the MBufferIO.\n\n        Parameters\n        ----------\n        lines: an iterable\n        ";
-static PyObject *__pyx_pw_9mbufferio_10_mbufferio_9MBufferIO_57writelines(PyObject *__pyx_v_self, PyObject *__pyx_v_lines) {
+static PyObject *__pyx_pw_9mbufferio_10_mbufferio_9MBufferIO_63writelines(PyObject *__pyx_v_self, PyObject *__pyx_v_lines); /*proto*/
+static char __pyx_doc_9mbufferio_10_mbufferio_9MBufferIO_62writelines[] = "\n        writelines(lines)\n        Write a list of lines to the MBufferIO.\n\n        Parameters\n        ----------\n        lines: an iterable\n        ";
+static PyObject *__pyx_pw_9mbufferio_10_mbufferio_9MBufferIO_63writelines(PyObject *__pyx_v_self, PyObject *__pyx_v_lines) {
   PyObject *__pyx_r = 0;
   __Pyx_RefNannyDeclarations
   __Pyx_RefNannySetupContext("writelines (wrapper)", 0);
-  __pyx_r = __pyx_pf_9mbufferio_10_mbufferio_9MBufferIO_56writelines(((struct __pyx_obj_9mbufferio_10_mbufferio_MBufferIO *)__pyx_v_self), ((PyObject *)__pyx_v_lines));
+  __pyx_r = __pyx_pf_9mbufferio_10_mbufferio_9MBufferIO_62writelines(((struct __pyx_obj_9mbufferio_10_mbufferio_MBufferIO *)__pyx_v_self), ((PyObject *)__pyx_v_lines));
 
   /* function exit code */
   __Pyx_RefNannyFinishContext();
   return __pyx_r;
 }
 
-static PyObject *__pyx_pf_9mbufferio_10_mbufferio_9MBufferIO_56writelines(struct __pyx_obj_9mbufferio_10_mbufferio_MBufferIO *__pyx_v_self, PyObject *__pyx_v_lines) {
+static PyObject *__pyx_pf_9mbufferio_10_mbufferio_9MBufferIO_62writelines(struct __pyx_obj_9mbufferio_10_mbufferio_MBufferIO *__pyx_v_self, PyObject *__pyx_v_lines) {
   PyObject *__pyx_r = NULL;
   __Pyx_RefNannyDeclarations
   PyObject *__pyx_t_1 = NULL;
@@ -9291,7 +9739,7 @@ static PyObject *__pyx_pf_9mbufferio_10_mbufferio_9MBufferIO_56writelines(struct
   int __pyx_clineno = 0;
   __Pyx_RefNannySetupContext("writelines", 0);
   __Pyx_XDECREF(__pyx_r);
-  __pyx_t_1 = __pyx_f_9mbufferio_10_mbufferio_9MBufferIO_writelines(__pyx_v_self, __pyx_v_lines, 1); if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 603; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __pyx_t_1 = __pyx_f_9mbufferio_10_mbufferio_9MBufferIO_writelines(__pyx_v_self, __pyx_v_lines, 1); if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 650; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
   __Pyx_GOTREF(__pyx_t_1);
   __pyx_r = __pyx_t_1;
   __pyx_t_1 = 0;
@@ -9308,7 +9756,7 @@ static PyObject *__pyx_pf_9mbufferio_10_mbufferio_9MBufferIO_56writelines(struct
   return __pyx_r;
 }
 
-/* "mbufferio/_mbufferio.pyx":621
+/* "mbufferio/_mbufferio.pyx":668
  *             self.write(line)
  * 
  *     cpdef readlines(self, int64_t hint=-1):             # <<<<<<<<<<<<<<
@@ -9316,7 +9764,7 @@ static PyObject *__pyx_pf_9mbufferio_10_mbufferio_9MBufferIO_56writelines(struct
  *         readlines(int64_t hint=-1)
  */
 
-static PyObject *__pyx_pw_9mbufferio_10_mbufferio_9MBufferIO_59readlines(PyObject *__pyx_v_self, PyObject *__pyx_args, PyObject *__pyx_kwds); /*proto*/
+static PyObject *__pyx_pw_9mbufferio_10_mbufferio_9MBufferIO_65readlines(PyObject *__pyx_v_self, PyObject *__pyx_args, PyObject *__pyx_kwds); /*proto*/
 static PyObject *__pyx_f_9mbufferio_10_mbufferio_9MBufferIO_readlines(struct __pyx_obj_9mbufferio_10_mbufferio_MBufferIO *__pyx_v_self, int __pyx_skip_dispatch, struct __pyx_opt_args_9mbufferio_10_mbufferio_9MBufferIO_readlines *__pyx_optional_args) {
   int64_t __pyx_v_hint = ((int64_t)-1L);
   PyObject *__pyx_v_lines = NULL;
@@ -9348,11 +9796,11 @@ static PyObject *__pyx_f_9mbufferio_10_mbufferio_9MBufferIO_readlines(struct __p
   if (unlikely(__pyx_skip_dispatch)) ;
   /* Check if overridden in Python */
   else if (unlikely(Py_TYPE(((PyObject *)__pyx_v_self))->tp_dictoffset != 0)) {
-    __pyx_t_1 = __Pyx_PyObject_GetAttrStr(((PyObject *)__pyx_v_self), __pyx_n_s_readlines); if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 621; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+    __pyx_t_1 = __Pyx_PyObject_GetAttrStr(((PyObject *)__pyx_v_self), __pyx_n_s_readlines); if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 668; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
     __Pyx_GOTREF(__pyx_t_1);
-    if (!PyCFunction_Check(__pyx_t_1) || (PyCFunction_GET_FUNCTION(__pyx_t_1) != (PyCFunction)__pyx_pw_9mbufferio_10_mbufferio_9MBufferIO_59readlines)) {
+    if (!PyCFunction_Check(__pyx_t_1) || (PyCFunction_GET_FUNCTION(__pyx_t_1) != (PyCFunction)__pyx_pw_9mbufferio_10_mbufferio_9MBufferIO_65readlines)) {
       __Pyx_XDECREF(__pyx_r);
-      __pyx_t_3 = __Pyx_PyInt_From_int64_t(__pyx_v_hint); if (unlikely(!__pyx_t_3)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 621; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+      __pyx_t_3 = __Pyx_PyInt_From_int64_t(__pyx_v_hint); if (unlikely(!__pyx_t_3)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 668; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
       __Pyx_GOTREF(__pyx_t_3);
       __Pyx_INCREF(__pyx_t_1);
       __pyx_t_4 = __pyx_t_1; __pyx_t_5 = NULL;
@@ -9366,17 +9814,17 @@ static PyObject *__pyx_f_9mbufferio_10_mbufferio_9MBufferIO_readlines(struct __p
         }
       }
       if (!__pyx_t_5) {
-        __pyx_t_2 = __Pyx_PyObject_CallOneArg(__pyx_t_4, __pyx_t_3); if (unlikely(!__pyx_t_2)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 621; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+        __pyx_t_2 = __Pyx_PyObject_CallOneArg(__pyx_t_4, __pyx_t_3); if (unlikely(!__pyx_t_2)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 668; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
         __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
         __Pyx_GOTREF(__pyx_t_2);
       } else {
-        __pyx_t_6 = PyTuple_New(1+1); if (unlikely(!__pyx_t_6)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 621; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+        __pyx_t_6 = PyTuple_New(1+1); if (unlikely(!__pyx_t_6)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 668; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
         __Pyx_GOTREF(__pyx_t_6);
         __Pyx_GIVEREF(__pyx_t_5); PyTuple_SET_ITEM(__pyx_t_6, 0, __pyx_t_5); __pyx_t_5 = NULL;
         __Pyx_GIVEREF(__pyx_t_3);
         PyTuple_SET_ITEM(__pyx_t_6, 0+1, __pyx_t_3);
         __pyx_t_3 = 0;
-        __pyx_t_2 = __Pyx_PyObject_Call(__pyx_t_4, __pyx_t_6, NULL); if (unlikely(!__pyx_t_2)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 621; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+        __pyx_t_2 = __Pyx_PyObject_Call(__pyx_t_4, __pyx_t_6, NULL); if (unlikely(!__pyx_t_2)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 668; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
         __Pyx_GOTREF(__pyx_t_2);
         __Pyx_DECREF(__pyx_t_6); __pyx_t_6 = 0;
       }
@@ -9389,7 +9837,7 @@ static PyObject *__pyx_f_9mbufferio_10_mbufferio_9MBufferIO_readlines(struct __p
     __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
   }
 
-  /* "mbufferio/_mbufferio.pyx":637
+  /* "mbufferio/_mbufferio.pyx":684
  *         # Read and return a list of lines from the stream. hint can be specified to control the number of lines read:
  *         # no more lines will be read if the total size (in bytes/characters) of all lines so far exceeds hint.
  *         if self.closed:             # <<<<<<<<<<<<<<
@@ -9399,20 +9847,20 @@ static PyObject *__pyx_f_9mbufferio_10_mbufferio_9MBufferIO_readlines(struct __p
   __pyx_t_7 = (__pyx_v_self->closed != 0);
   if (__pyx_t_7) {
 
-    /* "mbufferio/_mbufferio.pyx":638
+    /* "mbufferio/_mbufferio.pyx":685
  *         # no more lines will be read if the total size (in bytes/characters) of all lines so far exceeds hint.
  *         if self.closed:
  *             raise ValueError(u"I/O operation on closed file.")             # <<<<<<<<<<<<<<
  *         lines = []
  *         cdef bytes line
  */
-    __pyx_t_1 = __Pyx_PyObject_Call(__pyx_builtin_ValueError, __pyx_tuple__31, NULL); if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 638; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+    __pyx_t_1 = __Pyx_PyObject_Call(__pyx_builtin_ValueError, __pyx_tuple__31, NULL); if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 685; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
     __Pyx_GOTREF(__pyx_t_1);
     __Pyx_Raise(__pyx_t_1, 0, 0, 0);
     __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
-    {__pyx_filename = __pyx_f[0]; __pyx_lineno = 638; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+    {__pyx_filename = __pyx_f[0]; __pyx_lineno = 685; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
 
-    /* "mbufferio/_mbufferio.pyx":637
+    /* "mbufferio/_mbufferio.pyx":684
  *         # Read and return a list of lines from the stream. hint can be specified to control the number of lines read:
  *         # no more lines will be read if the total size (in bytes/characters) of all lines so far exceeds hint.
  *         if self.closed:             # <<<<<<<<<<<<<<
@@ -9421,19 +9869,19 @@ static PyObject *__pyx_f_9mbufferio_10_mbufferio_9MBufferIO_readlines(struct __p
  */
   }
 
-  /* "mbufferio/_mbufferio.pyx":639
+  /* "mbufferio/_mbufferio.pyx":686
  *         if self.closed:
  *             raise ValueError(u"I/O operation on closed file.")
  *         lines = []             # <<<<<<<<<<<<<<
  *         cdef bytes line
  *         cdef int64_t bytes_read = 0
  */
-  __pyx_t_1 = PyList_New(0); if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 639; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __pyx_t_1 = PyList_New(0); if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 686; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
   __Pyx_GOTREF(__pyx_t_1);
   __pyx_v_lines = ((PyObject*)__pyx_t_1);
   __pyx_t_1 = 0;
 
-  /* "mbufferio/_mbufferio.pyx":641
+  /* "mbufferio/_mbufferio.pyx":688
  *         lines = []
  *         cdef bytes line
  *         cdef int64_t bytes_read = 0             # <<<<<<<<<<<<<<
@@ -9442,7 +9890,7 @@ static PyObject *__pyx_f_9mbufferio_10_mbufferio_9MBufferIO_readlines(struct __p
  */
   __pyx_v_bytes_read = 0;
 
-  /* "mbufferio/_mbufferio.pyx":642
+  /* "mbufferio/_mbufferio.pyx":689
  *         cdef bytes line
  *         cdef int64_t bytes_read = 0
  *         while True:             # <<<<<<<<<<<<<<
@@ -9451,19 +9899,19 @@ static PyObject *__pyx_f_9mbufferio_10_mbufferio_9MBufferIO_readlines(struct __p
  */
   while (1) {
 
-    /* "mbufferio/_mbufferio.pyx":643
+    /* "mbufferio/_mbufferio.pyx":690
  *         cdef int64_t bytes_read = 0
  *         while True:
  *             line = self.readline()             # <<<<<<<<<<<<<<
  *             bytes_read += len(line)
  *             lines.append(line)
  */
-    __pyx_t_1 = ((struct __pyx_vtabstruct_9mbufferio_10_mbufferio_MBufferIO *)__pyx_v_self->__pyx_vtab)->readline(__pyx_v_self, 0, NULL); if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 643; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+    __pyx_t_1 = ((struct __pyx_vtabstruct_9mbufferio_10_mbufferio_MBufferIO *)__pyx_v_self->__pyx_vtab)->readline(__pyx_v_self, 0, NULL); if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 690; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
     __Pyx_GOTREF(__pyx_t_1);
     __Pyx_XDECREF_SET(__pyx_v_line, ((PyObject*)__pyx_t_1));
     __pyx_t_1 = 0;
 
-    /* "mbufferio/_mbufferio.pyx":644
+    /* "mbufferio/_mbufferio.pyx":691
  *         while True:
  *             line = self.readline()
  *             bytes_read += len(line)             # <<<<<<<<<<<<<<
@@ -9472,21 +9920,21 @@ static PyObject *__pyx_f_9mbufferio_10_mbufferio_9MBufferIO_readlines(struct __p
  */
     if (unlikely(__pyx_v_line == Py_None)) {
       PyErr_SetString(PyExc_TypeError, "object of type 'NoneType' has no len()");
-      {__pyx_filename = __pyx_f[0]; __pyx_lineno = 644; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+      {__pyx_filename = __pyx_f[0]; __pyx_lineno = 691; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
     }
-    __pyx_t_8 = PyBytes_GET_SIZE(__pyx_v_line); if (unlikely(__pyx_t_8 == -1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 644; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+    __pyx_t_8 = PyBytes_GET_SIZE(__pyx_v_line); if (unlikely(__pyx_t_8 == -1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 691; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
     __pyx_v_bytes_read = (__pyx_v_bytes_read + __pyx_t_8);
 
-    /* "mbufferio/_mbufferio.pyx":645
+    /* "mbufferio/_mbufferio.pyx":692
  *             line = self.readline()
  *             bytes_read += len(line)
  *             lines.append(line)             # <<<<<<<<<<<<<<
  *             if 0 <= hint < bytes_read or self.offset >= self.length:
  *                 break
  */
-    __pyx_t_9 = __Pyx_PyList_Append(__pyx_v_lines, __pyx_v_line); if (unlikely(__pyx_t_9 == -1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 645; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+    __pyx_t_9 = __Pyx_PyList_Append(__pyx_v_lines, __pyx_v_line); if (unlikely(__pyx_t_9 == -1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 692; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
 
-    /* "mbufferio/_mbufferio.pyx":646
+    /* "mbufferio/_mbufferio.pyx":693
  *             bytes_read += len(line)
  *             lines.append(line)
  *             if 0 <= hint < bytes_read or self.offset >= self.length:             # <<<<<<<<<<<<<<
@@ -9508,7 +9956,7 @@ static PyObject *__pyx_f_9mbufferio_10_mbufferio_9MBufferIO_readlines(struct __p
     __pyx_L7_bool_binop_done:;
     if (__pyx_t_7) {
 
-      /* "mbufferio/_mbufferio.pyx":647
+      /* "mbufferio/_mbufferio.pyx":694
  *             lines.append(line)
  *             if 0 <= hint < bytes_read or self.offset >= self.length:
  *                 break             # <<<<<<<<<<<<<<
@@ -9517,7 +9965,7 @@ static PyObject *__pyx_f_9mbufferio_10_mbufferio_9MBufferIO_readlines(struct __p
  */
       goto __pyx_L5_break;
 
-      /* "mbufferio/_mbufferio.pyx":646
+      /* "mbufferio/_mbufferio.pyx":693
  *             bytes_read += len(line)
  *             lines.append(line)
  *             if 0 <= hint < bytes_read or self.offset >= self.length:             # <<<<<<<<<<<<<<
@@ -9528,7 +9976,7 @@ static PyObject *__pyx_f_9mbufferio_10_mbufferio_9MBufferIO_readlines(struct __p
   }
   __pyx_L5_break:;
 
-  /* "mbufferio/_mbufferio.pyx":648
+  /* "mbufferio/_mbufferio.pyx":695
  *             if 0 <= hint < bytes_read or self.offset >= self.length:
  *                 break
  *         return lines             # <<<<<<<<<<<<<<
@@ -9540,7 +9988,7 @@ static PyObject *__pyx_f_9mbufferio_10_mbufferio_9MBufferIO_readlines(struct __p
   __pyx_r = __pyx_v_lines;
   goto __pyx_L0;
 
-  /* "mbufferio/_mbufferio.pyx":621
+  /* "mbufferio/_mbufferio.pyx":668
  *             self.write(line)
  * 
  *     cpdef readlines(self, int64_t hint=-1):             # <<<<<<<<<<<<<<
@@ -9567,9 +10015,9 @@ static PyObject *__pyx_f_9mbufferio_10_mbufferio_9MBufferIO_readlines(struct __p
 }
 
 /* Python wrapper */
-static PyObject *__pyx_pw_9mbufferio_10_mbufferio_9MBufferIO_59readlines(PyObject *__pyx_v_self, PyObject *__pyx_args, PyObject *__pyx_kwds); /*proto*/
-static char __pyx_doc_9mbufferio_10_mbufferio_9MBufferIO_58readlines[] = "\n        readlines(int64_t hint=-1)\n        Read and return a list of lines from the stream. hint can be specified to control the number of lines read:\n        no more lines will be read if the total size (in bytes/characters) of all lines so far exceeds hint.\n\n        Parameters\n        ----------\n        hint: int64_t\n\n        Returns\n        -------\n        a list of 'bytes' objects\n        ";
-static PyObject *__pyx_pw_9mbufferio_10_mbufferio_9MBufferIO_59readlines(PyObject *__pyx_v_self, PyObject *__pyx_args, PyObject *__pyx_kwds) {
+static PyObject *__pyx_pw_9mbufferio_10_mbufferio_9MBufferIO_65readlines(PyObject *__pyx_v_self, PyObject *__pyx_args, PyObject *__pyx_kwds); /*proto*/
+static char __pyx_doc_9mbufferio_10_mbufferio_9MBufferIO_64readlines[] = "\n        readlines(int64_t hint=-1)\n        Read and return a list of lines from the stream. hint can be specified to control the number of lines read:\n        no more lines will be read if the total size (in bytes/characters) of all lines so far exceeds hint.\n\n        Parameters\n        ----------\n        hint: int64_t\n\n        Returns\n        -------\n        a list of 'bytes' objects\n        ";
+static PyObject *__pyx_pw_9mbufferio_10_mbufferio_9MBufferIO_65readlines(PyObject *__pyx_v_self, PyObject *__pyx_args, PyObject *__pyx_kwds) {
   int64_t __pyx_v_hint;
   int __pyx_lineno = 0;
   const char *__pyx_filename = NULL;
@@ -9597,7 +10045,7 @@ static PyObject *__pyx_pw_9mbufferio_10_mbufferio_9MBufferIO_59readlines(PyObjec
         }
       }
       if (unlikely(kw_args > 0)) {
-        if (unlikely(__Pyx_ParseOptionalKeywords(__pyx_kwds, __pyx_pyargnames, 0, values, pos_args, "readlines") < 0)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 621; __pyx_clineno = __LINE__; goto __pyx_L3_error;}
+        if (unlikely(__Pyx_ParseOptionalKeywords(__pyx_kwds, __pyx_pyargnames, 0, values, pos_args, "readlines") < 0)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 668; __pyx_clineno = __LINE__; goto __pyx_L3_error;}
       }
     } else {
       switch (PyTuple_GET_SIZE(__pyx_args)) {
@@ -9607,27 +10055,27 @@ static PyObject *__pyx_pw_9mbufferio_10_mbufferio_9MBufferIO_59readlines(PyObjec
       }
     }
     if (values[0]) {
-      __pyx_v_hint = __Pyx_PyInt_As_int64_t(values[0]); if (unlikely((__pyx_v_hint == (int64_t)-1) && PyErr_Occurred())) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 621; __pyx_clineno = __LINE__; goto __pyx_L3_error;}
+      __pyx_v_hint = __Pyx_PyInt_As_int64_t(values[0]); if (unlikely((__pyx_v_hint == (int64_t)-1) && PyErr_Occurred())) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 668; __pyx_clineno = __LINE__; goto __pyx_L3_error;}
     } else {
       __pyx_v_hint = ((int64_t)-1L);
     }
   }
   goto __pyx_L4_argument_unpacking_done;
   __pyx_L5_argtuple_error:;
-  __Pyx_RaiseArgtupleInvalid("readlines", 0, 0, 1, PyTuple_GET_SIZE(__pyx_args)); {__pyx_filename = __pyx_f[0]; __pyx_lineno = 621; __pyx_clineno = __LINE__; goto __pyx_L3_error;}
+  __Pyx_RaiseArgtupleInvalid("readlines", 0, 0, 1, PyTuple_GET_SIZE(__pyx_args)); {__pyx_filename = __pyx_f[0]; __pyx_lineno = 668; __pyx_clineno = __LINE__; goto __pyx_L3_error;}
   __pyx_L3_error:;
   __Pyx_AddTraceback("mbufferio._mbufferio.MBufferIO.readlines", __pyx_clineno, __pyx_lineno, __pyx_filename);
   __Pyx_RefNannyFinishContext();
   return NULL;
   __pyx_L4_argument_unpacking_done:;
-  __pyx_r = __pyx_pf_9mbufferio_10_mbufferio_9MBufferIO_58readlines(((struct __pyx_obj_9mbufferio_10_mbufferio_MBufferIO *)__pyx_v_self), __pyx_v_hint);
+  __pyx_r = __pyx_pf_9mbufferio_10_mbufferio_9MBufferIO_64readlines(((struct __pyx_obj_9mbufferio_10_mbufferio_MBufferIO *)__pyx_v_self), __pyx_v_hint);
 
   /* function exit code */
   __Pyx_RefNannyFinishContext();
   return __pyx_r;
 }
 
-static PyObject *__pyx_pf_9mbufferio_10_mbufferio_9MBufferIO_58readlines(struct __pyx_obj_9mbufferio_10_mbufferio_MBufferIO *__pyx_v_self, int64_t __pyx_v_hint) {
+static PyObject *__pyx_pf_9mbufferio_10_mbufferio_9MBufferIO_64readlines(struct __pyx_obj_9mbufferio_10_mbufferio_MBufferIO *__pyx_v_self, int64_t __pyx_v_hint) {
   PyObject *__pyx_r = NULL;
   __Pyx_RefNannyDeclarations
   PyObject *__pyx_t_1 = NULL;
@@ -9639,7 +10087,7 @@ static PyObject *__pyx_pf_9mbufferio_10_mbufferio_9MBufferIO_58readlines(struct 
   __Pyx_XDECREF(__pyx_r);
   __pyx_t_2.__pyx_n = 1;
   __pyx_t_2.hint = __pyx_v_hint;
-  __pyx_t_1 = __pyx_vtabptr_9mbufferio_10_mbufferio_MBufferIO->readlines(__pyx_v_self, 1, &__pyx_t_2); if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 621; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __pyx_t_1 = __pyx_vtabptr_9mbufferio_10_mbufferio_MBufferIO->readlines(__pyx_v_self, 1, &__pyx_t_2); if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 668; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
   __Pyx_GOTREF(__pyx_t_1);
   __pyx_r = __pyx_t_1;
   __pyx_t_1 = 0;
@@ -9655,9 +10103,9 @@ static PyObject *__pyx_pf_9mbufferio_10_mbufferio_9MBufferIO_58readlines(struct 
   __Pyx_RefNannyFinishContext();
   return __pyx_r;
 }
-static PyObject *__pyx_gb_9mbufferio_10_mbufferio_9MBufferIO_62generator(__pyx_CoroutineObject *__pyx_generator, PyObject *__pyx_sent_value); /* proto */
+static PyObject *__pyx_gb_9mbufferio_10_mbufferio_9MBufferIO_68generator(__pyx_CoroutineObject *__pyx_generator, PyObject *__pyx_sent_value); /* proto */
 
-/* "mbufferio/_mbufferio.pyx":650
+/* "mbufferio/_mbufferio.pyx":697
  *         return lines
  * 
  *     def __iter__(self):             # <<<<<<<<<<<<<<
@@ -9666,19 +10114,19 @@ static PyObject *__pyx_gb_9mbufferio_10_mbufferio_9MBufferIO_62generator(__pyx_C
  */
 
 /* Python wrapper */
-static PyObject *__pyx_pw_9mbufferio_10_mbufferio_9MBufferIO_61__iter__(PyObject *__pyx_v_self); /*proto*/
-static PyObject *__pyx_pw_9mbufferio_10_mbufferio_9MBufferIO_61__iter__(PyObject *__pyx_v_self) {
+static PyObject *__pyx_pw_9mbufferio_10_mbufferio_9MBufferIO_67__iter__(PyObject *__pyx_v_self); /*proto*/
+static PyObject *__pyx_pw_9mbufferio_10_mbufferio_9MBufferIO_67__iter__(PyObject *__pyx_v_self) {
   PyObject *__pyx_r = 0;
   __Pyx_RefNannyDeclarations
   __Pyx_RefNannySetupContext("__iter__ (wrapper)", 0);
-  __pyx_r = __pyx_pf_9mbufferio_10_mbufferio_9MBufferIO_60__iter__(((struct __pyx_obj_9mbufferio_10_mbufferio_MBufferIO *)__pyx_v_self));
+  __pyx_r = __pyx_pf_9mbufferio_10_mbufferio_9MBufferIO_66__iter__(((struct __pyx_obj_9mbufferio_10_mbufferio_MBufferIO *)__pyx_v_self));
 
   /* function exit code */
   __Pyx_RefNannyFinishContext();
   return __pyx_r;
 }
 
-static PyObject *__pyx_pf_9mbufferio_10_mbufferio_9MBufferIO_60__iter__(struct __pyx_obj_9mbufferio_10_mbufferio_MBufferIO *__pyx_v_self) {
+static PyObject *__pyx_pf_9mbufferio_10_mbufferio_9MBufferIO_66__iter__(struct __pyx_obj_9mbufferio_10_mbufferio_MBufferIO *__pyx_v_self) {
   struct __pyx_obj_9mbufferio_10_mbufferio___pyx_scope_struct____iter__ *__pyx_cur_scope;
   PyObject *__pyx_r = NULL;
   __Pyx_RefNannyDeclarations
@@ -9696,7 +10144,7 @@ static PyObject *__pyx_pf_9mbufferio_10_mbufferio_9MBufferIO_60__iter__(struct _
   __Pyx_INCREF((PyObject *)__pyx_cur_scope->__pyx_v_self);
   __Pyx_GIVEREF((PyObject *)__pyx_cur_scope->__pyx_v_self);
   {
-    __pyx_CoroutineObject *gen = __Pyx_Generator_New((__pyx_coroutine_body_t) __pyx_gb_9mbufferio_10_mbufferio_9MBufferIO_62generator, (PyObject *) __pyx_cur_scope, __pyx_n_s_iter, __pyx_n_s_MBufferIO___iter); if (unlikely(!gen)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 650; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+    __pyx_CoroutineObject *gen = __Pyx_Generator_New((__pyx_coroutine_body_t) __pyx_gb_9mbufferio_10_mbufferio_9MBufferIO_68generator, (PyObject *) __pyx_cur_scope, __pyx_n_s_iter, __pyx_n_s_MBufferIO___iter); if (unlikely(!gen)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 697; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
     __Pyx_DECREF(__pyx_cur_scope);
     __Pyx_RefNannyFinishContext();
     return (PyObject *) gen;
@@ -9712,7 +10160,7 @@ static PyObject *__pyx_pf_9mbufferio_10_mbufferio_9MBufferIO_60__iter__(struct _
   return __pyx_r;
 }
 
-static PyObject *__pyx_gb_9mbufferio_10_mbufferio_9MBufferIO_62generator(__pyx_CoroutineObject *__pyx_generator, PyObject *__pyx_sent_value) /* generator body */
+static PyObject *__pyx_gb_9mbufferio_10_mbufferio_9MBufferIO_68generator(__pyx_CoroutineObject *__pyx_generator, PyObject *__pyx_sent_value) /* generator body */
 {
   struct __pyx_obj_9mbufferio_10_mbufferio___pyx_scope_struct____iter__ *__pyx_cur_scope = ((struct __pyx_obj_9mbufferio_10_mbufferio___pyx_scope_struct____iter__ *)__pyx_generator->closure);
   PyObject *__pyx_r = NULL;
@@ -9731,9 +10179,9 @@ static PyObject *__pyx_gb_9mbufferio_10_mbufferio_9MBufferIO_62generator(__pyx_C
     return NULL;
   }
   __pyx_L3_first_run:;
-  if (unlikely(!__pyx_sent_value)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 650; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  if (unlikely(!__pyx_sent_value)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 697; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
 
-  /* "mbufferio/_mbufferio.pyx":651
+  /* "mbufferio/_mbufferio.pyx":698
  * 
  *     def __iter__(self):
  *         if self.closed:             # <<<<<<<<<<<<<<
@@ -9743,20 +10191,20 @@ static PyObject *__pyx_gb_9mbufferio_10_mbufferio_9MBufferIO_62generator(__pyx_C
   __pyx_t_1 = (__pyx_cur_scope->__pyx_v_self->closed != 0);
   if (__pyx_t_1) {
 
-    /* "mbufferio/_mbufferio.pyx":652
+    /* "mbufferio/_mbufferio.pyx":699
  *     def __iter__(self):
  *         if self.closed:
  *             raise ValueError(u"I/O operation on closed file.")             # <<<<<<<<<<<<<<
  *         while self.offset < self.length:
  *             yield self.readline()
  */
-    __pyx_t_2 = __Pyx_PyObject_Call(__pyx_builtin_ValueError, __pyx_tuple__32, NULL); if (unlikely(!__pyx_t_2)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 652; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+    __pyx_t_2 = __Pyx_PyObject_Call(__pyx_builtin_ValueError, __pyx_tuple__32, NULL); if (unlikely(!__pyx_t_2)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 699; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
     __Pyx_GOTREF(__pyx_t_2);
     __Pyx_Raise(__pyx_t_2, 0, 0, 0);
     __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
-    {__pyx_filename = __pyx_f[0]; __pyx_lineno = 652; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+    {__pyx_filename = __pyx_f[0]; __pyx_lineno = 699; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
 
-    /* "mbufferio/_mbufferio.pyx":651
+    /* "mbufferio/_mbufferio.pyx":698
  * 
  *     def __iter__(self):
  *         if self.closed:             # <<<<<<<<<<<<<<
@@ -9765,7 +10213,7 @@ static PyObject *__pyx_gb_9mbufferio_10_mbufferio_9MBufferIO_62generator(__pyx_C
  */
   }
 
-  /* "mbufferio/_mbufferio.pyx":653
+  /* "mbufferio/_mbufferio.pyx":700
  *         if self.closed:
  *             raise ValueError(u"I/O operation on closed file.")
  *         while self.offset < self.length:             # <<<<<<<<<<<<<<
@@ -9776,14 +10224,14 @@ static PyObject *__pyx_gb_9mbufferio_10_mbufferio_9MBufferIO_62generator(__pyx_C
     __pyx_t_1 = ((__pyx_cur_scope->__pyx_v_self->offset < __pyx_cur_scope->__pyx_v_self->length) != 0);
     if (!__pyx_t_1) break;
 
-    /* "mbufferio/_mbufferio.pyx":654
+    /* "mbufferio/_mbufferio.pyx":701
  *             raise ValueError(u"I/O operation on closed file.")
  *         while self.offset < self.length:
  *             yield self.readline()             # <<<<<<<<<<<<<<
  * 
  *     def __getbuffer__(self, Py_buffer *pybuf, int flags):
  */
-    __pyx_t_2 = ((struct __pyx_vtabstruct_9mbufferio_10_mbufferio_MBufferIO *)__pyx_cur_scope->__pyx_v_self->__pyx_vtab)->readline(__pyx_cur_scope->__pyx_v_self, 0, NULL); if (unlikely(!__pyx_t_2)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 654; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+    __pyx_t_2 = ((struct __pyx_vtabstruct_9mbufferio_10_mbufferio_MBufferIO *)__pyx_cur_scope->__pyx_v_self->__pyx_vtab)->readline(__pyx_cur_scope->__pyx_v_self, 0, NULL); if (unlikely(!__pyx_t_2)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 701; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
     __Pyx_GOTREF(__pyx_t_2);
     __pyx_r = __pyx_t_2;
     __pyx_t_2 = 0;
@@ -9793,10 +10241,10 @@ static PyObject *__pyx_gb_9mbufferio_10_mbufferio_9MBufferIO_62generator(__pyx_C
     __pyx_generator->resume_label = 1;
     return __pyx_r;
     __pyx_L7_resume_from_yield:;
-    if (unlikely(!__pyx_sent_value)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 654; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+    if (unlikely(!__pyx_sent_value)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 701; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
   }
 
-  /* "mbufferio/_mbufferio.pyx":650
+  /* "mbufferio/_mbufferio.pyx":697
  *         return lines
  * 
  *     def __iter__(self):             # <<<<<<<<<<<<<<
@@ -9818,7 +10266,7 @@ static PyObject *__pyx_gb_9mbufferio_10_mbufferio_9MBufferIO_62generator(__pyx_C
   return __pyx_r;
 }
 
-/* "mbufferio/_mbufferio.pyx":656
+/* "mbufferio/_mbufferio.pyx":703
  *             yield self.readline()
  * 
  *     def __getbuffer__(self, Py_buffer *pybuf, int flags):             # <<<<<<<<<<<<<<
@@ -9827,19 +10275,19 @@ static PyObject *__pyx_gb_9mbufferio_10_mbufferio_9MBufferIO_62generator(__pyx_C
  */
 
 /* Python wrapper */
-static CYTHON_UNUSED int __pyx_pw_9mbufferio_10_mbufferio_9MBufferIO_64__getbuffer__(PyObject *__pyx_v_self, Py_buffer *__pyx_v_pybuf, int __pyx_v_flags); /*proto*/
-static CYTHON_UNUSED int __pyx_pw_9mbufferio_10_mbufferio_9MBufferIO_64__getbuffer__(PyObject *__pyx_v_self, Py_buffer *__pyx_v_pybuf, int __pyx_v_flags) {
+static CYTHON_UNUSED int __pyx_pw_9mbufferio_10_mbufferio_9MBufferIO_70__getbuffer__(PyObject *__pyx_v_self, Py_buffer *__pyx_v_pybuf, int __pyx_v_flags); /*proto*/
+static CYTHON_UNUSED int __pyx_pw_9mbufferio_10_mbufferio_9MBufferIO_70__getbuffer__(PyObject *__pyx_v_self, Py_buffer *__pyx_v_pybuf, int __pyx_v_flags) {
   int __pyx_r;
   __Pyx_RefNannyDeclarations
   __Pyx_RefNannySetupContext("__getbuffer__ (wrapper)", 0);
-  __pyx_r = __pyx_pf_9mbufferio_10_mbufferio_9MBufferIO_63__getbuffer__(((struct __pyx_obj_9mbufferio_10_mbufferio_MBufferIO *)__pyx_v_self), ((Py_buffer *)__pyx_v_pybuf), ((int)__pyx_v_flags));
+  __pyx_r = __pyx_pf_9mbufferio_10_mbufferio_9MBufferIO_69__getbuffer__(((struct __pyx_obj_9mbufferio_10_mbufferio_MBufferIO *)__pyx_v_self), ((Py_buffer *)__pyx_v_pybuf), ((int)__pyx_v_flags));
 
   /* function exit code */
   __Pyx_RefNannyFinishContext();
   return __pyx_r;
 }
 
-static int __pyx_pf_9mbufferio_10_mbufferio_9MBufferIO_63__getbuffer__(struct __pyx_obj_9mbufferio_10_mbufferio_MBufferIO *__pyx_v_self, Py_buffer *__pyx_v_pybuf, int __pyx_v_flags) {
+static int __pyx_pf_9mbufferio_10_mbufferio_9MBufferIO_69__getbuffer__(struct __pyx_obj_9mbufferio_10_mbufferio_MBufferIO *__pyx_v_self, Py_buffer *__pyx_v_pybuf, int __pyx_v_flags) {
   int __pyx_r;
   __Pyx_RefNannyDeclarations
   int __pyx_t_1;
@@ -9856,7 +10304,7 @@ static int __pyx_pf_9mbufferio_10_mbufferio_9MBufferIO_63__getbuffer__(struct __
     __Pyx_GIVEREF(__pyx_v_pybuf->obj);
   }
 
-  /* "mbufferio/_mbufferio.pyx":657
+  /* "mbufferio/_mbufferio.pyx":704
  * 
  *     def __getbuffer__(self, Py_buffer *pybuf, int flags):
  *         if self.closed:             # <<<<<<<<<<<<<<
@@ -9866,20 +10314,20 @@ static int __pyx_pf_9mbufferio_10_mbufferio_9MBufferIO_63__getbuffer__(struct __
   __pyx_t_1 = (__pyx_v_self->closed != 0);
   if (__pyx_t_1) {
 
-    /* "mbufferio/_mbufferio.pyx":658
+    /* "mbufferio/_mbufferio.pyx":705
  *     def __getbuffer__(self, Py_buffer *pybuf, int flags):
  *         if self.closed:
  *             raise BufferError("the object is closed")             # <<<<<<<<<<<<<<
  *         if pybuf == NULL:
  *             raise BufferError("pybuf is NULL")
  */
-    __pyx_t_2 = __Pyx_PyObject_Call(__pyx_builtin_BufferError, __pyx_tuple__33, NULL); if (unlikely(!__pyx_t_2)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 658; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+    __pyx_t_2 = __Pyx_PyObject_Call(__pyx_builtin_BufferError, __pyx_tuple__33, NULL); if (unlikely(!__pyx_t_2)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 705; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
     __Pyx_GOTREF(__pyx_t_2);
     __Pyx_Raise(__pyx_t_2, 0, 0, 0);
     __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
-    {__pyx_filename = __pyx_f[0]; __pyx_lineno = 658; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+    {__pyx_filename = __pyx_f[0]; __pyx_lineno = 705; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
 
-    /* "mbufferio/_mbufferio.pyx":657
+    /* "mbufferio/_mbufferio.pyx":704
  * 
  *     def __getbuffer__(self, Py_buffer *pybuf, int flags):
  *         if self.closed:             # <<<<<<<<<<<<<<
@@ -9888,7 +10336,7 @@ static int __pyx_pf_9mbufferio_10_mbufferio_9MBufferIO_63__getbuffer__(struct __
  */
   }
 
-  /* "mbufferio/_mbufferio.pyx":659
+  /* "mbufferio/_mbufferio.pyx":706
  *         if self.closed:
  *             raise BufferError("the object is closed")
  *         if pybuf == NULL:             # <<<<<<<<<<<<<<
@@ -9898,20 +10346,20 @@ static int __pyx_pf_9mbufferio_10_mbufferio_9MBufferIO_63__getbuffer__(struct __
   __pyx_t_1 = ((__pyx_v_pybuf == NULL) != 0);
   if (__pyx_t_1) {
 
-    /* "mbufferio/_mbufferio.pyx":660
+    /* "mbufferio/_mbufferio.pyx":707
  *             raise BufferError("the object is closed")
  *         if pybuf == NULL:
  *             raise BufferError("pybuf is NULL")             # <<<<<<<<<<<<<<
  *         if bool(flags & PyBUF_WRITABLE) and bool(self.readonly):
  *             raise BufferError('read only object')
  */
-    __pyx_t_2 = __Pyx_PyObject_Call(__pyx_builtin_BufferError, __pyx_tuple__34, NULL); if (unlikely(!__pyx_t_2)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 660; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+    __pyx_t_2 = __Pyx_PyObject_Call(__pyx_builtin_BufferError, __pyx_tuple__34, NULL); if (unlikely(!__pyx_t_2)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 707; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
     __Pyx_GOTREF(__pyx_t_2);
     __Pyx_Raise(__pyx_t_2, 0, 0, 0);
     __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
-    {__pyx_filename = __pyx_f[0]; __pyx_lineno = 660; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+    {__pyx_filename = __pyx_f[0]; __pyx_lineno = 707; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
 
-    /* "mbufferio/_mbufferio.pyx":659
+    /* "mbufferio/_mbufferio.pyx":706
  *         if self.closed:
  *             raise BufferError("the object is closed")
  *         if pybuf == NULL:             # <<<<<<<<<<<<<<
@@ -9920,7 +10368,7 @@ static int __pyx_pf_9mbufferio_10_mbufferio_9MBufferIO_63__getbuffer__(struct __
  */
   }
 
-  /* "mbufferio/_mbufferio.pyx":661
+  /* "mbufferio/_mbufferio.pyx":708
  *         if pybuf == NULL:
  *             raise BufferError("pybuf is NULL")
  *         if bool(flags & PyBUF_WRITABLE) and bool(self.readonly):             # <<<<<<<<<<<<<<
@@ -9937,20 +10385,20 @@ static int __pyx_pf_9mbufferio_10_mbufferio_9MBufferIO_63__getbuffer__(struct __
   __pyx_L6_bool_binop_done:;
   if (__pyx_t_1) {
 
-    /* "mbufferio/_mbufferio.pyx":662
+    /* "mbufferio/_mbufferio.pyx":709
  *             raise BufferError("pybuf is NULL")
  *         if bool(flags & PyBUF_WRITABLE) and bool(self.readonly):
  *             raise BufferError('read only object')             # <<<<<<<<<<<<<<
  *         if bool(flags & PyBUF_STRIDES) or bool(flags & PyBUF_ND):
  *             raise BufferError
  */
-    __pyx_t_2 = __Pyx_PyObject_Call(__pyx_builtin_BufferError, __pyx_tuple__35, NULL); if (unlikely(!__pyx_t_2)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 662; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+    __pyx_t_2 = __Pyx_PyObject_Call(__pyx_builtin_BufferError, __pyx_tuple__35, NULL); if (unlikely(!__pyx_t_2)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 709; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
     __Pyx_GOTREF(__pyx_t_2);
     __Pyx_Raise(__pyx_t_2, 0, 0, 0);
     __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
-    {__pyx_filename = __pyx_f[0]; __pyx_lineno = 662; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+    {__pyx_filename = __pyx_f[0]; __pyx_lineno = 709; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
 
-    /* "mbufferio/_mbufferio.pyx":661
+    /* "mbufferio/_mbufferio.pyx":708
  *         if pybuf == NULL:
  *             raise BufferError("pybuf is NULL")
  *         if bool(flags & PyBUF_WRITABLE) and bool(self.readonly):             # <<<<<<<<<<<<<<
@@ -9959,7 +10407,7 @@ static int __pyx_pf_9mbufferio_10_mbufferio_9MBufferIO_63__getbuffer__(struct __
  */
   }
 
-  /* "mbufferio/_mbufferio.pyx":663
+  /* "mbufferio/_mbufferio.pyx":710
  *         if bool(flags & PyBUF_WRITABLE) and bool(self.readonly):
  *             raise BufferError('read only object')
  *         if bool(flags & PyBUF_STRIDES) or bool(flags & PyBUF_ND):             # <<<<<<<<<<<<<<
@@ -9975,7 +10423,7 @@ static int __pyx_pf_9mbufferio_10_mbufferio_9MBufferIO_63__getbuffer__(struct __
   __pyx_L9_bool_binop_done:;
   if (__pyx_t_1) {
 
-    /* "mbufferio/_mbufferio.pyx":664
+    /* "mbufferio/_mbufferio.pyx":711
  *             raise BufferError('read only object')
  *         if bool(flags & PyBUF_STRIDES) or bool(flags & PyBUF_ND):
  *             raise BufferError             # <<<<<<<<<<<<<<
@@ -9983,9 +10431,9 @@ static int __pyx_pf_9mbufferio_10_mbufferio_9MBufferIO_63__getbuffer__(struct __
  *         self.shape[0] = self.length
  */
     __Pyx_Raise(__pyx_builtin_BufferError, 0, 0, 0);
-    {__pyx_filename = __pyx_f[0]; __pyx_lineno = 664; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+    {__pyx_filename = __pyx_f[0]; __pyx_lineno = 711; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
 
-    /* "mbufferio/_mbufferio.pyx":663
+    /* "mbufferio/_mbufferio.pyx":710
  *         if bool(flags & PyBUF_WRITABLE) and bool(self.readonly):
  *             raise BufferError('read only object')
  *         if bool(flags & PyBUF_STRIDES) or bool(flags & PyBUF_ND):             # <<<<<<<<<<<<<<
@@ -9994,7 +10442,7 @@ static int __pyx_pf_9mbufferio_10_mbufferio_9MBufferIO_63__getbuffer__(struct __
  */
   }
 
-  /* "mbufferio/_mbufferio.pyx":666
+  /* "mbufferio/_mbufferio.pyx":713
  *             raise BufferError
  * 
  *         self.shape[0] = self.length             # <<<<<<<<<<<<<<
@@ -10004,7 +10452,7 @@ static int __pyx_pf_9mbufferio_10_mbufferio_9MBufferIO_63__getbuffer__(struct __
   __pyx_t_4 = __pyx_v_self->length;
   (__pyx_v_self->shape[0]) = __pyx_t_4;
 
-  /* "mbufferio/_mbufferio.pyx":667
+  /* "mbufferio/_mbufferio.pyx":714
  * 
  *         self.shape[0] = self.length
  *         pybuf.buf = self.buf_pointer + self.startpos             # <<<<<<<<<<<<<<
@@ -10013,7 +10461,7 @@ static int __pyx_pf_9mbufferio_10_mbufferio_9MBufferIO_63__getbuffer__(struct __
  */
   __pyx_v_pybuf->buf = (__pyx_v_self->buf_pointer + __pyx_v_self->startpos);
 
-  /* "mbufferio/_mbufferio.pyx":668
+  /* "mbufferio/_mbufferio.pyx":715
  *         self.shape[0] = self.length
  *         pybuf.buf = self.buf_pointer + self.startpos
  *         pybuf.len = self.length             # <<<<<<<<<<<<<<
@@ -10023,7 +10471,7 @@ static int __pyx_pf_9mbufferio_10_mbufferio_9MBufferIO_63__getbuffer__(struct __
   __pyx_t_4 = __pyx_v_self->length;
   __pyx_v_pybuf->len = __pyx_t_4;
 
-  /* "mbufferio/_mbufferio.pyx":669
+  /* "mbufferio/_mbufferio.pyx":716
  *         pybuf.buf = self.buf_pointer + self.startpos
  *         pybuf.len = self.length
  *         pybuf.readonly = 1 if self.readonly else 0             # <<<<<<<<<<<<<<
@@ -10037,7 +10485,7 @@ static int __pyx_pf_9mbufferio_10_mbufferio_9MBufferIO_63__getbuffer__(struct __
   }
   __pyx_v_pybuf->readonly = __pyx_t_1;
 
-  /* "mbufferio/_mbufferio.pyx":670
+  /* "mbufferio/_mbufferio.pyx":717
  *         pybuf.len = self.length
  *         pybuf.readonly = 1 if self.readonly else 0
  *         pybuf.format = "B"             # <<<<<<<<<<<<<<
@@ -10046,7 +10494,7 @@ static int __pyx_pf_9mbufferio_10_mbufferio_9MBufferIO_63__getbuffer__(struct __
  */
   __pyx_v_pybuf->format = __pyx_k_B;
 
-  /* "mbufferio/_mbufferio.pyx":671
+  /* "mbufferio/_mbufferio.pyx":718
  *         pybuf.readonly = 1 if self.readonly else 0
  *         pybuf.format = "B"
  *         pybuf.ndim = 1             # <<<<<<<<<<<<<<
@@ -10055,7 +10503,7 @@ static int __pyx_pf_9mbufferio_10_mbufferio_9MBufferIO_63__getbuffer__(struct __
  */
   __pyx_v_pybuf->ndim = 1;
 
-  /* "mbufferio/_mbufferio.pyx":672
+  /* "mbufferio/_mbufferio.pyx":719
  *         pybuf.format = "B"
  *         pybuf.ndim = 1
  *         pybuf.shape = self.shape             # <<<<<<<<<<<<<<
@@ -10065,7 +10513,7 @@ static int __pyx_pf_9mbufferio_10_mbufferio_9MBufferIO_63__getbuffer__(struct __
   __pyx_t_5 = __pyx_v_self->shape;
   __pyx_v_pybuf->shape = __pyx_t_5;
 
-  /* "mbufferio/_mbufferio.pyx":673
+  /* "mbufferio/_mbufferio.pyx":720
  *         pybuf.ndim = 1
  *         pybuf.shape = self.shape
  *         pybuf.strides = NULL             # <<<<<<<<<<<<<<
@@ -10074,7 +10522,7 @@ static int __pyx_pf_9mbufferio_10_mbufferio_9MBufferIO_63__getbuffer__(struct __
  */
   __pyx_v_pybuf->strides = NULL;
 
-  /* "mbufferio/_mbufferio.pyx":674
+  /* "mbufferio/_mbufferio.pyx":721
  *         pybuf.shape = self.shape
  *         pybuf.strides = NULL
  *         pybuf.suboffsets = NULL             # <<<<<<<<<<<<<<
@@ -10083,7 +10531,7 @@ static int __pyx_pf_9mbufferio_10_mbufferio_9MBufferIO_63__getbuffer__(struct __
  */
   __pyx_v_pybuf->suboffsets = NULL;
 
-  /* "mbufferio/_mbufferio.pyx":675
+  /* "mbufferio/_mbufferio.pyx":722
  *         pybuf.strides = NULL
  *         pybuf.suboffsets = NULL
  *         pybuf.itemsize = 1             # <<<<<<<<<<<<<<
@@ -10092,7 +10540,7 @@ static int __pyx_pf_9mbufferio_10_mbufferio_9MBufferIO_63__getbuffer__(struct __
  */
   __pyx_v_pybuf->itemsize = 1;
 
-  /* "mbufferio/_mbufferio.pyx":676
+  /* "mbufferio/_mbufferio.pyx":723
  *         pybuf.suboffsets = NULL
  *         pybuf.itemsize = 1
  *         pybuf.internal = NULL             # <<<<<<<<<<<<<<
@@ -10101,7 +10549,7 @@ static int __pyx_pf_9mbufferio_10_mbufferio_9MBufferIO_63__getbuffer__(struct __
  */
   __pyx_v_pybuf->internal = NULL;
 
-  /* "mbufferio/_mbufferio.pyx":677
+  /* "mbufferio/_mbufferio.pyx":724
  *         pybuf.itemsize = 1
  *         pybuf.internal = NULL
  *         pybuf.obj = self             # <<<<<<<<<<<<<<
@@ -10114,7 +10562,7 @@ static int __pyx_pf_9mbufferio_10_mbufferio_9MBufferIO_63__getbuffer__(struct __
   __Pyx_DECREF(__pyx_v_pybuf->obj);
   __pyx_v_pybuf->obj = ((PyObject *)__pyx_v_self);
 
-  /* "mbufferio/_mbufferio.pyx":678
+  /* "mbufferio/_mbufferio.pyx":725
  *         pybuf.internal = NULL
  *         pybuf.obj = self
  *         self.view_count += 1             # <<<<<<<<<<<<<<
@@ -10123,7 +10571,7 @@ static int __pyx_pf_9mbufferio_10_mbufferio_9MBufferIO_63__getbuffer__(struct __
  */
   __pyx_v_self->view_count = (__pyx_v_self->view_count + 1);
 
-  /* "mbufferio/_mbufferio.pyx":656
+  /* "mbufferio/_mbufferio.pyx":703
  *             yield self.readline()
  * 
  *     def __getbuffer__(self, Py_buffer *pybuf, int flags):             # <<<<<<<<<<<<<<
@@ -10153,7 +10601,7 @@ static int __pyx_pf_9mbufferio_10_mbufferio_9MBufferIO_63__getbuffer__(struct __
   return __pyx_r;
 }
 
-/* "mbufferio/_mbufferio.pyx":680
+/* "mbufferio/_mbufferio.pyx":727
  *         self.view_count += 1
  * 
  *     def __releasebuffer__(self, Py_buffer *pybuf):             # <<<<<<<<<<<<<<
@@ -10162,21 +10610,21 @@ static int __pyx_pf_9mbufferio_10_mbufferio_9MBufferIO_63__getbuffer__(struct __
  */
 
 /* Python wrapper */
-static CYTHON_UNUSED void __pyx_pw_9mbufferio_10_mbufferio_9MBufferIO_66__releasebuffer__(PyObject *__pyx_v_self, Py_buffer *__pyx_v_pybuf); /*proto*/
-static CYTHON_UNUSED void __pyx_pw_9mbufferio_10_mbufferio_9MBufferIO_66__releasebuffer__(PyObject *__pyx_v_self, Py_buffer *__pyx_v_pybuf) {
+static CYTHON_UNUSED void __pyx_pw_9mbufferio_10_mbufferio_9MBufferIO_72__releasebuffer__(PyObject *__pyx_v_self, Py_buffer *__pyx_v_pybuf); /*proto*/
+static CYTHON_UNUSED void __pyx_pw_9mbufferio_10_mbufferio_9MBufferIO_72__releasebuffer__(PyObject *__pyx_v_self, Py_buffer *__pyx_v_pybuf) {
   __Pyx_RefNannyDeclarations
   __Pyx_RefNannySetupContext("__releasebuffer__ (wrapper)", 0);
-  __pyx_pf_9mbufferio_10_mbufferio_9MBufferIO_65__releasebuffer__(((struct __pyx_obj_9mbufferio_10_mbufferio_MBufferIO *)__pyx_v_self), ((Py_buffer *)__pyx_v_pybuf));
+  __pyx_pf_9mbufferio_10_mbufferio_9MBufferIO_71__releasebuffer__(((struct __pyx_obj_9mbufferio_10_mbufferio_MBufferIO *)__pyx_v_self), ((Py_buffer *)__pyx_v_pybuf));
 
   /* function exit code */
   __Pyx_RefNannyFinishContext();
 }
 
-static void __pyx_pf_9mbufferio_10_mbufferio_9MBufferIO_65__releasebuffer__(struct __pyx_obj_9mbufferio_10_mbufferio_MBufferIO *__pyx_v_self, CYTHON_UNUSED Py_buffer *__pyx_v_pybuf) {
+static void __pyx_pf_9mbufferio_10_mbufferio_9MBufferIO_71__releasebuffer__(struct __pyx_obj_9mbufferio_10_mbufferio_MBufferIO *__pyx_v_self, CYTHON_UNUSED Py_buffer *__pyx_v_pybuf) {
   __Pyx_RefNannyDeclarations
   __Pyx_RefNannySetupContext("__releasebuffer__", 0);
 
-  /* "mbufferio/_mbufferio.pyx":681
+  /* "mbufferio/_mbufferio.pyx":728
  * 
  *     def __releasebuffer__(self, Py_buffer *pybuf):
  *         self.view_count -= 1             # <<<<<<<<<<<<<<
@@ -10185,7 +10633,7 @@ static void __pyx_pf_9mbufferio_10_mbufferio_9MBufferIO_65__releasebuffer__(stru
  */
   __pyx_v_self->view_count = (__pyx_v_self->view_count - 1);
 
-  /* "mbufferio/_mbufferio.pyx":680
+  /* "mbufferio/_mbufferio.pyx":727
  *         self.view_count += 1
  * 
  *     def __releasebuffer__(self, Py_buffer *pybuf):             # <<<<<<<<<<<<<<
@@ -10197,7 +10645,7 @@ static void __pyx_pf_9mbufferio_10_mbufferio_9MBufferIO_65__releasebuffer__(stru
   __Pyx_RefNannyFinishContext();
 }
 
-/* "mbufferio/_mbufferio.pyx":683
+/* "mbufferio/_mbufferio.pyx":730
  *         self.view_count -= 1
  * 
  *     def __getitem__(self, item):             # <<<<<<<<<<<<<<
@@ -10206,19 +10654,19 @@ static void __pyx_pf_9mbufferio_10_mbufferio_9MBufferIO_65__releasebuffer__(stru
  */
 
 /* Python wrapper */
-static PyObject *__pyx_pw_9mbufferio_10_mbufferio_9MBufferIO_68__getitem__(PyObject *__pyx_v_self, PyObject *__pyx_v_item); /*proto*/
-static PyObject *__pyx_pw_9mbufferio_10_mbufferio_9MBufferIO_68__getitem__(PyObject *__pyx_v_self, PyObject *__pyx_v_item) {
+static PyObject *__pyx_pw_9mbufferio_10_mbufferio_9MBufferIO_74__getitem__(PyObject *__pyx_v_self, PyObject *__pyx_v_item); /*proto*/
+static PyObject *__pyx_pw_9mbufferio_10_mbufferio_9MBufferIO_74__getitem__(PyObject *__pyx_v_self, PyObject *__pyx_v_item) {
   PyObject *__pyx_r = 0;
   __Pyx_RefNannyDeclarations
   __Pyx_RefNannySetupContext("__getitem__ (wrapper)", 0);
-  __pyx_r = __pyx_pf_9mbufferio_10_mbufferio_9MBufferIO_67__getitem__(((struct __pyx_obj_9mbufferio_10_mbufferio_MBufferIO *)__pyx_v_self), ((PyObject *)__pyx_v_item));
+  __pyx_r = __pyx_pf_9mbufferio_10_mbufferio_9MBufferIO_73__getitem__(((struct __pyx_obj_9mbufferio_10_mbufferio_MBufferIO *)__pyx_v_self), ((PyObject *)__pyx_v_item));
 
   /* function exit code */
   __Pyx_RefNannyFinishContext();
   return __pyx_r;
 }
 
-static PyObject *__pyx_pf_9mbufferio_10_mbufferio_9MBufferIO_67__getitem__(struct __pyx_obj_9mbufferio_10_mbufferio_MBufferIO *__pyx_v_self, PyObject *__pyx_v_item) {
+static PyObject *__pyx_pf_9mbufferio_10_mbufferio_9MBufferIO_73__getitem__(struct __pyx_obj_9mbufferio_10_mbufferio_MBufferIO *__pyx_v_self, PyObject *__pyx_v_item) {
   int64_t __pyx_v_slice_length;
   int64_t __pyx_v_i;
   int64_t __pyx_v_j;
@@ -10244,7 +10692,7 @@ static PyObject *__pyx_pf_9mbufferio_10_mbufferio_9MBufferIO_67__getitem__(struc
   int __pyx_clineno = 0;
   __Pyx_RefNannySetupContext("__getitem__", 0);
 
-  /* "mbufferio/_mbufferio.pyx":687
+  /* "mbufferio/_mbufferio.pyx":734
  *         cdef int64_t i, j
  * 
  *         if self.closed:             # <<<<<<<<<<<<<<
@@ -10254,20 +10702,20 @@ static PyObject *__pyx_pf_9mbufferio_10_mbufferio_9MBufferIO_67__getitem__(struc
   __pyx_t_1 = (__pyx_v_self->closed != 0);
   if (__pyx_t_1) {
 
-    /* "mbufferio/_mbufferio.pyx":688
+    /* "mbufferio/_mbufferio.pyx":735
  * 
  *         if self.closed:
  *             raise RuntimeError("The buffer is closed")             # <<<<<<<<<<<<<<
  * 
  *         if isinstance(item, slice):
  */
-    __pyx_t_2 = __Pyx_PyObject_Call(__pyx_builtin_RuntimeError, __pyx_tuple__36, NULL); if (unlikely(!__pyx_t_2)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 688; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+    __pyx_t_2 = __Pyx_PyObject_Call(__pyx_builtin_RuntimeError, __pyx_tuple__36, NULL); if (unlikely(!__pyx_t_2)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 735; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
     __Pyx_GOTREF(__pyx_t_2);
     __Pyx_Raise(__pyx_t_2, 0, 0, 0);
     __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
-    {__pyx_filename = __pyx_f[0]; __pyx_lineno = 688; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+    {__pyx_filename = __pyx_f[0]; __pyx_lineno = 735; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
 
-    /* "mbufferio/_mbufferio.pyx":687
+    /* "mbufferio/_mbufferio.pyx":734
  *         cdef int64_t i, j
  * 
  *         if self.closed:             # <<<<<<<<<<<<<<
@@ -10276,7 +10724,7 @@ static PyObject *__pyx_pf_9mbufferio_10_mbufferio_9MBufferIO_67__getitem__(struc
  */
   }
 
-  /* "mbufferio/_mbufferio.pyx":690
+  /* "mbufferio/_mbufferio.pyx":737
  *             raise RuntimeError("The buffer is closed")
  * 
  *         if isinstance(item, slice):             # <<<<<<<<<<<<<<
@@ -10287,16 +10735,16 @@ static PyObject *__pyx_pf_9mbufferio_10_mbufferio_9MBufferIO_67__getitem__(struc
   __pyx_t_3 = (__pyx_t_1 != 0);
   if (__pyx_t_3) {
 
-    /* "mbufferio/_mbufferio.pyx":691
+    /* "mbufferio/_mbufferio.pyx":738
  * 
  *         if isinstance(item, slice):
  *             start, stop, stride = item.indices(self.length)             # <<<<<<<<<<<<<<
  *             i = start
  *             j = stop
  */
-    __pyx_t_4 = __Pyx_PyObject_GetAttrStr(__pyx_v_item, __pyx_n_s_indices); if (unlikely(!__pyx_t_4)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 691; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+    __pyx_t_4 = __Pyx_PyObject_GetAttrStr(__pyx_v_item, __pyx_n_s_indices); if (unlikely(!__pyx_t_4)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 738; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
     __Pyx_GOTREF(__pyx_t_4);
-    __pyx_t_5 = __Pyx_PyInt_From_int64_t(__pyx_v_self->length); if (unlikely(!__pyx_t_5)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 691; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+    __pyx_t_5 = __Pyx_PyInt_From_int64_t(__pyx_v_self->length); if (unlikely(!__pyx_t_5)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 738; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
     __Pyx_GOTREF(__pyx_t_5);
     __pyx_t_6 = NULL;
     if (CYTHON_COMPILING_IN_CPYTHON && likely(PyMethod_Check(__pyx_t_4))) {
@@ -10309,17 +10757,17 @@ static PyObject *__pyx_pf_9mbufferio_10_mbufferio_9MBufferIO_67__getitem__(struc
       }
     }
     if (!__pyx_t_6) {
-      __pyx_t_2 = __Pyx_PyObject_CallOneArg(__pyx_t_4, __pyx_t_5); if (unlikely(!__pyx_t_2)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 691; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+      __pyx_t_2 = __Pyx_PyObject_CallOneArg(__pyx_t_4, __pyx_t_5); if (unlikely(!__pyx_t_2)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 738; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
       __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
       __Pyx_GOTREF(__pyx_t_2);
     } else {
-      __pyx_t_7 = PyTuple_New(1+1); if (unlikely(!__pyx_t_7)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 691; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+      __pyx_t_7 = PyTuple_New(1+1); if (unlikely(!__pyx_t_7)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 738; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
       __Pyx_GOTREF(__pyx_t_7);
       __Pyx_GIVEREF(__pyx_t_6); PyTuple_SET_ITEM(__pyx_t_7, 0, __pyx_t_6); __pyx_t_6 = NULL;
       __Pyx_GIVEREF(__pyx_t_5);
       PyTuple_SET_ITEM(__pyx_t_7, 0+1, __pyx_t_5);
       __pyx_t_5 = 0;
-      __pyx_t_2 = __Pyx_PyObject_Call(__pyx_t_4, __pyx_t_7, NULL); if (unlikely(!__pyx_t_2)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 691; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+      __pyx_t_2 = __Pyx_PyObject_Call(__pyx_t_4, __pyx_t_7, NULL); if (unlikely(!__pyx_t_2)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 738; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
       __Pyx_GOTREF(__pyx_t_2);
       __Pyx_DECREF(__pyx_t_7); __pyx_t_7 = 0;
     }
@@ -10334,7 +10782,7 @@ static PyObject *__pyx_pf_9mbufferio_10_mbufferio_9MBufferIO_67__getitem__(struc
       if (unlikely(size != 3)) {
         if (size > 3) __Pyx_RaiseTooManyValuesError(3);
         else if (size >= 0) __Pyx_RaiseNeedMoreValuesError(size);
-        {__pyx_filename = __pyx_f[0]; __pyx_lineno = 691; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+        {__pyx_filename = __pyx_f[0]; __pyx_lineno = 738; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
       }
       #if CYTHON_COMPILING_IN_CPYTHON
       if (likely(PyTuple_CheckExact(sequence))) {
@@ -10350,17 +10798,17 @@ static PyObject *__pyx_pf_9mbufferio_10_mbufferio_9MBufferIO_67__getitem__(struc
       __Pyx_INCREF(__pyx_t_7);
       __Pyx_INCREF(__pyx_t_5);
       #else
-      __pyx_t_4 = PySequence_ITEM(sequence, 0); if (unlikely(!__pyx_t_4)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 691; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+      __pyx_t_4 = PySequence_ITEM(sequence, 0); if (unlikely(!__pyx_t_4)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 738; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
       __Pyx_GOTREF(__pyx_t_4);
-      __pyx_t_7 = PySequence_ITEM(sequence, 1); if (unlikely(!__pyx_t_7)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 691; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+      __pyx_t_7 = PySequence_ITEM(sequence, 1); if (unlikely(!__pyx_t_7)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 738; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
       __Pyx_GOTREF(__pyx_t_7);
-      __pyx_t_5 = PySequence_ITEM(sequence, 2); if (unlikely(!__pyx_t_5)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 691; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+      __pyx_t_5 = PySequence_ITEM(sequence, 2); if (unlikely(!__pyx_t_5)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 738; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
       __Pyx_GOTREF(__pyx_t_5);
       #endif
       __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
     } else {
       Py_ssize_t index = -1;
-      __pyx_t_6 = PyObject_GetIter(__pyx_t_2); if (unlikely(!__pyx_t_6)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 691; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+      __pyx_t_6 = PyObject_GetIter(__pyx_t_2); if (unlikely(!__pyx_t_6)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 738; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
       __Pyx_GOTREF(__pyx_t_6);
       __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
       __pyx_t_8 = Py_TYPE(__pyx_t_6)->tp_iternext;
@@ -10370,7 +10818,7 @@ static PyObject *__pyx_pf_9mbufferio_10_mbufferio_9MBufferIO_67__getitem__(struc
       __Pyx_GOTREF(__pyx_t_7);
       index = 2; __pyx_t_5 = __pyx_t_8(__pyx_t_6); if (unlikely(!__pyx_t_5)) goto __pyx_L5_unpacking_failed;
       __Pyx_GOTREF(__pyx_t_5);
-      if (__Pyx_IternextUnpackEndCheck(__pyx_t_8(__pyx_t_6), 3) < 0) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 691; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+      if (__Pyx_IternextUnpackEndCheck(__pyx_t_8(__pyx_t_6), 3) < 0) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 738; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
       __pyx_t_8 = NULL;
       __Pyx_DECREF(__pyx_t_6); __pyx_t_6 = 0;
       goto __pyx_L6_unpacking_done;
@@ -10378,7 +10826,7 @@ static PyObject *__pyx_pf_9mbufferio_10_mbufferio_9MBufferIO_67__getitem__(struc
       __Pyx_DECREF(__pyx_t_6); __pyx_t_6 = 0;
       __pyx_t_8 = NULL;
       if (__Pyx_IterFinish() == 0) __Pyx_RaiseNeedMoreValuesError(index);
-      {__pyx_filename = __pyx_f[0]; __pyx_lineno = 691; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+      {__pyx_filename = __pyx_f[0]; __pyx_lineno = 738; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
       __pyx_L6_unpacking_done:;
     }
     __pyx_v_start = __pyx_t_4;
@@ -10388,52 +10836,52 @@ static PyObject *__pyx_pf_9mbufferio_10_mbufferio_9MBufferIO_67__getitem__(struc
     __pyx_v_stride = __pyx_t_5;
     __pyx_t_5 = 0;
 
-    /* "mbufferio/_mbufferio.pyx":692
+    /* "mbufferio/_mbufferio.pyx":739
  *         if isinstance(item, slice):
  *             start, stop, stride = item.indices(self.length)
  *             i = start             # <<<<<<<<<<<<<<
  *             j = stop
  *             if stride != 1:
  */
-    __pyx_t_9 = __Pyx_PyInt_As_int64_t(__pyx_v_start); if (unlikely((__pyx_t_9 == (int64_t)-1) && PyErr_Occurred())) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 692; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+    __pyx_t_9 = __Pyx_PyInt_As_int64_t(__pyx_v_start); if (unlikely((__pyx_t_9 == (int64_t)-1) && PyErr_Occurred())) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 739; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
     __pyx_v_i = __pyx_t_9;
 
-    /* "mbufferio/_mbufferio.pyx":693
+    /* "mbufferio/_mbufferio.pyx":740
  *             start, stop, stride = item.indices(self.length)
  *             i = start
  *             j = stop             # <<<<<<<<<<<<<<
  *             if stride != 1:
  *                 raise ValueError("does not support step != 1")
  */
-    __pyx_t_9 = __Pyx_PyInt_As_int64_t(__pyx_v_stop); if (unlikely((__pyx_t_9 == (int64_t)-1) && PyErr_Occurred())) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 693; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+    __pyx_t_9 = __Pyx_PyInt_As_int64_t(__pyx_v_stop); if (unlikely((__pyx_t_9 == (int64_t)-1) && PyErr_Occurred())) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 740; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
     __pyx_v_j = __pyx_t_9;
 
-    /* "mbufferio/_mbufferio.pyx":694
+    /* "mbufferio/_mbufferio.pyx":741
  *             i = start
  *             j = stop
  *             if stride != 1:             # <<<<<<<<<<<<<<
  *                 raise ValueError("does not support step != 1")
  *             slice_length = max(j - i, 0)
  */
-    __pyx_t_2 = PyObject_RichCompare(__pyx_v_stride, __pyx_int_1, Py_NE); __Pyx_XGOTREF(__pyx_t_2); if (unlikely(!__pyx_t_2)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 694; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
-    __pyx_t_3 = __Pyx_PyObject_IsTrue(__pyx_t_2); if (unlikely(__pyx_t_3 < 0)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 694; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+    __pyx_t_2 = PyObject_RichCompare(__pyx_v_stride, __pyx_int_1, Py_NE); __Pyx_XGOTREF(__pyx_t_2); if (unlikely(!__pyx_t_2)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 741; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+    __pyx_t_3 = __Pyx_PyObject_IsTrue(__pyx_t_2); if (unlikely(__pyx_t_3 < 0)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 741; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
     __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
     if (__pyx_t_3) {
 
-      /* "mbufferio/_mbufferio.pyx":695
+      /* "mbufferio/_mbufferio.pyx":742
  *             j = stop
  *             if stride != 1:
  *                 raise ValueError("does not support step != 1")             # <<<<<<<<<<<<<<
  *             slice_length = max(j - i, 0)
  *             if self.original_obj is None:
  */
-      __pyx_t_2 = __Pyx_PyObject_Call(__pyx_builtin_ValueError, __pyx_tuple__37, NULL); if (unlikely(!__pyx_t_2)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 695; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+      __pyx_t_2 = __Pyx_PyObject_Call(__pyx_builtin_ValueError, __pyx_tuple__37, NULL); if (unlikely(!__pyx_t_2)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 742; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
       __Pyx_GOTREF(__pyx_t_2);
       __Pyx_Raise(__pyx_t_2, 0, 0, 0);
       __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
-      {__pyx_filename = __pyx_f[0]; __pyx_lineno = 695; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+      {__pyx_filename = __pyx_f[0]; __pyx_lineno = 742; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
 
-      /* "mbufferio/_mbufferio.pyx":694
+      /* "mbufferio/_mbufferio.pyx":741
  *             i = start
  *             j = stop
  *             if stride != 1:             # <<<<<<<<<<<<<<
@@ -10442,7 +10890,7 @@ static PyObject *__pyx_pf_9mbufferio_10_mbufferio_9MBufferIO_67__getitem__(struc
  */
     }
 
-    /* "mbufferio/_mbufferio.pyx":696
+    /* "mbufferio/_mbufferio.pyx":743
  *             if stride != 1:
  *                 raise ValueError("does not support step != 1")
  *             slice_length = max(j - i, 0)             # <<<<<<<<<<<<<<
@@ -10458,7 +10906,7 @@ static PyObject *__pyx_pf_9mbufferio_10_mbufferio_9MBufferIO_67__getitem__(struc
     }
     __pyx_v_slice_length = __pyx_t_11;
 
-    /* "mbufferio/_mbufferio.pyx":697
+    /* "mbufferio/_mbufferio.pyx":744
  *                 raise ValueError("does not support step != 1")
  *             slice_length = max(j - i, 0)
  *             if self.original_obj is None:             # <<<<<<<<<<<<<<
@@ -10469,7 +10917,7 @@ static PyObject *__pyx_pf_9mbufferio_10_mbufferio_9MBufferIO_67__getitem__(struc
     __pyx_t_1 = (__pyx_t_3 != 0);
     if (__pyx_t_1) {
 
-      /* "mbufferio/_mbufferio.pyx":698
+      /* "mbufferio/_mbufferio.pyx":745
  *             slice_length = max(j - i, 0)
  *             if self.original_obj is None:
  *                 return MBufferIO(self, i, slice_length)     # startpos in handled in __getbuffer__             # <<<<<<<<<<<<<<
@@ -10477,11 +10925,11 @@ static PyObject *__pyx_pf_9mbufferio_10_mbufferio_9MBufferIO_67__getitem__(struc
  *                 return MBufferIO(self.original_obj, self.startpos + i, slice_length)
  */
       __Pyx_XDECREF(__pyx_r);
-      __pyx_t_2 = __Pyx_PyInt_From_int64_t(__pyx_v_i); if (unlikely(!__pyx_t_2)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 698; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+      __pyx_t_2 = __Pyx_PyInt_From_int64_t(__pyx_v_i); if (unlikely(!__pyx_t_2)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 745; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
       __Pyx_GOTREF(__pyx_t_2);
-      __pyx_t_5 = __Pyx_PyInt_From_int64_t(__pyx_v_slice_length); if (unlikely(!__pyx_t_5)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 698; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+      __pyx_t_5 = __Pyx_PyInt_From_int64_t(__pyx_v_slice_length); if (unlikely(!__pyx_t_5)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 745; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
       __Pyx_GOTREF(__pyx_t_5);
-      __pyx_t_7 = PyTuple_New(3); if (unlikely(!__pyx_t_7)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 698; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+      __pyx_t_7 = PyTuple_New(3); if (unlikely(!__pyx_t_7)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 745; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
       __Pyx_GOTREF(__pyx_t_7);
       __Pyx_INCREF(((PyObject *)__pyx_v_self));
       __Pyx_GIVEREF(((PyObject *)__pyx_v_self));
@@ -10492,14 +10940,14 @@ static PyObject *__pyx_pf_9mbufferio_10_mbufferio_9MBufferIO_67__getitem__(struc
       PyTuple_SET_ITEM(__pyx_t_7, 2, __pyx_t_5);
       __pyx_t_2 = 0;
       __pyx_t_5 = 0;
-      __pyx_t_5 = __Pyx_PyObject_Call(((PyObject *)__pyx_ptype_9mbufferio_10_mbufferio_MBufferIO), __pyx_t_7, NULL); if (unlikely(!__pyx_t_5)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 698; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+      __pyx_t_5 = __Pyx_PyObject_Call(((PyObject *)__pyx_ptype_9mbufferio_10_mbufferio_MBufferIO), __pyx_t_7, NULL); if (unlikely(!__pyx_t_5)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 745; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
       __Pyx_GOTREF(__pyx_t_5);
       __Pyx_DECREF(__pyx_t_7); __pyx_t_7 = 0;
       __pyx_r = __pyx_t_5;
       __pyx_t_5 = 0;
       goto __pyx_L0;
 
-      /* "mbufferio/_mbufferio.pyx":697
+      /* "mbufferio/_mbufferio.pyx":744
  *                 raise ValueError("does not support step != 1")
  *             slice_length = max(j - i, 0)
  *             if self.original_obj is None:             # <<<<<<<<<<<<<<
@@ -10508,7 +10956,7 @@ static PyObject *__pyx_pf_9mbufferio_10_mbufferio_9MBufferIO_67__getitem__(struc
  */
     }
 
-    /* "mbufferio/_mbufferio.pyx":700
+    /* "mbufferio/_mbufferio.pyx":747
  *                 return MBufferIO(self, i, slice_length)     # startpos in handled in __getbuffer__
  *             else:
  *                 return MBufferIO(self.original_obj, self.startpos + i, slice_length)             # <<<<<<<<<<<<<<
@@ -10517,11 +10965,11 @@ static PyObject *__pyx_pf_9mbufferio_10_mbufferio_9MBufferIO_67__getitem__(struc
  */
     /*else*/ {
       __Pyx_XDECREF(__pyx_r);
-      __pyx_t_5 = __Pyx_PyInt_From_int64_t((__pyx_v_self->startpos + __pyx_v_i)); if (unlikely(!__pyx_t_5)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 700; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+      __pyx_t_5 = __Pyx_PyInt_From_int64_t((__pyx_v_self->startpos + __pyx_v_i)); if (unlikely(!__pyx_t_5)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 747; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
       __Pyx_GOTREF(__pyx_t_5);
-      __pyx_t_7 = __Pyx_PyInt_From_int64_t(__pyx_v_slice_length); if (unlikely(!__pyx_t_7)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 700; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+      __pyx_t_7 = __Pyx_PyInt_From_int64_t(__pyx_v_slice_length); if (unlikely(!__pyx_t_7)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 747; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
       __Pyx_GOTREF(__pyx_t_7);
-      __pyx_t_2 = PyTuple_New(3); if (unlikely(!__pyx_t_2)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 700; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+      __pyx_t_2 = PyTuple_New(3); if (unlikely(!__pyx_t_2)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 747; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
       __Pyx_GOTREF(__pyx_t_2);
       __Pyx_INCREF(__pyx_v_self->original_obj);
       __Pyx_GIVEREF(__pyx_v_self->original_obj);
@@ -10532,7 +10980,7 @@ static PyObject *__pyx_pf_9mbufferio_10_mbufferio_9MBufferIO_67__getitem__(struc
       PyTuple_SET_ITEM(__pyx_t_2, 2, __pyx_t_7);
       __pyx_t_5 = 0;
       __pyx_t_7 = 0;
-      __pyx_t_7 = __Pyx_PyObject_Call(((PyObject *)__pyx_ptype_9mbufferio_10_mbufferio_MBufferIO), __pyx_t_2, NULL); if (unlikely(!__pyx_t_7)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 700; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+      __pyx_t_7 = __Pyx_PyObject_Call(((PyObject *)__pyx_ptype_9mbufferio_10_mbufferio_MBufferIO), __pyx_t_2, NULL); if (unlikely(!__pyx_t_7)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 747; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
       __Pyx_GOTREF(__pyx_t_7);
       __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
       __pyx_r = __pyx_t_7;
@@ -10540,7 +10988,7 @@ static PyObject *__pyx_pf_9mbufferio_10_mbufferio_9MBufferIO_67__getitem__(struc
       goto __pyx_L0;
     }
 
-    /* "mbufferio/_mbufferio.pyx":690
+    /* "mbufferio/_mbufferio.pyx":737
  *             raise RuntimeError("The buffer is closed")
  * 
  *         if isinstance(item, slice):             # <<<<<<<<<<<<<<
@@ -10549,17 +10997,17 @@ static PyObject *__pyx_pf_9mbufferio_10_mbufferio_9MBufferIO_67__getitem__(struc
  */
   }
 
-  /* "mbufferio/_mbufferio.pyx":702
+  /* "mbufferio/_mbufferio.pyx":749
  *                 return MBufferIO(self.original_obj, self.startpos + i, slice_length)
  * 
  *         i = item             # <<<<<<<<<<<<<<
  *         if i >= self.length or i < (-self.length):
  *             raise IndexError
  */
-  __pyx_t_11 = __Pyx_PyInt_As_int64_t(__pyx_v_item); if (unlikely((__pyx_t_11 == (int64_t)-1) && PyErr_Occurred())) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 702; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __pyx_t_11 = __Pyx_PyInt_As_int64_t(__pyx_v_item); if (unlikely((__pyx_t_11 == (int64_t)-1) && PyErr_Occurred())) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 749; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
   __pyx_v_i = __pyx_t_11;
 
-  /* "mbufferio/_mbufferio.pyx":703
+  /* "mbufferio/_mbufferio.pyx":750
  * 
  *         i = item
  *         if i >= self.length or i < (-self.length):             # <<<<<<<<<<<<<<
@@ -10577,7 +11025,7 @@ static PyObject *__pyx_pf_9mbufferio_10_mbufferio_9MBufferIO_67__getitem__(struc
   __pyx_L10_bool_binop_done:;
   if (__pyx_t_1) {
 
-    /* "mbufferio/_mbufferio.pyx":704
+    /* "mbufferio/_mbufferio.pyx":751
  *         i = item
  *         if i >= self.length or i < (-self.length):
  *             raise IndexError             # <<<<<<<<<<<<<<
@@ -10585,9 +11033,9 @@ static PyObject *__pyx_pf_9mbufferio_10_mbufferio_9MBufferIO_67__getitem__(struc
  *         if i < 0:
  */
     __Pyx_Raise(__pyx_builtin_IndexError, 0, 0, 0);
-    {__pyx_filename = __pyx_f[0]; __pyx_lineno = 704; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+    {__pyx_filename = __pyx_f[0]; __pyx_lineno = 751; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
 
-    /* "mbufferio/_mbufferio.pyx":703
+    /* "mbufferio/_mbufferio.pyx":750
  * 
  *         i = item
  *         if i >= self.length or i < (-self.length):             # <<<<<<<<<<<<<<
@@ -10596,7 +11044,7 @@ static PyObject *__pyx_pf_9mbufferio_10_mbufferio_9MBufferIO_67__getitem__(struc
  */
   }
 
-  /* "mbufferio/_mbufferio.pyx":706
+  /* "mbufferio/_mbufferio.pyx":753
  *             raise IndexError
  * 
  *         if i < 0:             # <<<<<<<<<<<<<<
@@ -10606,7 +11054,7 @@ static PyObject *__pyx_pf_9mbufferio_10_mbufferio_9MBufferIO_67__getitem__(struc
   __pyx_t_1 = ((__pyx_v_i < 0) != 0);
   if (__pyx_t_1) {
 
-    /* "mbufferio/_mbufferio.pyx":707
+    /* "mbufferio/_mbufferio.pyx":754
  * 
  *         if i < 0:
  *             i = self.length + i             # <<<<<<<<<<<<<<
@@ -10615,7 +11063,7 @@ static PyObject *__pyx_pf_9mbufferio_10_mbufferio_9MBufferIO_67__getitem__(struc
  */
     __pyx_v_i = (__pyx_v_self->length + __pyx_v_i);
 
-    /* "mbufferio/_mbufferio.pyx":706
+    /* "mbufferio/_mbufferio.pyx":753
  *             raise IndexError
  * 
  *         if i < 0:             # <<<<<<<<<<<<<<
@@ -10624,7 +11072,7 @@ static PyObject *__pyx_pf_9mbufferio_10_mbufferio_9MBufferIO_67__getitem__(struc
  */
   }
 
-  /* "mbufferio/_mbufferio.pyx":709
+  /* "mbufferio/_mbufferio.pyx":756
  *             i = self.length + i
  * 
  *         return <bytes> (self.buf_pointer[self.startpos + i])             # <<<<<<<<<<<<<<
@@ -10633,13 +11081,13 @@ static PyObject *__pyx_pf_9mbufferio_10_mbufferio_9MBufferIO_67__getitem__(struc
  */
   __Pyx_XDECREF(__pyx_r);
   __pyx_t_12 = (__pyx_v_self->buf_pointer[(__pyx_v_self->startpos + __pyx_v_i)]);
-  __pyx_t_7 = PyBytes_FromStringAndSize(&__pyx_t_12, 1); if (unlikely(!__pyx_t_7)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 709; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __pyx_t_7 = PyBytes_FromStringAndSize(&__pyx_t_12, 1); if (unlikely(!__pyx_t_7)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 756; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
   __Pyx_GOTREF(__pyx_t_7);
   __pyx_r = __pyx_t_7;
   __pyx_t_7 = 0;
   goto __pyx_L0;
 
-  /* "mbufferio/_mbufferio.pyx":683
+  /* "mbufferio/_mbufferio.pyx":730
  *         self.view_count -= 1
  * 
  *     def __getitem__(self, item):             # <<<<<<<<<<<<<<
@@ -10665,7 +11113,7 @@ static PyObject *__pyx_pf_9mbufferio_10_mbufferio_9MBufferIO_67__getitem__(struc
   return __pyx_r;
 }
 
-/* "mbufferio/_mbufferio.pyx":711
+/* "mbufferio/_mbufferio.pyx":758
  *         return <bytes> (self.buf_pointer[self.startpos + i])
  * 
  *     cpdef murmur128(self, prefix=b'', to_unicode=False):             # <<<<<<<<<<<<<<
@@ -10673,9 +11121,9 @@ static PyObject *__pyx_pf_9mbufferio_10_mbufferio_9MBufferIO_67__getitem__(struc
  *         murmur128(prefix=b'', to_unicode=False)
  */
 
-static PyObject *__pyx_pw_9mbufferio_10_mbufferio_9MBufferIO_70murmur128(PyObject *__pyx_v_self, PyObject *__pyx_args, PyObject *__pyx_kwds); /*proto*/
+static PyObject *__pyx_pw_9mbufferio_10_mbufferio_9MBufferIO_76murmur128(PyObject *__pyx_v_self, PyObject *__pyx_args, PyObject *__pyx_kwds); /*proto*/
 static PyObject *__pyx_f_9mbufferio_10_mbufferio_9MBufferIO_murmur128(struct __pyx_obj_9mbufferio_10_mbufferio_MBufferIO *__pyx_v_self, int __pyx_skip_dispatch, struct __pyx_opt_args_9mbufferio_10_mbufferio_9MBufferIO_murmur128 *__pyx_optional_args) {
-  PyObject *__pyx_v_prefix = ((PyObject *)__pyx_kp_b__14);
+  PyObject *__pyx_v_prefix = ((PyObject *)__pyx_kp_b__15);
   PyObject *__pyx_v_to_unicode = ((PyObject *)Py_False);
   PyObject *__pyx_v_retbuf = NULL;
   int __pyx_v_res;
@@ -10708,9 +11156,9 @@ static PyObject *__pyx_f_9mbufferio_10_mbufferio_9MBufferIO_murmur128(struct __p
   if (unlikely(__pyx_skip_dispatch)) ;
   /* Check if overridden in Python */
   else if (unlikely(Py_TYPE(((PyObject *)__pyx_v_self))->tp_dictoffset != 0)) {
-    __pyx_t_1 = __Pyx_PyObject_GetAttrStr(((PyObject *)__pyx_v_self), __pyx_n_s_murmur128); if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 711; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+    __pyx_t_1 = __Pyx_PyObject_GetAttrStr(((PyObject *)__pyx_v_self), __pyx_n_s_murmur128); if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 758; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
     __Pyx_GOTREF(__pyx_t_1);
-    if (!PyCFunction_Check(__pyx_t_1) || (PyCFunction_GET_FUNCTION(__pyx_t_1) != (PyCFunction)__pyx_pw_9mbufferio_10_mbufferio_9MBufferIO_70murmur128)) {
+    if (!PyCFunction_Check(__pyx_t_1) || (PyCFunction_GET_FUNCTION(__pyx_t_1) != (PyCFunction)__pyx_pw_9mbufferio_10_mbufferio_9MBufferIO_76murmur128)) {
       __Pyx_XDECREF(__pyx_r);
       __Pyx_INCREF(__pyx_t_1);
       __pyx_t_3 = __pyx_t_1; __pyx_t_4 = NULL;
@@ -10725,7 +11173,7 @@ static PyObject *__pyx_f_9mbufferio_10_mbufferio_9MBufferIO_murmur128(struct __p
           __pyx_t_5 = 1;
         }
       }
-      __pyx_t_6 = PyTuple_New(2+__pyx_t_5); if (unlikely(!__pyx_t_6)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 711; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+      __pyx_t_6 = PyTuple_New(2+__pyx_t_5); if (unlikely(!__pyx_t_6)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 758; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
       __Pyx_GOTREF(__pyx_t_6);
       if (__pyx_t_4) {
         __Pyx_GIVEREF(__pyx_t_4); PyTuple_SET_ITEM(__pyx_t_6, 0, __pyx_t_4); __pyx_t_4 = NULL;
@@ -10736,7 +11184,7 @@ static PyObject *__pyx_f_9mbufferio_10_mbufferio_9MBufferIO_murmur128(struct __p
       __Pyx_INCREF(__pyx_v_to_unicode);
       __Pyx_GIVEREF(__pyx_v_to_unicode);
       PyTuple_SET_ITEM(__pyx_t_6, 1+__pyx_t_5, __pyx_v_to_unicode);
-      __pyx_t_2 = __Pyx_PyObject_Call(__pyx_t_3, __pyx_t_6, NULL); if (unlikely(!__pyx_t_2)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 711; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+      __pyx_t_2 = __Pyx_PyObject_Call(__pyx_t_3, __pyx_t_6, NULL); if (unlikely(!__pyx_t_2)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 758; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
       __Pyx_GOTREF(__pyx_t_2);
       __Pyx_DECREF(__pyx_t_6); __pyx_t_6 = 0;
       __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
@@ -10748,30 +11196,30 @@ static PyObject *__pyx_f_9mbufferio_10_mbufferio_9MBufferIO_murmur128(struct __p
     __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
   }
 
-  /* "mbufferio/_mbufferio.pyx":727
+  /* "mbufferio/_mbufferio.pyx":774
  *         The hash
  *         """
  *         prefix = make_utf8(prefix)             # <<<<<<<<<<<<<<
  *         if not self:
  *             return prefix
  */
-  __pyx_t_1 = __pyx_f_9mbufferio_10_mbufferio_make_utf8(__pyx_v_prefix, 0); if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 727; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __pyx_t_1 = __pyx_f_9mbufferio_10_mbufferio_make_utf8(__pyx_v_prefix, 0); if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 774; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
   __Pyx_GOTREF(__pyx_t_1);
   __Pyx_DECREF_SET(__pyx_v_prefix, __pyx_t_1);
   __pyx_t_1 = 0;
 
-  /* "mbufferio/_mbufferio.pyx":728
+  /* "mbufferio/_mbufferio.pyx":775
  *         """
  *         prefix = make_utf8(prefix)
  *         if not self:             # <<<<<<<<<<<<<<
  *             return prefix
  *         retbuf = bytearray(16)
  */
-  __pyx_t_7 = __Pyx_PyObject_IsTrue(((PyObject *)__pyx_v_self)); if (unlikely(__pyx_t_7 < 0)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 728; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __pyx_t_7 = __Pyx_PyObject_IsTrue(((PyObject *)__pyx_v_self)); if (unlikely(__pyx_t_7 < 0)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 775; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
   __pyx_t_8 = ((!__pyx_t_7) != 0);
   if (__pyx_t_8) {
 
-    /* "mbufferio/_mbufferio.pyx":729
+    /* "mbufferio/_mbufferio.pyx":776
  *         prefix = make_utf8(prefix)
  *         if not self:
  *             return prefix             # <<<<<<<<<<<<<<
@@ -10783,7 +11231,7 @@ static PyObject *__pyx_f_9mbufferio_10_mbufferio_9MBufferIO_murmur128(struct __p
     __pyx_r = __pyx_v_prefix;
     goto __pyx_L0;
 
-    /* "mbufferio/_mbufferio.pyx":728
+    /* "mbufferio/_mbufferio.pyx":775
  *         """
  *         prefix = make_utf8(prefix)
  *         if not self:             # <<<<<<<<<<<<<<
@@ -10792,29 +11240,29 @@ static PyObject *__pyx_f_9mbufferio_10_mbufferio_9MBufferIO_murmur128(struct __p
  */
   }
 
-  /* "mbufferio/_mbufferio.pyx":730
+  /* "mbufferio/_mbufferio.pyx":777
  *         if not self:
  *             return prefix
  *         retbuf = bytearray(16)             # <<<<<<<<<<<<<<
  *         cdef int res = qhashmurmur3_128(<void*>(self.buf_pointer + self.startpos), <size_t> self.length, <void *> (<char*> retbuf))
  *         if res == 0:
  */
-  __pyx_t_1 = __Pyx_PyObject_Call(((PyObject *)(&PyByteArray_Type)), __pyx_tuple__38, NULL); if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 730; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __pyx_t_1 = __Pyx_PyObject_Call(((PyObject *)(&PyByteArray_Type)), __pyx_tuple__38, NULL); if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 777; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
   __Pyx_GOTREF(__pyx_t_1);
   __pyx_v_retbuf = ((PyObject*)__pyx_t_1);
   __pyx_t_1 = 0;
 
-  /* "mbufferio/_mbufferio.pyx":731
+  /* "mbufferio/_mbufferio.pyx":778
  *             return prefix
  *         retbuf = bytearray(16)
  *         cdef int res = qhashmurmur3_128(<void*>(self.buf_pointer + self.startpos), <size_t> self.length, <void *> (<char*> retbuf))             # <<<<<<<<<<<<<<
  *         if res == 0:
  *             return None
  */
-  __pyx_t_9 = __Pyx_PyObject_AsString(__pyx_v_retbuf); if (unlikely((!__pyx_t_9) && PyErr_Occurred())) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 731; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __pyx_t_9 = __Pyx_PyObject_AsString(__pyx_v_retbuf); if (unlikely((!__pyx_t_9) && PyErr_Occurred())) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 778; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
   __pyx_v_res = qhashmurmur3_128(((void *)(__pyx_v_self->buf_pointer + __pyx_v_self->startpos)), ((size_t)__pyx_v_self->length), ((void *)((char *)__pyx_t_9)));
 
-  /* "mbufferio/_mbufferio.pyx":732
+  /* "mbufferio/_mbufferio.pyx":779
  *         retbuf = bytearray(16)
  *         cdef int res = qhashmurmur3_128(<void*>(self.buf_pointer + self.startpos), <size_t> self.length, <void *> (<char*> retbuf))
  *         if res == 0:             # <<<<<<<<<<<<<<
@@ -10824,7 +11272,7 @@ static PyObject *__pyx_f_9mbufferio_10_mbufferio_9MBufferIO_murmur128(struct __p
   __pyx_t_8 = ((__pyx_v_res == 0) != 0);
   if (__pyx_t_8) {
 
-    /* "mbufferio/_mbufferio.pyx":733
+    /* "mbufferio/_mbufferio.pyx":780
  *         cdef int res = qhashmurmur3_128(<void*>(self.buf_pointer + self.startpos), <size_t> self.length, <void *> (<char*> retbuf))
  *         if res == 0:
  *             return None             # <<<<<<<<<<<<<<
@@ -10836,7 +11284,7 @@ static PyObject *__pyx_f_9mbufferio_10_mbufferio_9MBufferIO_murmur128(struct __p
     __pyx_r = Py_None;
     goto __pyx_L0;
 
-    /* "mbufferio/_mbufferio.pyx":732
+    /* "mbufferio/_mbufferio.pyx":779
  *         retbuf = bytearray(16)
  *         cdef int res = qhashmurmur3_128(<void*>(self.buf_pointer + self.startpos), <size_t> self.length, <void *> (<char*> retbuf))
  *         if res == 0:             # <<<<<<<<<<<<<<
@@ -10845,44 +11293,44 @@ static PyObject *__pyx_f_9mbufferio_10_mbufferio_9MBufferIO_murmur128(struct __p
  */
   }
 
-  /* "mbufferio/_mbufferio.pyx":734
+  /* "mbufferio/_mbufferio.pyx":781
  *         if res == 0:
  *             return None
  *         result = prefix + bytes(retbuf).encode('hex')             # <<<<<<<<<<<<<<
  *         if to_unicode:
  *             return unicode(result)
  */
-  __pyx_t_1 = PyTuple_New(1); if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 734; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __pyx_t_1 = PyTuple_New(1); if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 781; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
   __Pyx_GOTREF(__pyx_t_1);
   __Pyx_INCREF(__pyx_v_retbuf);
   __Pyx_GIVEREF(__pyx_v_retbuf);
   PyTuple_SET_ITEM(__pyx_t_1, 0, __pyx_v_retbuf);
-  __pyx_t_2 = __Pyx_PyObject_Call(((PyObject *)(&PyBytes_Type)), __pyx_t_1, NULL); if (unlikely(!__pyx_t_2)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 734; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __pyx_t_2 = __Pyx_PyObject_Call(((PyObject *)(&PyBytes_Type)), __pyx_t_1, NULL); if (unlikely(!__pyx_t_2)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 781; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
   __Pyx_GOTREF(__pyx_t_2);
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
-  __pyx_t_1 = __Pyx_PyObject_GetAttrStr(__pyx_t_2, __pyx_n_s_encode); if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 734; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __pyx_t_1 = __Pyx_PyObject_GetAttrStr(__pyx_t_2, __pyx_n_s_encode); if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 781; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
   __Pyx_GOTREF(__pyx_t_1);
   __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
-  __pyx_t_2 = __Pyx_PyObject_Call(__pyx_t_1, __pyx_tuple__39, NULL); if (unlikely(!__pyx_t_2)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 734; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __pyx_t_2 = __Pyx_PyObject_Call(__pyx_t_1, __pyx_tuple__39, NULL); if (unlikely(!__pyx_t_2)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 781; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
   __Pyx_GOTREF(__pyx_t_2);
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
-  __pyx_t_1 = PyNumber_Add(__pyx_v_prefix, __pyx_t_2); if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 734; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __pyx_t_1 = PyNumber_Add(__pyx_v_prefix, __pyx_t_2); if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 781; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
   __Pyx_GOTREF(__pyx_t_1);
   __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
   __pyx_v_result = __pyx_t_1;
   __pyx_t_1 = 0;
 
-  /* "mbufferio/_mbufferio.pyx":735
+  /* "mbufferio/_mbufferio.pyx":782
  *             return None
  *         result = prefix + bytes(retbuf).encode('hex')
  *         if to_unicode:             # <<<<<<<<<<<<<<
  *             return unicode(result)
  *         return result
  */
-  __pyx_t_8 = __Pyx_PyObject_IsTrue(__pyx_v_to_unicode); if (unlikely(__pyx_t_8 < 0)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 735; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __pyx_t_8 = __Pyx_PyObject_IsTrue(__pyx_v_to_unicode); if (unlikely(__pyx_t_8 < 0)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 782; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
   if (__pyx_t_8) {
 
-    /* "mbufferio/_mbufferio.pyx":736
+    /* "mbufferio/_mbufferio.pyx":783
  *         result = prefix + bytes(retbuf).encode('hex')
  *         if to_unicode:
  *             return unicode(result)             # <<<<<<<<<<<<<<
@@ -10890,19 +11338,19 @@ static PyObject *__pyx_f_9mbufferio_10_mbufferio_9MBufferIO_murmur128(struct __p
  * 
  */
     __Pyx_XDECREF(__pyx_r);
-    __pyx_t_1 = PyTuple_New(1); if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 736; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+    __pyx_t_1 = PyTuple_New(1); if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 783; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
     __Pyx_GOTREF(__pyx_t_1);
     __Pyx_INCREF(__pyx_v_result);
     __Pyx_GIVEREF(__pyx_v_result);
     PyTuple_SET_ITEM(__pyx_t_1, 0, __pyx_v_result);
-    __pyx_t_2 = __Pyx_PyObject_Call(((PyObject *)(&PyUnicode_Type)), __pyx_t_1, NULL); if (unlikely(!__pyx_t_2)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 736; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+    __pyx_t_2 = __Pyx_PyObject_Call(((PyObject *)(&PyUnicode_Type)), __pyx_t_1, NULL); if (unlikely(!__pyx_t_2)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 783; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
     __Pyx_GOTREF(__pyx_t_2);
     __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
     __pyx_r = __pyx_t_2;
     __pyx_t_2 = 0;
     goto __pyx_L0;
 
-    /* "mbufferio/_mbufferio.pyx":735
+    /* "mbufferio/_mbufferio.pyx":782
  *             return None
  *         result = prefix + bytes(retbuf).encode('hex')
  *         if to_unicode:             # <<<<<<<<<<<<<<
@@ -10911,7 +11359,7 @@ static PyObject *__pyx_f_9mbufferio_10_mbufferio_9MBufferIO_murmur128(struct __p
  */
   }
 
-  /* "mbufferio/_mbufferio.pyx":737
+  /* "mbufferio/_mbufferio.pyx":784
  *         if to_unicode:
  *             return unicode(result)
  *         return result             # <<<<<<<<<<<<<<
@@ -10923,7 +11371,7 @@ static PyObject *__pyx_f_9mbufferio_10_mbufferio_9MBufferIO_murmur128(struct __p
   __pyx_r = __pyx_v_result;
   goto __pyx_L0;
 
-  /* "mbufferio/_mbufferio.pyx":711
+  /* "mbufferio/_mbufferio.pyx":758
  *         return <bytes> (self.buf_pointer[self.startpos + i])
  * 
  *     cpdef murmur128(self, prefix=b'', to_unicode=False):             # <<<<<<<<<<<<<<
@@ -10950,9 +11398,9 @@ static PyObject *__pyx_f_9mbufferio_10_mbufferio_9MBufferIO_murmur128(struct __p
 }
 
 /* Python wrapper */
-static PyObject *__pyx_pw_9mbufferio_10_mbufferio_9MBufferIO_70murmur128(PyObject *__pyx_v_self, PyObject *__pyx_args, PyObject *__pyx_kwds); /*proto*/
-static char __pyx_doc_9mbufferio_10_mbufferio_9MBufferIO_69murmur128[] = "\n        murmur128(prefix=b'', to_unicode=False)\n        Returns the hexadecimal encoded murmur128 hash of the MBufferIO content.\n\n        Parameters\n        ----------\n        prefix: bytes\n            an optional prefix\n        to_unicode: bool\n            If True, return the hash as unicode. If False, return the hash as 'bytes'.\n\n        Returns\n        -------\n        The hash\n        ";
-static PyObject *__pyx_pw_9mbufferio_10_mbufferio_9MBufferIO_70murmur128(PyObject *__pyx_v_self, PyObject *__pyx_args, PyObject *__pyx_kwds) {
+static PyObject *__pyx_pw_9mbufferio_10_mbufferio_9MBufferIO_76murmur128(PyObject *__pyx_v_self, PyObject *__pyx_args, PyObject *__pyx_kwds); /*proto*/
+static char __pyx_doc_9mbufferio_10_mbufferio_9MBufferIO_75murmur128[] = "\n        murmur128(prefix=b'', to_unicode=False)\n        Returns the hexadecimal encoded murmur128 hash of the MBufferIO content.\n\n        Parameters\n        ----------\n        prefix: bytes\n            an optional prefix\n        to_unicode: bool\n            If True, return the hash as unicode. If False, return the hash as 'bytes'.\n\n        Returns\n        -------\n        The hash\n        ";
+static PyObject *__pyx_pw_9mbufferio_10_mbufferio_9MBufferIO_76murmur128(PyObject *__pyx_v_self, PyObject *__pyx_args, PyObject *__pyx_kwds) {
   PyObject *__pyx_v_prefix = 0;
   PyObject *__pyx_v_to_unicode = 0;
   int __pyx_lineno = 0;
@@ -10964,7 +11412,7 @@ static PyObject *__pyx_pw_9mbufferio_10_mbufferio_9MBufferIO_70murmur128(PyObjec
   {
     static PyObject **__pyx_pyargnames[] = {&__pyx_n_s_prefix,&__pyx_n_s_to_unicode,0};
     PyObject* values[2] = {0,0};
-    values[0] = ((PyObject *)__pyx_kp_b__14);
+    values[0] = ((PyObject *)__pyx_kp_b__15);
     values[1] = ((PyObject *)Py_False);
     if (unlikely(__pyx_kwds)) {
       Py_ssize_t kw_args;
@@ -10989,7 +11437,7 @@ static PyObject *__pyx_pw_9mbufferio_10_mbufferio_9MBufferIO_70murmur128(PyObjec
         }
       }
       if (unlikely(kw_args > 0)) {
-        if (unlikely(__Pyx_ParseOptionalKeywords(__pyx_kwds, __pyx_pyargnames, 0, values, pos_args, "murmur128") < 0)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 711; __pyx_clineno = __LINE__; goto __pyx_L3_error;}
+        if (unlikely(__Pyx_ParseOptionalKeywords(__pyx_kwds, __pyx_pyargnames, 0, values, pos_args, "murmur128") < 0)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 758; __pyx_clineno = __LINE__; goto __pyx_L3_error;}
       }
     } else {
       switch (PyTuple_GET_SIZE(__pyx_args)) {
@@ -11004,20 +11452,20 @@ static PyObject *__pyx_pw_9mbufferio_10_mbufferio_9MBufferIO_70murmur128(PyObjec
   }
   goto __pyx_L4_argument_unpacking_done;
   __pyx_L5_argtuple_error:;
-  __Pyx_RaiseArgtupleInvalid("murmur128", 0, 0, 2, PyTuple_GET_SIZE(__pyx_args)); {__pyx_filename = __pyx_f[0]; __pyx_lineno = 711; __pyx_clineno = __LINE__; goto __pyx_L3_error;}
+  __Pyx_RaiseArgtupleInvalid("murmur128", 0, 0, 2, PyTuple_GET_SIZE(__pyx_args)); {__pyx_filename = __pyx_f[0]; __pyx_lineno = 758; __pyx_clineno = __LINE__; goto __pyx_L3_error;}
   __pyx_L3_error:;
   __Pyx_AddTraceback("mbufferio._mbufferio.MBufferIO.murmur128", __pyx_clineno, __pyx_lineno, __pyx_filename);
   __Pyx_RefNannyFinishContext();
   return NULL;
   __pyx_L4_argument_unpacking_done:;
-  __pyx_r = __pyx_pf_9mbufferio_10_mbufferio_9MBufferIO_69murmur128(((struct __pyx_obj_9mbufferio_10_mbufferio_MBufferIO *)__pyx_v_self), __pyx_v_prefix, __pyx_v_to_unicode);
+  __pyx_r = __pyx_pf_9mbufferio_10_mbufferio_9MBufferIO_75murmur128(((struct __pyx_obj_9mbufferio_10_mbufferio_MBufferIO *)__pyx_v_self), __pyx_v_prefix, __pyx_v_to_unicode);
 
   /* function exit code */
   __Pyx_RefNannyFinishContext();
   return __pyx_r;
 }
 
-static PyObject *__pyx_pf_9mbufferio_10_mbufferio_9MBufferIO_69murmur128(struct __pyx_obj_9mbufferio_10_mbufferio_MBufferIO *__pyx_v_self, PyObject *__pyx_v_prefix, PyObject *__pyx_v_to_unicode) {
+static PyObject *__pyx_pf_9mbufferio_10_mbufferio_9MBufferIO_75murmur128(struct __pyx_obj_9mbufferio_10_mbufferio_MBufferIO *__pyx_v_self, PyObject *__pyx_v_prefix, PyObject *__pyx_v_to_unicode) {
   PyObject *__pyx_r = NULL;
   __Pyx_RefNannyDeclarations
   PyObject *__pyx_t_1 = NULL;
@@ -11030,7 +11478,7 @@ static PyObject *__pyx_pf_9mbufferio_10_mbufferio_9MBufferIO_69murmur128(struct 
   __pyx_t_2.__pyx_n = 2;
   __pyx_t_2.prefix = __pyx_v_prefix;
   __pyx_t_2.to_unicode = __pyx_v_to_unicode;
-  __pyx_t_1 = __pyx_vtabptr_9mbufferio_10_mbufferio_MBufferIO->murmur128(__pyx_v_self, 1, &__pyx_t_2); if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 711; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __pyx_t_1 = __pyx_vtabptr_9mbufferio_10_mbufferio_MBufferIO->murmur128(__pyx_v_self, 1, &__pyx_t_2); if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 758; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
   __Pyx_GOTREF(__pyx_t_1);
   __pyx_r = __pyx_t_1;
   __pyx_t_1 = 0;
@@ -11047,7 +11495,7 @@ static PyObject *__pyx_pf_9mbufferio_10_mbufferio_9MBufferIO_69murmur128(struct 
   return __pyx_r;
 }
 
-/* "mbufferio/_mbufferio.pyx":739
+/* "mbufferio/_mbufferio.pyx":786
  *         return result
  * 
  *     def __hash__(self):             # <<<<<<<<<<<<<<
@@ -11056,19 +11504,19 @@ static PyObject *__pyx_pf_9mbufferio_10_mbufferio_9MBufferIO_69murmur128(struct 
  */
 
 /* Python wrapper */
-static Py_hash_t __pyx_pw_9mbufferio_10_mbufferio_9MBufferIO_72__hash__(PyObject *__pyx_v_self); /*proto*/
-static Py_hash_t __pyx_pw_9mbufferio_10_mbufferio_9MBufferIO_72__hash__(PyObject *__pyx_v_self) {
+static Py_hash_t __pyx_pw_9mbufferio_10_mbufferio_9MBufferIO_78__hash__(PyObject *__pyx_v_self); /*proto*/
+static Py_hash_t __pyx_pw_9mbufferio_10_mbufferio_9MBufferIO_78__hash__(PyObject *__pyx_v_self) {
   Py_hash_t __pyx_r;
   __Pyx_RefNannyDeclarations
   __Pyx_RefNannySetupContext("__hash__ (wrapper)", 0);
-  __pyx_r = __pyx_pf_9mbufferio_10_mbufferio_9MBufferIO_71__hash__(((struct __pyx_obj_9mbufferio_10_mbufferio_MBufferIO *)__pyx_v_self));
+  __pyx_r = __pyx_pf_9mbufferio_10_mbufferio_9MBufferIO_77__hash__(((struct __pyx_obj_9mbufferio_10_mbufferio_MBufferIO *)__pyx_v_self));
 
   /* function exit code */
   __Pyx_RefNannyFinishContext();
   return __pyx_r;
 }
 
-static Py_hash_t __pyx_pf_9mbufferio_10_mbufferio_9MBufferIO_71__hash__(struct __pyx_obj_9mbufferio_10_mbufferio_MBufferIO *__pyx_v_self) {
+static Py_hash_t __pyx_pf_9mbufferio_10_mbufferio_9MBufferIO_77__hash__(struct __pyx_obj_9mbufferio_10_mbufferio_MBufferIO *__pyx_v_self) {
   Py_hash_t __pyx_r;
   __Pyx_RefNannyDeclarations
   int __pyx_t_1;
@@ -11078,18 +11526,18 @@ static Py_hash_t __pyx_pf_9mbufferio_10_mbufferio_9MBufferIO_71__hash__(struct _
   int __pyx_clineno = 0;
   __Pyx_RefNannySetupContext("__hash__", 0);
 
-  /* "mbufferio/_mbufferio.pyx":740
+  /* "mbufferio/_mbufferio.pyx":787
  * 
  *     def __hash__(self):
  *         if not self:             # <<<<<<<<<<<<<<
  *             return 0
  *         return qhashmurmur3_32(<void*> (self.buf_pointer + self.startpos), <int> self.length)
  */
-  __pyx_t_1 = __Pyx_PyObject_IsTrue(((PyObject *)__pyx_v_self)); if (unlikely(__pyx_t_1 < 0)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 740; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __pyx_t_1 = __Pyx_PyObject_IsTrue(((PyObject *)__pyx_v_self)); if (unlikely(__pyx_t_1 < 0)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 787; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
   __pyx_t_2 = ((!__pyx_t_1) != 0);
   if (__pyx_t_2) {
 
-    /* "mbufferio/_mbufferio.pyx":741
+    /* "mbufferio/_mbufferio.pyx":788
  *     def __hash__(self):
  *         if not self:
  *             return 0             # <<<<<<<<<<<<<<
@@ -11099,7 +11547,7 @@ static Py_hash_t __pyx_pf_9mbufferio_10_mbufferio_9MBufferIO_71__hash__(struct _
     __pyx_r = 0;
     goto __pyx_L0;
 
-    /* "mbufferio/_mbufferio.pyx":740
+    /* "mbufferio/_mbufferio.pyx":787
  * 
  *     def __hash__(self):
  *         if not self:             # <<<<<<<<<<<<<<
@@ -11108,7 +11556,7 @@ static Py_hash_t __pyx_pf_9mbufferio_10_mbufferio_9MBufferIO_71__hash__(struct _
  */
   }
 
-  /* "mbufferio/_mbufferio.pyx":742
+  /* "mbufferio/_mbufferio.pyx":789
  *         if not self:
  *             return 0
  *         return qhashmurmur3_32(<void*> (self.buf_pointer + self.startpos), <int> self.length)             # <<<<<<<<<<<<<<
@@ -11118,7 +11566,7 @@ static Py_hash_t __pyx_pf_9mbufferio_10_mbufferio_9MBufferIO_71__hash__(struct _
   __pyx_r = qhashmurmur3_32(((void *)(__pyx_v_self->buf_pointer + __pyx_v_self->startpos)), ((int)__pyx_v_self->length));
   goto __pyx_L0;
 
-  /* "mbufferio/_mbufferio.pyx":739
+  /* "mbufferio/_mbufferio.pyx":786
  *         return result
  * 
  *     def __hash__(self):             # <<<<<<<<<<<<<<
@@ -11136,7 +11584,7 @@ static Py_hash_t __pyx_pf_9mbufferio_10_mbufferio_9MBufferIO_71__hash__(struct _
   return __pyx_r;
 }
 
-/* "mbufferio/_mbufferio.pyx":744
+/* "mbufferio/_mbufferio.pyx":791
  *         return qhashmurmur3_32(<void*> (self.buf_pointer + self.startpos), <int> self.length)
  * 
  *     def __richcmp__(self, other, op):             # <<<<<<<<<<<<<<
@@ -11145,8 +11593,8 @@ static Py_hash_t __pyx_pf_9mbufferio_10_mbufferio_9MBufferIO_71__hash__(struct _
  */
 
 /* Python wrapper */
-static PyObject *__pyx_pw_9mbufferio_10_mbufferio_9MBufferIO_74__richcmp__(PyObject *__pyx_v_self, PyObject *__pyx_v_other, int __pyx_arg_op); /*proto*/
-static PyObject *__pyx_pw_9mbufferio_10_mbufferio_9MBufferIO_74__richcmp__(PyObject *__pyx_v_self, PyObject *__pyx_v_other, int __pyx_arg_op) {
+static PyObject *__pyx_pw_9mbufferio_10_mbufferio_9MBufferIO_80__richcmp__(PyObject *__pyx_v_self, PyObject *__pyx_v_other, int __pyx_arg_op); /*proto*/
+static PyObject *__pyx_pw_9mbufferio_10_mbufferio_9MBufferIO_80__richcmp__(PyObject *__pyx_v_self, PyObject *__pyx_v_other, int __pyx_arg_op) {
   PyObject *__pyx_v_op = 0;
   int __pyx_lineno = 0;
   const char *__pyx_filename = NULL;
@@ -11154,7 +11602,7 @@ static PyObject *__pyx_pw_9mbufferio_10_mbufferio_9MBufferIO_74__richcmp__(PyObj
   PyObject *__pyx_r = 0;
   __Pyx_RefNannyDeclarations
   __Pyx_RefNannySetupContext("__richcmp__ (wrapper)", 0);
-  __pyx_v_op = __Pyx_PyInt_From_int(__pyx_arg_op); if (unlikely(!__pyx_v_op)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 744; __pyx_clineno = __LINE__; goto __pyx_L3_error;}
+  __pyx_v_op = __Pyx_PyInt_From_int(__pyx_arg_op); if (unlikely(!__pyx_v_op)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 791; __pyx_clineno = __LINE__; goto __pyx_L3_error;}
   __Pyx_GOTREF(__pyx_v_op);
   goto __pyx_L4_argument_unpacking_done;
   __pyx_L3_error:;
@@ -11162,7 +11610,7 @@ static PyObject *__pyx_pw_9mbufferio_10_mbufferio_9MBufferIO_74__richcmp__(PyObj
   __Pyx_RefNannyFinishContext();
   return NULL;
   __pyx_L4_argument_unpacking_done:;
-  __pyx_r = __pyx_pf_9mbufferio_10_mbufferio_9MBufferIO_73__richcmp__(((PyObject *)__pyx_v_self), ((PyObject *)__pyx_v_other), ((PyObject *)__pyx_v_op));
+  __pyx_r = __pyx_pf_9mbufferio_10_mbufferio_9MBufferIO_79__richcmp__(((PyObject *)__pyx_v_self), ((PyObject *)__pyx_v_other), ((PyObject *)__pyx_v_op));
 
   /* function exit code */
   __Pyx_XDECREF(__pyx_v_op);
@@ -11170,7 +11618,7 @@ static PyObject *__pyx_pw_9mbufferio_10_mbufferio_9MBufferIO_74__richcmp__(PyObj
   return __pyx_r;
 }
 
-static PyObject *__pyx_pf_9mbufferio_10_mbufferio_9MBufferIO_73__richcmp__(PyObject *__pyx_v_self, PyObject *__pyx_v_other, PyObject *__pyx_v_op) {
+static PyObject *__pyx_pf_9mbufferio_10_mbufferio_9MBufferIO_79__richcmp__(PyObject *__pyx_v_self, PyObject *__pyx_v_other, PyObject *__pyx_v_op) {
   int __pyx_v_ope;
   PyObject *__pyx_r = NULL;
   __Pyx_RefNannyDeclarations
@@ -11187,17 +11635,17 @@ static PyObject *__pyx_pf_9mbufferio_10_mbufferio_9MBufferIO_73__richcmp__(PyObj
   int __pyx_clineno = 0;
   __Pyx_RefNannySetupContext("__richcmp__", 0);
 
-  /* "mbufferio/_mbufferio.pyx":745
+  /* "mbufferio/_mbufferio.pyx":792
  * 
  *     def __richcmp__(self, other, op):
  *         cdef int ope = op             # <<<<<<<<<<<<<<
  *         if ope == 3:
  *             return not self == other
  */
-  __pyx_t_1 = __Pyx_PyInt_As_int(__pyx_v_op); if (unlikely((__pyx_t_1 == (int)-1) && PyErr_Occurred())) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 745; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __pyx_t_1 = __Pyx_PyInt_As_int(__pyx_v_op); if (unlikely((__pyx_t_1 == (int)-1) && PyErr_Occurred())) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 792; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
   __pyx_v_ope = __pyx_t_1;
 
-  /* "mbufferio/_mbufferio.pyx":746
+  /* "mbufferio/_mbufferio.pyx":793
  *     def __richcmp__(self, other, op):
  *         cdef int ope = op
  *         if ope == 3:             # <<<<<<<<<<<<<<
@@ -11207,7 +11655,7 @@ static PyObject *__pyx_pf_9mbufferio_10_mbufferio_9MBufferIO_73__richcmp__(PyObj
   __pyx_t_2 = ((__pyx_v_ope == 3) != 0);
   if (__pyx_t_2) {
 
-    /* "mbufferio/_mbufferio.pyx":747
+    /* "mbufferio/_mbufferio.pyx":794
  *         cdef int ope = op
  *         if ope == 3:
  *             return not self == other             # <<<<<<<<<<<<<<
@@ -11215,16 +11663,16 @@ static PyObject *__pyx_pf_9mbufferio_10_mbufferio_9MBufferIO_73__richcmp__(PyObj
  *             if self.closed:
  */
     __Pyx_XDECREF(__pyx_r);
-    __pyx_t_3 = PyObject_RichCompare(__pyx_v_self, __pyx_v_other, Py_EQ); __Pyx_XGOTREF(__pyx_t_3); if (unlikely(!__pyx_t_3)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 747; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
-    __pyx_t_2 = __Pyx_PyObject_IsTrue(__pyx_t_3); if (unlikely(__pyx_t_2 < 0)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 747; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+    __pyx_t_3 = PyObject_RichCompare(__pyx_v_self, __pyx_v_other, Py_EQ); __Pyx_XGOTREF(__pyx_t_3); if (unlikely(!__pyx_t_3)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 794; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+    __pyx_t_2 = __Pyx_PyObject_IsTrue(__pyx_t_3); if (unlikely(__pyx_t_2 < 0)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 794; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
     __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
-    __pyx_t_3 = __Pyx_PyBool_FromLong((!__pyx_t_2)); if (unlikely(!__pyx_t_3)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 747; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+    __pyx_t_3 = __Pyx_PyBool_FromLong((!__pyx_t_2)); if (unlikely(!__pyx_t_3)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 794; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
     __Pyx_GOTREF(__pyx_t_3);
     __pyx_r = __pyx_t_3;
     __pyx_t_3 = 0;
     goto __pyx_L0;
 
-    /* "mbufferio/_mbufferio.pyx":746
+    /* "mbufferio/_mbufferio.pyx":793
  *     def __richcmp__(self, other, op):
  *         cdef int ope = op
  *         if ope == 3:             # <<<<<<<<<<<<<<
@@ -11233,7 +11681,7 @@ static PyObject *__pyx_pf_9mbufferio_10_mbufferio_9MBufferIO_73__richcmp__(PyObj
  */
   }
 
-  /* "mbufferio/_mbufferio.pyx":748
+  /* "mbufferio/_mbufferio.pyx":795
  *         if ope == 3:
  *             return not self == other
  *         if ope == 2:             # <<<<<<<<<<<<<<
@@ -11243,20 +11691,20 @@ static PyObject *__pyx_pf_9mbufferio_10_mbufferio_9MBufferIO_73__richcmp__(PyObj
   __pyx_t_2 = ((__pyx_v_ope == 2) != 0);
   if (__pyx_t_2) {
 
-    /* "mbufferio/_mbufferio.pyx":749
+    /* "mbufferio/_mbufferio.pyx":796
  *             return not self == other
  *         if ope == 2:
  *             if self.closed:             # <<<<<<<<<<<<<<
  *                 if isinstance(other, MBufferIO):
  *                     return other.closed
  */
-    __pyx_t_3 = __Pyx_PyObject_GetAttrStr(__pyx_v_self, __pyx_n_s_closed); if (unlikely(!__pyx_t_3)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 749; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+    __pyx_t_3 = __Pyx_PyObject_GetAttrStr(__pyx_v_self, __pyx_n_s_closed); if (unlikely(!__pyx_t_3)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 796; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
     __Pyx_GOTREF(__pyx_t_3);
-    __pyx_t_2 = __Pyx_PyObject_IsTrue(__pyx_t_3); if (unlikely(__pyx_t_2 < 0)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 749; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+    __pyx_t_2 = __Pyx_PyObject_IsTrue(__pyx_t_3); if (unlikely(__pyx_t_2 < 0)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 796; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
     __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
     if (__pyx_t_2) {
 
-      /* "mbufferio/_mbufferio.pyx":750
+      /* "mbufferio/_mbufferio.pyx":797
  *         if ope == 2:
  *             if self.closed:
  *                 if isinstance(other, MBufferIO):             # <<<<<<<<<<<<<<
@@ -11267,7 +11715,7 @@ static PyObject *__pyx_pf_9mbufferio_10_mbufferio_9MBufferIO_73__richcmp__(PyObj
       __pyx_t_4 = (__pyx_t_2 != 0);
       if (__pyx_t_4) {
 
-        /* "mbufferio/_mbufferio.pyx":751
+        /* "mbufferio/_mbufferio.pyx":798
  *             if self.closed:
  *                 if isinstance(other, MBufferIO):
  *                     return other.closed             # <<<<<<<<<<<<<<
@@ -11275,13 +11723,13 @@ static PyObject *__pyx_pf_9mbufferio_10_mbufferio_9MBufferIO_73__richcmp__(PyObj
  *             if isinstance(other, MBufferIO):
  */
         __Pyx_XDECREF(__pyx_r);
-        __pyx_t_3 = __Pyx_PyObject_GetAttrStr(__pyx_v_other, __pyx_n_s_closed); if (unlikely(!__pyx_t_3)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 751; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+        __pyx_t_3 = __Pyx_PyObject_GetAttrStr(__pyx_v_other, __pyx_n_s_closed); if (unlikely(!__pyx_t_3)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 798; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
         __Pyx_GOTREF(__pyx_t_3);
         __pyx_r = __pyx_t_3;
         __pyx_t_3 = 0;
         goto __pyx_L0;
 
-        /* "mbufferio/_mbufferio.pyx":750
+        /* "mbufferio/_mbufferio.pyx":797
  *         if ope == 2:
  *             if self.closed:
  *                 if isinstance(other, MBufferIO):             # <<<<<<<<<<<<<<
@@ -11290,7 +11738,7 @@ static PyObject *__pyx_pf_9mbufferio_10_mbufferio_9MBufferIO_73__richcmp__(PyObj
  */
       }
 
-      /* "mbufferio/_mbufferio.pyx":752
+      /* "mbufferio/_mbufferio.pyx":799
  *                 if isinstance(other, MBufferIO):
  *                     return other.closed
  *                 return False             # <<<<<<<<<<<<<<
@@ -11302,7 +11750,7 @@ static PyObject *__pyx_pf_9mbufferio_10_mbufferio_9MBufferIO_73__richcmp__(PyObj
       __pyx_r = Py_False;
       goto __pyx_L0;
 
-      /* "mbufferio/_mbufferio.pyx":749
+      /* "mbufferio/_mbufferio.pyx":796
  *             return not self == other
  *         if ope == 2:
  *             if self.closed:             # <<<<<<<<<<<<<<
@@ -11311,7 +11759,7 @@ static PyObject *__pyx_pf_9mbufferio_10_mbufferio_9MBufferIO_73__richcmp__(PyObj
  */
     }
 
-    /* "mbufferio/_mbufferio.pyx":753
+    /* "mbufferio/_mbufferio.pyx":800
  *                     return other.closed
  *                 return False
  *             if isinstance(other, MBufferIO):             # <<<<<<<<<<<<<<
@@ -11322,20 +11770,20 @@ static PyObject *__pyx_pf_9mbufferio_10_mbufferio_9MBufferIO_73__richcmp__(PyObj
     __pyx_t_2 = (__pyx_t_4 != 0);
     if (__pyx_t_2) {
 
-      /* "mbufferio/_mbufferio.pyx":754
+      /* "mbufferio/_mbufferio.pyx":801
  *                 return False
  *             if isinstance(other, MBufferIO):
  *                 if other.closed:             # <<<<<<<<<<<<<<
  *                     return False
  *                 if hash(self) != hash(other):
  */
-      __pyx_t_3 = __Pyx_PyObject_GetAttrStr(__pyx_v_other, __pyx_n_s_closed); if (unlikely(!__pyx_t_3)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 754; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+      __pyx_t_3 = __Pyx_PyObject_GetAttrStr(__pyx_v_other, __pyx_n_s_closed); if (unlikely(!__pyx_t_3)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 801; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
       __Pyx_GOTREF(__pyx_t_3);
-      __pyx_t_2 = __Pyx_PyObject_IsTrue(__pyx_t_3); if (unlikely(__pyx_t_2 < 0)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 754; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+      __pyx_t_2 = __Pyx_PyObject_IsTrue(__pyx_t_3); if (unlikely(__pyx_t_2 < 0)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 801; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
       __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
       if (__pyx_t_2) {
 
-        /* "mbufferio/_mbufferio.pyx":755
+        /* "mbufferio/_mbufferio.pyx":802
  *             if isinstance(other, MBufferIO):
  *                 if other.closed:
  *                     return False             # <<<<<<<<<<<<<<
@@ -11347,7 +11795,7 @@ static PyObject *__pyx_pf_9mbufferio_10_mbufferio_9MBufferIO_73__richcmp__(PyObj
         __pyx_r = Py_False;
         goto __pyx_L0;
 
-        /* "mbufferio/_mbufferio.pyx":754
+        /* "mbufferio/_mbufferio.pyx":801
  *                 return False
  *             if isinstance(other, MBufferIO):
  *                 if other.closed:             # <<<<<<<<<<<<<<
@@ -11356,19 +11804,19 @@ static PyObject *__pyx_pf_9mbufferio_10_mbufferio_9MBufferIO_73__richcmp__(PyObj
  */
       }
 
-      /* "mbufferio/_mbufferio.pyx":756
+      /* "mbufferio/_mbufferio.pyx":803
  *                 if other.closed:
  *                     return False
  *                 if hash(self) != hash(other):             # <<<<<<<<<<<<<<
  *                     return False
  *                 return bytes(self) == bytes(other)
  */
-      __pyx_t_5 = PyObject_Hash(__pyx_v_self); if (unlikely(__pyx_t_5 == -1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 756; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
-      __pyx_t_6 = PyObject_Hash(__pyx_v_other); if (unlikely(__pyx_t_6 == -1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 756; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+      __pyx_t_5 = PyObject_Hash(__pyx_v_self); if (unlikely(__pyx_t_5 == -1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 803; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+      __pyx_t_6 = PyObject_Hash(__pyx_v_other); if (unlikely(__pyx_t_6 == -1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 803; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
       __pyx_t_2 = ((__pyx_t_5 != __pyx_t_6) != 0);
       if (__pyx_t_2) {
 
-        /* "mbufferio/_mbufferio.pyx":757
+        /* "mbufferio/_mbufferio.pyx":804
  *                     return False
  *                 if hash(self) != hash(other):
  *                     return False             # <<<<<<<<<<<<<<
@@ -11380,7 +11828,7 @@ static PyObject *__pyx_pf_9mbufferio_10_mbufferio_9MBufferIO_73__richcmp__(PyObj
         __pyx_r = Py_False;
         goto __pyx_L0;
 
-        /* "mbufferio/_mbufferio.pyx":756
+        /* "mbufferio/_mbufferio.pyx":803
  *                 if other.closed:
  *                     return False
  *                 if hash(self) != hash(other):             # <<<<<<<<<<<<<<
@@ -11389,7 +11837,7 @@ static PyObject *__pyx_pf_9mbufferio_10_mbufferio_9MBufferIO_73__richcmp__(PyObj
  */
       }
 
-      /* "mbufferio/_mbufferio.pyx":758
+      /* "mbufferio/_mbufferio.pyx":805
  *                 if hash(self) != hash(other):
  *                     return False
  *                 return bytes(self) == bytes(other)             # <<<<<<<<<<<<<<
@@ -11397,32 +11845,32 @@ static PyObject *__pyx_pf_9mbufferio_10_mbufferio_9MBufferIO_73__richcmp__(PyObj
  *         raise ValueError("operation not supported")
  */
       __Pyx_XDECREF(__pyx_r);
-      __pyx_t_3 = PyTuple_New(1); if (unlikely(!__pyx_t_3)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 758; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+      __pyx_t_3 = PyTuple_New(1); if (unlikely(!__pyx_t_3)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 805; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
       __Pyx_GOTREF(__pyx_t_3);
       __Pyx_INCREF(__pyx_v_self);
       __Pyx_GIVEREF(__pyx_v_self);
       PyTuple_SET_ITEM(__pyx_t_3, 0, __pyx_v_self);
-      __pyx_t_7 = __Pyx_PyObject_Call(((PyObject *)(&PyBytes_Type)), __pyx_t_3, NULL); if (unlikely(!__pyx_t_7)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 758; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+      __pyx_t_7 = __Pyx_PyObject_Call(((PyObject *)(&PyBytes_Type)), __pyx_t_3, NULL); if (unlikely(!__pyx_t_7)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 805; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
       __Pyx_GOTREF(__pyx_t_7);
       __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
-      __pyx_t_3 = PyTuple_New(1); if (unlikely(!__pyx_t_3)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 758; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+      __pyx_t_3 = PyTuple_New(1); if (unlikely(!__pyx_t_3)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 805; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
       __Pyx_GOTREF(__pyx_t_3);
       __Pyx_INCREF(__pyx_v_other);
       __Pyx_GIVEREF(__pyx_v_other);
       PyTuple_SET_ITEM(__pyx_t_3, 0, __pyx_v_other);
-      __pyx_t_8 = __Pyx_PyObject_Call(((PyObject *)(&PyBytes_Type)), __pyx_t_3, NULL); if (unlikely(!__pyx_t_8)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 758; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+      __pyx_t_8 = __Pyx_PyObject_Call(((PyObject *)(&PyBytes_Type)), __pyx_t_3, NULL); if (unlikely(!__pyx_t_8)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 805; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
       __Pyx_GOTREF(__pyx_t_8);
       __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
-      __pyx_t_2 = (__Pyx_PyBytes_Equals(__pyx_t_7, __pyx_t_8, Py_EQ)); if (unlikely(__pyx_t_2 < 0)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 758; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+      __pyx_t_2 = (__Pyx_PyBytes_Equals(__pyx_t_7, __pyx_t_8, Py_EQ)); if (unlikely(__pyx_t_2 < 0)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 805; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
       __Pyx_DECREF(__pyx_t_7); __pyx_t_7 = 0;
       __Pyx_DECREF(__pyx_t_8); __pyx_t_8 = 0;
-      __pyx_t_8 = __Pyx_PyBool_FromLong(__pyx_t_2); if (unlikely(!__pyx_t_8)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 758; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+      __pyx_t_8 = __Pyx_PyBool_FromLong(__pyx_t_2); if (unlikely(!__pyx_t_8)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 805; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
       __Pyx_GOTREF(__pyx_t_8);
       __pyx_r = __pyx_t_8;
       __pyx_t_8 = 0;
       goto __pyx_L0;
 
-      /* "mbufferio/_mbufferio.pyx":753
+      /* "mbufferio/_mbufferio.pyx":800
  *                     return other.closed
  *                 return False
  *             if isinstance(other, MBufferIO):             # <<<<<<<<<<<<<<
@@ -11431,7 +11879,7 @@ static PyObject *__pyx_pf_9mbufferio_10_mbufferio_9MBufferIO_73__richcmp__(PyObj
  */
     }
 
-    /* "mbufferio/_mbufferio.pyx":759
+    /* "mbufferio/_mbufferio.pyx":806
  *                     return False
  *                 return bytes(self) == bytes(other)
  *             return False             # <<<<<<<<<<<<<<
@@ -11443,7 +11891,7 @@ static PyObject *__pyx_pf_9mbufferio_10_mbufferio_9MBufferIO_73__richcmp__(PyObj
     __pyx_r = Py_False;
     goto __pyx_L0;
 
-    /* "mbufferio/_mbufferio.pyx":748
+    /* "mbufferio/_mbufferio.pyx":795
  *         if ope == 3:
  *             return not self == other
  *         if ope == 2:             # <<<<<<<<<<<<<<
@@ -11452,20 +11900,20 @@ static PyObject *__pyx_pf_9mbufferio_10_mbufferio_9MBufferIO_73__richcmp__(PyObj
  */
   }
 
-  /* "mbufferio/_mbufferio.pyx":760
+  /* "mbufferio/_mbufferio.pyx":807
  *                 return bytes(self) == bytes(other)
  *             return False
  *         raise ValueError("operation not supported")             # <<<<<<<<<<<<<<
  * 
  *     def __reduce__(self):
  */
-  __pyx_t_8 = __Pyx_PyObject_Call(__pyx_builtin_ValueError, __pyx_tuple__40, NULL); if (unlikely(!__pyx_t_8)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 760; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __pyx_t_8 = __Pyx_PyObject_Call(__pyx_builtin_ValueError, __pyx_tuple__40, NULL); if (unlikely(!__pyx_t_8)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 807; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
   __Pyx_GOTREF(__pyx_t_8);
   __Pyx_Raise(__pyx_t_8, 0, 0, 0);
   __Pyx_DECREF(__pyx_t_8); __pyx_t_8 = 0;
-  {__pyx_filename = __pyx_f[0]; __pyx_lineno = 760; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  {__pyx_filename = __pyx_f[0]; __pyx_lineno = 807; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
 
-  /* "mbufferio/_mbufferio.pyx":744
+  /* "mbufferio/_mbufferio.pyx":791
  *         return qhashmurmur3_32(<void*> (self.buf_pointer + self.startpos), <int> self.length)
  * 
  *     def __richcmp__(self, other, op):             # <<<<<<<<<<<<<<
@@ -11486,7 +11934,7 @@ static PyObject *__pyx_pf_9mbufferio_10_mbufferio_9MBufferIO_73__richcmp__(PyObj
   return __pyx_r;
 }
 
-/* "mbufferio/_mbufferio.pyx":762
+/* "mbufferio/_mbufferio.pyx":809
  *         raise ValueError("operation not supported")
  * 
  *     def __reduce__(self):             # <<<<<<<<<<<<<<
@@ -11495,19 +11943,19 @@ static PyObject *__pyx_pf_9mbufferio_10_mbufferio_9MBufferIO_73__richcmp__(PyObj
  */
 
 /* Python wrapper */
-static PyObject *__pyx_pw_9mbufferio_10_mbufferio_9MBufferIO_76__reduce__(PyObject *__pyx_v_self, CYTHON_UNUSED PyObject *unused); /*proto*/
-static PyObject *__pyx_pw_9mbufferio_10_mbufferio_9MBufferIO_76__reduce__(PyObject *__pyx_v_self, CYTHON_UNUSED PyObject *unused) {
+static PyObject *__pyx_pw_9mbufferio_10_mbufferio_9MBufferIO_82__reduce__(PyObject *__pyx_v_self, CYTHON_UNUSED PyObject *unused); /*proto*/
+static PyObject *__pyx_pw_9mbufferio_10_mbufferio_9MBufferIO_82__reduce__(PyObject *__pyx_v_self, CYTHON_UNUSED PyObject *unused) {
   PyObject *__pyx_r = 0;
   __Pyx_RefNannyDeclarations
   __Pyx_RefNannySetupContext("__reduce__ (wrapper)", 0);
-  __pyx_r = __pyx_pf_9mbufferio_10_mbufferio_9MBufferIO_75__reduce__(((struct __pyx_obj_9mbufferio_10_mbufferio_MBufferIO *)__pyx_v_self));
+  __pyx_r = __pyx_pf_9mbufferio_10_mbufferio_9MBufferIO_81__reduce__(((struct __pyx_obj_9mbufferio_10_mbufferio_MBufferIO *)__pyx_v_self));
 
   /* function exit code */
   __Pyx_RefNannyFinishContext();
   return __pyx_r;
 }
 
-static PyObject *__pyx_pf_9mbufferio_10_mbufferio_9MBufferIO_75__reduce__(struct __pyx_obj_9mbufferio_10_mbufferio_MBufferIO *__pyx_v_self) {
+static PyObject *__pyx_pf_9mbufferio_10_mbufferio_9MBufferIO_81__reduce__(struct __pyx_obj_9mbufferio_10_mbufferio_MBufferIO *__pyx_v_self) {
   PyObject *__pyx_r = NULL;
   __Pyx_RefNannyDeclarations
   int __pyx_t_1;
@@ -11518,7 +11966,7 @@ static PyObject *__pyx_pf_9mbufferio_10_mbufferio_9MBufferIO_75__reduce__(struct
   int __pyx_clineno = 0;
   __Pyx_RefNannySetupContext("__reduce__", 0);
 
-  /* "mbufferio/_mbufferio.pyx":763
+  /* "mbufferio/_mbufferio.pyx":810
  * 
  *     def __reduce__(self):
  *         if self.closed:             # <<<<<<<<<<<<<<
@@ -11528,20 +11976,20 @@ static PyObject *__pyx_pf_9mbufferio_10_mbufferio_9MBufferIO_75__reduce__(struct
   __pyx_t_1 = (__pyx_v_self->closed != 0);
   if (__pyx_t_1) {
 
-    /* "mbufferio/_mbufferio.pyx":764
+    /* "mbufferio/_mbufferio.pyx":811
  *     def __reduce__(self):
  *         if self.closed:
  *             raise RuntimeError("Can't reduce a closed MBufferIO")             # <<<<<<<<<<<<<<
  *         return MBufferIO, bytes(self)
  * 
  */
-    __pyx_t_2 = __Pyx_PyObject_Call(__pyx_builtin_RuntimeError, __pyx_tuple__41, NULL); if (unlikely(!__pyx_t_2)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 764; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+    __pyx_t_2 = __Pyx_PyObject_Call(__pyx_builtin_RuntimeError, __pyx_tuple__41, NULL); if (unlikely(!__pyx_t_2)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 811; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
     __Pyx_GOTREF(__pyx_t_2);
     __Pyx_Raise(__pyx_t_2, 0, 0, 0);
     __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
-    {__pyx_filename = __pyx_f[0]; __pyx_lineno = 764; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+    {__pyx_filename = __pyx_f[0]; __pyx_lineno = 811; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
 
-    /* "mbufferio/_mbufferio.pyx":763
+    /* "mbufferio/_mbufferio.pyx":810
  * 
  *     def __reduce__(self):
  *         if self.closed:             # <<<<<<<<<<<<<<
@@ -11550,7 +11998,7 @@ static PyObject *__pyx_pf_9mbufferio_10_mbufferio_9MBufferIO_75__reduce__(struct
  */
   }
 
-  /* "mbufferio/_mbufferio.pyx":765
+  /* "mbufferio/_mbufferio.pyx":812
  *         if self.closed:
  *             raise RuntimeError("Can't reduce a closed MBufferIO")
  *         return MBufferIO, bytes(self)             # <<<<<<<<<<<<<<
@@ -11558,15 +12006,15 @@ static PyObject *__pyx_pf_9mbufferio_10_mbufferio_9MBufferIO_75__reduce__(struct
  *     def __nonzero__(self):
  */
   __Pyx_XDECREF(__pyx_r);
-  __pyx_t_2 = PyTuple_New(1); if (unlikely(!__pyx_t_2)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 765; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __pyx_t_2 = PyTuple_New(1); if (unlikely(!__pyx_t_2)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 812; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
   __Pyx_GOTREF(__pyx_t_2);
   __Pyx_INCREF(((PyObject *)__pyx_v_self));
   __Pyx_GIVEREF(((PyObject *)__pyx_v_self));
   PyTuple_SET_ITEM(__pyx_t_2, 0, ((PyObject *)__pyx_v_self));
-  __pyx_t_3 = __Pyx_PyObject_Call(((PyObject *)(&PyBytes_Type)), __pyx_t_2, NULL); if (unlikely(!__pyx_t_3)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 765; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __pyx_t_3 = __Pyx_PyObject_Call(((PyObject *)(&PyBytes_Type)), __pyx_t_2, NULL); if (unlikely(!__pyx_t_3)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 812; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
   __Pyx_GOTREF(__pyx_t_3);
   __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
-  __pyx_t_2 = PyTuple_New(2); if (unlikely(!__pyx_t_2)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 765; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __pyx_t_2 = PyTuple_New(2); if (unlikely(!__pyx_t_2)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 812; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
   __Pyx_GOTREF(__pyx_t_2);
   __Pyx_INCREF(((PyObject *)__pyx_ptype_9mbufferio_10_mbufferio_MBufferIO));
   __Pyx_GIVEREF(((PyObject *)__pyx_ptype_9mbufferio_10_mbufferio_MBufferIO));
@@ -11578,7 +12026,7 @@ static PyObject *__pyx_pf_9mbufferio_10_mbufferio_9MBufferIO_75__reduce__(struct
   __pyx_t_2 = 0;
   goto __pyx_L0;
 
-  /* "mbufferio/_mbufferio.pyx":762
+  /* "mbufferio/_mbufferio.pyx":809
  *         raise ValueError("operation not supported")
  * 
  *     def __reduce__(self):             # <<<<<<<<<<<<<<
@@ -11598,7 +12046,7 @@ static PyObject *__pyx_pf_9mbufferio_10_mbufferio_9MBufferIO_75__reduce__(struct
   return __pyx_r;
 }
 
-/* "mbufferio/_mbufferio.pyx":767
+/* "mbufferio/_mbufferio.pyx":814
  *         return MBufferIO, bytes(self)
  * 
  *     def __nonzero__(self):             # <<<<<<<<<<<<<<
@@ -11607,25 +12055,25 @@ static PyObject *__pyx_pf_9mbufferio_10_mbufferio_9MBufferIO_75__reduce__(struct
  */
 
 /* Python wrapper */
-static int __pyx_pw_9mbufferio_10_mbufferio_9MBufferIO_78__nonzero__(PyObject *__pyx_v_self); /*proto*/
-static int __pyx_pw_9mbufferio_10_mbufferio_9MBufferIO_78__nonzero__(PyObject *__pyx_v_self) {
+static int __pyx_pw_9mbufferio_10_mbufferio_9MBufferIO_84__nonzero__(PyObject *__pyx_v_self); /*proto*/
+static int __pyx_pw_9mbufferio_10_mbufferio_9MBufferIO_84__nonzero__(PyObject *__pyx_v_self) {
   int __pyx_r;
   __Pyx_RefNannyDeclarations
   __Pyx_RefNannySetupContext("__nonzero__ (wrapper)", 0);
-  __pyx_r = __pyx_pf_9mbufferio_10_mbufferio_9MBufferIO_77__nonzero__(((struct __pyx_obj_9mbufferio_10_mbufferio_MBufferIO *)__pyx_v_self));
+  __pyx_r = __pyx_pf_9mbufferio_10_mbufferio_9MBufferIO_83__nonzero__(((struct __pyx_obj_9mbufferio_10_mbufferio_MBufferIO *)__pyx_v_self));
 
   /* function exit code */
   __Pyx_RefNannyFinishContext();
   return __pyx_r;
 }
 
-static int __pyx_pf_9mbufferio_10_mbufferio_9MBufferIO_77__nonzero__(struct __pyx_obj_9mbufferio_10_mbufferio_MBufferIO *__pyx_v_self) {
+static int __pyx_pf_9mbufferio_10_mbufferio_9MBufferIO_83__nonzero__(struct __pyx_obj_9mbufferio_10_mbufferio_MBufferIO *__pyx_v_self) {
   int __pyx_r;
   __Pyx_RefNannyDeclarations
   int __pyx_t_1;
   __Pyx_RefNannySetupContext("__nonzero__", 0);
 
-  /* "mbufferio/_mbufferio.pyx":768
+  /* "mbufferio/_mbufferio.pyx":815
  * 
  *     def __nonzero__(self):
  *         if self.closed:             # <<<<<<<<<<<<<<
@@ -11635,7 +12083,7 @@ static int __pyx_pf_9mbufferio_10_mbufferio_9MBufferIO_77__nonzero__(struct __py
   __pyx_t_1 = (__pyx_v_self->closed != 0);
   if (__pyx_t_1) {
 
-    /* "mbufferio/_mbufferio.pyx":769
+    /* "mbufferio/_mbufferio.pyx":816
  *     def __nonzero__(self):
  *         if self.closed:
  *             return False             # <<<<<<<<<<<<<<
@@ -11645,7 +12093,7 @@ static int __pyx_pf_9mbufferio_10_mbufferio_9MBufferIO_77__nonzero__(struct __py
     __pyx_r = 0;
     goto __pyx_L0;
 
-    /* "mbufferio/_mbufferio.pyx":768
+    /* "mbufferio/_mbufferio.pyx":815
  * 
  *     def __nonzero__(self):
  *         if self.closed:             # <<<<<<<<<<<<<<
@@ -11654,7 +12102,7 @@ static int __pyx_pf_9mbufferio_10_mbufferio_9MBufferIO_77__nonzero__(struct __py
  */
   }
 
-  /* "mbufferio/_mbufferio.pyx":770
+  /* "mbufferio/_mbufferio.pyx":817
  *         if self.closed:
  *             return False
  *         return self.length != 0             # <<<<<<<<<<<<<<
@@ -11664,7 +12112,7 @@ static int __pyx_pf_9mbufferio_10_mbufferio_9MBufferIO_77__nonzero__(struct __py
   __pyx_r = (__pyx_v_self->length != 0);
   goto __pyx_L0;
 
-  /* "mbufferio/_mbufferio.pyx":767
+  /* "mbufferio/_mbufferio.pyx":814
  *         return MBufferIO, bytes(self)
  * 
  *     def __nonzero__(self):             # <<<<<<<<<<<<<<
@@ -11678,7 +12126,7 @@ static int __pyx_pf_9mbufferio_10_mbufferio_9MBufferIO_77__nonzero__(struct __py
   return __pyx_r;
 }
 
-/* "mbufferio/_mbufferio.pyx":772
+/* "mbufferio/_mbufferio.pyx":819
  *         return self.length != 0
  * 
  *     def __copy__(self):             # <<<<<<<<<<<<<<
@@ -11687,19 +12135,19 @@ static int __pyx_pf_9mbufferio_10_mbufferio_9MBufferIO_77__nonzero__(struct __py
  */
 
 /* Python wrapper */
-static PyObject *__pyx_pw_9mbufferio_10_mbufferio_9MBufferIO_80__copy__(PyObject *__pyx_v_self, CYTHON_UNUSED PyObject *unused); /*proto*/
-static PyObject *__pyx_pw_9mbufferio_10_mbufferio_9MBufferIO_80__copy__(PyObject *__pyx_v_self, CYTHON_UNUSED PyObject *unused) {
+static PyObject *__pyx_pw_9mbufferio_10_mbufferio_9MBufferIO_86__copy__(PyObject *__pyx_v_self, CYTHON_UNUSED PyObject *unused); /*proto*/
+static PyObject *__pyx_pw_9mbufferio_10_mbufferio_9MBufferIO_86__copy__(PyObject *__pyx_v_self, CYTHON_UNUSED PyObject *unused) {
   PyObject *__pyx_r = 0;
   __Pyx_RefNannyDeclarations
   __Pyx_RefNannySetupContext("__copy__ (wrapper)", 0);
-  __pyx_r = __pyx_pf_9mbufferio_10_mbufferio_9MBufferIO_79__copy__(((struct __pyx_obj_9mbufferio_10_mbufferio_MBufferIO *)__pyx_v_self));
+  __pyx_r = __pyx_pf_9mbufferio_10_mbufferio_9MBufferIO_85__copy__(((struct __pyx_obj_9mbufferio_10_mbufferio_MBufferIO *)__pyx_v_self));
 
   /* function exit code */
   __Pyx_RefNannyFinishContext();
   return __pyx_r;
 }
 
-static PyObject *__pyx_pf_9mbufferio_10_mbufferio_9MBufferIO_79__copy__(struct __pyx_obj_9mbufferio_10_mbufferio_MBufferIO *__pyx_v_self) {
+static PyObject *__pyx_pf_9mbufferio_10_mbufferio_9MBufferIO_85__copy__(struct __pyx_obj_9mbufferio_10_mbufferio_MBufferIO *__pyx_v_self) {
   PyObject *__pyx_r = NULL;
   __Pyx_RefNannyDeclarations
   int __pyx_t_1;
@@ -11712,7 +12160,7 @@ static PyObject *__pyx_pf_9mbufferio_10_mbufferio_9MBufferIO_79__copy__(struct _
   int __pyx_clineno = 0;
   __Pyx_RefNannySetupContext("__copy__", 0);
 
-  /* "mbufferio/_mbufferio.pyx":773
+  /* "mbufferio/_mbufferio.pyx":820
  * 
  *     def __copy__(self):
  *         if self.closed:             # <<<<<<<<<<<<<<
@@ -11722,20 +12170,20 @@ static PyObject *__pyx_pf_9mbufferio_10_mbufferio_9MBufferIO_79__copy__(struct _
   __pyx_t_1 = (__pyx_v_self->closed != 0);
   if (__pyx_t_1) {
 
-    /* "mbufferio/_mbufferio.pyx":774
+    /* "mbufferio/_mbufferio.pyx":821
  *     def __copy__(self):
  *         if self.closed:
  *             raise RuntimeError(u"Can't copy a closed MBufferIO")             # <<<<<<<<<<<<<<
  *         if self.original_obj is None:
  *             return MBufferIO(self)
  */
-    __pyx_t_2 = __Pyx_PyObject_Call(__pyx_builtin_RuntimeError, __pyx_tuple__42, NULL); if (unlikely(!__pyx_t_2)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 774; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+    __pyx_t_2 = __Pyx_PyObject_Call(__pyx_builtin_RuntimeError, __pyx_tuple__42, NULL); if (unlikely(!__pyx_t_2)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 821; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
     __Pyx_GOTREF(__pyx_t_2);
     __Pyx_Raise(__pyx_t_2, 0, 0, 0);
     __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
-    {__pyx_filename = __pyx_f[0]; __pyx_lineno = 774; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+    {__pyx_filename = __pyx_f[0]; __pyx_lineno = 821; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
 
-    /* "mbufferio/_mbufferio.pyx":773
+    /* "mbufferio/_mbufferio.pyx":820
  * 
  *     def __copy__(self):
  *         if self.closed:             # <<<<<<<<<<<<<<
@@ -11744,7 +12192,7 @@ static PyObject *__pyx_pf_9mbufferio_10_mbufferio_9MBufferIO_79__copy__(struct _
  */
   }
 
-  /* "mbufferio/_mbufferio.pyx":775
+  /* "mbufferio/_mbufferio.pyx":822
  *         if self.closed:
  *             raise RuntimeError(u"Can't copy a closed MBufferIO")
  *         if self.original_obj is None:             # <<<<<<<<<<<<<<
@@ -11755,7 +12203,7 @@ static PyObject *__pyx_pf_9mbufferio_10_mbufferio_9MBufferIO_79__copy__(struct _
   __pyx_t_3 = (__pyx_t_1 != 0);
   if (__pyx_t_3) {
 
-    /* "mbufferio/_mbufferio.pyx":776
+    /* "mbufferio/_mbufferio.pyx":823
  *             raise RuntimeError(u"Can't copy a closed MBufferIO")
  *         if self.original_obj is None:
  *             return MBufferIO(self)             # <<<<<<<<<<<<<<
@@ -11763,19 +12211,19 @@ static PyObject *__pyx_pf_9mbufferio_10_mbufferio_9MBufferIO_79__copy__(struct _
  * 
  */
     __Pyx_XDECREF(__pyx_r);
-    __pyx_t_2 = PyTuple_New(1); if (unlikely(!__pyx_t_2)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 776; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+    __pyx_t_2 = PyTuple_New(1); if (unlikely(!__pyx_t_2)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 823; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
     __Pyx_GOTREF(__pyx_t_2);
     __Pyx_INCREF(((PyObject *)__pyx_v_self));
     __Pyx_GIVEREF(((PyObject *)__pyx_v_self));
     PyTuple_SET_ITEM(__pyx_t_2, 0, ((PyObject *)__pyx_v_self));
-    __pyx_t_4 = __Pyx_PyObject_Call(((PyObject *)__pyx_ptype_9mbufferio_10_mbufferio_MBufferIO), __pyx_t_2, NULL); if (unlikely(!__pyx_t_4)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 776; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+    __pyx_t_4 = __Pyx_PyObject_Call(((PyObject *)__pyx_ptype_9mbufferio_10_mbufferio_MBufferIO), __pyx_t_2, NULL); if (unlikely(!__pyx_t_4)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 823; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
     __Pyx_GOTREF(__pyx_t_4);
     __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
     __pyx_r = __pyx_t_4;
     __pyx_t_4 = 0;
     goto __pyx_L0;
 
-    /* "mbufferio/_mbufferio.pyx":775
+    /* "mbufferio/_mbufferio.pyx":822
  *         if self.closed:
  *             raise RuntimeError(u"Can't copy a closed MBufferIO")
  *         if self.original_obj is None:             # <<<<<<<<<<<<<<
@@ -11784,7 +12232,7 @@ static PyObject *__pyx_pf_9mbufferio_10_mbufferio_9MBufferIO_79__copy__(struct _
  */
   }
 
-  /* "mbufferio/_mbufferio.pyx":777
+  /* "mbufferio/_mbufferio.pyx":824
  *         if self.original_obj is None:
  *             return MBufferIO(self)
  *         return MBufferIO(self.original_obj, self.startpos, self.length)             # <<<<<<<<<<<<<<
@@ -11792,11 +12240,11 @@ static PyObject *__pyx_pf_9mbufferio_10_mbufferio_9MBufferIO_79__copy__(struct _
  * 
  */
   __Pyx_XDECREF(__pyx_r);
-  __pyx_t_4 = __Pyx_PyInt_From_int64_t(__pyx_v_self->startpos); if (unlikely(!__pyx_t_4)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 777; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __pyx_t_4 = __Pyx_PyInt_From_int64_t(__pyx_v_self->startpos); if (unlikely(!__pyx_t_4)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 824; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
   __Pyx_GOTREF(__pyx_t_4);
-  __pyx_t_2 = __Pyx_PyInt_From_int64_t(__pyx_v_self->length); if (unlikely(!__pyx_t_2)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 777; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __pyx_t_2 = __Pyx_PyInt_From_int64_t(__pyx_v_self->length); if (unlikely(!__pyx_t_2)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 824; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
   __Pyx_GOTREF(__pyx_t_2);
-  __pyx_t_5 = PyTuple_New(3); if (unlikely(!__pyx_t_5)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 777; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __pyx_t_5 = PyTuple_New(3); if (unlikely(!__pyx_t_5)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 824; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
   __Pyx_GOTREF(__pyx_t_5);
   __Pyx_INCREF(__pyx_v_self->original_obj);
   __Pyx_GIVEREF(__pyx_v_self->original_obj);
@@ -11807,14 +12255,14 @@ static PyObject *__pyx_pf_9mbufferio_10_mbufferio_9MBufferIO_79__copy__(struct _
   PyTuple_SET_ITEM(__pyx_t_5, 2, __pyx_t_2);
   __pyx_t_4 = 0;
   __pyx_t_2 = 0;
-  __pyx_t_2 = __Pyx_PyObject_Call(((PyObject *)__pyx_ptype_9mbufferio_10_mbufferio_MBufferIO), __pyx_t_5, NULL); if (unlikely(!__pyx_t_2)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 777; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __pyx_t_2 = __Pyx_PyObject_Call(((PyObject *)__pyx_ptype_9mbufferio_10_mbufferio_MBufferIO), __pyx_t_5, NULL); if (unlikely(!__pyx_t_2)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 824; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
   __Pyx_GOTREF(__pyx_t_2);
   __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
   __pyx_r = __pyx_t_2;
   __pyx_t_2 = 0;
   goto __pyx_L0;
 
-  /* "mbufferio/_mbufferio.pyx":772
+  /* "mbufferio/_mbufferio.pyx":819
  *         return self.length != 0
  * 
  *     def __copy__(self):             # <<<<<<<<<<<<<<
@@ -11835,7 +12283,7 @@ static PyObject *__pyx_pf_9mbufferio_10_mbufferio_9MBufferIO_79__copy__(struct _
   return __pyx_r;
 }
 
-/* "mbufferio/_mbufferio.pxd":17
+/* "mbufferio/_mbufferio.pxd":21
  * cdef class MBufferIO(object):
  *     cdef Py_ssize_t shape[1]
  *     cdef readonly int view_count             # <<<<<<<<<<<<<<
@@ -11865,7 +12313,7 @@ static PyObject *__pyx_pf_9mbufferio_10_mbufferio_9MBufferIO_10view_count___get_
   int __pyx_clineno = 0;
   __Pyx_RefNannySetupContext("__get__", 0);
   __Pyx_XDECREF(__pyx_r);
-  __pyx_t_1 = __Pyx_PyInt_From_int(__pyx_v_self->view_count); if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[1]; __pyx_lineno = 17; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __pyx_t_1 = __Pyx_PyInt_From_int(__pyx_v_self->view_count); if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[1]; __pyx_lineno = 21; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
   __Pyx_GOTREF(__pyx_t_1);
   __pyx_r = __pyx_t_1;
   __pyx_t_1 = 0;
@@ -11882,7 +12330,7 @@ static PyObject *__pyx_pf_9mbufferio_10_mbufferio_9MBufferIO_10view_count___get_
   return __pyx_r;
 }
 
-/* "mbufferio/_mbufferio.pxd":20
+/* "mbufferio/_mbufferio.pxd":24
  *     cdef char* buf_pointer
  *     cdef char* copy_buf_pointer
  *     cdef readonly int64_t copy_buf_size             # <<<<<<<<<<<<<<
@@ -11912,7 +12360,7 @@ static PyObject *__pyx_pf_9mbufferio_10_mbufferio_9MBufferIO_13copy_buf_size___g
   int __pyx_clineno = 0;
   __Pyx_RefNannySetupContext("__get__", 0);
   __Pyx_XDECREF(__pyx_r);
-  __pyx_t_1 = __Pyx_PyInt_From_int64_t(__pyx_v_self->copy_buf_size); if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[1]; __pyx_lineno = 20; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __pyx_t_1 = __Pyx_PyInt_From_int64_t(__pyx_v_self->copy_buf_size); if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[1]; __pyx_lineno = 24; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
   __Pyx_GOTREF(__pyx_t_1);
   __pyx_r = __pyx_t_1;
   __pyx_t_1 = 0;
@@ -11929,7 +12377,7 @@ static PyObject *__pyx_pf_9mbufferio_10_mbufferio_9MBufferIO_13copy_buf_size___g
   return __pyx_r;
 }
 
-/* "mbufferio/_mbufferio.pxd":22
+/* "mbufferio/_mbufferio.pxd":26
  *     cdef readonly int64_t copy_buf_size
  *     cdef Py_buffer* src_view
  *     cdef readonly int64_t length             # <<<<<<<<<<<<<<
@@ -11959,7 +12407,7 @@ static PyObject *__pyx_pf_9mbufferio_10_mbufferio_9MBufferIO_6length___get__(str
   int __pyx_clineno = 0;
   __Pyx_RefNannySetupContext("__get__", 0);
   __Pyx_XDECREF(__pyx_r);
-  __pyx_t_1 = __Pyx_PyInt_From_int64_t(__pyx_v_self->length); if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[1]; __pyx_lineno = 22; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __pyx_t_1 = __Pyx_PyInt_From_int64_t(__pyx_v_self->length); if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[1]; __pyx_lineno = 26; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
   __Pyx_GOTREF(__pyx_t_1);
   __pyx_r = __pyx_t_1;
   __pyx_t_1 = 0;
@@ -11976,7 +12424,7 @@ static PyObject *__pyx_pf_9mbufferio_10_mbufferio_9MBufferIO_6length___get__(str
   return __pyx_r;
 }
 
-/* "mbufferio/_mbufferio.pxd":23
+/* "mbufferio/_mbufferio.pxd":27
  *     cdef Py_buffer* src_view
  *     cdef readonly int64_t length
  *     cdef readonly int64_t startpos             # <<<<<<<<<<<<<<
@@ -12006,7 +12454,7 @@ static PyObject *__pyx_pf_9mbufferio_10_mbufferio_9MBufferIO_8startpos___get__(s
   int __pyx_clineno = 0;
   __Pyx_RefNannySetupContext("__get__", 0);
   __Pyx_XDECREF(__pyx_r);
-  __pyx_t_1 = __Pyx_PyInt_From_int64_t(__pyx_v_self->startpos); if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[1]; __pyx_lineno = 23; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __pyx_t_1 = __Pyx_PyInt_From_int64_t(__pyx_v_self->startpos); if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[1]; __pyx_lineno = 27; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
   __Pyx_GOTREF(__pyx_t_1);
   __pyx_r = __pyx_t_1;
   __pyx_t_1 = 0;
@@ -12023,7 +12471,7 @@ static PyObject *__pyx_pf_9mbufferio_10_mbufferio_9MBufferIO_8startpos___get__(s
   return __pyx_r;
 }
 
-/* "mbufferio/_mbufferio.pxd":24
+/* "mbufferio/_mbufferio.pxd":28
  *     cdef readonly int64_t length
  *     cdef readonly int64_t startpos
  *     cdef readonly int64_t offset             # <<<<<<<<<<<<<<
@@ -12053,7 +12501,7 @@ static PyObject *__pyx_pf_9mbufferio_10_mbufferio_9MBufferIO_6offset___get__(str
   int __pyx_clineno = 0;
   __Pyx_RefNannySetupContext("__get__", 0);
   __Pyx_XDECREF(__pyx_r);
-  __pyx_t_1 = __Pyx_PyInt_From_int64_t(__pyx_v_self->offset); if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[1]; __pyx_lineno = 24; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __pyx_t_1 = __Pyx_PyInt_From_int64_t(__pyx_v_self->offset); if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[1]; __pyx_lineno = 28; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
   __Pyx_GOTREF(__pyx_t_1);
   __pyx_r = __pyx_t_1;
   __pyx_t_1 = 0;
@@ -12070,7 +12518,7 @@ static PyObject *__pyx_pf_9mbufferio_10_mbufferio_9MBufferIO_6offset___get__(str
   return __pyx_r;
 }
 
-/* "mbufferio/_mbufferio.pxd":25
+/* "mbufferio/_mbufferio.pxd":29
  *     cdef readonly int64_t startpos
  *     cdef readonly int64_t offset
  *     cdef readonly bint closed             # <<<<<<<<<<<<<<
@@ -12100,7 +12548,7 @@ static PyObject *__pyx_pf_9mbufferio_10_mbufferio_9MBufferIO_6closed___get__(str
   int __pyx_clineno = 0;
   __Pyx_RefNannySetupContext("__get__", 0);
   __Pyx_XDECREF(__pyx_r);
-  __pyx_t_1 = __Pyx_PyBool_FromLong(__pyx_v_self->closed); if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[1]; __pyx_lineno = 25; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __pyx_t_1 = __Pyx_PyBool_FromLong(__pyx_v_self->closed); if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[1]; __pyx_lineno = 29; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
   __Pyx_GOTREF(__pyx_t_1);
   __pyx_r = __pyx_t_1;
   __pyx_t_1 = 0;
@@ -12117,7 +12565,7 @@ static PyObject *__pyx_pf_9mbufferio_10_mbufferio_9MBufferIO_6closed___get__(str
   return __pyx_r;
 }
 
-/* "mbufferio/_mbufferio.pxd":26
+/* "mbufferio/_mbufferio.pxd":30
  *     cdef readonly int64_t offset
  *     cdef readonly bint closed
  *     cdef readonly bint readonly             # <<<<<<<<<<<<<<
@@ -12147,7 +12595,7 @@ static PyObject *__pyx_pf_9mbufferio_10_mbufferio_9MBufferIO_8readonly___get__(s
   int __pyx_clineno = 0;
   __Pyx_RefNannySetupContext("__get__", 0);
   __Pyx_XDECREF(__pyx_r);
-  __pyx_t_1 = __Pyx_PyBool_FromLong(__pyx_v_self->readonly); if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[1]; __pyx_lineno = 26; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __pyx_t_1 = __Pyx_PyBool_FromLong(__pyx_v_self->readonly); if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[1]; __pyx_lineno = 30; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
   __Pyx_GOTREF(__pyx_t_1);
   __pyx_r = __pyx_t_1;
   __pyx_t_1 = 0;
@@ -12164,12 +12612,12 @@ static PyObject *__pyx_pf_9mbufferio_10_mbufferio_9MBufferIO_8readonly___get__(s
   return __pyx_r;
 }
 
-/* "mbufferio/_mbufferio.pxd":27
+/* "mbufferio/_mbufferio.pxd":31
  *     cdef readonly bint closed
  *     cdef readonly bint readonly
  *     cdef readonly bint is_a_reference             # <<<<<<<<<<<<<<
  *     cdef object original_obj
- * 
+ *     cdef bint have_ownership
  */
 
 /* Python wrapper */
@@ -12194,7 +12642,7 @@ static PyObject *__pyx_pf_9mbufferio_10_mbufferio_9MBufferIO_14is_a_reference___
   int __pyx_clineno = 0;
   __Pyx_RefNannySetupContext("__get__", 0);
   __Pyx_XDECREF(__pyx_r);
-  __pyx_t_1 = __Pyx_PyBool_FromLong(__pyx_v_self->is_a_reference); if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[1]; __pyx_lineno = 27; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __pyx_t_1 = __Pyx_PyBool_FromLong(__pyx_v_self->is_a_reference); if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[1]; __pyx_lineno = 31; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
   __Pyx_GOTREF(__pyx_t_1);
   __pyx_r = __pyx_t_1;
   __pyx_t_1 = 0;
@@ -12211,7 +12659,7 @@ static PyObject *__pyx_pf_9mbufferio_10_mbufferio_9MBufferIO_14is_a_reference___
   return __pyx_r;
 }
 
-/* "mbufferio/_mbufferio.pyx":780
+/* "mbufferio/_mbufferio.pyx":827
  * 
  * 
  * cpdef murmur128(obj, prefix=b'', to_unicode=False):             # <<<<<<<<<<<<<<
@@ -12221,7 +12669,7 @@ static PyObject *__pyx_pf_9mbufferio_10_mbufferio_9MBufferIO_14is_a_reference___
 
 static PyObject *__pyx_pw_9mbufferio_10_mbufferio_3murmur128(PyObject *__pyx_self, PyObject *__pyx_args, PyObject *__pyx_kwds); /*proto*/
 static PyObject *__pyx_f_9mbufferio_10_mbufferio_murmur128(PyObject *__pyx_v_obj, CYTHON_UNUSED int __pyx_skip_dispatch, struct __pyx_opt_args_9mbufferio_10_mbufferio_murmur128 *__pyx_optional_args) {
-  PyObject *__pyx_v_prefix = ((PyObject *)__pyx_kp_b__14);
+  PyObject *__pyx_v_prefix = ((PyObject *)__pyx_kp_b__15);
   PyObject *__pyx_v_to_unicode = ((PyObject *)Py_False);
   size_t __pyx_v_length;
   void *__pyx_v_buf;
@@ -12261,19 +12709,19 @@ static PyObject *__pyx_f_9mbufferio_10_mbufferio_murmur128(PyObject *__pyx_v_obj
   __Pyx_INCREF(__pyx_v_obj);
   __Pyx_INCREF(__pyx_v_prefix);
 
-  /* "mbufferio/_mbufferio.pyx":784
+  /* "mbufferio/_mbufferio.pyx":831
  *     cdef void* buf
  *     cdef int res
  *     prefix = make_utf8(prefix)             # <<<<<<<<<<<<<<
  *     if PyUnicode_Check(obj):
  *         obj = PyUnicode_AsUTF8String(obj)
  */
-  __pyx_t_1 = __pyx_f_9mbufferio_10_mbufferio_make_utf8(__pyx_v_prefix, 0); if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 784; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __pyx_t_1 = __pyx_f_9mbufferio_10_mbufferio_make_utf8(__pyx_v_prefix, 0); if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 831; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
   __Pyx_GOTREF(__pyx_t_1);
   __Pyx_DECREF_SET(__pyx_v_prefix, __pyx_t_1);
   __pyx_t_1 = 0;
 
-  /* "mbufferio/_mbufferio.pyx":785
+  /* "mbufferio/_mbufferio.pyx":832
  *     cdef int res
  *     prefix = make_utf8(prefix)
  *     if PyUnicode_Check(obj):             # <<<<<<<<<<<<<<
@@ -12283,19 +12731,19 @@ static PyObject *__pyx_f_9mbufferio_10_mbufferio_murmur128(PyObject *__pyx_v_obj
   __pyx_t_2 = (PyUnicode_Check(__pyx_v_obj) != 0);
   if (__pyx_t_2) {
 
-    /* "mbufferio/_mbufferio.pyx":786
+    /* "mbufferio/_mbufferio.pyx":833
  *     prefix = make_utf8(prefix)
  *     if PyUnicode_Check(obj):
  *         obj = PyUnicode_AsUTF8String(obj)             # <<<<<<<<<<<<<<
  *     if not PyObject_CheckBuffer(obj):
  *         if hasattr(obj, '__hash__'):
  */
-    __pyx_t_1 = PyUnicode_AsUTF8String(__pyx_v_obj); if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 786; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+    __pyx_t_1 = PyUnicode_AsUTF8String(__pyx_v_obj); if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 833; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
     __Pyx_GOTREF(__pyx_t_1);
     __Pyx_DECREF_SET(__pyx_v_obj, __pyx_t_1);
     __pyx_t_1 = 0;
 
-    /* "mbufferio/_mbufferio.pyx":785
+    /* "mbufferio/_mbufferio.pyx":832
  *     cdef int res
  *     prefix = make_utf8(prefix)
  *     if PyUnicode_Check(obj):             # <<<<<<<<<<<<<<
@@ -12304,7 +12752,7 @@ static PyObject *__pyx_f_9mbufferio_10_mbufferio_murmur128(PyObject *__pyx_v_obj
  */
   }
 
-  /* "mbufferio/_mbufferio.pyx":787
+  /* "mbufferio/_mbufferio.pyx":834
  *     if PyUnicode_Check(obj):
  *         obj = PyUnicode_AsUTF8String(obj)
  *     if not PyObject_CheckBuffer(obj):             # <<<<<<<<<<<<<<
@@ -12314,25 +12762,25 @@ static PyObject *__pyx_f_9mbufferio_10_mbufferio_murmur128(PyObject *__pyx_v_obj
   __pyx_t_2 = ((!(PyObject_CheckBuffer(__pyx_v_obj) != 0)) != 0);
   if (__pyx_t_2) {
 
-    /* "mbufferio/_mbufferio.pyx":788
+    /* "mbufferio/_mbufferio.pyx":835
  *         obj = PyUnicode_AsUTF8String(obj)
  *     if not PyObject_CheckBuffer(obj):
  *         if hasattr(obj, '__hash__'):             # <<<<<<<<<<<<<<
  *             obj = bytes(obj.__hash__())
  *         else:
  */
-    __pyx_t_2 = PyObject_HasAttr(__pyx_v_obj, __pyx_n_s_hash); if (unlikely(__pyx_t_2 == -1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 788; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+    __pyx_t_2 = PyObject_HasAttr(__pyx_v_obj, __pyx_n_s_hash); if (unlikely(__pyx_t_2 == -1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 835; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
     __pyx_t_3 = (__pyx_t_2 != 0);
     if (__pyx_t_3) {
 
-      /* "mbufferio/_mbufferio.pyx":789
+      /* "mbufferio/_mbufferio.pyx":836
  *     if not PyObject_CheckBuffer(obj):
  *         if hasattr(obj, '__hash__'):
  *             obj = bytes(obj.__hash__())             # <<<<<<<<<<<<<<
  *         else:
  *             obj = bytes(obj)
  */
-      __pyx_t_4 = __Pyx_PyObject_GetAttrStr(__pyx_v_obj, __pyx_n_s_hash); if (unlikely(!__pyx_t_4)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 789; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+      __pyx_t_4 = __Pyx_PyObject_GetAttrStr(__pyx_v_obj, __pyx_n_s_hash); if (unlikely(!__pyx_t_4)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 836; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
       __Pyx_GOTREF(__pyx_t_4);
       __pyx_t_5 = NULL;
       if (CYTHON_COMPILING_IN_CPYTHON && likely(PyMethod_Check(__pyx_t_4))) {
@@ -12345,25 +12793,25 @@ static PyObject *__pyx_f_9mbufferio_10_mbufferio_murmur128(PyObject *__pyx_v_obj
         }
       }
       if (__pyx_t_5) {
-        __pyx_t_1 = __Pyx_PyObject_CallOneArg(__pyx_t_4, __pyx_t_5); if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 789; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+        __pyx_t_1 = __Pyx_PyObject_CallOneArg(__pyx_t_4, __pyx_t_5); if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 836; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
         __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
       } else {
-        __pyx_t_1 = __Pyx_PyObject_CallNoArg(__pyx_t_4); if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 789; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+        __pyx_t_1 = __Pyx_PyObject_CallNoArg(__pyx_t_4); if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 836; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
       }
       __Pyx_GOTREF(__pyx_t_1);
       __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
-      __pyx_t_4 = PyTuple_New(1); if (unlikely(!__pyx_t_4)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 789; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+      __pyx_t_4 = PyTuple_New(1); if (unlikely(!__pyx_t_4)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 836; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
       __Pyx_GOTREF(__pyx_t_4);
       __Pyx_GIVEREF(__pyx_t_1);
       PyTuple_SET_ITEM(__pyx_t_4, 0, __pyx_t_1);
       __pyx_t_1 = 0;
-      __pyx_t_1 = __Pyx_PyObject_Call(((PyObject *)(&PyBytes_Type)), __pyx_t_4, NULL); if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 789; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+      __pyx_t_1 = __Pyx_PyObject_Call(((PyObject *)(&PyBytes_Type)), __pyx_t_4, NULL); if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 836; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
       __Pyx_GOTREF(__pyx_t_1);
       __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
       __Pyx_DECREF_SET(__pyx_v_obj, __pyx_t_1);
       __pyx_t_1 = 0;
 
-      /* "mbufferio/_mbufferio.pyx":788
+      /* "mbufferio/_mbufferio.pyx":835
  *         obj = PyUnicode_AsUTF8String(obj)
  *     if not PyObject_CheckBuffer(obj):
  *         if hasattr(obj, '__hash__'):             # <<<<<<<<<<<<<<
@@ -12373,7 +12821,7 @@ static PyObject *__pyx_f_9mbufferio_10_mbufferio_murmur128(PyObject *__pyx_v_obj
       goto __pyx_L5;
     }
 
-    /* "mbufferio/_mbufferio.pyx":791
+    /* "mbufferio/_mbufferio.pyx":838
  *             obj = bytes(obj.__hash__())
  *         else:
  *             obj = bytes(obj)             # <<<<<<<<<<<<<<
@@ -12381,12 +12829,12 @@ static PyObject *__pyx_f_9mbufferio_10_mbufferio_murmur128(PyObject *__pyx_v_obj
  *     retbuf = bytearray(16)
  */
     /*else*/ {
-      __pyx_t_1 = PyTuple_New(1); if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 791; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+      __pyx_t_1 = PyTuple_New(1); if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 838; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
       __Pyx_GOTREF(__pyx_t_1);
       __Pyx_INCREF(__pyx_v_obj);
       __Pyx_GIVEREF(__pyx_v_obj);
       PyTuple_SET_ITEM(__pyx_t_1, 0, __pyx_v_obj);
-      __pyx_t_4 = __Pyx_PyObject_Call(((PyObject *)(&PyBytes_Type)), __pyx_t_1, NULL); if (unlikely(!__pyx_t_4)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 791; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+      __pyx_t_4 = __Pyx_PyObject_Call(((PyObject *)(&PyBytes_Type)), __pyx_t_1, NULL); if (unlikely(!__pyx_t_4)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 838; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
       __Pyx_GOTREF(__pyx_t_4);
       __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
       __Pyx_DECREF_SET(__pyx_v_obj, __pyx_t_4);
@@ -12394,7 +12842,7 @@ static PyObject *__pyx_f_9mbufferio_10_mbufferio_murmur128(PyObject *__pyx_v_obj
     }
     __pyx_L5:;
 
-    /* "mbufferio/_mbufferio.pyx":787
+    /* "mbufferio/_mbufferio.pyx":834
  *     if PyUnicode_Check(obj):
  *         obj = PyUnicode_AsUTF8String(obj)
  *     if not PyObject_CheckBuffer(obj):             # <<<<<<<<<<<<<<
@@ -12403,37 +12851,37 @@ static PyObject *__pyx_f_9mbufferio_10_mbufferio_murmur128(PyObject *__pyx_v_obj
  */
   }
 
-  /* "mbufferio/_mbufferio.pyx":792
+  /* "mbufferio/_mbufferio.pyx":839
  *         else:
  *             obj = bytes(obj)
  *     prefix = bytes(prefix)             # <<<<<<<<<<<<<<
  *     retbuf = bytearray(16)
  * 
  */
-  __pyx_t_4 = PyTuple_New(1); if (unlikely(!__pyx_t_4)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 792; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __pyx_t_4 = PyTuple_New(1); if (unlikely(!__pyx_t_4)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 839; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
   __Pyx_GOTREF(__pyx_t_4);
   __Pyx_INCREF(__pyx_v_prefix);
   __Pyx_GIVEREF(__pyx_v_prefix);
   PyTuple_SET_ITEM(__pyx_t_4, 0, __pyx_v_prefix);
-  __pyx_t_1 = __Pyx_PyObject_Call(((PyObject *)(&PyBytes_Type)), __pyx_t_4, NULL); if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 792; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __pyx_t_1 = __Pyx_PyObject_Call(((PyObject *)(&PyBytes_Type)), __pyx_t_4, NULL); if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 839; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
   __Pyx_GOTREF(__pyx_t_1);
   __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
   __Pyx_DECREF_SET(__pyx_v_prefix, __pyx_t_1);
   __pyx_t_1 = 0;
 
-  /* "mbufferio/_mbufferio.pyx":793
+  /* "mbufferio/_mbufferio.pyx":840
  *             obj = bytes(obj)
  *     prefix = bytes(prefix)
  *     retbuf = bytearray(16)             # <<<<<<<<<<<<<<
  * 
  *     cdef Py_buffer* view = <Py_buffer*> PyMem_Malloc(sizeof(Py_buffer))
  */
-  __pyx_t_1 = __Pyx_PyObject_Call(((PyObject *)(&PyByteArray_Type)), __pyx_tuple__43, NULL); if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 793; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __pyx_t_1 = __Pyx_PyObject_Call(((PyObject *)(&PyByteArray_Type)), __pyx_tuple__43, NULL); if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 840; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
   __Pyx_GOTREF(__pyx_t_1);
   __pyx_v_retbuf = ((PyObject*)__pyx_t_1);
   __pyx_t_1 = 0;
 
-  /* "mbufferio/_mbufferio.pyx":795
+  /* "mbufferio/_mbufferio.pyx":842
  *     retbuf = bytearray(16)
  * 
  *     cdef Py_buffer* view = <Py_buffer*> PyMem_Malloc(sizeof(Py_buffer))             # <<<<<<<<<<<<<<
@@ -12442,7 +12890,7 @@ static PyObject *__pyx_f_9mbufferio_10_mbufferio_murmur128(PyObject *__pyx_v_obj
  */
   __pyx_v_view = ((Py_buffer *)PyMem_Malloc((sizeof(Py_buffer))));
 
-  /* "mbufferio/_mbufferio.pyx":796
+  /* "mbufferio/_mbufferio.pyx":843
  * 
  *     cdef Py_buffer* view = <Py_buffer*> PyMem_Malloc(sizeof(Py_buffer))
  *     if view == NULL:             # <<<<<<<<<<<<<<
@@ -12452,20 +12900,20 @@ static PyObject *__pyx_f_9mbufferio_10_mbufferio_murmur128(PyObject *__pyx_v_obj
   __pyx_t_3 = ((__pyx_v_view == NULL) != 0);
   if (__pyx_t_3) {
 
-    /* "mbufferio/_mbufferio.pyx":797
+    /* "mbufferio/_mbufferio.pyx":844
  *     cdef Py_buffer* view = <Py_buffer*> PyMem_Malloc(sizeof(Py_buffer))
  *     if view == NULL:
  *         raise MemoryError("Could not allocate memory for the Py_buffer")             # <<<<<<<<<<<<<<
  *     res = PyObject_GetBuffer(obj, view, PyBUF_SIMPLE)
  *     if res == -1:
  */
-    __pyx_t_1 = __Pyx_PyObject_Call(__pyx_builtin_MemoryError, __pyx_tuple__44, NULL); if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 797; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+    __pyx_t_1 = __Pyx_PyObject_Call(__pyx_builtin_MemoryError, __pyx_tuple__44, NULL); if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 844; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
     __Pyx_GOTREF(__pyx_t_1);
     __Pyx_Raise(__pyx_t_1, 0, 0, 0);
     __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
-    {__pyx_filename = __pyx_f[0]; __pyx_lineno = 797; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+    {__pyx_filename = __pyx_f[0]; __pyx_lineno = 844; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
 
-    /* "mbufferio/_mbufferio.pyx":796
+    /* "mbufferio/_mbufferio.pyx":843
  * 
  *     cdef Py_buffer* view = <Py_buffer*> PyMem_Malloc(sizeof(Py_buffer))
  *     if view == NULL:             # <<<<<<<<<<<<<<
@@ -12474,17 +12922,17 @@ static PyObject *__pyx_f_9mbufferio_10_mbufferio_murmur128(PyObject *__pyx_v_obj
  */
   }
 
-  /* "mbufferio/_mbufferio.pyx":798
+  /* "mbufferio/_mbufferio.pyx":845
  *     if view == NULL:
  *         raise MemoryError("Could not allocate memory for the Py_buffer")
  *     res = PyObject_GetBuffer(obj, view, PyBUF_SIMPLE)             # <<<<<<<<<<<<<<
  *     if res == -1:
  *         PyMem_Free(view)
  */
-  __pyx_t_6 = PyObject_GetBuffer(__pyx_v_obj, __pyx_v_view, PyBUF_SIMPLE); if (unlikely(__pyx_t_6 == -1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 798; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __pyx_t_6 = PyObject_GetBuffer(__pyx_v_obj, __pyx_v_view, PyBUF_SIMPLE); if (unlikely(__pyx_t_6 == -1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 845; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
   __pyx_v_res = __pyx_t_6;
 
-  /* "mbufferio/_mbufferio.pyx":799
+  /* "mbufferio/_mbufferio.pyx":846
  *         raise MemoryError("Could not allocate memory for the Py_buffer")
  *     res = PyObject_GetBuffer(obj, view, PyBUF_SIMPLE)
  *     if res == -1:             # <<<<<<<<<<<<<<
@@ -12494,7 +12942,7 @@ static PyObject *__pyx_f_9mbufferio_10_mbufferio_murmur128(PyObject *__pyx_v_obj
   __pyx_t_3 = ((__pyx_v_res == -1L) != 0);
   if (__pyx_t_3) {
 
-    /* "mbufferio/_mbufferio.pyx":800
+    /* "mbufferio/_mbufferio.pyx":847
  *     res = PyObject_GetBuffer(obj, view, PyBUF_SIMPLE)
  *     if res == -1:
  *         PyMem_Free(view)             # <<<<<<<<<<<<<<
@@ -12503,20 +12951,20 @@ static PyObject *__pyx_f_9mbufferio_10_mbufferio_murmur128(PyObject *__pyx_v_obj
  */
     PyMem_Free(__pyx_v_view);
 
-    /* "mbufferio/_mbufferio.pyx":801
+    /* "mbufferio/_mbufferio.pyx":848
  *     if res == -1:
  *         PyMem_Free(view)
  *         raise RuntimeError("PyObject_GetBuffer failed")             # <<<<<<<<<<<<<<
  *     length = <size_t> view.len
  *     buf = <void*> view.buf
  */
-    __pyx_t_1 = __Pyx_PyObject_Call(__pyx_builtin_RuntimeError, __pyx_tuple__45, NULL); if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 801; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+    __pyx_t_1 = __Pyx_PyObject_Call(__pyx_builtin_RuntimeError, __pyx_tuple__45, NULL); if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 848; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
     __Pyx_GOTREF(__pyx_t_1);
     __Pyx_Raise(__pyx_t_1, 0, 0, 0);
     __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
-    {__pyx_filename = __pyx_f[0]; __pyx_lineno = 801; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+    {__pyx_filename = __pyx_f[0]; __pyx_lineno = 848; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
 
-    /* "mbufferio/_mbufferio.pyx":799
+    /* "mbufferio/_mbufferio.pyx":846
  *         raise MemoryError("Could not allocate memory for the Py_buffer")
  *     res = PyObject_GetBuffer(obj, view, PyBUF_SIMPLE)
  *     if res == -1:             # <<<<<<<<<<<<<<
@@ -12525,7 +12973,7 @@ static PyObject *__pyx_f_9mbufferio_10_mbufferio_murmur128(PyObject *__pyx_v_obj
  */
   }
 
-  /* "mbufferio/_mbufferio.pyx":802
+  /* "mbufferio/_mbufferio.pyx":849
  *         PyMem_Free(view)
  *         raise RuntimeError("PyObject_GetBuffer failed")
  *     length = <size_t> view.len             # <<<<<<<<<<<<<<
@@ -12534,7 +12982,7 @@ static PyObject *__pyx_f_9mbufferio_10_mbufferio_murmur128(PyObject *__pyx_v_obj
  */
   __pyx_v_length = ((size_t)__pyx_v_view->len);
 
-  /* "mbufferio/_mbufferio.pyx":803
+  /* "mbufferio/_mbufferio.pyx":850
  *         raise RuntimeError("PyObject_GetBuffer failed")
  *     length = <size_t> view.len
  *     buf = <void*> view.buf             # <<<<<<<<<<<<<<
@@ -12543,7 +12991,7 @@ static PyObject *__pyx_f_9mbufferio_10_mbufferio_murmur128(PyObject *__pyx_v_obj
  */
   __pyx_v_buf = ((void *)__pyx_v_view->buf);
 
-  /* "mbufferio/_mbufferio.pyx":804
+  /* "mbufferio/_mbufferio.pyx":851
  *     length = <size_t> view.len
  *     buf = <void*> view.buf
  *     try:             # <<<<<<<<<<<<<<
@@ -12552,17 +13000,17 @@ static PyObject *__pyx_f_9mbufferio_10_mbufferio_murmur128(PyObject *__pyx_v_obj
  */
   /*try:*/ {
 
-    /* "mbufferio/_mbufferio.pyx":805
+    /* "mbufferio/_mbufferio.pyx":852
  *     buf = <void*> view.buf
  *     try:
  *         res = qhashmurmur3_128(buf, length, <void *> (<char*> retbuf))             # <<<<<<<<<<<<<<
  *         if res == 0:
  *             return None
  */
-    __pyx_t_7 = __Pyx_PyObject_AsString(__pyx_v_retbuf); if (unlikely((!__pyx_t_7) && PyErr_Occurred())) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 805; __pyx_clineno = __LINE__; goto __pyx_L9_error;}
+    __pyx_t_7 = __Pyx_PyObject_AsString(__pyx_v_retbuf); if (unlikely((!__pyx_t_7) && PyErr_Occurred())) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 852; __pyx_clineno = __LINE__; goto __pyx_L9_error;}
     __pyx_v_res = qhashmurmur3_128(__pyx_v_buf, __pyx_v_length, ((void *)((char *)__pyx_t_7)));
 
-    /* "mbufferio/_mbufferio.pyx":806
+    /* "mbufferio/_mbufferio.pyx":853
  *     try:
  *         res = qhashmurmur3_128(buf, length, <void *> (<char*> retbuf))
  *         if res == 0:             # <<<<<<<<<<<<<<
@@ -12572,7 +13020,7 @@ static PyObject *__pyx_f_9mbufferio_10_mbufferio_murmur128(PyObject *__pyx_v_obj
     __pyx_t_3 = ((__pyx_v_res == 0) != 0);
     if (__pyx_t_3) {
 
-      /* "mbufferio/_mbufferio.pyx":807
+      /* "mbufferio/_mbufferio.pyx":854
  *         res = qhashmurmur3_128(buf, length, <void *> (<char*> retbuf))
  *         if res == 0:
  *             return None             # <<<<<<<<<<<<<<
@@ -12584,7 +13032,7 @@ static PyObject *__pyx_f_9mbufferio_10_mbufferio_murmur128(PyObject *__pyx_v_obj
       __pyx_r = Py_None;
       goto __pyx_L8_return;
 
-      /* "mbufferio/_mbufferio.pyx":806
+      /* "mbufferio/_mbufferio.pyx":853
  *     try:
  *         res = qhashmurmur3_128(buf, length, <void *> (<char*> retbuf))
  *         if res == 0:             # <<<<<<<<<<<<<<
@@ -12593,44 +13041,44 @@ static PyObject *__pyx_f_9mbufferio_10_mbufferio_murmur128(PyObject *__pyx_v_obj
  */
     }
 
-    /* "mbufferio/_mbufferio.pyx":808
+    /* "mbufferio/_mbufferio.pyx":855
  *         if res == 0:
  *             return None
  *         result = prefix + bytes(retbuf).encode('hex')             # <<<<<<<<<<<<<<
  *         if to_unicode:
  *             return unicode(result)
  */
-    __pyx_t_1 = PyTuple_New(1); if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 808; __pyx_clineno = __LINE__; goto __pyx_L9_error;}
+    __pyx_t_1 = PyTuple_New(1); if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 855; __pyx_clineno = __LINE__; goto __pyx_L9_error;}
     __Pyx_GOTREF(__pyx_t_1);
     __Pyx_INCREF(__pyx_v_retbuf);
     __Pyx_GIVEREF(__pyx_v_retbuf);
     PyTuple_SET_ITEM(__pyx_t_1, 0, __pyx_v_retbuf);
-    __pyx_t_4 = __Pyx_PyObject_Call(((PyObject *)(&PyBytes_Type)), __pyx_t_1, NULL); if (unlikely(!__pyx_t_4)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 808; __pyx_clineno = __LINE__; goto __pyx_L9_error;}
+    __pyx_t_4 = __Pyx_PyObject_Call(((PyObject *)(&PyBytes_Type)), __pyx_t_1, NULL); if (unlikely(!__pyx_t_4)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 855; __pyx_clineno = __LINE__; goto __pyx_L9_error;}
     __Pyx_GOTREF(__pyx_t_4);
     __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
-    __pyx_t_1 = __Pyx_PyObject_GetAttrStr(__pyx_t_4, __pyx_n_s_encode); if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 808; __pyx_clineno = __LINE__; goto __pyx_L9_error;}
+    __pyx_t_1 = __Pyx_PyObject_GetAttrStr(__pyx_t_4, __pyx_n_s_encode); if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 855; __pyx_clineno = __LINE__; goto __pyx_L9_error;}
     __Pyx_GOTREF(__pyx_t_1);
     __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
-    __pyx_t_4 = __Pyx_PyObject_Call(__pyx_t_1, __pyx_tuple__46, NULL); if (unlikely(!__pyx_t_4)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 808; __pyx_clineno = __LINE__; goto __pyx_L9_error;}
+    __pyx_t_4 = __Pyx_PyObject_Call(__pyx_t_1, __pyx_tuple__46, NULL); if (unlikely(!__pyx_t_4)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 855; __pyx_clineno = __LINE__; goto __pyx_L9_error;}
     __Pyx_GOTREF(__pyx_t_4);
     __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
-    __pyx_t_1 = PyNumber_Add(__pyx_v_prefix, __pyx_t_4); if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 808; __pyx_clineno = __LINE__; goto __pyx_L9_error;}
+    __pyx_t_1 = PyNumber_Add(__pyx_v_prefix, __pyx_t_4); if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 855; __pyx_clineno = __LINE__; goto __pyx_L9_error;}
     __Pyx_GOTREF(__pyx_t_1);
     __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
     __pyx_v_result = __pyx_t_1;
     __pyx_t_1 = 0;
 
-    /* "mbufferio/_mbufferio.pyx":809
+    /* "mbufferio/_mbufferio.pyx":856
  *             return None
  *         result = prefix + bytes(retbuf).encode('hex')
  *         if to_unicode:             # <<<<<<<<<<<<<<
  *             return unicode(result)
  *         return result
  */
-    __pyx_t_3 = __Pyx_PyObject_IsTrue(__pyx_v_to_unicode); if (unlikely(__pyx_t_3 < 0)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 809; __pyx_clineno = __LINE__; goto __pyx_L9_error;}
+    __pyx_t_3 = __Pyx_PyObject_IsTrue(__pyx_v_to_unicode); if (unlikely(__pyx_t_3 < 0)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 856; __pyx_clineno = __LINE__; goto __pyx_L9_error;}
     if (__pyx_t_3) {
 
-      /* "mbufferio/_mbufferio.pyx":810
+      /* "mbufferio/_mbufferio.pyx":857
  *         result = prefix + bytes(retbuf).encode('hex')
  *         if to_unicode:
  *             return unicode(result)             # <<<<<<<<<<<<<<
@@ -12638,19 +13086,19 @@ static PyObject *__pyx_f_9mbufferio_10_mbufferio_murmur128(PyObject *__pyx_v_obj
  *     finally:
  */
       __Pyx_XDECREF(__pyx_r);
-      __pyx_t_1 = PyTuple_New(1); if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 810; __pyx_clineno = __LINE__; goto __pyx_L9_error;}
+      __pyx_t_1 = PyTuple_New(1); if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 857; __pyx_clineno = __LINE__; goto __pyx_L9_error;}
       __Pyx_GOTREF(__pyx_t_1);
       __Pyx_INCREF(__pyx_v_result);
       __Pyx_GIVEREF(__pyx_v_result);
       PyTuple_SET_ITEM(__pyx_t_1, 0, __pyx_v_result);
-      __pyx_t_4 = __Pyx_PyObject_Call(((PyObject *)(&PyUnicode_Type)), __pyx_t_1, NULL); if (unlikely(!__pyx_t_4)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 810; __pyx_clineno = __LINE__; goto __pyx_L9_error;}
+      __pyx_t_4 = __Pyx_PyObject_Call(((PyObject *)(&PyUnicode_Type)), __pyx_t_1, NULL); if (unlikely(!__pyx_t_4)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 857; __pyx_clineno = __LINE__; goto __pyx_L9_error;}
       __Pyx_GOTREF(__pyx_t_4);
       __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
       __pyx_r = __pyx_t_4;
       __pyx_t_4 = 0;
       goto __pyx_L8_return;
 
-      /* "mbufferio/_mbufferio.pyx":809
+      /* "mbufferio/_mbufferio.pyx":856
  *             return None
  *         result = prefix + bytes(retbuf).encode('hex')
  *         if to_unicode:             # <<<<<<<<<<<<<<
@@ -12659,7 +13107,7 @@ static PyObject *__pyx_f_9mbufferio_10_mbufferio_murmur128(PyObject *__pyx_v_obj
  */
     }
 
-    /* "mbufferio/_mbufferio.pyx":811
+    /* "mbufferio/_mbufferio.pyx":858
  *         if to_unicode:
  *             return unicode(result)
  *         return result             # <<<<<<<<<<<<<<
@@ -12672,7 +13120,7 @@ static PyObject *__pyx_f_9mbufferio_10_mbufferio_murmur128(PyObject *__pyx_v_obj
     goto __pyx_L8_return;
   }
 
-  /* "mbufferio/_mbufferio.pyx":813
+  /* "mbufferio/_mbufferio.pyx":860
  *         return result
  *     finally:
  *         if view is not NULL:             # <<<<<<<<<<<<<<
@@ -12699,7 +13147,7 @@ static PyObject *__pyx_f_9mbufferio_10_mbufferio_murmur128(PyObject *__pyx_v_obj
         __pyx_t_3 = ((__pyx_v_view != NULL) != 0);
         if (__pyx_t_3) {
 
-          /* "mbufferio/_mbufferio.pyx":814
+          /* "mbufferio/_mbufferio.pyx":861
  *     finally:
  *         if view is not NULL:
  *             PyBuffer_Release(view)             # <<<<<<<<<<<<<<
@@ -12708,7 +13156,7 @@ static PyObject *__pyx_f_9mbufferio_10_mbufferio_murmur128(PyObject *__pyx_v_obj
  */
           PyBuffer_Release(__pyx_v_view);
 
-          /* "mbufferio/_mbufferio.pyx":815
+          /* "mbufferio/_mbufferio.pyx":862
  *         if view is not NULL:
  *             PyBuffer_Release(view)
  *             PyMem_Free(view)             # <<<<<<<<<<<<<<
@@ -12717,7 +13165,7 @@ static PyObject *__pyx_f_9mbufferio_10_mbufferio_murmur128(PyObject *__pyx_v_obj
  */
           PyMem_Free(__pyx_v_view);
 
-          /* "mbufferio/_mbufferio.pyx":813
+          /* "mbufferio/_mbufferio.pyx":860
  *         return result
  *     finally:
  *         if view is not NULL:             # <<<<<<<<<<<<<<
@@ -12746,7 +13194,7 @@ static PyObject *__pyx_f_9mbufferio_10_mbufferio_murmur128(PyObject *__pyx_v_obj
       __pyx_t_3 = ((__pyx_v_view != NULL) != 0);
       if (__pyx_t_3) {
 
-        /* "mbufferio/_mbufferio.pyx":814
+        /* "mbufferio/_mbufferio.pyx":861
  *     finally:
  *         if view is not NULL:
  *             PyBuffer_Release(view)             # <<<<<<<<<<<<<<
@@ -12755,7 +13203,7 @@ static PyObject *__pyx_f_9mbufferio_10_mbufferio_murmur128(PyObject *__pyx_v_obj
  */
         PyBuffer_Release(__pyx_v_view);
 
-        /* "mbufferio/_mbufferio.pyx":815
+        /* "mbufferio/_mbufferio.pyx":862
  *         if view is not NULL:
  *             PyBuffer_Release(view)
  *             PyMem_Free(view)             # <<<<<<<<<<<<<<
@@ -12764,7 +13212,7 @@ static PyObject *__pyx_f_9mbufferio_10_mbufferio_murmur128(PyObject *__pyx_v_obj
  */
         PyMem_Free(__pyx_v_view);
 
-        /* "mbufferio/_mbufferio.pyx":813
+        /* "mbufferio/_mbufferio.pyx":860
  *         return result
  *     finally:
  *         if view is not NULL:             # <<<<<<<<<<<<<<
@@ -12778,7 +13226,7 @@ static PyObject *__pyx_f_9mbufferio_10_mbufferio_murmur128(PyObject *__pyx_v_obj
     }
   }
 
-  /* "mbufferio/_mbufferio.pyx":780
+  /* "mbufferio/_mbufferio.pyx":827
  * 
  * 
  * cpdef murmur128(obj, prefix=b'', to_unicode=False):             # <<<<<<<<<<<<<<
@@ -12818,7 +13266,7 @@ static PyObject *__pyx_pw_9mbufferio_10_mbufferio_3murmur128(PyObject *__pyx_sel
   {
     static PyObject **__pyx_pyargnames[] = {&__pyx_n_s_obj,&__pyx_n_s_prefix,&__pyx_n_s_to_unicode,0};
     PyObject* values[3] = {0,0,0};
-    values[1] = ((PyObject *)__pyx_kp_b__14);
+    values[1] = ((PyObject *)__pyx_kp_b__15);
     values[2] = ((PyObject *)Py_False);
     if (unlikely(__pyx_kwds)) {
       Py_ssize_t kw_args;
@@ -12847,7 +13295,7 @@ static PyObject *__pyx_pw_9mbufferio_10_mbufferio_3murmur128(PyObject *__pyx_sel
         }
       }
       if (unlikely(kw_args > 0)) {
-        if (unlikely(__Pyx_ParseOptionalKeywords(__pyx_kwds, __pyx_pyargnames, 0, values, pos_args, "murmur128") < 0)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 780; __pyx_clineno = __LINE__; goto __pyx_L3_error;}
+        if (unlikely(__Pyx_ParseOptionalKeywords(__pyx_kwds, __pyx_pyargnames, 0, values, pos_args, "murmur128") < 0)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 827; __pyx_clineno = __LINE__; goto __pyx_L3_error;}
       }
     } else {
       switch (PyTuple_GET_SIZE(__pyx_args)) {
@@ -12864,7 +13312,7 @@ static PyObject *__pyx_pw_9mbufferio_10_mbufferio_3murmur128(PyObject *__pyx_sel
   }
   goto __pyx_L4_argument_unpacking_done;
   __pyx_L5_argtuple_error:;
-  __Pyx_RaiseArgtupleInvalid("murmur128", 0, 1, 3, PyTuple_GET_SIZE(__pyx_args)); {__pyx_filename = __pyx_f[0]; __pyx_lineno = 780; __pyx_clineno = __LINE__; goto __pyx_L3_error;}
+  __Pyx_RaiseArgtupleInvalid("murmur128", 0, 1, 3, PyTuple_GET_SIZE(__pyx_args)); {__pyx_filename = __pyx_f[0]; __pyx_lineno = 827; __pyx_clineno = __LINE__; goto __pyx_L3_error;}
   __pyx_L3_error:;
   __Pyx_AddTraceback("mbufferio._mbufferio.murmur128", __pyx_clineno, __pyx_lineno, __pyx_filename);
   __Pyx_RefNannyFinishContext();
@@ -12890,7 +13338,7 @@ static PyObject *__pyx_pf_9mbufferio_10_mbufferio_2murmur128(CYTHON_UNUSED PyObj
   __pyx_t_2.__pyx_n = 2;
   __pyx_t_2.prefix = __pyx_v_prefix;
   __pyx_t_2.to_unicode = __pyx_v_to_unicode;
-  __pyx_t_1 = __pyx_f_9mbufferio_10_mbufferio_murmur128(__pyx_v_obj, 0, &__pyx_t_2); if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 780; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __pyx_t_1 = __pyx_f_9mbufferio_10_mbufferio_murmur128(__pyx_v_obj, 0, &__pyx_t_2); if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 827; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
   __Pyx_GOTREF(__pyx_t_1);
   __pyx_r = __pyx_t_1;
   __pyx_t_1 = 0;
@@ -12907,7 +13355,7 @@ static PyObject *__pyx_pf_9mbufferio_10_mbufferio_2murmur128(CYTHON_UNUSED PyObj
   return __pyx_r;
 }
 
-/* "mbufferio/_mbufferio.pyx":818
+/* "mbufferio/_mbufferio.pyx":865
  * 
  * 
  * cpdef umurmur128(obj, prefix=b''):             # <<<<<<<<<<<<<<
@@ -12917,7 +13365,7 @@ static PyObject *__pyx_pf_9mbufferio_10_mbufferio_2murmur128(CYTHON_UNUSED PyObj
 
 static PyObject *__pyx_pw_9mbufferio_10_mbufferio_5umurmur128(PyObject *__pyx_self, PyObject *__pyx_args, PyObject *__pyx_kwds); /*proto*/
 static PyObject *__pyx_f_9mbufferio_10_mbufferio_umurmur128(PyObject *__pyx_v_obj, CYTHON_UNUSED int __pyx_skip_dispatch, struct __pyx_opt_args_9mbufferio_10_mbufferio_umurmur128 *__pyx_optional_args) {
-  PyObject *__pyx_v_prefix = ((PyObject *)__pyx_kp_b__14);
+  PyObject *__pyx_v_prefix = ((PyObject *)__pyx_kp_b__15);
   PyObject *__pyx_r = NULL;
   __Pyx_RefNannyDeclarations
   PyObject *__pyx_t_1 = NULL;
@@ -12932,7 +13380,7 @@ static PyObject *__pyx_f_9mbufferio_10_mbufferio_umurmur128(PyObject *__pyx_v_ob
     }
   }
 
-  /* "mbufferio/_mbufferio.pyx":819
+  /* "mbufferio/_mbufferio.pyx":866
  * 
  * cpdef umurmur128(obj, prefix=b''):
  *     return murmur128(obj, prefix, to_unicode=True)             # <<<<<<<<<<<<<<
@@ -12943,13 +13391,13 @@ static PyObject *__pyx_f_9mbufferio_10_mbufferio_umurmur128(PyObject *__pyx_v_ob
   __pyx_t_2.__pyx_n = 2;
   __pyx_t_2.prefix = __pyx_v_prefix;
   __pyx_t_2.to_unicode = Py_True;
-  __pyx_t_1 = __pyx_f_9mbufferio_10_mbufferio_murmur128(__pyx_v_obj, 0, &__pyx_t_2); if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 819; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __pyx_t_1 = __pyx_f_9mbufferio_10_mbufferio_murmur128(__pyx_v_obj, 0, &__pyx_t_2); if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 866; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
   __Pyx_GOTREF(__pyx_t_1);
   __pyx_r = __pyx_t_1;
   __pyx_t_1 = 0;
   goto __pyx_L0;
 
-  /* "mbufferio/_mbufferio.pyx":818
+  /* "mbufferio/_mbufferio.pyx":865
  * 
  * 
  * cpdef umurmur128(obj, prefix=b''):             # <<<<<<<<<<<<<<
@@ -12982,7 +13430,7 @@ static PyObject *__pyx_pw_9mbufferio_10_mbufferio_5umurmur128(PyObject *__pyx_se
   {
     static PyObject **__pyx_pyargnames[] = {&__pyx_n_s_obj,&__pyx_n_s_prefix,0};
     PyObject* values[2] = {0,0};
-    values[1] = ((PyObject *)__pyx_kp_b__14);
+    values[1] = ((PyObject *)__pyx_kp_b__15);
     if (unlikely(__pyx_kwds)) {
       Py_ssize_t kw_args;
       const Py_ssize_t pos_args = PyTuple_GET_SIZE(__pyx_args);
@@ -13004,7 +13452,7 @@ static PyObject *__pyx_pw_9mbufferio_10_mbufferio_5umurmur128(PyObject *__pyx_se
         }
       }
       if (unlikely(kw_args > 0)) {
-        if (unlikely(__Pyx_ParseOptionalKeywords(__pyx_kwds, __pyx_pyargnames, 0, values, pos_args, "umurmur128") < 0)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 818; __pyx_clineno = __LINE__; goto __pyx_L3_error;}
+        if (unlikely(__Pyx_ParseOptionalKeywords(__pyx_kwds, __pyx_pyargnames, 0, values, pos_args, "umurmur128") < 0)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 865; __pyx_clineno = __LINE__; goto __pyx_L3_error;}
       }
     } else {
       switch (PyTuple_GET_SIZE(__pyx_args)) {
@@ -13019,7 +13467,7 @@ static PyObject *__pyx_pw_9mbufferio_10_mbufferio_5umurmur128(PyObject *__pyx_se
   }
   goto __pyx_L4_argument_unpacking_done;
   __pyx_L5_argtuple_error:;
-  __Pyx_RaiseArgtupleInvalid("umurmur128", 0, 1, 2, PyTuple_GET_SIZE(__pyx_args)); {__pyx_filename = __pyx_f[0]; __pyx_lineno = 818; __pyx_clineno = __LINE__; goto __pyx_L3_error;}
+  __Pyx_RaiseArgtupleInvalid("umurmur128", 0, 1, 2, PyTuple_GET_SIZE(__pyx_args)); {__pyx_filename = __pyx_f[0]; __pyx_lineno = 865; __pyx_clineno = __LINE__; goto __pyx_L3_error;}
   __pyx_L3_error:;
   __Pyx_AddTraceback("mbufferio._mbufferio.umurmur128", __pyx_clineno, __pyx_lineno, __pyx_filename);
   __Pyx_RefNannyFinishContext();
@@ -13044,7 +13492,7 @@ static PyObject *__pyx_pf_9mbufferio_10_mbufferio_4umurmur128(CYTHON_UNUSED PyOb
   __Pyx_XDECREF(__pyx_r);
   __pyx_t_2.__pyx_n = 1;
   __pyx_t_2.prefix = __pyx_v_prefix;
-  __pyx_t_1 = __pyx_f_9mbufferio_10_mbufferio_umurmur128(__pyx_v_obj, 0, &__pyx_t_2); if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 818; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __pyx_t_1 = __pyx_f_9mbufferio_10_mbufferio_umurmur128(__pyx_v_obj, 0, &__pyx_t_2); if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 865; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
   __Pyx_GOTREF(__pyx_t_1);
   __pyx_r = __pyx_t_1;
   __pyx_t_1 = 0;
@@ -13061,7 +13509,7 @@ static PyObject *__pyx_pf_9mbufferio_10_mbufferio_4umurmur128(CYTHON_UNUSED PyOb
   return __pyx_r;
 }
 
-/* "mbufferio/_mbufferio.pyx":821
+/* "mbufferio/_mbufferio.pyx":868
  *     return murmur128(obj, prefix, to_unicode=True)
  * 
  * cpdef unicode make_unicode(s):             # <<<<<<<<<<<<<<
@@ -13083,7 +13531,7 @@ static PyObject *__pyx_f_9mbufferio_10_mbufferio_make_unicode(PyObject *__pyx_v_
   int __pyx_clineno = 0;
   __Pyx_RefNannySetupContext("make_unicode", 0);
 
-  /* "mbufferio/_mbufferio.pyx":822
+  /* "mbufferio/_mbufferio.pyx":869
  * 
  * cpdef unicode make_unicode(s):
  *     if s is None:             # <<<<<<<<<<<<<<
@@ -13094,7 +13542,7 @@ static PyObject *__pyx_f_9mbufferio_10_mbufferio_make_unicode(PyObject *__pyx_v_
   __pyx_t_2 = (__pyx_t_1 != 0);
   if (__pyx_t_2) {
 
-    /* "mbufferio/_mbufferio.pyx":823
+    /* "mbufferio/_mbufferio.pyx":870
  * cpdef unicode make_unicode(s):
  *     if s is None:
  *         return u''             # <<<<<<<<<<<<<<
@@ -13102,11 +13550,11 @@ static PyObject *__pyx_f_9mbufferio_10_mbufferio_make_unicode(PyObject *__pyx_v_
  *         return s
  */
     __Pyx_XDECREF(__pyx_r);
-    __Pyx_INCREF(__pyx_kp_u__14);
-    __pyx_r = __pyx_kp_u__14;
+    __Pyx_INCREF(__pyx_kp_u__15);
+    __pyx_r = __pyx_kp_u__15;
     goto __pyx_L0;
 
-    /* "mbufferio/_mbufferio.pyx":822
+    /* "mbufferio/_mbufferio.pyx":869
  * 
  * cpdef unicode make_unicode(s):
  *     if s is None:             # <<<<<<<<<<<<<<
@@ -13115,7 +13563,7 @@ static PyObject *__pyx_f_9mbufferio_10_mbufferio_make_unicode(PyObject *__pyx_v_
  */
   }
 
-  /* "mbufferio/_mbufferio.pyx":824
+  /* "mbufferio/_mbufferio.pyx":871
  *     if s is None:
  *         return u''
  *     if PyUnicode_Check(s):             # <<<<<<<<<<<<<<
@@ -13125,7 +13573,7 @@ static PyObject *__pyx_f_9mbufferio_10_mbufferio_make_unicode(PyObject *__pyx_v_
   __pyx_t_2 = (PyUnicode_Check(__pyx_v_s) != 0);
   if (__pyx_t_2) {
 
-    /* "mbufferio/_mbufferio.pyx":825
+    /* "mbufferio/_mbufferio.pyx":872
  *         return u''
  *     if PyUnicode_Check(s):
  *         return s             # <<<<<<<<<<<<<<
@@ -13133,12 +13581,12 @@ static PyObject *__pyx_f_9mbufferio_10_mbufferio_make_unicode(PyObject *__pyx_v_
  *         return s.decode('utf-8')
  */
     __Pyx_XDECREF(__pyx_r);
-    if (!(likely(PyUnicode_CheckExact(__pyx_v_s))||((__pyx_v_s) == Py_None)||(PyErr_Format(PyExc_TypeError, "Expected %.16s, got %.200s", "unicode", Py_TYPE(__pyx_v_s)->tp_name), 0))) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 825; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+    if (!(likely(PyUnicode_CheckExact(__pyx_v_s))||((__pyx_v_s) == Py_None)||(PyErr_Format(PyExc_TypeError, "Expected %.16s, got %.200s", "unicode", Py_TYPE(__pyx_v_s)->tp_name), 0))) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 872; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
     __Pyx_INCREF(__pyx_v_s);
     __pyx_r = ((PyObject*)__pyx_v_s);
     goto __pyx_L0;
 
-    /* "mbufferio/_mbufferio.pyx":824
+    /* "mbufferio/_mbufferio.pyx":871
  *     if s is None:
  *         return u''
  *     if PyUnicode_Check(s):             # <<<<<<<<<<<<<<
@@ -13147,7 +13595,7 @@ static PyObject *__pyx_f_9mbufferio_10_mbufferio_make_unicode(PyObject *__pyx_v_
  */
   }
 
-  /* "mbufferio/_mbufferio.pyx":826
+  /* "mbufferio/_mbufferio.pyx":873
  *     if PyUnicode_Check(s):
  *         return s
  *     if PyBytes_Check(s):             # <<<<<<<<<<<<<<
@@ -13157,7 +13605,7 @@ static PyObject *__pyx_f_9mbufferio_10_mbufferio_make_unicode(PyObject *__pyx_v_
   __pyx_t_2 = (PyBytes_Check(__pyx_v_s) != 0);
   if (__pyx_t_2) {
 
-    /* "mbufferio/_mbufferio.pyx":827
+    /* "mbufferio/_mbufferio.pyx":874
  *         return s
  *     if PyBytes_Check(s):
  *         return s.decode('utf-8')             # <<<<<<<<<<<<<<
@@ -13165,17 +13613,17 @@ static PyObject *__pyx_f_9mbufferio_10_mbufferio_make_unicode(PyObject *__pyx_v_
  *         return s.__bytes__().decode('utf-8')
  */
     __Pyx_XDECREF(__pyx_r);
-    __pyx_t_3 = __Pyx_PyObject_GetAttrStr(__pyx_v_s, __pyx_n_s_decode); if (unlikely(!__pyx_t_3)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 827; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+    __pyx_t_3 = __Pyx_PyObject_GetAttrStr(__pyx_v_s, __pyx_n_s_decode); if (unlikely(!__pyx_t_3)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 874; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
     __Pyx_GOTREF(__pyx_t_3);
-    __pyx_t_4 = __Pyx_PyObject_Call(__pyx_t_3, __pyx_tuple__47, NULL); if (unlikely(!__pyx_t_4)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 827; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+    __pyx_t_4 = __Pyx_PyObject_Call(__pyx_t_3, __pyx_tuple__47, NULL); if (unlikely(!__pyx_t_4)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 874; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
     __Pyx_GOTREF(__pyx_t_4);
     __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
-    if (!(likely(PyUnicode_CheckExact(__pyx_t_4))||((__pyx_t_4) == Py_None)||(PyErr_Format(PyExc_TypeError, "Expected %.16s, got %.200s", "unicode", Py_TYPE(__pyx_t_4)->tp_name), 0))) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 827; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+    if (!(likely(PyUnicode_CheckExact(__pyx_t_4))||((__pyx_t_4) == Py_None)||(PyErr_Format(PyExc_TypeError, "Expected %.16s, got %.200s", "unicode", Py_TYPE(__pyx_t_4)->tp_name), 0))) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 874; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
     __pyx_r = ((PyObject*)__pyx_t_4);
     __pyx_t_4 = 0;
     goto __pyx_L0;
 
-    /* "mbufferio/_mbufferio.pyx":826
+    /* "mbufferio/_mbufferio.pyx":873
  *     if PyUnicode_Check(s):
  *         return s
  *     if PyBytes_Check(s):             # <<<<<<<<<<<<<<
@@ -13184,18 +13632,18 @@ static PyObject *__pyx_f_9mbufferio_10_mbufferio_make_unicode(PyObject *__pyx_v_
  */
   }
 
-  /* "mbufferio/_mbufferio.pyx":828
+  /* "mbufferio/_mbufferio.pyx":875
  *     if PyBytes_Check(s):
  *         return s.decode('utf-8')
  *     if hasattr(s, '__bytes__'):             # <<<<<<<<<<<<<<
  *         return s.__bytes__().decode('utf-8')
  *     if hasattr(s, '__unicode__'):
  */
-  __pyx_t_2 = PyObject_HasAttr(__pyx_v_s, __pyx_n_s_bytes); if (unlikely(__pyx_t_2 == -1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 828; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __pyx_t_2 = PyObject_HasAttr(__pyx_v_s, __pyx_n_s_bytes); if (unlikely(__pyx_t_2 == -1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 875; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
   __pyx_t_1 = (__pyx_t_2 != 0);
   if (__pyx_t_1) {
 
-    /* "mbufferio/_mbufferio.pyx":829
+    /* "mbufferio/_mbufferio.pyx":876
  *         return s.decode('utf-8')
  *     if hasattr(s, '__bytes__'):
  *         return s.__bytes__().decode('utf-8')             # <<<<<<<<<<<<<<
@@ -13203,7 +13651,7 @@ static PyObject *__pyx_f_9mbufferio_10_mbufferio_make_unicode(PyObject *__pyx_v_
  *         return s.__unicode__()
  */
     __Pyx_XDECREF(__pyx_r);
-    __pyx_t_3 = __Pyx_PyObject_GetAttrStr(__pyx_v_s, __pyx_n_s_bytes); if (unlikely(!__pyx_t_3)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 829; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+    __pyx_t_3 = __Pyx_PyObject_GetAttrStr(__pyx_v_s, __pyx_n_s_bytes); if (unlikely(!__pyx_t_3)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 876; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
     __Pyx_GOTREF(__pyx_t_3);
     __pyx_t_5 = NULL;
     if (CYTHON_COMPILING_IN_CPYTHON && likely(PyMethod_Check(__pyx_t_3))) {
@@ -13216,25 +13664,25 @@ static PyObject *__pyx_f_9mbufferio_10_mbufferio_make_unicode(PyObject *__pyx_v_
       }
     }
     if (__pyx_t_5) {
-      __pyx_t_4 = __Pyx_PyObject_CallOneArg(__pyx_t_3, __pyx_t_5); if (unlikely(!__pyx_t_4)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 829; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+      __pyx_t_4 = __Pyx_PyObject_CallOneArg(__pyx_t_3, __pyx_t_5); if (unlikely(!__pyx_t_4)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 876; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
       __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
     } else {
-      __pyx_t_4 = __Pyx_PyObject_CallNoArg(__pyx_t_3); if (unlikely(!__pyx_t_4)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 829; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+      __pyx_t_4 = __Pyx_PyObject_CallNoArg(__pyx_t_3); if (unlikely(!__pyx_t_4)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 876; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
     }
     __Pyx_GOTREF(__pyx_t_4);
     __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
-    __pyx_t_3 = __Pyx_PyObject_GetAttrStr(__pyx_t_4, __pyx_n_s_decode); if (unlikely(!__pyx_t_3)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 829; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+    __pyx_t_3 = __Pyx_PyObject_GetAttrStr(__pyx_t_4, __pyx_n_s_decode); if (unlikely(!__pyx_t_3)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 876; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
     __Pyx_GOTREF(__pyx_t_3);
     __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
-    __pyx_t_4 = __Pyx_PyObject_Call(__pyx_t_3, __pyx_tuple__48, NULL); if (unlikely(!__pyx_t_4)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 829; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+    __pyx_t_4 = __Pyx_PyObject_Call(__pyx_t_3, __pyx_tuple__48, NULL); if (unlikely(!__pyx_t_4)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 876; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
     __Pyx_GOTREF(__pyx_t_4);
     __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
-    if (!(likely(PyUnicode_CheckExact(__pyx_t_4))||((__pyx_t_4) == Py_None)||(PyErr_Format(PyExc_TypeError, "Expected %.16s, got %.200s", "unicode", Py_TYPE(__pyx_t_4)->tp_name), 0))) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 829; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+    if (!(likely(PyUnicode_CheckExact(__pyx_t_4))||((__pyx_t_4) == Py_None)||(PyErr_Format(PyExc_TypeError, "Expected %.16s, got %.200s", "unicode", Py_TYPE(__pyx_t_4)->tp_name), 0))) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 876; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
     __pyx_r = ((PyObject*)__pyx_t_4);
     __pyx_t_4 = 0;
     goto __pyx_L0;
 
-    /* "mbufferio/_mbufferio.pyx":828
+    /* "mbufferio/_mbufferio.pyx":875
  *     if PyBytes_Check(s):
  *         return s.decode('utf-8')
  *     if hasattr(s, '__bytes__'):             # <<<<<<<<<<<<<<
@@ -13243,18 +13691,18 @@ static PyObject *__pyx_f_9mbufferio_10_mbufferio_make_unicode(PyObject *__pyx_v_
  */
   }
 
-  /* "mbufferio/_mbufferio.pyx":830
+  /* "mbufferio/_mbufferio.pyx":877
  *     if hasattr(s, '__bytes__'):
  *         return s.__bytes__().decode('utf-8')
  *     if hasattr(s, '__unicode__'):             # <<<<<<<<<<<<<<
  *         return s.__unicode__()
  *     return make_unicode(unicode(s))
  */
-  __pyx_t_1 = PyObject_HasAttr(__pyx_v_s, __pyx_n_s_unicode); if (unlikely(__pyx_t_1 == -1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 830; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __pyx_t_1 = PyObject_HasAttr(__pyx_v_s, __pyx_n_s_unicode); if (unlikely(__pyx_t_1 == -1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 877; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
   __pyx_t_2 = (__pyx_t_1 != 0);
   if (__pyx_t_2) {
 
-    /* "mbufferio/_mbufferio.pyx":831
+    /* "mbufferio/_mbufferio.pyx":878
  *         return s.__bytes__().decode('utf-8')
  *     if hasattr(s, '__unicode__'):
  *         return s.__unicode__()             # <<<<<<<<<<<<<<
@@ -13262,7 +13710,7 @@ static PyObject *__pyx_f_9mbufferio_10_mbufferio_make_unicode(PyObject *__pyx_v_
  * 
  */
     __Pyx_XDECREF(__pyx_r);
-    __pyx_t_3 = __Pyx_PyObject_GetAttrStr(__pyx_v_s, __pyx_n_s_unicode); if (unlikely(!__pyx_t_3)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 831; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+    __pyx_t_3 = __Pyx_PyObject_GetAttrStr(__pyx_v_s, __pyx_n_s_unicode); if (unlikely(!__pyx_t_3)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 878; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
     __Pyx_GOTREF(__pyx_t_3);
     __pyx_t_5 = NULL;
     if (CYTHON_COMPILING_IN_CPYTHON && likely(PyMethod_Check(__pyx_t_3))) {
@@ -13275,19 +13723,19 @@ static PyObject *__pyx_f_9mbufferio_10_mbufferio_make_unicode(PyObject *__pyx_v_
       }
     }
     if (__pyx_t_5) {
-      __pyx_t_4 = __Pyx_PyObject_CallOneArg(__pyx_t_3, __pyx_t_5); if (unlikely(!__pyx_t_4)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 831; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+      __pyx_t_4 = __Pyx_PyObject_CallOneArg(__pyx_t_3, __pyx_t_5); if (unlikely(!__pyx_t_4)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 878; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
       __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
     } else {
-      __pyx_t_4 = __Pyx_PyObject_CallNoArg(__pyx_t_3); if (unlikely(!__pyx_t_4)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 831; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+      __pyx_t_4 = __Pyx_PyObject_CallNoArg(__pyx_t_3); if (unlikely(!__pyx_t_4)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 878; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
     }
     __Pyx_GOTREF(__pyx_t_4);
     __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
-    if (!(likely(PyUnicode_CheckExact(__pyx_t_4))||((__pyx_t_4) == Py_None)||(PyErr_Format(PyExc_TypeError, "Expected %.16s, got %.200s", "unicode", Py_TYPE(__pyx_t_4)->tp_name), 0))) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 831; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+    if (!(likely(PyUnicode_CheckExact(__pyx_t_4))||((__pyx_t_4) == Py_None)||(PyErr_Format(PyExc_TypeError, "Expected %.16s, got %.200s", "unicode", Py_TYPE(__pyx_t_4)->tp_name), 0))) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 878; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
     __pyx_r = ((PyObject*)__pyx_t_4);
     __pyx_t_4 = 0;
     goto __pyx_L0;
 
-    /* "mbufferio/_mbufferio.pyx":830
+    /* "mbufferio/_mbufferio.pyx":877
  *     if hasattr(s, '__bytes__'):
  *         return s.__bytes__().decode('utf-8')
  *     if hasattr(s, '__unicode__'):             # <<<<<<<<<<<<<<
@@ -13296,7 +13744,7 @@ static PyObject *__pyx_f_9mbufferio_10_mbufferio_make_unicode(PyObject *__pyx_v_
  */
   }
 
-  /* "mbufferio/_mbufferio.pyx":832
+  /* "mbufferio/_mbufferio.pyx":879
  *     if hasattr(s, '__unicode__'):
  *         return s.__unicode__()
  *     return make_unicode(unicode(s))             # <<<<<<<<<<<<<<
@@ -13304,22 +13752,22 @@ static PyObject *__pyx_f_9mbufferio_10_mbufferio_make_unicode(PyObject *__pyx_v_
  * 
  */
   __Pyx_XDECREF(__pyx_r);
-  __pyx_t_4 = PyTuple_New(1); if (unlikely(!__pyx_t_4)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 832; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __pyx_t_4 = PyTuple_New(1); if (unlikely(!__pyx_t_4)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 879; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
   __Pyx_GOTREF(__pyx_t_4);
   __Pyx_INCREF(__pyx_v_s);
   __Pyx_GIVEREF(__pyx_v_s);
   PyTuple_SET_ITEM(__pyx_t_4, 0, __pyx_v_s);
-  __pyx_t_3 = __Pyx_PyObject_Call(((PyObject *)(&PyUnicode_Type)), __pyx_t_4, NULL); if (unlikely(!__pyx_t_3)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 832; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __pyx_t_3 = __Pyx_PyObject_Call(((PyObject *)(&PyUnicode_Type)), __pyx_t_4, NULL); if (unlikely(!__pyx_t_3)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 879; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
   __Pyx_GOTREF(__pyx_t_3);
   __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
-  __pyx_t_4 = __pyx_f_9mbufferio_10_mbufferio_make_unicode(__pyx_t_3, 0); if (unlikely(!__pyx_t_4)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 832; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __pyx_t_4 = __pyx_f_9mbufferio_10_mbufferio_make_unicode(__pyx_t_3, 0); if (unlikely(!__pyx_t_4)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 879; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
   __Pyx_GOTREF(__pyx_t_4);
   __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
   __pyx_r = ((PyObject*)__pyx_t_4);
   __pyx_t_4 = 0;
   goto __pyx_L0;
 
-  /* "mbufferio/_mbufferio.pyx":821
+  /* "mbufferio/_mbufferio.pyx":868
  *     return murmur128(obj, prefix, to_unicode=True)
  * 
  * cpdef unicode make_unicode(s):             # <<<<<<<<<<<<<<
@@ -13362,7 +13810,7 @@ static PyObject *__pyx_pf_9mbufferio_10_mbufferio_6make_unicode(CYTHON_UNUSED Py
   int __pyx_clineno = 0;
   __Pyx_RefNannySetupContext("make_unicode", 0);
   __Pyx_XDECREF(__pyx_r);
-  __pyx_t_1 = __pyx_f_9mbufferio_10_mbufferio_make_unicode(__pyx_v_s, 0); if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 821; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __pyx_t_1 = __pyx_f_9mbufferio_10_mbufferio_make_unicode(__pyx_v_s, 0); if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 868; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
   __Pyx_GOTREF(__pyx_t_1);
   __pyx_r = __pyx_t_1;
   __pyx_t_1 = 0;
@@ -13379,7 +13827,7 @@ static PyObject *__pyx_pf_9mbufferio_10_mbufferio_6make_unicode(CYTHON_UNUSED Py
   return __pyx_r;
 }
 
-/* "mbufferio/_mbufferio.pyx":835
+/* "mbufferio/_mbufferio.pyx":882
  * 
  * 
  * cpdef bytes make_utf8(s):             # <<<<<<<<<<<<<<
@@ -13401,7 +13849,7 @@ static PyObject *__pyx_f_9mbufferio_10_mbufferio_make_utf8(PyObject *__pyx_v_s, 
   int __pyx_clineno = 0;
   __Pyx_RefNannySetupContext("make_utf8", 0);
 
-  /* "mbufferio/_mbufferio.pyx":836
+  /* "mbufferio/_mbufferio.pyx":883
  * 
  * cpdef bytes make_utf8(s):
  *     if s is None:             # <<<<<<<<<<<<<<
@@ -13412,7 +13860,7 @@ static PyObject *__pyx_f_9mbufferio_10_mbufferio_make_utf8(PyObject *__pyx_v_s, 
   __pyx_t_2 = (__pyx_t_1 != 0);
   if (__pyx_t_2) {
 
-    /* "mbufferio/_mbufferio.pyx":837
+    /* "mbufferio/_mbufferio.pyx":884
  * cpdef bytes make_utf8(s):
  *     if s is None:
  *         return b''             # <<<<<<<<<<<<<<
@@ -13420,11 +13868,11 @@ static PyObject *__pyx_f_9mbufferio_10_mbufferio_make_utf8(PyObject *__pyx_v_s, 
  *         return s
  */
     __Pyx_XDECREF(__pyx_r);
-    __Pyx_INCREF(__pyx_kp_b__14);
-    __pyx_r = __pyx_kp_b__14;
+    __Pyx_INCREF(__pyx_kp_b__15);
+    __pyx_r = __pyx_kp_b__15;
     goto __pyx_L0;
 
-    /* "mbufferio/_mbufferio.pyx":836
+    /* "mbufferio/_mbufferio.pyx":883
  * 
  * cpdef bytes make_utf8(s):
  *     if s is None:             # <<<<<<<<<<<<<<
@@ -13433,7 +13881,7 @@ static PyObject *__pyx_f_9mbufferio_10_mbufferio_make_utf8(PyObject *__pyx_v_s, 
  */
   }
 
-  /* "mbufferio/_mbufferio.pyx":838
+  /* "mbufferio/_mbufferio.pyx":885
  *     if s is None:
  *         return b''
  *     if PyBytes_Check(s):             # <<<<<<<<<<<<<<
@@ -13443,7 +13891,7 @@ static PyObject *__pyx_f_9mbufferio_10_mbufferio_make_utf8(PyObject *__pyx_v_s, 
   __pyx_t_2 = (PyBytes_Check(__pyx_v_s) != 0);
   if (__pyx_t_2) {
 
-    /* "mbufferio/_mbufferio.pyx":839
+    /* "mbufferio/_mbufferio.pyx":886
  *         return b''
  *     if PyBytes_Check(s):
  *         return s             # <<<<<<<<<<<<<<
@@ -13451,12 +13899,12 @@ static PyObject *__pyx_f_9mbufferio_10_mbufferio_make_utf8(PyObject *__pyx_v_s, 
  *         return PyUnicode_AsUTF8String(s)
  */
     __Pyx_XDECREF(__pyx_r);
-    if (!(likely(PyBytes_CheckExact(__pyx_v_s))||((__pyx_v_s) == Py_None)||(PyErr_Format(PyExc_TypeError, "Expected %.16s, got %.200s", "bytes", Py_TYPE(__pyx_v_s)->tp_name), 0))) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 839; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+    if (!(likely(PyBytes_CheckExact(__pyx_v_s))||((__pyx_v_s) == Py_None)||(PyErr_Format(PyExc_TypeError, "Expected %.16s, got %.200s", "bytes", Py_TYPE(__pyx_v_s)->tp_name), 0))) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 886; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
     __Pyx_INCREF(__pyx_v_s);
     __pyx_r = ((PyObject*)__pyx_v_s);
     goto __pyx_L0;
 
-    /* "mbufferio/_mbufferio.pyx":838
+    /* "mbufferio/_mbufferio.pyx":885
  *     if s is None:
  *         return b''
  *     if PyBytes_Check(s):             # <<<<<<<<<<<<<<
@@ -13465,7 +13913,7 @@ static PyObject *__pyx_f_9mbufferio_10_mbufferio_make_utf8(PyObject *__pyx_v_s, 
  */
   }
 
-  /* "mbufferio/_mbufferio.pyx":840
+  /* "mbufferio/_mbufferio.pyx":887
  *     if PyBytes_Check(s):
  *         return s
  *     if PyUnicode_Check(s):             # <<<<<<<<<<<<<<
@@ -13475,7 +13923,7 @@ static PyObject *__pyx_f_9mbufferio_10_mbufferio_make_utf8(PyObject *__pyx_v_s, 
   __pyx_t_2 = (PyUnicode_Check(__pyx_v_s) != 0);
   if (__pyx_t_2) {
 
-    /* "mbufferio/_mbufferio.pyx":841
+    /* "mbufferio/_mbufferio.pyx":888
  *         return s
  *     if PyUnicode_Check(s):
  *         return PyUnicode_AsUTF8String(s)             # <<<<<<<<<<<<<<
@@ -13483,13 +13931,13 @@ static PyObject *__pyx_f_9mbufferio_10_mbufferio_make_utf8(PyObject *__pyx_v_s, 
  *         return s.__bytes__()
  */
     __Pyx_XDECREF(__pyx_r);
-    __pyx_t_3 = PyUnicode_AsUTF8String(__pyx_v_s); if (unlikely(!__pyx_t_3)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 841; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+    __pyx_t_3 = PyUnicode_AsUTF8String(__pyx_v_s); if (unlikely(!__pyx_t_3)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 888; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
     __Pyx_GOTREF(__pyx_t_3);
     __pyx_r = ((PyObject*)__pyx_t_3);
     __pyx_t_3 = 0;
     goto __pyx_L0;
 
-    /* "mbufferio/_mbufferio.pyx":840
+    /* "mbufferio/_mbufferio.pyx":887
  *     if PyBytes_Check(s):
  *         return s
  *     if PyUnicode_Check(s):             # <<<<<<<<<<<<<<
@@ -13498,18 +13946,18 @@ static PyObject *__pyx_f_9mbufferio_10_mbufferio_make_utf8(PyObject *__pyx_v_s, 
  */
   }
 
-  /* "mbufferio/_mbufferio.pyx":842
+  /* "mbufferio/_mbufferio.pyx":889
  *     if PyUnicode_Check(s):
  *         return PyUnicode_AsUTF8String(s)
  *     if hasattr(s, '__bytes__'):             # <<<<<<<<<<<<<<
  *         return s.__bytes__()
  *     if hasattr(s, '__unicode__'):
  */
-  __pyx_t_2 = PyObject_HasAttr(__pyx_v_s, __pyx_n_s_bytes); if (unlikely(__pyx_t_2 == -1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 842; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __pyx_t_2 = PyObject_HasAttr(__pyx_v_s, __pyx_n_s_bytes); if (unlikely(__pyx_t_2 == -1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 889; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
   __pyx_t_1 = (__pyx_t_2 != 0);
   if (__pyx_t_1) {
 
-    /* "mbufferio/_mbufferio.pyx":843
+    /* "mbufferio/_mbufferio.pyx":890
  *         return PyUnicode_AsUTF8String(s)
  *     if hasattr(s, '__bytes__'):
  *         return s.__bytes__()             # <<<<<<<<<<<<<<
@@ -13517,7 +13965,7 @@ static PyObject *__pyx_f_9mbufferio_10_mbufferio_make_utf8(PyObject *__pyx_v_s, 
  *         return PyUnicode_AsUTF8String(s.__unicode__())
  */
     __Pyx_XDECREF(__pyx_r);
-    __pyx_t_4 = __Pyx_PyObject_GetAttrStr(__pyx_v_s, __pyx_n_s_bytes); if (unlikely(!__pyx_t_4)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 843; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+    __pyx_t_4 = __Pyx_PyObject_GetAttrStr(__pyx_v_s, __pyx_n_s_bytes); if (unlikely(!__pyx_t_4)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 890; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
     __Pyx_GOTREF(__pyx_t_4);
     __pyx_t_5 = NULL;
     if (CYTHON_COMPILING_IN_CPYTHON && likely(PyMethod_Check(__pyx_t_4))) {
@@ -13530,19 +13978,19 @@ static PyObject *__pyx_f_9mbufferio_10_mbufferio_make_utf8(PyObject *__pyx_v_s, 
       }
     }
     if (__pyx_t_5) {
-      __pyx_t_3 = __Pyx_PyObject_CallOneArg(__pyx_t_4, __pyx_t_5); if (unlikely(!__pyx_t_3)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 843; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+      __pyx_t_3 = __Pyx_PyObject_CallOneArg(__pyx_t_4, __pyx_t_5); if (unlikely(!__pyx_t_3)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 890; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
       __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
     } else {
-      __pyx_t_3 = __Pyx_PyObject_CallNoArg(__pyx_t_4); if (unlikely(!__pyx_t_3)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 843; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+      __pyx_t_3 = __Pyx_PyObject_CallNoArg(__pyx_t_4); if (unlikely(!__pyx_t_3)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 890; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
     }
     __Pyx_GOTREF(__pyx_t_3);
     __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
-    if (!(likely(PyBytes_CheckExact(__pyx_t_3))||((__pyx_t_3) == Py_None)||(PyErr_Format(PyExc_TypeError, "Expected %.16s, got %.200s", "bytes", Py_TYPE(__pyx_t_3)->tp_name), 0))) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 843; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+    if (!(likely(PyBytes_CheckExact(__pyx_t_3))||((__pyx_t_3) == Py_None)||(PyErr_Format(PyExc_TypeError, "Expected %.16s, got %.200s", "bytes", Py_TYPE(__pyx_t_3)->tp_name), 0))) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 890; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
     __pyx_r = ((PyObject*)__pyx_t_3);
     __pyx_t_3 = 0;
     goto __pyx_L0;
 
-    /* "mbufferio/_mbufferio.pyx":842
+    /* "mbufferio/_mbufferio.pyx":889
  *     if PyUnicode_Check(s):
  *         return PyUnicode_AsUTF8String(s)
  *     if hasattr(s, '__bytes__'):             # <<<<<<<<<<<<<<
@@ -13551,25 +13999,25 @@ static PyObject *__pyx_f_9mbufferio_10_mbufferio_make_utf8(PyObject *__pyx_v_s, 
  */
   }
 
-  /* "mbufferio/_mbufferio.pyx":844
+  /* "mbufferio/_mbufferio.pyx":891
  *     if hasattr(s, '__bytes__'):
  *         return s.__bytes__()
  *     if hasattr(s, '__unicode__'):             # <<<<<<<<<<<<<<
  *         return PyUnicode_AsUTF8String(s.__unicode__())
  *     return make_utf8(bytes(s))
  */
-  __pyx_t_1 = PyObject_HasAttr(__pyx_v_s, __pyx_n_s_unicode); if (unlikely(__pyx_t_1 == -1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 844; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __pyx_t_1 = PyObject_HasAttr(__pyx_v_s, __pyx_n_s_unicode); if (unlikely(__pyx_t_1 == -1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 891; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
   __pyx_t_2 = (__pyx_t_1 != 0);
   if (__pyx_t_2) {
 
-    /* "mbufferio/_mbufferio.pyx":845
+    /* "mbufferio/_mbufferio.pyx":892
  *         return s.__bytes__()
  *     if hasattr(s, '__unicode__'):
  *         return PyUnicode_AsUTF8String(s.__unicode__())             # <<<<<<<<<<<<<<
  *     return make_utf8(bytes(s))
  */
     __Pyx_XDECREF(__pyx_r);
-    __pyx_t_4 = __Pyx_PyObject_GetAttrStr(__pyx_v_s, __pyx_n_s_unicode); if (unlikely(!__pyx_t_4)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 845; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+    __pyx_t_4 = __Pyx_PyObject_GetAttrStr(__pyx_v_s, __pyx_n_s_unicode); if (unlikely(!__pyx_t_4)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 892; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
     __Pyx_GOTREF(__pyx_t_4);
     __pyx_t_5 = NULL;
     if (CYTHON_COMPILING_IN_CPYTHON && likely(PyMethod_Check(__pyx_t_4))) {
@@ -13582,21 +14030,21 @@ static PyObject *__pyx_f_9mbufferio_10_mbufferio_make_utf8(PyObject *__pyx_v_s, 
       }
     }
     if (__pyx_t_5) {
-      __pyx_t_3 = __Pyx_PyObject_CallOneArg(__pyx_t_4, __pyx_t_5); if (unlikely(!__pyx_t_3)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 845; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+      __pyx_t_3 = __Pyx_PyObject_CallOneArg(__pyx_t_4, __pyx_t_5); if (unlikely(!__pyx_t_3)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 892; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
       __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
     } else {
-      __pyx_t_3 = __Pyx_PyObject_CallNoArg(__pyx_t_4); if (unlikely(!__pyx_t_3)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 845; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+      __pyx_t_3 = __Pyx_PyObject_CallNoArg(__pyx_t_4); if (unlikely(!__pyx_t_3)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 892; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
     }
     __Pyx_GOTREF(__pyx_t_3);
     __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
-    __pyx_t_4 = PyUnicode_AsUTF8String(__pyx_t_3); if (unlikely(!__pyx_t_4)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 845; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+    __pyx_t_4 = PyUnicode_AsUTF8String(__pyx_t_3); if (unlikely(!__pyx_t_4)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 892; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
     __Pyx_GOTREF(__pyx_t_4);
     __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
     __pyx_r = ((PyObject*)__pyx_t_4);
     __pyx_t_4 = 0;
     goto __pyx_L0;
 
-    /* "mbufferio/_mbufferio.pyx":844
+    /* "mbufferio/_mbufferio.pyx":891
  *     if hasattr(s, '__bytes__'):
  *         return s.__bytes__()
  *     if hasattr(s, '__unicode__'):             # <<<<<<<<<<<<<<
@@ -13605,28 +14053,28 @@ static PyObject *__pyx_f_9mbufferio_10_mbufferio_make_utf8(PyObject *__pyx_v_s, 
  */
   }
 
-  /* "mbufferio/_mbufferio.pyx":846
+  /* "mbufferio/_mbufferio.pyx":893
  *     if hasattr(s, '__unicode__'):
  *         return PyUnicode_AsUTF8String(s.__unicode__())
  *     return make_utf8(bytes(s))             # <<<<<<<<<<<<<<
  */
   __Pyx_XDECREF(__pyx_r);
-  __pyx_t_4 = PyTuple_New(1); if (unlikely(!__pyx_t_4)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 846; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __pyx_t_4 = PyTuple_New(1); if (unlikely(!__pyx_t_4)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 893; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
   __Pyx_GOTREF(__pyx_t_4);
   __Pyx_INCREF(__pyx_v_s);
   __Pyx_GIVEREF(__pyx_v_s);
   PyTuple_SET_ITEM(__pyx_t_4, 0, __pyx_v_s);
-  __pyx_t_3 = __Pyx_PyObject_Call(((PyObject *)(&PyBytes_Type)), __pyx_t_4, NULL); if (unlikely(!__pyx_t_3)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 846; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __pyx_t_3 = __Pyx_PyObject_Call(((PyObject *)(&PyBytes_Type)), __pyx_t_4, NULL); if (unlikely(!__pyx_t_3)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 893; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
   __Pyx_GOTREF(__pyx_t_3);
   __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
-  __pyx_t_4 = __pyx_f_9mbufferio_10_mbufferio_make_utf8(__pyx_t_3, 0); if (unlikely(!__pyx_t_4)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 846; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __pyx_t_4 = __pyx_f_9mbufferio_10_mbufferio_make_utf8(__pyx_t_3, 0); if (unlikely(!__pyx_t_4)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 893; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
   __Pyx_GOTREF(__pyx_t_4);
   __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
   __pyx_r = ((PyObject*)__pyx_t_4);
   __pyx_t_4 = 0;
   goto __pyx_L0;
 
-  /* "mbufferio/_mbufferio.pyx":835
+  /* "mbufferio/_mbufferio.pyx":882
  * 
  * 
  * cpdef bytes make_utf8(s):             # <<<<<<<<<<<<<<
@@ -13669,7 +14117,7 @@ static PyObject *__pyx_pf_9mbufferio_10_mbufferio_8make_utf8(CYTHON_UNUSED PyObj
   int __pyx_clineno = 0;
   __Pyx_RefNannySetupContext("make_utf8", 0);
   __Pyx_XDECREF(__pyx_r);
-  __pyx_t_1 = __pyx_f_9mbufferio_10_mbufferio_make_utf8(__pyx_v_s, 0); if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 835; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __pyx_t_1 = __pyx_f_9mbufferio_10_mbufferio_make_utf8(__pyx_v_s, 0); if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 882; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
   __Pyx_GOTREF(__pyx_t_1);
   __pyx_r = __pyx_t_1;
   __pyx_t_1 = 0;
@@ -13686,7 +14134,7 @@ static PyObject *__pyx_pf_9mbufferio_10_mbufferio_8make_utf8(CYTHON_UNUSED PyObj
   return __pyx_r;
 }
 
-/* "mbufferio/_mbufferio.pxd":56
+/* "mbufferio/_mbufferio.pxd":61
  * 
  * 
  * cpdef inline uint64_t up_power2(uint64_t v):             # <<<<<<<<<<<<<<
@@ -13700,7 +14148,7 @@ static CYTHON_INLINE uint64_t __pyx_f_9mbufferio_10_mbufferio_up_power2(uint64_t
   __Pyx_RefNannyDeclarations
   __Pyx_RefNannySetupContext("up_power2", 0);
 
-  /* "mbufferio/_mbufferio.pxd":57
+  /* "mbufferio/_mbufferio.pxd":62
  * 
  * cpdef inline uint64_t up_power2(uint64_t v):
  *     v -= 1             # <<<<<<<<<<<<<<
@@ -13709,7 +14157,7 @@ static CYTHON_INLINE uint64_t __pyx_f_9mbufferio_10_mbufferio_up_power2(uint64_t
  */
   __pyx_v_v = (__pyx_v_v - 1);
 
-  /* "mbufferio/_mbufferio.pxd":58
+  /* "mbufferio/_mbufferio.pxd":63
  * cpdef inline uint64_t up_power2(uint64_t v):
  *     v -= 1
  *     v |= v >> 1             # <<<<<<<<<<<<<<
@@ -13718,7 +14166,7 @@ static CYTHON_INLINE uint64_t __pyx_f_9mbufferio_10_mbufferio_up_power2(uint64_t
  */
   __pyx_v_v = (__pyx_v_v | (__pyx_v_v >> 1));
 
-  /* "mbufferio/_mbufferio.pxd":59
+  /* "mbufferio/_mbufferio.pxd":64
  *     v -= 1
  *     v |= v >> 1
  *     v |= v >> 2             # <<<<<<<<<<<<<<
@@ -13727,7 +14175,7 @@ static CYTHON_INLINE uint64_t __pyx_f_9mbufferio_10_mbufferio_up_power2(uint64_t
  */
   __pyx_v_v = (__pyx_v_v | (__pyx_v_v >> 2));
 
-  /* "mbufferio/_mbufferio.pxd":60
+  /* "mbufferio/_mbufferio.pxd":65
  *     v |= v >> 1
  *     v |= v >> 2
  *     v |= v >> 4             # <<<<<<<<<<<<<<
@@ -13736,7 +14184,7 @@ static CYTHON_INLINE uint64_t __pyx_f_9mbufferio_10_mbufferio_up_power2(uint64_t
  */
   __pyx_v_v = (__pyx_v_v | (__pyx_v_v >> 4));
 
-  /* "mbufferio/_mbufferio.pxd":61
+  /* "mbufferio/_mbufferio.pxd":66
  *     v |= v >> 2
  *     v |= v >> 4
  *     v |= v >> 8             # <<<<<<<<<<<<<<
@@ -13745,7 +14193,7 @@ static CYTHON_INLINE uint64_t __pyx_f_9mbufferio_10_mbufferio_up_power2(uint64_t
  */
   __pyx_v_v = (__pyx_v_v | (__pyx_v_v >> 8));
 
-  /* "mbufferio/_mbufferio.pxd":62
+  /* "mbufferio/_mbufferio.pxd":67
  *     v |= v >> 4
  *     v |= v >> 8
  *     v |= v >> 16             # <<<<<<<<<<<<<<
@@ -13754,7 +14202,7 @@ static CYTHON_INLINE uint64_t __pyx_f_9mbufferio_10_mbufferio_up_power2(uint64_t
  */
   __pyx_v_v = (__pyx_v_v | (__pyx_v_v >> 16));
 
-  /* "mbufferio/_mbufferio.pxd":63
+  /* "mbufferio/_mbufferio.pxd":68
  *     v |= v >> 8
  *     v |= v >> 16
  *     v |= v >> 32             # <<<<<<<<<<<<<<
@@ -13763,7 +14211,7 @@ static CYTHON_INLINE uint64_t __pyx_f_9mbufferio_10_mbufferio_up_power2(uint64_t
  */
   __pyx_v_v = (__pyx_v_v | (__pyx_v_v >> 32));
 
-  /* "mbufferio/_mbufferio.pxd":64
+  /* "mbufferio/_mbufferio.pxd":69
  *     v |= v >> 16
  *     v |= v >> 32
  *     v += 1             # <<<<<<<<<<<<<<
@@ -13772,7 +14220,7 @@ static CYTHON_INLINE uint64_t __pyx_f_9mbufferio_10_mbufferio_up_power2(uint64_t
  */
   __pyx_v_v = (__pyx_v_v + 1);
 
-  /* "mbufferio/_mbufferio.pxd":65
+  /* "mbufferio/_mbufferio.pxd":70
  *     v |= v >> 32
  *     v += 1
  *     return v             # <<<<<<<<<<<<<<
@@ -13782,7 +14230,7 @@ static CYTHON_INLINE uint64_t __pyx_f_9mbufferio_10_mbufferio_up_power2(uint64_t
   __pyx_r = __pyx_v_v;
   goto __pyx_L0;
 
-  /* "mbufferio/_mbufferio.pxd":56
+  /* "mbufferio/_mbufferio.pxd":61
  * 
  * 
  * cpdef inline uint64_t up_power2(uint64_t v):             # <<<<<<<<<<<<<<
@@ -13807,7 +14255,7 @@ static PyObject *__pyx_pw_9mbufferio_10_mbufferio_1up_power2(PyObject *__pyx_sel
   __Pyx_RefNannyDeclarations
   __Pyx_RefNannySetupContext("up_power2 (wrapper)", 0);
   assert(__pyx_arg_v); {
-    __pyx_v_v = __Pyx_PyInt_As_uint64_t(__pyx_arg_v); if (unlikely((__pyx_v_v == (uint64_t)-1) && PyErr_Occurred())) {__pyx_filename = __pyx_f[1]; __pyx_lineno = 56; __pyx_clineno = __LINE__; goto __pyx_L3_error;}
+    __pyx_v_v = __Pyx_PyInt_As_uint64_t(__pyx_arg_v); if (unlikely((__pyx_v_v == (uint64_t)-1) && PyErr_Occurred())) {__pyx_filename = __pyx_f[1]; __pyx_lineno = 61; __pyx_clineno = __LINE__; goto __pyx_L3_error;}
   }
   goto __pyx_L4_argument_unpacking_done;
   __pyx_L3_error:;
@@ -13831,7 +14279,7 @@ static PyObject *__pyx_pf_9mbufferio_10_mbufferio_up_power2(CYTHON_UNUSED PyObje
   int __pyx_clineno = 0;
   __Pyx_RefNannySetupContext("up_power2", 0);
   __Pyx_XDECREF(__pyx_r);
-  __pyx_t_1 = __Pyx_PyInt_From_uint64_t(__pyx_f_9mbufferio_10_mbufferio_up_power2(__pyx_v_v, 0)); if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[1]; __pyx_lineno = 56; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __pyx_t_1 = __Pyx_PyInt_From_uint64_t(__pyx_f_9mbufferio_10_mbufferio_up_power2(__pyx_v_v, 0)); if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[1]; __pyx_lineno = 61; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
   __Pyx_GOTREF(__pyx_t_1);
   __pyx_r = __pyx_t_1;
   __pyx_t_1 = 0;
@@ -25466,34 +25914,36 @@ static PyObject *__pyx_getprop_9mbufferio_10_mbufferio_9MBufferIO_is_a_reference
 }
 
 static PyMethodDef __pyx_methods_9mbufferio_10_mbufferio_MBufferIO[] = {
-  {"close", (PyCFunction)__pyx_pw_9mbufferio_10_mbufferio_9MBufferIO_7close, METH_NOARGS, __pyx_doc_9mbufferio_10_mbufferio_9MBufferIO_6close},
-  {"__enter__", (PyCFunction)__pyx_pw_9mbufferio_10_mbufferio_9MBufferIO_9__enter__, METH_NOARGS, 0},
-  {"__exit__", (PyCFunction)__pyx_pw_9mbufferio_10_mbufferio_9MBufferIO_11__exit__, METH_VARARGS|METH_KEYWORDS, 0},
-  {"detach", (PyCFunction)__pyx_pw_9mbufferio_10_mbufferio_9MBufferIO_13detach, METH_VARARGS|METH_KEYWORDS, __pyx_doc_9mbufferio_10_mbufferio_9MBufferIO_12detach},
-  {"write", (PyCFunction)__pyx_pw_9mbufferio_10_mbufferio_9MBufferIO_15write, METH_O, __pyx_doc_9mbufferio_10_mbufferio_9MBufferIO_14write},
-  {"seek", (PyCFunction)__pyx_pw_9mbufferio_10_mbufferio_9MBufferIO_17seek, METH_VARARGS|METH_KEYWORDS, __pyx_doc_9mbufferio_10_mbufferio_9MBufferIO_16seek},
-  {"read", (PyCFunction)__pyx_pw_9mbufferio_10_mbufferio_9MBufferIO_19read, METH_VARARGS|METH_KEYWORDS, __pyx_doc_9mbufferio_10_mbufferio_9MBufferIO_18read},
-  {"readl", (PyCFunction)__pyx_pw_9mbufferio_10_mbufferio_9MBufferIO_21readl, METH_VARARGS|METH_KEYWORDS, __pyx_doc_9mbufferio_10_mbufferio_9MBufferIO_20readl},
-  {"readline", (PyCFunction)__pyx_pw_9mbufferio_10_mbufferio_9MBufferIO_23readline, METH_VARARGS|METH_KEYWORDS, __pyx_doc_9mbufferio_10_mbufferio_9MBufferIO_22readline},
-  {"readall", (PyCFunction)__pyx_pw_9mbufferio_10_mbufferio_9MBufferIO_25readall, METH_NOARGS, __pyx_doc_9mbufferio_10_mbufferio_9MBufferIO_24readall},
-  {"getvalue", (PyCFunction)__pyx_pw_9mbufferio_10_mbufferio_9MBufferIO_29getvalue, METH_NOARGS, __pyx_doc_9mbufferio_10_mbufferio_9MBufferIO_28getvalue},
-  {"extend", (PyCFunction)__pyx_pw_9mbufferio_10_mbufferio_9MBufferIO_33extend, METH_O, __pyx_doc_9mbufferio_10_mbufferio_9MBufferIO_32extend},
-  {"readinto", (PyCFunction)__pyx_pw_9mbufferio_10_mbufferio_9MBufferIO_35readinto, METH_O, __pyx_doc_9mbufferio_10_mbufferio_9MBufferIO_34readinto},
-  {"exportto", (PyCFunction)__pyx_pw_9mbufferio_10_mbufferio_9MBufferIO_37exportto, METH_O, __pyx_doc_9mbufferio_10_mbufferio_9MBufferIO_36exportto},
-  {"tobytearray", (PyCFunction)__pyx_pw_9mbufferio_10_mbufferio_9MBufferIO_39tobytearray, METH_NOARGS, __pyx_doc_9mbufferio_10_mbufferio_9MBufferIO_38tobytearray},
-  {"tobytes", (PyCFunction)__pyx_pw_9mbufferio_10_mbufferio_9MBufferIO_41tobytes, METH_NOARGS, __pyx_doc_9mbufferio_10_mbufferio_9MBufferIO_40tobytes},
-  {"fileno", (PyCFunction)__pyx_pw_9mbufferio_10_mbufferio_9MBufferIO_43fileno, METH_NOARGS, __pyx_doc_9mbufferio_10_mbufferio_9MBufferIO_42fileno},
-  {"flush", (PyCFunction)__pyx_pw_9mbufferio_10_mbufferio_9MBufferIO_45flush, METH_NOARGS, __pyx_doc_9mbufferio_10_mbufferio_9MBufferIO_44flush},
-  {"isatty", (PyCFunction)__pyx_pw_9mbufferio_10_mbufferio_9MBufferIO_47isatty, METH_NOARGS, __pyx_doc_9mbufferio_10_mbufferio_9MBufferIO_46isatty},
-  {"readable", (PyCFunction)__pyx_pw_9mbufferio_10_mbufferio_9MBufferIO_49readable, METH_NOARGS, __pyx_doc_9mbufferio_10_mbufferio_9MBufferIO_48readable},
-  {"seekable", (PyCFunction)__pyx_pw_9mbufferio_10_mbufferio_9MBufferIO_51seekable, METH_NOARGS, __pyx_doc_9mbufferio_10_mbufferio_9MBufferIO_50seekable},
-  {"tell", (PyCFunction)__pyx_pw_9mbufferio_10_mbufferio_9MBufferIO_53tell, METH_NOARGS, __pyx_doc_9mbufferio_10_mbufferio_9MBufferIO_52tell},
-  {"writable", (PyCFunction)__pyx_pw_9mbufferio_10_mbufferio_9MBufferIO_55writable, METH_NOARGS, __pyx_doc_9mbufferio_10_mbufferio_9MBufferIO_54writable},
-  {"writelines", (PyCFunction)__pyx_pw_9mbufferio_10_mbufferio_9MBufferIO_57writelines, METH_O, __pyx_doc_9mbufferio_10_mbufferio_9MBufferIO_56writelines},
-  {"readlines", (PyCFunction)__pyx_pw_9mbufferio_10_mbufferio_9MBufferIO_59readlines, METH_VARARGS|METH_KEYWORDS, __pyx_doc_9mbufferio_10_mbufferio_9MBufferIO_58readlines},
-  {"murmur128", (PyCFunction)__pyx_pw_9mbufferio_10_mbufferio_9MBufferIO_70murmur128, METH_VARARGS|METH_KEYWORDS, __pyx_doc_9mbufferio_10_mbufferio_9MBufferIO_69murmur128},
-  {"__reduce__", (PyCFunction)__pyx_pw_9mbufferio_10_mbufferio_9MBufferIO_76__reduce__, METH_NOARGS, 0},
-  {"__copy__", (PyCFunction)__pyx_pw_9mbufferio_10_mbufferio_9MBufferIO_80__copy__, METH_NOARGS, 0},
+  {"from_mview", (PyCFunction)__pyx_pw_9mbufferio_10_mbufferio_9MBufferIO_7from_mview, METH_VARARGS|METH_KEYWORDS, __pyx_doc_9mbufferio_10_mbufferio_9MBufferIO_6from_mview},
+  {"close", (PyCFunction)__pyx_pw_9mbufferio_10_mbufferio_9MBufferIO_9close, METH_NOARGS, __pyx_doc_9mbufferio_10_mbufferio_9MBufferIO_8close},
+  {"__enter__", (PyCFunction)__pyx_pw_9mbufferio_10_mbufferio_9MBufferIO_11__enter__, METH_NOARGS, 0},
+  {"__exit__", (PyCFunction)__pyx_pw_9mbufferio_10_mbufferio_9MBufferIO_13__exit__, METH_VARARGS|METH_KEYWORDS, 0},
+  {"detach", (PyCFunction)__pyx_pw_9mbufferio_10_mbufferio_9MBufferIO_15detach, METH_VARARGS|METH_KEYWORDS, __pyx_doc_9mbufferio_10_mbufferio_9MBufferIO_14detach},
+  {"write", (PyCFunction)__pyx_pw_9mbufferio_10_mbufferio_9MBufferIO_17write, METH_O, __pyx_doc_9mbufferio_10_mbufferio_9MBufferIO_16write},
+  {"seek", (PyCFunction)__pyx_pw_9mbufferio_10_mbufferio_9MBufferIO_19seek, METH_VARARGS|METH_KEYWORDS, __pyx_doc_9mbufferio_10_mbufferio_9MBufferIO_18seek},
+  {"read", (PyCFunction)__pyx_pw_9mbufferio_10_mbufferio_9MBufferIO_21read, METH_VARARGS|METH_KEYWORDS, __pyx_doc_9mbufferio_10_mbufferio_9MBufferIO_20read},
+  {"readl", (PyCFunction)__pyx_pw_9mbufferio_10_mbufferio_9MBufferIO_23readl, METH_VARARGS|METH_KEYWORDS, __pyx_doc_9mbufferio_10_mbufferio_9MBufferIO_22readl},
+  {"readline", (PyCFunction)__pyx_pw_9mbufferio_10_mbufferio_9MBufferIO_25readline, METH_VARARGS|METH_KEYWORDS, __pyx_doc_9mbufferio_10_mbufferio_9MBufferIO_24readline},
+  {"readall", (PyCFunction)__pyx_pw_9mbufferio_10_mbufferio_9MBufferIO_27readall, METH_NOARGS, __pyx_doc_9mbufferio_10_mbufferio_9MBufferIO_26readall},
+  {"extend", (PyCFunction)__pyx_pw_9mbufferio_10_mbufferio_9MBufferIO_31extend, METH_O, __pyx_doc_9mbufferio_10_mbufferio_9MBufferIO_30extend},
+  {"readinto", (PyCFunction)__pyx_pw_9mbufferio_10_mbufferio_9MBufferIO_33readinto, METH_O, __pyx_doc_9mbufferio_10_mbufferio_9MBufferIO_32readinto},
+  {"exportto", (PyCFunction)__pyx_pw_9mbufferio_10_mbufferio_9MBufferIO_35exportto, METH_O, __pyx_doc_9mbufferio_10_mbufferio_9MBufferIO_34exportto},
+  {"tobytearray", (PyCFunction)__pyx_pw_9mbufferio_10_mbufferio_9MBufferIO_37tobytearray, METH_NOARGS, __pyx_doc_9mbufferio_10_mbufferio_9MBufferIO_36tobytearray},
+  {"tobytes", (PyCFunction)__pyx_pw_9mbufferio_10_mbufferio_9MBufferIO_39tobytes, METH_NOARGS, __pyx_doc_9mbufferio_10_mbufferio_9MBufferIO_38tobytes},
+  {"getvalue", (PyCFunction)__pyx_pw_9mbufferio_10_mbufferio_9MBufferIO_41getvalue, METH_NOARGS, __pyx_doc_9mbufferio_10_mbufferio_9MBufferIO_40getvalue},
+  {"__bytes__", (PyCFunction)__pyx_pw_9mbufferio_10_mbufferio_9MBufferIO_43__bytes__, METH_NOARGS, 0},
+  {"fileno", (PyCFunction)__pyx_pw_9mbufferio_10_mbufferio_9MBufferIO_49fileno, METH_NOARGS, __pyx_doc_9mbufferio_10_mbufferio_9MBufferIO_48fileno},
+  {"flush", (PyCFunction)__pyx_pw_9mbufferio_10_mbufferio_9MBufferIO_51flush, METH_NOARGS, __pyx_doc_9mbufferio_10_mbufferio_9MBufferIO_50flush},
+  {"isatty", (PyCFunction)__pyx_pw_9mbufferio_10_mbufferio_9MBufferIO_53isatty, METH_NOARGS, __pyx_doc_9mbufferio_10_mbufferio_9MBufferIO_52isatty},
+  {"readable", (PyCFunction)__pyx_pw_9mbufferio_10_mbufferio_9MBufferIO_55readable, METH_NOARGS, __pyx_doc_9mbufferio_10_mbufferio_9MBufferIO_54readable},
+  {"seekable", (PyCFunction)__pyx_pw_9mbufferio_10_mbufferio_9MBufferIO_57seekable, METH_NOARGS, __pyx_doc_9mbufferio_10_mbufferio_9MBufferIO_56seekable},
+  {"tell", (PyCFunction)__pyx_pw_9mbufferio_10_mbufferio_9MBufferIO_59tell, METH_NOARGS, __pyx_doc_9mbufferio_10_mbufferio_9MBufferIO_58tell},
+  {"writable", (PyCFunction)__pyx_pw_9mbufferio_10_mbufferio_9MBufferIO_61writable, METH_NOARGS, __pyx_doc_9mbufferio_10_mbufferio_9MBufferIO_60writable},
+  {"writelines", (PyCFunction)__pyx_pw_9mbufferio_10_mbufferio_9MBufferIO_63writelines, METH_O, __pyx_doc_9mbufferio_10_mbufferio_9MBufferIO_62writelines},
+  {"readlines", (PyCFunction)__pyx_pw_9mbufferio_10_mbufferio_9MBufferIO_65readlines, METH_VARARGS|METH_KEYWORDS, __pyx_doc_9mbufferio_10_mbufferio_9MBufferIO_64readlines},
+  {"murmur128", (PyCFunction)__pyx_pw_9mbufferio_10_mbufferio_9MBufferIO_76murmur128, METH_VARARGS|METH_KEYWORDS, __pyx_doc_9mbufferio_10_mbufferio_9MBufferIO_75murmur128},
+  {"__reduce__", (PyCFunction)__pyx_pw_9mbufferio_10_mbufferio_9MBufferIO_82__reduce__, METH_NOARGS, 0},
+  {"__copy__", (PyCFunction)__pyx_pw_9mbufferio_10_mbufferio_9MBufferIO_86__copy__, METH_NOARGS, 0},
   {0, 0, 0, 0}
 };
 
@@ -25522,7 +25972,7 @@ static PyNumberMethods __pyx_tp_as_number_MBufferIO = {
   0, /*nb_negative*/
   0, /*nb_positive*/
   0, /*nb_absolute*/
-  __pyx_pw_9mbufferio_10_mbufferio_9MBufferIO_78__nonzero__, /*nb_nonzero*/
+  __pyx_pw_9mbufferio_10_mbufferio_9MBufferIO_84__nonzero__, /*nb_nonzero*/
   0, /*nb_invert*/
   0, /*nb_lshift*/
   0, /*nb_rshift*/
@@ -25572,7 +26022,7 @@ static PyNumberMethods __pyx_tp_as_number_MBufferIO = {
 };
 
 static PySequenceMethods __pyx_tp_as_sequence_MBufferIO = {
-  __pyx_pw_9mbufferio_10_mbufferio_9MBufferIO_31__len__, /*sq_length*/
+  __pyx_pw_9mbufferio_10_mbufferio_9MBufferIO_29__len__, /*sq_length*/
   0, /*sq_concat*/
   0, /*sq_repeat*/
   __pyx_sq_item_9mbufferio_10_mbufferio_MBufferIO, /*sq_item*/
@@ -25585,8 +26035,8 @@ static PySequenceMethods __pyx_tp_as_sequence_MBufferIO = {
 };
 
 static PyMappingMethods __pyx_tp_as_mapping_MBufferIO = {
-  __pyx_pw_9mbufferio_10_mbufferio_9MBufferIO_31__len__, /*mp_length*/
-  __pyx_pw_9mbufferio_10_mbufferio_9MBufferIO_68__getitem__, /*mp_subscript*/
+  __pyx_pw_9mbufferio_10_mbufferio_9MBufferIO_29__len__, /*mp_length*/
+  __pyx_pw_9mbufferio_10_mbufferio_9MBufferIO_74__getitem__, /*mp_subscript*/
   0, /*mp_ass_subscript*/
 };
 
@@ -25603,8 +26053,8 @@ static PyBufferProcs __pyx_tp_as_buffer_MBufferIO = {
   #if PY_MAJOR_VERSION < 3
   0, /*bf_getcharbuffer*/
   #endif
-  __pyx_pw_9mbufferio_10_mbufferio_9MBufferIO_64__getbuffer__, /*bf_getbuffer*/
-  __pyx_pw_9mbufferio_10_mbufferio_9MBufferIO_66__releasebuffer__, /*bf_releasebuffer*/
+  __pyx_pw_9mbufferio_10_mbufferio_9MBufferIO_70__getbuffer__, /*bf_getbuffer*/
+  __pyx_pw_9mbufferio_10_mbufferio_9MBufferIO_72__releasebuffer__, /*bf_releasebuffer*/
 };
 
 static PyTypeObject __pyx_type_9mbufferio_10_mbufferio_MBufferIO = {
@@ -25622,13 +26072,13 @@ static PyTypeObject __pyx_type_9mbufferio_10_mbufferio_MBufferIO = {
   #if PY_MAJOR_VERSION >= 3
   0, /*tp_as_async*/
   #endif
-  0, /*tp_repr*/
+  __pyx_pw_9mbufferio_10_mbufferio_9MBufferIO_47__repr__, /*tp_repr*/
   &__pyx_tp_as_number_MBufferIO, /*tp_as_number*/
   &__pyx_tp_as_sequence_MBufferIO, /*tp_as_sequence*/
   &__pyx_tp_as_mapping_MBufferIO, /*tp_as_mapping*/
-  __pyx_pw_9mbufferio_10_mbufferio_9MBufferIO_72__hash__, /*tp_hash*/
+  __pyx_pw_9mbufferio_10_mbufferio_9MBufferIO_78__hash__, /*tp_hash*/
   0, /*tp_call*/
-  __pyx_pw_9mbufferio_10_mbufferio_9MBufferIO_27__str__, /*tp_str*/
+  __pyx_pw_9mbufferio_10_mbufferio_9MBufferIO_45__str__, /*tp_str*/
   0, /*tp_getattro*/
   0, /*tp_setattro*/
   &__pyx_tp_as_buffer_MBufferIO, /*tp_as_buffer*/
@@ -25636,9 +26086,9 @@ static PyTypeObject __pyx_type_9mbufferio_10_mbufferio_MBufferIO = {
   "\n    MBufferIO objects behave like streams of the io module. They are especially useful when you have to deal with\n    some API that only accepts file-like objects, or bytes object, or buffers...\n\n    A MBufferIO can be initialized with a 'src' object. In that case, the MBufferIO is just a reference to the\n    'src' object and read/writes will be forwarded directly to 'src'.\n\n    If the 'src' referenced object is too small for some write operation, MBufferIO will copy the 'src' to an\n    internal buffer, and from that point 'src' and the MBufferIO will be completely separated.\n\n    MBufferIO supports the new buffer protocol.\n\n    MBufferIO objects are iterable (iteration returns the content line by line).\n\n    MBufferIO are pickleable (just the MBufferIO content is pickled though, not the current reading position).\n\n    The MBufferIO content can be accessed through slices.\n\n    MBufferIO supports the usual stream methods (read, write, etc).\n\n\n    Attributes\n    ----------\n    is_a_reference: bool\n        True if the MBufferIO is reference to a 'src' object. False if the MBufferIO is an independant copy.\n\n    ", /*tp_doc*/
   __pyx_tp_traverse_9mbufferio_10_mbufferio_MBufferIO, /*tp_traverse*/
   __pyx_tp_clear_9mbufferio_10_mbufferio_MBufferIO, /*tp_clear*/
-  __pyx_pw_9mbufferio_10_mbufferio_9MBufferIO_74__richcmp__, /*tp_richcompare*/
+  __pyx_pw_9mbufferio_10_mbufferio_9MBufferIO_80__richcmp__, /*tp_richcompare*/
   0, /*tp_weaklistoffset*/
-  __pyx_pw_9mbufferio_10_mbufferio_9MBufferIO_61__iter__, /*tp_iter*/
+  __pyx_pw_9mbufferio_10_mbufferio_9MBufferIO_67__iter__, /*tp_iter*/
   0, /*tp_iternext*/
   __pyx_methods_9mbufferio_10_mbufferio_MBufferIO, /*tp_methods*/
   0, /*tp_members*/
@@ -26477,6 +26927,8 @@ static __Pyx_StringTabEntry __pyx_string_tab[] = {
   {&__pyx_kp_s_Invalid_mode_expected_c_or_fortr, __pyx_k_Invalid_mode_expected_c_or_fortr, sizeof(__pyx_k_Invalid_mode_expected_c_or_fortr), 0, 0, 1, 0},
   {&__pyx_kp_s_Invalid_shape_in_axis_d_d, __pyx_k_Invalid_shape_in_axis_d_d, sizeof(__pyx_k_Invalid_shape_in_axis_d_d), 0, 0, 1, 0},
   {&__pyx_n_s_MBufferIO___iter, __pyx_k_MBufferIO___iter, sizeof(__pyx_k_MBufferIO___iter), 0, 0, 1, 1},
+  {&__pyx_kp_u_MBufferIO_bytes_long, __pyx_k_MBufferIO_bytes_long, sizeof(__pyx_k_MBufferIO_bytes_long), 0, 1, 0, 0},
+  {&__pyx_kp_u_MBufferIO_closed, __pyx_k_MBufferIO_closed, sizeof(__pyx_k_MBufferIO_closed), 0, 1, 0, 0},
   {&__pyx_n_s_MemoryError, __pyx_k_MemoryError, sizeof(__pyx_k_MemoryError), 0, 0, 1, 1},
   {&__pyx_kp_s_MemoryView_of_r_at_0x_x, __pyx_k_MemoryView_of_r_at_0x_x, sizeof(__pyx_k_MemoryView_of_r_at_0x_x), 0, 0, 1, 0},
   {&__pyx_kp_s_MemoryView_of_r_object, __pyx_k_MemoryView_of_r_object, sizeof(__pyx_k_MemoryView_of_r_object), 0, 0, 1, 0},
@@ -26489,8 +26941,8 @@ static __Pyx_StringTabEntry __pyx_string_tab[] = {
   {&__pyx_n_s_TypeError, __pyx_k_TypeError, sizeof(__pyx_k_TypeError), 0, 0, 1, 1},
   {&__pyx_kp_s_Unable_to_convert_item_to_object, __pyx_k_Unable_to_convert_item_to_object, sizeof(__pyx_k_Unable_to_convert_item_to_object), 0, 0, 1, 0},
   {&__pyx_n_s_ValueError, __pyx_k_ValueError, sizeof(__pyx_k_ValueError), 0, 0, 1, 1},
-  {&__pyx_kp_b__14, __pyx_k__14, sizeof(__pyx_k__14), 0, 0, 0, 0},
-  {&__pyx_kp_u__14, __pyx_k__14, sizeof(__pyx_k__14), 0, 1, 0, 0},
+  {&__pyx_kp_b__15, __pyx_k__15, sizeof(__pyx_k__15), 0, 0, 0, 0},
+  {&__pyx_kp_u__15, __pyx_k__15, sizeof(__pyx_k__15), 0, 1, 0, 0},
   {&__pyx_n_s_allocate_buffer, __pyx_k_allocate_buffer, sizeof(__pyx_k_allocate_buffer), 0, 0, 1, 1},
   {&__pyx_n_s_args, __pyx_k_args, sizeof(__pyx_k_args), 0, 0, 1, 1},
   {&__pyx_n_s_base, __pyx_k_base, sizeof(__pyx_k_base), 0, 0, 1, 1},
@@ -26523,6 +26975,8 @@ static __Pyx_StringTabEntry __pyx_string_tab[] = {
   {&__pyx_n_s_format, __pyx_k_format, sizeof(__pyx_k_format), 0, 0, 1, 1},
   {&__pyx_n_s_fortran, __pyx_k_fortran, sizeof(__pyx_k_fortran), 0, 0, 1, 1},
   {&__pyx_n_u_fortran, __pyx_k_fortran, sizeof(__pyx_k_fortran), 0, 1, 0, 1},
+  {&__pyx_n_s_from_mview, __pyx_k_from_mview, sizeof(__pyx_k_from_mview), 0, 0, 1, 1},
+  {&__pyx_kp_s_from_mview_only_takes_a_memoryvi, __pyx_k_from_mview_only_takes_a_memoryvi, sizeof(__pyx_k_from_mview_only_takes_a_memoryvi), 0, 0, 1, 0},
   {&__pyx_n_s_getvalue, __pyx_k_getvalue, sizeof(__pyx_k_getvalue), 0, 0, 1, 1},
   {&__pyx_kp_s_got_differing_extents_in_dimensi, __pyx_k_got_differing_extents_in_dimensi, sizeof(__pyx_k_got_differing_extents_in_dimensi), 0, 0, 1, 0},
   {&__pyx_n_s_hash, __pyx_k_hash, sizeof(__pyx_k_hash), 0, 0, 1, 1},
@@ -26543,6 +26997,7 @@ static __Pyx_StringTabEntry __pyx_string_tab[] = {
   {&__pyx_n_s_memview, __pyx_k_memview, sizeof(__pyx_k_memview), 0, 0, 1, 1},
   {&__pyx_n_s_mode, __pyx_k_mode, sizeof(__pyx_k_mode), 0, 0, 1, 1},
   {&__pyx_n_s_murmur128, __pyx_k_murmur128, sizeof(__pyx_k_murmur128), 0, 0, 1, 1},
+  {&__pyx_n_s_mview, __pyx_k_mview, sizeof(__pyx_k_mview), 0, 0, 1, 1},
   {&__pyx_n_s_n, __pyx_k_n, sizeof(__pyx_k_n), 0, 0, 1, 1},
   {&__pyx_n_s_name, __pyx_k_name, sizeof(__pyx_k_name), 0, 0, 1, 1},
   {&__pyx_n_s_name_2, __pyx_k_name_2, sizeof(__pyx_k_name_2), 0, 0, 1, 1},
@@ -26574,11 +27029,11 @@ static __Pyx_StringTabEntry __pyx_string_tab[] = {
   {&__pyx_n_s_startpos, __pyx_k_startpos, sizeof(__pyx_k_startpos), 0, 0, 1, 1},
   {&__pyx_n_s_step, __pyx_k_step, sizeof(__pyx_k_step), 0, 0, 1, 1},
   {&__pyx_n_s_stop, __pyx_k_stop, sizeof(__pyx_k_stop), 0, 0, 1, 1},
-  {&__pyx_n_s_str, __pyx_k_str, sizeof(__pyx_k_str), 0, 0, 1, 1},
   {&__pyx_kp_s_strided_and_direct, __pyx_k_strided_and_direct, sizeof(__pyx_k_strided_and_direct), 0, 0, 1, 0},
   {&__pyx_kp_s_strided_and_direct_or_indirect, __pyx_k_strided_and_direct_or_indirect, sizeof(__pyx_k_strided_and_direct_or_indirect), 0, 0, 1, 0},
   {&__pyx_kp_s_strided_and_indirect, __pyx_k_strided_and_indirect, sizeof(__pyx_k_strided_and_indirect), 0, 0, 1, 0},
   {&__pyx_n_s_struct, __pyx_k_struct, sizeof(__pyx_k_struct), 0, 0, 1, 1},
+  {&__pyx_n_s_take_ownership, __pyx_k_take_ownership, sizeof(__pyx_k_take_ownership), 0, 0, 1, 1},
   {&__pyx_n_s_tell, __pyx_k_tell, sizeof(__pyx_k_tell), 0, 0, 1, 1},
   {&__pyx_n_s_test, __pyx_k_test, sizeof(__pyx_k_test), 0, 0, 1, 1},
   {&__pyx_kp_s_the_object_is_closed, __pyx_k_the_object_is_closed, sizeof(__pyx_k_the_object_is_closed), 0, 0, 1, 0},
@@ -26598,13 +27053,13 @@ static __Pyx_StringTabEntry __pyx_string_tab[] = {
   {0, 0, 0, 0, 0, 0, 0}
 };
 static int __Pyx_InitCachedBuiltins(void) {
-  __pyx_builtin_MemoryError = __Pyx_GetBuiltinName(__pyx_n_s_MemoryError); if (!__pyx_builtin_MemoryError) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 63; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
-  __pyx_builtin_RuntimeError = __Pyx_GetBuiltinName(__pyx_n_s_RuntimeError); if (!__pyx_builtin_RuntimeError) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 78; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
-  __pyx_builtin_ValueError = __Pyx_GetBuiltinName(__pyx_n_s_ValueError); if (!__pyx_builtin_ValueError) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 139; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
-  __pyx_builtin_TypeError = __Pyx_GetBuiltinName(__pyx_n_s_TypeError); if (!__pyx_builtin_TypeError) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 454; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
-  __pyx_builtin_IOError = __Pyx_GetBuiltinName(__pyx_n_s_IOError); if (!__pyx_builtin_IOError) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 552; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
-  __pyx_builtin_BufferError = __Pyx_GetBuiltinName(__pyx_n_s_BufferError); if (!__pyx_builtin_BufferError) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 658; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
-  __pyx_builtin_IndexError = __Pyx_GetBuiltinName(__pyx_n_s_IndexError); if (!__pyx_builtin_IndexError) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 704; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __pyx_builtin_MemoryError = __Pyx_GetBuiltinName(__pyx_n_s_MemoryError); if (!__pyx_builtin_MemoryError) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 65; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __pyx_builtin_RuntimeError = __Pyx_GetBuiltinName(__pyx_n_s_RuntimeError); if (!__pyx_builtin_RuntimeError) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 80; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __pyx_builtin_TypeError = __Pyx_GetBuiltinName(__pyx_n_s_TypeError); if (!__pyx_builtin_TypeError) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 157; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __pyx_builtin_ValueError = __Pyx_GetBuiltinName(__pyx_n_s_ValueError); if (!__pyx_builtin_ValueError) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 169; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __pyx_builtin_IOError = __Pyx_GetBuiltinName(__pyx_n_s_IOError); if (!__pyx_builtin_IOError) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 599; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __pyx_builtin_BufferError = __Pyx_GetBuiltinName(__pyx_n_s_BufferError); if (!__pyx_builtin_BufferError) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 705; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __pyx_builtin_IndexError = __Pyx_GetBuiltinName(__pyx_n_s_IndexError); if (!__pyx_builtin_IndexError) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 751; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
   __pyx_builtin_enumerate = __Pyx_GetBuiltinName(__pyx_n_s_enumerate); if (!__pyx_builtin_enumerate) {__pyx_filename = __pyx_f[2]; __pyx_lineno = 147; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
   __pyx_builtin_range = __Pyx_GetBuiltinName(__pyx_n_s_range); if (!__pyx_builtin_range) {__pyx_filename = __pyx_f[2]; __pyx_lineno = 176; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
   __pyx_builtin_Ellipsis = __Pyx_GetBuiltinName(__pyx_n_s_Ellipsis); if (!__pyx_builtin_Ellipsis) {__pyx_filename = __pyx_f[2]; __pyx_lineno = 359; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
@@ -26618,520 +27073,520 @@ static int __Pyx_InitCachedConstants(void) {
   __Pyx_RefNannyDeclarations
   __Pyx_RefNannySetupContext("__Pyx_InitCachedConstants", 0);
 
-  /* "mbufferio/_mbufferio.pyx":63
+  /* "mbufferio/_mbufferio.pyx":65
  *             self.copy_buf_pointer = <char*> PyMem_Malloc(self.copy_buf_size)
  *             if self.copy_buf_pointer == NULL:
  *                 raise MemoryError("Could not allocate initial memory for the copy_buf")             # <<<<<<<<<<<<<<
  *             self.buf_pointer = self.copy_buf_pointer
  *             self.is_a_reference = 0
  */
-  __pyx_tuple_ = PyTuple_Pack(1, __pyx_kp_s_Could_not_allocate_initial_memor); if (unlikely(!__pyx_tuple_)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 63; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __pyx_tuple_ = PyTuple_Pack(1, __pyx_kp_s_Could_not_allocate_initial_memor); if (unlikely(!__pyx_tuple_)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 65; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
   __Pyx_GOTREF(__pyx_tuple_);
   __Pyx_GIVEREF(__pyx_tuple_);
 
-  /* "mbufferio/_mbufferio.pyx":75
+  /* "mbufferio/_mbufferio.pyx":77
  *         self.src_view = <Py_buffer*> PyMem_Malloc(sizeof(Py_buffer))
  *         if self.src_view == NULL:
  *             raise MemoryError("Could not allocate memory for the Py_buffer")             # <<<<<<<<<<<<<<
  *         if PyObject_GetBuffer(src, self.src_view, PyBUF_SIMPLE) == -1:
  *             PyMem_Free(self.src_view)
  */
-  __pyx_tuple__2 = PyTuple_Pack(1, __pyx_kp_s_Could_not_allocate_memory_for_th); if (unlikely(!__pyx_tuple__2)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 75; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __pyx_tuple__2 = PyTuple_Pack(1, __pyx_kp_s_Could_not_allocate_memory_for_th); if (unlikely(!__pyx_tuple__2)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 77; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
   __Pyx_GOTREF(__pyx_tuple__2);
   __Pyx_GIVEREF(__pyx_tuple__2);
 
-  /* "mbufferio/_mbufferio.pyx":78
+  /* "mbufferio/_mbufferio.pyx":80
  *         if PyObject_GetBuffer(src, self.src_view, PyBUF_SIMPLE) == -1:
  *             PyMem_Free(self.src_view)
  *             raise RuntimeError("PyObject_GetBuffer failed")             # <<<<<<<<<<<<<<
  *         cdef int64_t original_length = self.src_view.len
  *         if startpos > original_length:
  */
-  __pyx_tuple__3 = PyTuple_Pack(1, __pyx_kp_s_PyObject_GetBuffer_failed); if (unlikely(!__pyx_tuple__3)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 78; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __pyx_tuple__3 = PyTuple_Pack(1, __pyx_kp_s_PyObject_GetBuffer_failed); if (unlikely(!__pyx_tuple__3)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 80; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
   __Pyx_GOTREF(__pyx_tuple__3);
   __Pyx_GIVEREF(__pyx_tuple__3);
 
-  /* "mbufferio/_mbufferio.pyx":92
+  /* "mbufferio/_mbufferio.pyx":94
  *             self.copy_buf_pointer = <char*> PyMem_Malloc(self.copy_buf_size)
  *             if self.copy_buf_pointer == NULL:
  *                 raise MemoryError("Could not allocate initial memory for the copy_buf")             # <<<<<<<<<<<<<<
  *             self.buf_pointer = self.copy_buf_pointer
  *             if self.length > 0:
  */
-  __pyx_tuple__4 = PyTuple_Pack(1, __pyx_kp_s_Could_not_allocate_initial_memor); if (unlikely(!__pyx_tuple__4)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 92; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __pyx_tuple__4 = PyTuple_Pack(1, __pyx_kp_s_Could_not_allocate_initial_memor); if (unlikely(!__pyx_tuple__4)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 94; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
   __Pyx_GOTREF(__pyx_tuple__4);
   __Pyx_GIVEREF(__pyx_tuple__4);
 
-  /* "mbufferio/_mbufferio.pyx":139
+  /* "mbufferio/_mbufferio.pyx":157
+ *         """
+ *         if not PyMemoryView_Check(<PyObject*> mview):
+ *             raise TypeError("from_mview only takes a memoryview object")             # <<<<<<<<<<<<<<
+ *         mbuf = cls(mview)
+ *         (<MBufferIO> mbuf).have_ownership = bool(take_ownership)
+ */
+  __pyx_tuple__5 = PyTuple_Pack(1, __pyx_kp_s_from_mview_only_takes_a_memoryvi); if (unlikely(!__pyx_tuple__5)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 157; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __Pyx_GOTREF(__pyx_tuple__5);
+  __Pyx_GIVEREF(__pyx_tuple__5);
+
+  /* "mbufferio/_mbufferio.pyx":169
  *         """
  *         if self.view_count > 0:
  *             raise ValueError("Can not modify the buffer when there are active views")             # <<<<<<<<<<<<<<
  *         # Once the file is closed, any operation on the file (e.g. reading or writing) will raise a ValueError.
  *         self.closed = 1
  */
-  __pyx_tuple__5 = PyTuple_Pack(1, __pyx_kp_s_Can_not_modify_the_buffer_when_t); if (unlikely(!__pyx_tuple__5)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 139; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
-  __Pyx_GOTREF(__pyx_tuple__5);
-  __Pyx_GIVEREF(__pyx_tuple__5);
+  __pyx_tuple__6 = PyTuple_Pack(1, __pyx_kp_s_Can_not_modify_the_buffer_when_t); if (unlikely(!__pyx_tuple__6)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 169; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __Pyx_GOTREF(__pyx_tuple__6);
+  __Pyx_GIVEREF(__pyx_tuple__6);
 
-  /* "mbufferio/_mbufferio.pyx":173
+  /* "mbufferio/_mbufferio.pyx":211
  *             self.copy_buf_pointer = <char*> PyMem_Malloc(self.copy_buf_size)
  *             if self.copy_buf_pointer == NULL:
  *                 raise MemoryError(u"Could not allocate enough memory when copying buf")             # <<<<<<<<<<<<<<
  *             memcpy(self.copy_buf_pointer, self.buf_pointer + self.startpos, self.length)
- *             self.buf_pointer = self.copy_buf_pointer
+ *             orig_buf_pointer = <void*> self.buf_pointer
  */
-  __pyx_tuple__6 = PyTuple_Pack(1, __pyx_kp_u_Could_not_allocate_enough_memory); if (unlikely(!__pyx_tuple__6)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 173; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
-  __Pyx_GOTREF(__pyx_tuple__6);
-  __Pyx_GIVEREF(__pyx_tuple__6);
+  __pyx_tuple__7 = PyTuple_Pack(1, __pyx_kp_u_Could_not_allocate_enough_memory); if (unlikely(!__pyx_tuple__7)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 211; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __Pyx_GOTREF(__pyx_tuple__7);
+  __Pyx_GIVEREF(__pyx_tuple__7);
 
-  /* "mbufferio/_mbufferio.pyx":195
+  /* "mbufferio/_mbufferio.pyx":237
  *             self.copy_buf_pointer = <char*> PyMem_Malloc(self.copy_buf_size)
  *             if self.copy_buf_pointer == NULL:
  *                 raise MemoryError(u"Could not reallocate enough memory")             # <<<<<<<<<<<<<<
  *             memcpy(self.copy_buf_pointer, self.buf_pointer + self.startpos, self.length)
  *             PyMem_Free(self.buf_pointer)
  */
-  __pyx_tuple__7 = PyTuple_Pack(1, __pyx_kp_u_Could_not_reallocate_enough_memo); if (unlikely(!__pyx_tuple__7)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 195; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
-  __Pyx_GOTREF(__pyx_tuple__7);
-  __Pyx_GIVEREF(__pyx_tuple__7);
+  __pyx_tuple__8 = PyTuple_Pack(1, __pyx_kp_u_Could_not_reallocate_enough_memo); if (unlikely(!__pyx_tuple__8)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 237; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __Pyx_GOTREF(__pyx_tuple__8);
+  __Pyx_GIVEREF(__pyx_tuple__8);
 
-  /* "mbufferio/_mbufferio.pyx":227
+  /* "mbufferio/_mbufferio.pyx":272
  *         """
  *         if self.closed:
  *             raise ValueError(u"I/O operation on closed file.")             # <<<<<<<<<<<<<<
  * 
  *         cdef int res = 0
  */
-  __pyx_tuple__8 = PyTuple_Pack(1, __pyx_kp_u_I_O_operation_on_closed_file); if (unlikely(!__pyx_tuple__8)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 227; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
-  __Pyx_GOTREF(__pyx_tuple__8);
-  __Pyx_GIVEREF(__pyx_tuple__8);
+  __pyx_tuple__9 = PyTuple_Pack(1, __pyx_kp_u_I_O_operation_on_closed_file); if (unlikely(!__pyx_tuple__9)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 272; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __Pyx_GOTREF(__pyx_tuple__9);
+  __Pyx_GIVEREF(__pyx_tuple__9);
 
-  /* "mbufferio/_mbufferio.pyx":252
+  /* "mbufferio/_mbufferio.pyx":297
  *             if res == -1:
  *                 PyMem_Free(obj_view)
  *                 raise RuntimeError("PyObject_GetBuffer failed")             # <<<<<<<<<<<<<<
  *             obj_addr = <char*> obj_view.buf
  *             obj_length = obj_view.len
  */
-  __pyx_tuple__9 = PyTuple_Pack(1, __pyx_kp_s_PyObject_GetBuffer_failed); if (unlikely(!__pyx_tuple__9)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 252; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
-  __Pyx_GOTREF(__pyx_tuple__9);
-  __Pyx_GIVEREF(__pyx_tuple__9);
+  __pyx_tuple__10 = PyTuple_Pack(1, __pyx_kp_s_PyObject_GetBuffer_failed); if (unlikely(!__pyx_tuple__10)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 297; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __Pyx_GOTREF(__pyx_tuple__10);
+  __Pyx_GIVEREF(__pyx_tuple__10);
 
-  /* "mbufferio/_mbufferio.pyx":268
+  /* "mbufferio/_mbufferio.pyx":313
  *             if (how_many_more_bytes > 0) or bool(self.readonly):
  *                 if self.view_count > 0:
  *                     raise ValueError("Can not modify the buffer when there are active views")             # <<<<<<<<<<<<<<
  *                 self.detach(how_many_more_bytes)
  * 
  */
-  __pyx_tuple__10 = PyTuple_Pack(1, __pyx_kp_s_Can_not_modify_the_buffer_when_t); if (unlikely(!__pyx_tuple__10)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 268; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
-  __Pyx_GOTREF(__pyx_tuple__10);
-  __Pyx_GIVEREF(__pyx_tuple__10);
+  __pyx_tuple__11 = PyTuple_Pack(1, __pyx_kp_s_Can_not_modify_the_buffer_when_t); if (unlikely(!__pyx_tuple__11)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 313; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __Pyx_GOTREF(__pyx_tuple__11);
+  __Pyx_GIVEREF(__pyx_tuple__11);
 
-  /* "mbufferio/_mbufferio.pyx":299
+  /* "mbufferio/_mbufferio.pyx":344
  *         """
  *         if self.closed:
  *             raise ValueError(u"I/O operation on closed file.")             # <<<<<<<<<<<<<<
  *         cdef int64_t frm
  *         cdef int64_t final_pos
  */
-  __pyx_tuple__11 = PyTuple_Pack(1, __pyx_kp_u_I_O_operation_on_closed_file); if (unlikely(!__pyx_tuple__11)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 299; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
-  __Pyx_GOTREF(__pyx_tuple__11);
-  __Pyx_GIVEREF(__pyx_tuple__11);
+  __pyx_tuple__12 = PyTuple_Pack(1, __pyx_kp_u_I_O_operation_on_closed_file); if (unlikely(!__pyx_tuple__12)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 344; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __Pyx_GOTREF(__pyx_tuple__12);
+  __Pyx_GIVEREF(__pyx_tuple__12);
 
-  /* "mbufferio/_mbufferio.pyx":309
+  /* "mbufferio/_mbufferio.pyx":354
  *             frm = self.length   # end of stream
  *         else:
  *             raise ValueError("invalid value for whence parameter")             # <<<<<<<<<<<<<<
  *         final_pos = frm + pos
  *         final_pos = max(0, final_pos)
  */
-  __pyx_tuple__12 = PyTuple_Pack(1, __pyx_kp_s_invalid_value_for_whence_paramet); if (unlikely(!__pyx_tuple__12)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 309; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
-  __Pyx_GOTREF(__pyx_tuple__12);
-  __Pyx_GIVEREF(__pyx_tuple__12);
+  __pyx_tuple__13 = PyTuple_Pack(1, __pyx_kp_s_invalid_value_for_whence_paramet); if (unlikely(!__pyx_tuple__13)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 354; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __Pyx_GOTREF(__pyx_tuple__13);
+  __Pyx_GIVEREF(__pyx_tuple__13);
 
-  /* "mbufferio/_mbufferio.pyx":331
+  /* "mbufferio/_mbufferio.pyx":376
  *         """
  *         if self.closed:
  *             raise ValueError(u"I/O operation on closed file.")             # <<<<<<<<<<<<<<
  *         if n == -1:
  *             return self.readall()
  */
-  __pyx_tuple__13 = PyTuple_Pack(1, __pyx_kp_u_I_O_operation_on_closed_file); if (unlikely(!__pyx_tuple__13)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 331; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
-  __Pyx_GOTREF(__pyx_tuple__13);
-  __Pyx_GIVEREF(__pyx_tuple__13);
+  __pyx_tuple__14 = PyTuple_Pack(1, __pyx_kp_u_I_O_operation_on_closed_file); if (unlikely(!__pyx_tuple__14)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 376; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __Pyx_GOTREF(__pyx_tuple__14);
+  __Pyx_GIVEREF(__pyx_tuple__14);
 
-  /* "mbufferio/_mbufferio.pyx":348
+  /* "mbufferio/_mbufferio.pyx":393
  *         """
  *         if self.closed:
  *             raise ValueError(u"I/O operation on closed file.")             # <<<<<<<<<<<<<<
  *         return self.read(n)
  * 
  */
-  __pyx_tuple__15 = PyTuple_Pack(1, __pyx_kp_u_I_O_operation_on_closed_file); if (unlikely(!__pyx_tuple__15)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 348; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
-  __Pyx_GOTREF(__pyx_tuple__15);
-  __Pyx_GIVEREF(__pyx_tuple__15);
+  __pyx_tuple__16 = PyTuple_Pack(1, __pyx_kp_u_I_O_operation_on_closed_file); if (unlikely(!__pyx_tuple__16)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 393; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __Pyx_GOTREF(__pyx_tuple__16);
+  __Pyx_GIVEREF(__pyx_tuple__16);
 
-  /* "mbufferio/_mbufferio.pyx":365
+  /* "mbufferio/_mbufferio.pyx":410
  *         """
  *         if self.closed:
  *             raise ValueError(u"I/O operation on closed file.")             # <<<<<<<<<<<<<<
  *         if self.offset == self.length or limit == 0:
  *             return b''
  */
-  __pyx_tuple__16 = PyTuple_Pack(1, __pyx_kp_u_I_O_operation_on_closed_file); if (unlikely(!__pyx_tuple__16)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 365; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
-  __Pyx_GOTREF(__pyx_tuple__16);
-  __Pyx_GIVEREF(__pyx_tuple__16);
+  __pyx_tuple__17 = PyTuple_Pack(1, __pyx_kp_u_I_O_operation_on_closed_file); if (unlikely(!__pyx_tuple__17)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 410; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __Pyx_GOTREF(__pyx_tuple__17);
+  __Pyx_GIVEREF(__pyx_tuple__17);
 
-  /* "mbufferio/_mbufferio.pyx":392
+  /* "mbufferio/_mbufferio.pyx":437
  *         """
  *         if self.closed:
  *             raise ValueError(u"I/O operation on closed file.")             # <<<<<<<<<<<<<<
  *         if self.length == self.offset:
  *             return b''
  */
-  __pyx_tuple__17 = PyTuple_Pack(1, __pyx_kp_u_I_O_operation_on_closed_file); if (unlikely(!__pyx_tuple__17)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 392; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
-  __Pyx_GOTREF(__pyx_tuple__17);
-  __Pyx_GIVEREF(__pyx_tuple__17);
-
-  /* "mbufferio/_mbufferio.pyx":414
- *         """
- *         if self.closed:
- *             raise ValueError(u"I/O operation on closed file.")             # <<<<<<<<<<<<<<
- *         return self.__str__()
- * 
- */
-  __pyx_tuple__18 = PyTuple_Pack(1, __pyx_kp_u_I_O_operation_on_closed_file); if (unlikely(!__pyx_tuple__18)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 414; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __pyx_tuple__18 = PyTuple_Pack(1, __pyx_kp_u_I_O_operation_on_closed_file); if (unlikely(!__pyx_tuple__18)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 437; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
   __Pyx_GOTREF(__pyx_tuple__18);
   __Pyx_GIVEREF(__pyx_tuple__18);
 
-  /* "mbufferio/_mbufferio.pyx":436
+  /* "mbufferio/_mbufferio.pyx":463
  *         """
  *         if self.closed:
  *             raise ValueError(u"I/O operation on closed file.")             # <<<<<<<<<<<<<<
  *         self.seek(0, 2)
  *         return self.write(obj_to_write)
  */
-  __pyx_tuple__19 = PyTuple_Pack(1, __pyx_kp_u_I_O_operation_on_closed_file); if (unlikely(!__pyx_tuple__19)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 436; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __pyx_tuple__19 = PyTuple_Pack(1, __pyx_kp_u_I_O_operation_on_closed_file); if (unlikely(!__pyx_tuple__19)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 463; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
   __Pyx_GOTREF(__pyx_tuple__19);
   __Pyx_GIVEREF(__pyx_tuple__19);
 
-  /* "mbufferio/_mbufferio.pyx":454
+  /* "mbufferio/_mbufferio.pyx":481
  *         """
  *         if not PyObject_CheckBuffer(destination):
  *             raise TypeError("exportto: parameter 'destination' must support the buffer protocol")             # <<<<<<<<<<<<<<
  * 
  *         cdef Py_buffer* dest_view
  */
-  __pyx_tuple__20 = PyTuple_Pack(1, __pyx_kp_s_exportto_parameter_destination_m); if (unlikely(!__pyx_tuple__20)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 454; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __pyx_tuple__20 = PyTuple_Pack(1, __pyx_kp_s_exportto_parameter_destination_m); if (unlikely(!__pyx_tuple__20)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 481; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
   __Pyx_GOTREF(__pyx_tuple__20);
   __Pyx_GIVEREF(__pyx_tuple__20);
 
-  /* "mbufferio/_mbufferio.pyx":465
+  /* "mbufferio/_mbufferio.pyx":492
  *         if PyObject_GetBuffer(destination, dest_view, PyBUF_SIMPLE) == -1:
  *             PyMem_Free(dest_view)
  *             raise RuntimeError("PyObject_GetBuffer failed")             # <<<<<<<<<<<<<<
  *         dest_addr = <char*> dest_view.buf
  *         dest_len = min(<int64_t> dest_view.len, self.length - self.offset)
  */
-  __pyx_tuple__21 = PyTuple_Pack(1, __pyx_kp_s_PyObject_GetBuffer_failed); if (unlikely(!__pyx_tuple__21)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 465; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __pyx_tuple__21 = PyTuple_Pack(1, __pyx_kp_s_PyObject_GetBuffer_failed); if (unlikely(!__pyx_tuple__21)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 492; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
   __Pyx_GOTREF(__pyx_tuple__21);
   __Pyx_GIVEREF(__pyx_tuple__21);
 
-  /* "mbufferio/_mbufferio.pyx":472
+  /* "mbufferio/_mbufferio.pyx":499
  *                 return 0
  *             if dest_view.readonly:
  *                 raise TypeError("destination is read-only")             # <<<<<<<<<<<<<<
  * 
  *             memcpy(dest_addr, self.buf_pointer + self.startpos + self.offset, dest_len)
  */
-  __pyx_tuple__22 = PyTuple_Pack(1, __pyx_kp_s_destination_is_read_only); if (unlikely(!__pyx_tuple__22)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 472; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __pyx_tuple__22 = PyTuple_Pack(1, __pyx_kp_s_destination_is_read_only); if (unlikely(!__pyx_tuple__22)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 499; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
   __Pyx_GOTREF(__pyx_tuple__22);
   __Pyx_GIVEREF(__pyx_tuple__22);
 
-  /* "mbufferio/_mbufferio.pyx":501
+  /* "mbufferio/_mbufferio.pyx":528
  * 
  *         if not PyObject_CheckBuffer(destination):
  *             raise TypeError("exportto: parameter 'destination' must support the buffer protocol")             # <<<<<<<<<<<<<<
  * 
  *         cdef Py_buffer* dest_view
  */
-  __pyx_tuple__23 = PyTuple_Pack(1, __pyx_kp_s_exportto_parameter_destination_m); if (unlikely(!__pyx_tuple__23)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 501; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __pyx_tuple__23 = PyTuple_Pack(1, __pyx_kp_s_exportto_parameter_destination_m); if (unlikely(!__pyx_tuple__23)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 528; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
   __Pyx_GOTREF(__pyx_tuple__23);
   __Pyx_GIVEREF(__pyx_tuple__23);
 
-  /* "mbufferio/_mbufferio.pyx":512
+  /* "mbufferio/_mbufferio.pyx":539
  *         if PyObject_GetBuffer(destination, dest_view, PyBUF_SIMPLE) == -1:
  *             PyMem_Free(dest_view)
  *             raise RuntimeError("PyObject_GetBuffer failed")             # <<<<<<<<<<<<<<
  *         dest_addr = <char*> dest_view.buf
  *         dest_len = min(<int64_t> dest_view.len, self.length)
  */
-  __pyx_tuple__24 = PyTuple_Pack(1, __pyx_kp_s_PyObject_GetBuffer_failed); if (unlikely(!__pyx_tuple__24)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 512; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __pyx_tuple__24 = PyTuple_Pack(1, __pyx_kp_s_PyObject_GetBuffer_failed); if (unlikely(!__pyx_tuple__24)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 539; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
   __Pyx_GOTREF(__pyx_tuple__24);
   __Pyx_GIVEREF(__pyx_tuple__24);
 
-  /* "mbufferio/_mbufferio.pyx":519
+  /* "mbufferio/_mbufferio.pyx":546
  *                 return 0
  *             if dest_view.readonly:
  *                 raise TypeError("destination is read-only")             # <<<<<<<<<<<<<<
  * 
  *             memcpy(dest_addr, self.buf_pointer + self.startpos, dest_len)
  */
-  __pyx_tuple__25 = PyTuple_Pack(1, __pyx_kp_s_destination_is_read_only); if (unlikely(!__pyx_tuple__25)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 519; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __pyx_tuple__25 = PyTuple_Pack(1, __pyx_kp_s_destination_is_read_only); if (unlikely(!__pyx_tuple__25)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 546; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
   __Pyx_GOTREF(__pyx_tuple__25);
   __Pyx_GIVEREF(__pyx_tuple__25);
 
-  /* "mbufferio/_mbufferio.pyx":552
+  /* "mbufferio/_mbufferio.pyx":599
  *         Always raise IOError
  *         """
  *         raise IOError(u"The IO object does not use a file descriptor")             # <<<<<<<<<<<<<<
  * 
  *     cpdef flush(self):
  */
-  __pyx_tuple__26 = PyTuple_Pack(1, __pyx_kp_u_The_IO_object_does_not_use_a_fil); if (unlikely(!__pyx_tuple__26)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 552; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __pyx_tuple__26 = PyTuple_Pack(1, __pyx_kp_u_The_IO_object_does_not_use_a_fil); if (unlikely(!__pyx_tuple__26)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 599; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
   __Pyx_GOTREF(__pyx_tuple__26);
   __Pyx_GIVEREF(__pyx_tuple__26);
 
-  /* "mbufferio/_mbufferio.pyx":560
+  /* "mbufferio/_mbufferio.pyx":607
  *         """
  *         if self.closed:
  *             raise ValueError(u"I/O operation on closed file.")             # <<<<<<<<<<<<<<
  * 
  *     cpdef isatty(self):
  */
-  __pyx_tuple__27 = PyTuple_Pack(1, __pyx_kp_u_I_O_operation_on_closed_file); if (unlikely(!__pyx_tuple__27)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 560; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __pyx_tuple__27 = PyTuple_Pack(1, __pyx_kp_u_I_O_operation_on_closed_file); if (unlikely(!__pyx_tuple__27)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 607; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
   __Pyx_GOTREF(__pyx_tuple__27);
   __Pyx_GIVEREF(__pyx_tuple__27);
 
-  /* "mbufferio/_mbufferio.pyx":589
+  /* "mbufferio/_mbufferio.pyx":636
  *         """
  *         if self.closed:
  *             raise ValueError(u"I/O operation on closed file.")             # <<<<<<<<<<<<<<
  *         return self.offset
  * 
  */
-  __pyx_tuple__28 = PyTuple_Pack(1, __pyx_kp_u_I_O_operation_on_closed_file); if (unlikely(!__pyx_tuple__28)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 589; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __pyx_tuple__28 = PyTuple_Pack(1, __pyx_kp_u_I_O_operation_on_closed_file); if (unlikely(!__pyx_tuple__28)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 636; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
   __Pyx_GOTREF(__pyx_tuple__28);
   __Pyx_GIVEREF(__pyx_tuple__28);
 
-  /* "mbufferio/_mbufferio.pyx":613
+  /* "mbufferio/_mbufferio.pyx":660
  *         """
  *         if self.closed:
  *             raise ValueError(u"I/O operation on closed file.")             # <<<<<<<<<<<<<<
  *         if self.view_count > 0:
  *             raise ValueError("Can not modify the buffer when there are active views")
  */
-  __pyx_tuple__29 = PyTuple_Pack(1, __pyx_kp_u_I_O_operation_on_closed_file); if (unlikely(!__pyx_tuple__29)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 613; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __pyx_tuple__29 = PyTuple_Pack(1, __pyx_kp_u_I_O_operation_on_closed_file); if (unlikely(!__pyx_tuple__29)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 660; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
   __Pyx_GOTREF(__pyx_tuple__29);
   __Pyx_GIVEREF(__pyx_tuple__29);
 
-  /* "mbufferio/_mbufferio.pyx":615
+  /* "mbufferio/_mbufferio.pyx":662
  *             raise ValueError(u"I/O operation on closed file.")
  *         if self.view_count > 0:
  *             raise ValueError("Can not modify the buffer when there are active views")             # <<<<<<<<<<<<<<
  *         # Write a list of lines to the stream. Line separators are not added, so it is usual for each of the lines
  *         # provided to have a line separator at the end.
  */
-  __pyx_tuple__30 = PyTuple_Pack(1, __pyx_kp_s_Can_not_modify_the_buffer_when_t); if (unlikely(!__pyx_tuple__30)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 615; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __pyx_tuple__30 = PyTuple_Pack(1, __pyx_kp_s_Can_not_modify_the_buffer_when_t); if (unlikely(!__pyx_tuple__30)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 662; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
   __Pyx_GOTREF(__pyx_tuple__30);
   __Pyx_GIVEREF(__pyx_tuple__30);
 
-  /* "mbufferio/_mbufferio.pyx":638
+  /* "mbufferio/_mbufferio.pyx":685
  *         # no more lines will be read if the total size (in bytes/characters) of all lines so far exceeds hint.
  *         if self.closed:
  *             raise ValueError(u"I/O operation on closed file.")             # <<<<<<<<<<<<<<
  *         lines = []
  *         cdef bytes line
  */
-  __pyx_tuple__31 = PyTuple_Pack(1, __pyx_kp_u_I_O_operation_on_closed_file); if (unlikely(!__pyx_tuple__31)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 638; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __pyx_tuple__31 = PyTuple_Pack(1, __pyx_kp_u_I_O_operation_on_closed_file); if (unlikely(!__pyx_tuple__31)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 685; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
   __Pyx_GOTREF(__pyx_tuple__31);
   __Pyx_GIVEREF(__pyx_tuple__31);
 
-  /* "mbufferio/_mbufferio.pyx":652
+  /* "mbufferio/_mbufferio.pyx":699
  *     def __iter__(self):
  *         if self.closed:
  *             raise ValueError(u"I/O operation on closed file.")             # <<<<<<<<<<<<<<
  *         while self.offset < self.length:
  *             yield self.readline()
  */
-  __pyx_tuple__32 = PyTuple_Pack(1, __pyx_kp_u_I_O_operation_on_closed_file); if (unlikely(!__pyx_tuple__32)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 652; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __pyx_tuple__32 = PyTuple_Pack(1, __pyx_kp_u_I_O_operation_on_closed_file); if (unlikely(!__pyx_tuple__32)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 699; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
   __Pyx_GOTREF(__pyx_tuple__32);
   __Pyx_GIVEREF(__pyx_tuple__32);
 
-  /* "mbufferio/_mbufferio.pyx":658
+  /* "mbufferio/_mbufferio.pyx":705
  *     def __getbuffer__(self, Py_buffer *pybuf, int flags):
  *         if self.closed:
  *             raise BufferError("the object is closed")             # <<<<<<<<<<<<<<
  *         if pybuf == NULL:
  *             raise BufferError("pybuf is NULL")
  */
-  __pyx_tuple__33 = PyTuple_Pack(1, __pyx_kp_s_the_object_is_closed); if (unlikely(!__pyx_tuple__33)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 658; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __pyx_tuple__33 = PyTuple_Pack(1, __pyx_kp_s_the_object_is_closed); if (unlikely(!__pyx_tuple__33)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 705; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
   __Pyx_GOTREF(__pyx_tuple__33);
   __Pyx_GIVEREF(__pyx_tuple__33);
 
-  /* "mbufferio/_mbufferio.pyx":660
+  /* "mbufferio/_mbufferio.pyx":707
  *             raise BufferError("the object is closed")
  *         if pybuf == NULL:
  *             raise BufferError("pybuf is NULL")             # <<<<<<<<<<<<<<
  *         if bool(flags & PyBUF_WRITABLE) and bool(self.readonly):
  *             raise BufferError('read only object')
  */
-  __pyx_tuple__34 = PyTuple_Pack(1, __pyx_kp_s_pybuf_is_NULL); if (unlikely(!__pyx_tuple__34)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 660; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __pyx_tuple__34 = PyTuple_Pack(1, __pyx_kp_s_pybuf_is_NULL); if (unlikely(!__pyx_tuple__34)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 707; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
   __Pyx_GOTREF(__pyx_tuple__34);
   __Pyx_GIVEREF(__pyx_tuple__34);
 
-  /* "mbufferio/_mbufferio.pyx":662
+  /* "mbufferio/_mbufferio.pyx":709
  *             raise BufferError("pybuf is NULL")
  *         if bool(flags & PyBUF_WRITABLE) and bool(self.readonly):
  *             raise BufferError('read only object')             # <<<<<<<<<<<<<<
  *         if bool(flags & PyBUF_STRIDES) or bool(flags & PyBUF_ND):
  *             raise BufferError
  */
-  __pyx_tuple__35 = PyTuple_Pack(1, __pyx_kp_s_read_only_object); if (unlikely(!__pyx_tuple__35)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 662; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __pyx_tuple__35 = PyTuple_Pack(1, __pyx_kp_s_read_only_object); if (unlikely(!__pyx_tuple__35)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 709; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
   __Pyx_GOTREF(__pyx_tuple__35);
   __Pyx_GIVEREF(__pyx_tuple__35);
 
-  /* "mbufferio/_mbufferio.pyx":688
+  /* "mbufferio/_mbufferio.pyx":735
  * 
  *         if self.closed:
  *             raise RuntimeError("The buffer is closed")             # <<<<<<<<<<<<<<
  * 
  *         if isinstance(item, slice):
  */
-  __pyx_tuple__36 = PyTuple_Pack(1, __pyx_kp_s_The_buffer_is_closed); if (unlikely(!__pyx_tuple__36)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 688; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __pyx_tuple__36 = PyTuple_Pack(1, __pyx_kp_s_The_buffer_is_closed); if (unlikely(!__pyx_tuple__36)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 735; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
   __Pyx_GOTREF(__pyx_tuple__36);
   __Pyx_GIVEREF(__pyx_tuple__36);
 
-  /* "mbufferio/_mbufferio.pyx":695
+  /* "mbufferio/_mbufferio.pyx":742
  *             j = stop
  *             if stride != 1:
  *                 raise ValueError("does not support step != 1")             # <<<<<<<<<<<<<<
  *             slice_length = max(j - i, 0)
  *             if self.original_obj is None:
  */
-  __pyx_tuple__37 = PyTuple_Pack(1, __pyx_kp_s_does_not_support_step_1); if (unlikely(!__pyx_tuple__37)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 695; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __pyx_tuple__37 = PyTuple_Pack(1, __pyx_kp_s_does_not_support_step_1); if (unlikely(!__pyx_tuple__37)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 742; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
   __Pyx_GOTREF(__pyx_tuple__37);
   __Pyx_GIVEREF(__pyx_tuple__37);
 
-  /* "mbufferio/_mbufferio.pyx":730
+  /* "mbufferio/_mbufferio.pyx":777
  *         if not self:
  *             return prefix
  *         retbuf = bytearray(16)             # <<<<<<<<<<<<<<
  *         cdef int res = qhashmurmur3_128(<void*>(self.buf_pointer + self.startpos), <size_t> self.length, <void *> (<char*> retbuf))
  *         if res == 0:
  */
-  __pyx_tuple__38 = PyTuple_Pack(1, __pyx_int_16); if (unlikely(!__pyx_tuple__38)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 730; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __pyx_tuple__38 = PyTuple_Pack(1, __pyx_int_16); if (unlikely(!__pyx_tuple__38)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 777; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
   __Pyx_GOTREF(__pyx_tuple__38);
   __Pyx_GIVEREF(__pyx_tuple__38);
 
-  /* "mbufferio/_mbufferio.pyx":734
+  /* "mbufferio/_mbufferio.pyx":781
  *         if res == 0:
  *             return None
  *         result = prefix + bytes(retbuf).encode('hex')             # <<<<<<<<<<<<<<
  *         if to_unicode:
  *             return unicode(result)
  */
-  __pyx_tuple__39 = PyTuple_Pack(1, __pyx_n_s_hex); if (unlikely(!__pyx_tuple__39)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 734; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __pyx_tuple__39 = PyTuple_Pack(1, __pyx_n_s_hex); if (unlikely(!__pyx_tuple__39)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 781; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
   __Pyx_GOTREF(__pyx_tuple__39);
   __Pyx_GIVEREF(__pyx_tuple__39);
 
-  /* "mbufferio/_mbufferio.pyx":760
+  /* "mbufferio/_mbufferio.pyx":807
  *                 return bytes(self) == bytes(other)
  *             return False
  *         raise ValueError("operation not supported")             # <<<<<<<<<<<<<<
  * 
  *     def __reduce__(self):
  */
-  __pyx_tuple__40 = PyTuple_Pack(1, __pyx_kp_s_operation_not_supported); if (unlikely(!__pyx_tuple__40)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 760; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __pyx_tuple__40 = PyTuple_Pack(1, __pyx_kp_s_operation_not_supported); if (unlikely(!__pyx_tuple__40)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 807; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
   __Pyx_GOTREF(__pyx_tuple__40);
   __Pyx_GIVEREF(__pyx_tuple__40);
 
-  /* "mbufferio/_mbufferio.pyx":764
+  /* "mbufferio/_mbufferio.pyx":811
  *     def __reduce__(self):
  *         if self.closed:
  *             raise RuntimeError("Can't reduce a closed MBufferIO")             # <<<<<<<<<<<<<<
  *         return MBufferIO, bytes(self)
  * 
  */
-  __pyx_tuple__41 = PyTuple_Pack(1, __pyx_kp_s_Can_t_reduce_a_closed_MBufferIO); if (unlikely(!__pyx_tuple__41)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 764; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __pyx_tuple__41 = PyTuple_Pack(1, __pyx_kp_s_Can_t_reduce_a_closed_MBufferIO); if (unlikely(!__pyx_tuple__41)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 811; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
   __Pyx_GOTREF(__pyx_tuple__41);
   __Pyx_GIVEREF(__pyx_tuple__41);
 
-  /* "mbufferio/_mbufferio.pyx":774
+  /* "mbufferio/_mbufferio.pyx":821
  *     def __copy__(self):
  *         if self.closed:
  *             raise RuntimeError(u"Can't copy a closed MBufferIO")             # <<<<<<<<<<<<<<
  *         if self.original_obj is None:
  *             return MBufferIO(self)
  */
-  __pyx_tuple__42 = PyTuple_Pack(1, __pyx_kp_u_Can_t_copy_a_closed_MBufferIO); if (unlikely(!__pyx_tuple__42)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 774; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __pyx_tuple__42 = PyTuple_Pack(1, __pyx_kp_u_Can_t_copy_a_closed_MBufferIO); if (unlikely(!__pyx_tuple__42)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 821; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
   __Pyx_GOTREF(__pyx_tuple__42);
   __Pyx_GIVEREF(__pyx_tuple__42);
 
-  /* "mbufferio/_mbufferio.pyx":793
+  /* "mbufferio/_mbufferio.pyx":840
  *             obj = bytes(obj)
  *     prefix = bytes(prefix)
  *     retbuf = bytearray(16)             # <<<<<<<<<<<<<<
  * 
  *     cdef Py_buffer* view = <Py_buffer*> PyMem_Malloc(sizeof(Py_buffer))
  */
-  __pyx_tuple__43 = PyTuple_Pack(1, __pyx_int_16); if (unlikely(!__pyx_tuple__43)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 793; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __pyx_tuple__43 = PyTuple_Pack(1, __pyx_int_16); if (unlikely(!__pyx_tuple__43)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 840; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
   __Pyx_GOTREF(__pyx_tuple__43);
   __Pyx_GIVEREF(__pyx_tuple__43);
 
-  /* "mbufferio/_mbufferio.pyx":797
+  /* "mbufferio/_mbufferio.pyx":844
  *     cdef Py_buffer* view = <Py_buffer*> PyMem_Malloc(sizeof(Py_buffer))
  *     if view == NULL:
  *         raise MemoryError("Could not allocate memory for the Py_buffer")             # <<<<<<<<<<<<<<
  *     res = PyObject_GetBuffer(obj, view, PyBUF_SIMPLE)
  *     if res == -1:
  */
-  __pyx_tuple__44 = PyTuple_Pack(1, __pyx_kp_s_Could_not_allocate_memory_for_th); if (unlikely(!__pyx_tuple__44)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 797; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __pyx_tuple__44 = PyTuple_Pack(1, __pyx_kp_s_Could_not_allocate_memory_for_th); if (unlikely(!__pyx_tuple__44)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 844; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
   __Pyx_GOTREF(__pyx_tuple__44);
   __Pyx_GIVEREF(__pyx_tuple__44);
 
-  /* "mbufferio/_mbufferio.pyx":801
+  /* "mbufferio/_mbufferio.pyx":848
  *     if res == -1:
  *         PyMem_Free(view)
  *         raise RuntimeError("PyObject_GetBuffer failed")             # <<<<<<<<<<<<<<
  *     length = <size_t> view.len
  *     buf = <void*> view.buf
  */
-  __pyx_tuple__45 = PyTuple_Pack(1, __pyx_kp_s_PyObject_GetBuffer_failed); if (unlikely(!__pyx_tuple__45)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 801; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __pyx_tuple__45 = PyTuple_Pack(1, __pyx_kp_s_PyObject_GetBuffer_failed); if (unlikely(!__pyx_tuple__45)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 848; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
   __Pyx_GOTREF(__pyx_tuple__45);
   __Pyx_GIVEREF(__pyx_tuple__45);
 
-  /* "mbufferio/_mbufferio.pyx":808
+  /* "mbufferio/_mbufferio.pyx":855
  *         if res == 0:
  *             return None
  *         result = prefix + bytes(retbuf).encode('hex')             # <<<<<<<<<<<<<<
  *         if to_unicode:
  *             return unicode(result)
  */
-  __pyx_tuple__46 = PyTuple_Pack(1, __pyx_n_s_hex); if (unlikely(!__pyx_tuple__46)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 808; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __pyx_tuple__46 = PyTuple_Pack(1, __pyx_n_s_hex); if (unlikely(!__pyx_tuple__46)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 855; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
   __Pyx_GOTREF(__pyx_tuple__46);
   __Pyx_GIVEREF(__pyx_tuple__46);
 
-  /* "mbufferio/_mbufferio.pyx":827
+  /* "mbufferio/_mbufferio.pyx":874
  *         return s
  *     if PyBytes_Check(s):
  *         return s.decode('utf-8')             # <<<<<<<<<<<<<<
  *     if hasattr(s, '__bytes__'):
  *         return s.__bytes__().decode('utf-8')
  */
-  __pyx_tuple__47 = PyTuple_Pack(1, __pyx_kp_s_utf_8); if (unlikely(!__pyx_tuple__47)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 827; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __pyx_tuple__47 = PyTuple_Pack(1, __pyx_kp_s_utf_8); if (unlikely(!__pyx_tuple__47)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 874; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
   __Pyx_GOTREF(__pyx_tuple__47);
   __Pyx_GIVEREF(__pyx_tuple__47);
 
-  /* "mbufferio/_mbufferio.pyx":829
+  /* "mbufferio/_mbufferio.pyx":876
  *         return s.decode('utf-8')
  *     if hasattr(s, '__bytes__'):
  *         return s.__bytes__().decode('utf-8')             # <<<<<<<<<<<<<<
  *     if hasattr(s, '__unicode__'):
  *         return s.__unicode__()
  */
-  __pyx_tuple__48 = PyTuple_Pack(1, __pyx_kp_s_utf_8); if (unlikely(!__pyx_tuple__48)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 829; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __pyx_tuple__48 = PyTuple_Pack(1, __pyx_kp_s_utf_8); if (unlikely(!__pyx_tuple__48)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 876; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
   __Pyx_GOTREF(__pyx_tuple__48);
   __Pyx_GIVEREF(__pyx_tuple__48);
 
@@ -27362,6 +27817,7 @@ PyMODINIT_FUNC PyInit__mbufferio(void)
 #endif
 {
   PyObject *__pyx_t_1 = NULL;
+  PyObject *__pyx_t_2 = NULL;
   int __pyx_lineno = 0;
   const char *__pyx_filename = NULL;
   int __pyx_clineno = 0;
@@ -27473,11 +27929,11 @@ PyMODINIT_FUNC PyInit__mbufferio(void)
   __pyx_vtable_9mbufferio_10_mbufferio_MBufferIO.tobytes = (PyObject *(*)(struct __pyx_obj_9mbufferio_10_mbufferio_MBufferIO *, int __pyx_skip_dispatch))__pyx_f_9mbufferio_10_mbufferio_9MBufferIO_tobytes;
   __pyx_vtable_9mbufferio_10_mbufferio_MBufferIO.detach = (PyObject *(*)(struct __pyx_obj_9mbufferio_10_mbufferio_MBufferIO *, int __pyx_skip_dispatch, struct __pyx_opt_args_9mbufferio_10_mbufferio_9MBufferIO_detach *__pyx_optional_args))__pyx_f_9mbufferio_10_mbufferio_9MBufferIO_detach;
   __pyx_vtable_9mbufferio_10_mbufferio_MBufferIO.murmur128 = (PyObject *(*)(struct __pyx_obj_9mbufferio_10_mbufferio_MBufferIO *, int __pyx_skip_dispatch, struct __pyx_opt_args_9mbufferio_10_mbufferio_9MBufferIO_murmur128 *__pyx_optional_args))__pyx_f_9mbufferio_10_mbufferio_9MBufferIO_murmur128;
-  if (PyType_Ready(&__pyx_type_9mbufferio_10_mbufferio_MBufferIO) < 0) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 18; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  if (PyType_Ready(&__pyx_type_9mbufferio_10_mbufferio_MBufferIO) < 0) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 19; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
   __pyx_type_9mbufferio_10_mbufferio_MBufferIO.tp_print = 0;
   #if CYTHON_COMPILING_IN_CPYTHON
   {
-    PyObject *wrapper = PyObject_GetAttrString((PyObject *)&__pyx_type_9mbufferio_10_mbufferio_MBufferIO, "__init__"); if (unlikely(!wrapper)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 18; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+    PyObject *wrapper = PyObject_GetAttrString((PyObject *)&__pyx_type_9mbufferio_10_mbufferio_MBufferIO, "__init__"); if (unlikely(!wrapper)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 19; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
     if (Py_TYPE(wrapper) == &PyWrapperDescr_Type) {
       __pyx_wrapperbase_9mbufferio_10_mbufferio_9MBufferIO_2__init__ = *((PyWrapperDescrObject *)wrapper)->d_base;
       __pyx_wrapperbase_9mbufferio_10_mbufferio_9MBufferIO_2__init__.doc = __pyx_doc_9mbufferio_10_mbufferio_9MBufferIO_2__init__;
@@ -27485,10 +27941,10 @@ PyMODINIT_FUNC PyInit__mbufferio(void)
     }
   }
   #endif
-  if (__Pyx_SetVtable(__pyx_type_9mbufferio_10_mbufferio_MBufferIO.tp_dict, __pyx_vtabptr_9mbufferio_10_mbufferio_MBufferIO) < 0) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 18; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
-  if (PyObject_SetAttrString(__pyx_m, "MBufferIO", (PyObject *)&__pyx_type_9mbufferio_10_mbufferio_MBufferIO) < 0) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 18; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  if (__Pyx_SetVtable(__pyx_type_9mbufferio_10_mbufferio_MBufferIO.tp_dict, __pyx_vtabptr_9mbufferio_10_mbufferio_MBufferIO) < 0) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 19; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  if (PyObject_SetAttrString(__pyx_m, "MBufferIO", (PyObject *)&__pyx_type_9mbufferio_10_mbufferio_MBufferIO) < 0) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 19; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
   __pyx_ptype_9mbufferio_10_mbufferio_MBufferIO = &__pyx_type_9mbufferio_10_mbufferio_MBufferIO;
-  if (PyType_Ready(&__pyx_type_9mbufferio_10_mbufferio___pyx_scope_struct____iter__) < 0) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 650; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  if (PyType_Ready(&__pyx_type_9mbufferio_10_mbufferio___pyx_scope_struct____iter__) < 0) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 697; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
   __pyx_type_9mbufferio_10_mbufferio___pyx_scope_struct____iter__.tp_print = 0;
   __pyx_ptype_9mbufferio_10_mbufferio___pyx_scope_struct____iter__ = &__pyx_type_9mbufferio_10_mbufferio___pyx_scope_struct____iter__;
   if (PyType_Ready(&__pyx_type___pyx_array) < 0) {__pyx_filename = __pyx_f[2]; __pyx_lineno = 101; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
@@ -27533,15 +27989,39 @@ PyMODINIT_FUNC PyInit__mbufferio(void)
   if (__Pyx_patch_abc() < 0) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 1; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
   #endif
 
+  /* "mbufferio/_mbufferio.pyx":136
+ * 
+ *     @classmethod
+ *     def from_mview(cls, mview, take_ownership=False):             # <<<<<<<<<<<<<<
+ *         """
+ *         Create a MBufferIO object from an existing memoryview.
+ */
+  __pyx_t_1 = __Pyx_GetNameInClass((PyObject *)__pyx_ptype_9mbufferio_10_mbufferio_MBufferIO, __pyx_n_s_from_mview); if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 136; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __Pyx_GOTREF(__pyx_t_1);
+
+  /* "mbufferio/_mbufferio.pyx":135
+ *             self.copy_buf_pointer = NULL
+ * 
+ *     @classmethod             # <<<<<<<<<<<<<<
+ *     def from_mview(cls, mview, take_ownership=False):
+ *         """
+ */
+  __pyx_t_2 = __Pyx_Method_ClassMethod(__pyx_t_1); if (unlikely(!__pyx_t_2)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 135; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __Pyx_GOTREF(__pyx_t_2);
+  __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
+  if (PyDict_SetItem((PyObject *)__pyx_ptype_9mbufferio_10_mbufferio_MBufferIO->tp_dict, __pyx_n_s_from_mview, __pyx_t_2) < 0) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 136; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
+  PyType_Modified(__pyx_ptype_9mbufferio_10_mbufferio_MBufferIO);
+
   /* "mbufferio/_mbufferio.pyx":1
  * # -*- coding: utf-8 -*-             # <<<<<<<<<<<<<<
  * 
  * # noinspection PyUnresolvedReferences
  */
-  __pyx_t_1 = PyDict_New(); if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 1; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
-  __Pyx_GOTREF(__pyx_t_1);
-  if (PyDict_SetItem(__pyx_d, __pyx_n_s_test, __pyx_t_1) < 0) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 1; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
-  __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
+  __pyx_t_2 = PyDict_New(); if (unlikely(!__pyx_t_2)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 1; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __Pyx_GOTREF(__pyx_t_2);
+  if (PyDict_SetItem(__pyx_d, __pyx_n_s_test, __pyx_t_2) < 0) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 1; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
 
   /* "View.MemoryView":205
  *         info.obj = self
@@ -27550,10 +28030,10 @@ PyMODINIT_FUNC PyInit__mbufferio(void)
  * 
  *     def __dealloc__(array self):
  */
-  __pyx_t_1 = __pyx_capsule_create(((void *)(&__pyx_array_getbuffer)), __pyx_k_getbuffer_obj_view_flags); if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[2]; __pyx_lineno = 205; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
-  __Pyx_GOTREF(__pyx_t_1);
-  if (PyDict_SetItem(__pyx_array_type->tp_dict, __pyx_n_s_pyx_getbuffer, __pyx_t_1) < 0) {__pyx_filename = __pyx_f[2]; __pyx_lineno = 205; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
-  __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
+  __pyx_t_2 = __pyx_capsule_create(((void *)(&__pyx_array_getbuffer)), __pyx_k_getbuffer_obj_view_flags); if (unlikely(!__pyx_t_2)) {__pyx_filename = __pyx_f[2]; __pyx_lineno = 205; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __Pyx_GOTREF(__pyx_t_2);
+  if (PyDict_SetItem(__pyx_array_type->tp_dict, __pyx_n_s_pyx_getbuffer, __pyx_t_2) < 0) {__pyx_filename = __pyx_f[2]; __pyx_lineno = 205; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
   PyType_Modified(__pyx_array_type);
 
   /* "View.MemoryView":278
@@ -27563,12 +28043,12 @@ PyMODINIT_FUNC PyInit__mbufferio(void)
  * cdef strided = Enum("<strided and direct>") # default
  * cdef indirect = Enum("<strided and indirect>")
  */
-  __pyx_t_1 = __Pyx_PyObject_Call(((PyObject *)__pyx_MemviewEnum_type), __pyx_tuple__62, NULL); if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[2]; __pyx_lineno = 278; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
-  __Pyx_GOTREF(__pyx_t_1);
+  __pyx_t_2 = __Pyx_PyObject_Call(((PyObject *)__pyx_MemviewEnum_type), __pyx_tuple__62, NULL); if (unlikely(!__pyx_t_2)) {__pyx_filename = __pyx_f[2]; __pyx_lineno = 278; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __Pyx_GOTREF(__pyx_t_2);
   __Pyx_XGOTREF(generic);
-  __Pyx_DECREF_SET(generic, __pyx_t_1);
-  __Pyx_GIVEREF(__pyx_t_1);
-  __pyx_t_1 = 0;
+  __Pyx_DECREF_SET(generic, __pyx_t_2);
+  __Pyx_GIVEREF(__pyx_t_2);
+  __pyx_t_2 = 0;
 
   /* "View.MemoryView":279
  * 
@@ -27577,12 +28057,12 @@ PyMODINIT_FUNC PyInit__mbufferio(void)
  * cdef indirect = Enum("<strided and indirect>")
  * 
  */
-  __pyx_t_1 = __Pyx_PyObject_Call(((PyObject *)__pyx_MemviewEnum_type), __pyx_tuple__63, NULL); if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[2]; __pyx_lineno = 279; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
-  __Pyx_GOTREF(__pyx_t_1);
+  __pyx_t_2 = __Pyx_PyObject_Call(((PyObject *)__pyx_MemviewEnum_type), __pyx_tuple__63, NULL); if (unlikely(!__pyx_t_2)) {__pyx_filename = __pyx_f[2]; __pyx_lineno = 279; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __Pyx_GOTREF(__pyx_t_2);
   __Pyx_XGOTREF(strided);
-  __Pyx_DECREF_SET(strided, __pyx_t_1);
-  __Pyx_GIVEREF(__pyx_t_1);
-  __pyx_t_1 = 0;
+  __Pyx_DECREF_SET(strided, __pyx_t_2);
+  __Pyx_GIVEREF(__pyx_t_2);
+  __pyx_t_2 = 0;
 
   /* "View.MemoryView":280
  * cdef generic = Enum("<strided and direct or indirect>")
@@ -27591,12 +28071,12 @@ PyMODINIT_FUNC PyInit__mbufferio(void)
  * 
  * 
  */
-  __pyx_t_1 = __Pyx_PyObject_Call(((PyObject *)__pyx_MemviewEnum_type), __pyx_tuple__64, NULL); if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[2]; __pyx_lineno = 280; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
-  __Pyx_GOTREF(__pyx_t_1);
+  __pyx_t_2 = __Pyx_PyObject_Call(((PyObject *)__pyx_MemviewEnum_type), __pyx_tuple__64, NULL); if (unlikely(!__pyx_t_2)) {__pyx_filename = __pyx_f[2]; __pyx_lineno = 280; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __Pyx_GOTREF(__pyx_t_2);
   __Pyx_XGOTREF(indirect);
-  __Pyx_DECREF_SET(indirect, __pyx_t_1);
-  __Pyx_GIVEREF(__pyx_t_1);
-  __pyx_t_1 = 0;
+  __Pyx_DECREF_SET(indirect, __pyx_t_2);
+  __Pyx_GIVEREF(__pyx_t_2);
+  __pyx_t_2 = 0;
 
   /* "View.MemoryView":283
  * 
@@ -27605,12 +28085,12 @@ PyMODINIT_FUNC PyInit__mbufferio(void)
  * cdef indirect_contiguous = Enum("<contiguous and indirect>")
  * 
  */
-  __pyx_t_1 = __Pyx_PyObject_Call(((PyObject *)__pyx_MemviewEnum_type), __pyx_tuple__65, NULL); if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[2]; __pyx_lineno = 283; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
-  __Pyx_GOTREF(__pyx_t_1);
+  __pyx_t_2 = __Pyx_PyObject_Call(((PyObject *)__pyx_MemviewEnum_type), __pyx_tuple__65, NULL); if (unlikely(!__pyx_t_2)) {__pyx_filename = __pyx_f[2]; __pyx_lineno = 283; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __Pyx_GOTREF(__pyx_t_2);
   __Pyx_XGOTREF(contiguous);
-  __Pyx_DECREF_SET(contiguous, __pyx_t_1);
-  __Pyx_GIVEREF(__pyx_t_1);
-  __pyx_t_1 = 0;
+  __Pyx_DECREF_SET(contiguous, __pyx_t_2);
+  __Pyx_GIVEREF(__pyx_t_2);
+  __pyx_t_2 = 0;
 
   /* "View.MemoryView":284
  * 
@@ -27619,12 +28099,12 @@ PyMODINIT_FUNC PyInit__mbufferio(void)
  * 
  * 
  */
-  __pyx_t_1 = __Pyx_PyObject_Call(((PyObject *)__pyx_MemviewEnum_type), __pyx_tuple__66, NULL); if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[2]; __pyx_lineno = 284; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
-  __Pyx_GOTREF(__pyx_t_1);
+  __pyx_t_2 = __Pyx_PyObject_Call(((PyObject *)__pyx_MemviewEnum_type), __pyx_tuple__66, NULL); if (unlikely(!__pyx_t_2)) {__pyx_filename = __pyx_f[2]; __pyx_lineno = 284; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __Pyx_GOTREF(__pyx_t_2);
   __Pyx_XGOTREF(indirect_contiguous);
-  __Pyx_DECREF_SET(indirect_contiguous, __pyx_t_1);
-  __Pyx_GIVEREF(__pyx_t_1);
-  __pyx_t_1 = 0;
+  __Pyx_DECREF_SET(indirect_contiguous, __pyx_t_2);
+  __Pyx_GIVEREF(__pyx_t_2);
+  __pyx_t_2 = 0;
 
   /* "View.MemoryView":498
  *         info.obj = self
@@ -27633,10 +28113,10 @@ PyMODINIT_FUNC PyInit__mbufferio(void)
  * 
  * 
  */
-  __pyx_t_1 = __pyx_capsule_create(((void *)(&__pyx_memoryview_getbuffer)), __pyx_k_getbuffer_obj_view_flags); if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[2]; __pyx_lineno = 498; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
-  __Pyx_GOTREF(__pyx_t_1);
-  if (PyDict_SetItem(__pyx_memoryview_type->tp_dict, __pyx_n_s_pyx_getbuffer, __pyx_t_1) < 0) {__pyx_filename = __pyx_f[2]; __pyx_lineno = 498; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
-  __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
+  __pyx_t_2 = __pyx_capsule_create(((void *)(&__pyx_memoryview_getbuffer)), __pyx_k_getbuffer_obj_view_flags); if (unlikely(!__pyx_t_2)) {__pyx_filename = __pyx_f[2]; __pyx_lineno = 498; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __Pyx_GOTREF(__pyx_t_2);
+  if (PyDict_SetItem(__pyx_memoryview_type->tp_dict, __pyx_n_s_pyx_getbuffer, __pyx_t_2) < 0) {__pyx_filename = __pyx_f[2]; __pyx_lineno = 498; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
   PyType_Modified(__pyx_memoryview_type);
 
   /* "View.MemoryView":954
@@ -27646,10 +28126,10 @@ PyMODINIT_FUNC PyInit__mbufferio(void)
  * 
  * 
  */
-  __pyx_t_1 = __pyx_capsule_create(((void *)(&__pyx_memoryview_getbuffer)), __pyx_k_getbuffer_obj_view_flags); if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[2]; __pyx_lineno = 954; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
-  __Pyx_GOTREF(__pyx_t_1);
-  if (PyDict_SetItem(__pyx_memoryviewslice_type->tp_dict, __pyx_n_s_pyx_getbuffer, __pyx_t_1) < 0) {__pyx_filename = __pyx_f[2]; __pyx_lineno = 954; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
-  __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
+  __pyx_t_2 = __pyx_capsule_create(((void *)(&__pyx_memoryview_getbuffer)), __pyx_k_getbuffer_obj_view_flags); if (unlikely(!__pyx_t_2)) {__pyx_filename = __pyx_f[2]; __pyx_lineno = 954; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __Pyx_GOTREF(__pyx_t_2);
+  if (PyDict_SetItem(__pyx_memoryviewslice_type->tp_dict, __pyx_n_s_pyx_getbuffer, __pyx_t_2) < 0) {__pyx_filename = __pyx_f[2]; __pyx_lineno = 954; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
   PyType_Modified(__pyx_memoryviewslice_type);
 
   /* "View.MemoryView":1364
@@ -27665,6 +28145,7 @@ PyMODINIT_FUNC PyInit__mbufferio(void)
   goto __pyx_L0;
   __pyx_L1_error:;
   __Pyx_XDECREF(__pyx_t_1);
+  __Pyx_XDECREF(__pyx_t_2);
   if (__pyx_m) {
     if (__pyx_d) {
       __Pyx_AddTraceback("init mbufferio._mbufferio", __pyx_clineno, __pyx_lineno, __pyx_filename);
@@ -28824,6 +29305,31 @@ bad:
     return -1;
 }
 
+static CYTHON_INLINE PyObject *__Pyx_GetModuleGlobalName(PyObject *name) {
+    PyObject *result;
+#if CYTHON_COMPILING_IN_CPYTHON
+    result = PyDict_GetItem(__pyx_d, name);
+    if (likely(result)) {
+        Py_INCREF(result);
+    } else {
+#else
+    result = PyObject_GetItem(__pyx_d, name);
+    if (!result) {
+        PyErr_Clear();
+#endif
+        result = __Pyx_GetBuiltinName(name);
+    }
+    return result;
+}
+
+static PyObject *__Pyx_GetNameInClass(PyObject *nmspace, PyObject *name) {
+    PyObject *result;
+    result = __Pyx_PyObject_GetAttrStr(nmspace, name);
+    if (!result)
+        result = __Pyx_GetModuleGlobalName(name);
+    return result;
+}
+
 static int __pyx_bisect_code_objects(__Pyx_CodeObjectCacheEntry* entries, int count, int code_line) {
     int start = 0, mid = 0, end = count - 1;
     if (end >= 0 && code_line > entries[end].code_line) {
@@ -29634,10 +30140,50 @@ static CYTHON_INLINE PyObject* __Pyx_PyInt_From_int64_t(int64_t value) {
     }
 }
 
+static PyObject* __Pyx_Method_ClassMethod(PyObject *method) {
+#if CYTHON_COMPILING_IN_PYPY
+    if (PyObject_TypeCheck(method, &PyWrapperDescr_Type)) {
+        return PyClassMethod_New(method);
+    }
+#else
+    static PyTypeObject *methoddescr_type = NULL;
+    if (methoddescr_type == NULL) {
+       PyObject *meth = PyObject_GetAttrString((PyObject*)&PyList_Type, "append");
+       if (!meth) return NULL;
+       methoddescr_type = Py_TYPE(meth);
+       Py_DECREF(meth);
+    }
+    if (PyObject_TypeCheck(method, methoddescr_type)) {
+        PyMethodDescrObject *descr = (PyMethodDescrObject *)method;
+        #if PY_VERSION_HEX < 0x03020000
+        PyTypeObject *d_type = descr->d_type;
+        #else
+        PyTypeObject *d_type = descr->d_common.d_type;
+        #endif
+        return PyDescr_NewClassMethod(d_type, descr->d_method);
+    }
+#endif
+    else if (PyMethod_Check(method)) {
+        return PyClassMethod_New(PyMethod_GET_FUNCTION(method));
+    }
+    else if (PyCFunction_Check(method)) {
+        return PyClassMethod_New(method);
+    }
+#ifdef __Pyx_CyFunction_USED
+    else if (PyObject_TypeCheck(method, __pyx_CyFunctionType)) {
+        return PyClassMethod_New(method);
+    }
+#endif
+    PyErr_SetString(PyExc_TypeError,
+                   "Class-level classmethod() can only be called on "
+                   "a method_descriptor or instance method.");
+    return NULL;
+}
+
 #if PY_MAJOR_VERSION < 3
 static int __Pyx_GetBuffer(PyObject *obj, Py_buffer *view, int flags) {
     if (PyObject_CheckBuffer(obj)) return PyObject_GetBuffer(obj, view, flags);
-        if (PyObject_TypeCheck(obj, __pyx_ptype_9mbufferio_10_mbufferio_MBufferIO)) return __pyx_pw_9mbufferio_10_mbufferio_9MBufferIO_64__getbuffer__(obj, view, flags);
+        if (PyObject_TypeCheck(obj, __pyx_ptype_9mbufferio_10_mbufferio_MBufferIO)) return __pyx_pw_9mbufferio_10_mbufferio_9MBufferIO_70__getbuffer__(obj, view, flags);
         if (PyObject_TypeCheck(obj, __pyx_array_type)) return __pyx_array_getbuffer(obj, view, flags);
         if (PyObject_TypeCheck(obj, __pyx_memoryview_type)) return __pyx_memoryview_getbuffer(obj, view, flags);
     PyErr_Format(PyExc_TypeError, "'%.200s' does not have the buffer interface", Py_TYPE(obj)->tp_name);
@@ -29650,14 +30196,14 @@ static void __Pyx_ReleaseBuffer(Py_buffer *view) {
         PyBuffer_Release(view);
         return;
     }
-        if (PyObject_TypeCheck(obj, __pyx_ptype_9mbufferio_10_mbufferio_MBufferIO)) { __pyx_pw_9mbufferio_10_mbufferio_9MBufferIO_66__releasebuffer__(obj, view); return; }
+        if (PyObject_TypeCheck(obj, __pyx_ptype_9mbufferio_10_mbufferio_MBufferIO)) { __pyx_pw_9mbufferio_10_mbufferio_9MBufferIO_72__releasebuffer__(obj, view); return; }
     Py_DECREF(obj);
     view->obj = NULL;
 }
 #endif
 
 
-      static CYTHON_INLINE int __Pyx_IsLittleEndian(void) {
+        static CYTHON_INLINE int __Pyx_IsLittleEndian(void) {
   unsigned int n = 1;
   return *(unsigned char*)(&n) != 0;
 }

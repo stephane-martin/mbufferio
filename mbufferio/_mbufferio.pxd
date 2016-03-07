@@ -12,6 +12,10 @@ cdef extern from "murmur.h" nogil:
     int qhashmurmur3_128(void *data, size_t nbytes, void *retbuf)
 
 
+cdef extern from "Python.h":
+    int PyMemoryView_Check(PyObject *obj)
+
+
 cdef class MBufferIO(object):
     cdef Py_ssize_t shape[1]
     cdef readonly int view_count
@@ -26,6 +30,7 @@ cdef class MBufferIO(object):
     cdef readonly bint readonly
     cdef readonly bint is_a_reference
     cdef object original_obj
+    cdef bint have_ownership
 
     cpdef bytes read(self, int64_t n=?)
     cpdef bytes readl(self, int64_t n=?)
