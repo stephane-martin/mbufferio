@@ -13,7 +13,8 @@ cdef extern from "murmur.h" nogil:
 
 
 cdef extern from "Python.h":
-    int PyMemoryView_Check(PyObject *obj)
+    int PyMemoryView_Check(object obj)
+    Py_buffer* PyMemoryView_GET_BUFFER(object mview)
 
 
 cdef class MBufferIO(object):
@@ -31,6 +32,7 @@ cdef class MBufferIO(object):
     cdef readonly bint is_a_reference
     cdef object original_obj
     cdef bint have_ownership
+    cdef bint malloc_mview
 
     cpdef bytes read(self, int64_t n=?)
     cpdef bytes readl(self, int64_t n=?)

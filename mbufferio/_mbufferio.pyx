@@ -45,6 +45,8 @@ cdef class MBufferIO(object):
 
     """
     def __cinit__(self, object src=None, int64_t startpos=0, int64_t length=-1, bint copy=0):
+        if not PyObject_CheckBuffer(src):
+            raise TypeError()
         self.have_ownership = 0
         if startpos < 0:
             startpos = 0
@@ -53,6 +55,7 @@ cdef class MBufferIO(object):
         self.original_obj = src
         self.offset = 0
         self.closed = 0
+        self.malloc_mview = 0
         if src is None:
             # empty MBufferIO object
             self.src_view = NULL
@@ -67,24 +70,25 @@ cdef class MBufferIO(object):
             self.is_a_reference = 0
             return
 
-        if not PyObject_CheckBuffer(src):
-            src = bytes(src)
-            copy = 1
-
         # build a MBufferIO from an existing buffer
-        self.src_view = <Py_buffer*> PyMem_Malloc(sizeof(Py_buffer))
-        if self.src_view == NULL:
-            raise MemoryError("Could not allocate memory for the Py_buffer")
-        if PyObject_GetBuffer(src, self.src_view, PyBUF_SIMPLE) == -1:
-            PyMem_Free(self.src_view)
-            raise RuntimeError("PyObject_GetBuffer failed")
+        if PyMemoryView_Check(src):
+            self.src_view = PyMemoryView_GET_BUFFER(src)
+        else:
+            self.src_view = <Py_buffer*> PyMem_Malloc(sizeof(Py_buffer))
+            if self.src_view == NULL:
+                raise MemoryError("Could not allocate memory for the Py_buffer")
+            if PyObject_GetBuffer(src, self.src_view, PyBUF_SIMPLE) == -1:
+                PyMem_Free(self.src_view)
+                raise RuntimeError("PyObject_GetBuffer failed")
+            self.malloc_mview = 1
+
         cdef int64_t original_length = self.src_view.len
         if startpos > original_length:
             startpos = original_length
         cdef int64_t max_orig_length = max(original_length - startpos, 0)
         self.length = max_orig_length if length < 0 else min(max_orig_length, length)
-        if copy:
-            # copy the original object (self.length bytes)
+
+        if copy:    # copy the original object (self.length bytes)
             self.readonly = 0
             self.is_a_reference = 0
             self.startpos = 0
@@ -96,13 +100,13 @@ cdef class MBufferIO(object):
             if self.length > 0:
                 memcpy(self.buf_pointer, self.src_view.buf + startpos, self.length)
 
-            # dont keep the reference to the original buffer
-            PyBuffer_Release(self.src_view)
-            PyMem_Free(self.src_view)
+            if self.malloc_mview:
+                PyBuffer_Release(self.src_view)
+                PyMem_Free(self.src_view)
             self.src_view = NULL
             self.original_obj = None
-        else:
-            # direct reference to the original buffer
+
+        else:   # direct reference to the original buffer
             self.readonly = 1 if self.src_view.readonly else 0
             self.is_a_reference = 1
             self.startpos = startpos
@@ -153,7 +157,7 @@ cdef class MBufferIO(object):
         -------
         mbuf: MBufferIO
         """
-        if not PyMemoryView_Check(<PyObject*> mview):
+        if not PyMemoryView_Check(mview):
             raise TypeError("from_mview only takes a memoryview object")
         mbuf = cls(mview)
         (<MBufferIO> mbuf).have_ownership = bool(take_ownership)
@@ -171,8 +175,9 @@ cdef class MBufferIO(object):
         self.closed = 1
         if self.is_a_reference:
             # release the view on the original object
-            PyBuffer_Release(self.src_view)
-            PyMem_Free(self.src_view)
+            if self.malloc_mview:
+                PyBuffer_Release(self.src_view)
+                PyMem_Free(self.src_view)
             self.src_view = NULL
             if self.have_ownership:
                 free(<void*> self.buf_pointer)
@@ -216,8 +221,9 @@ cdef class MBufferIO(object):
             self.readonly = 0
 
             # release the view on the original object
-            PyBuffer_Release(self.src_view)
-            PyMem_Free(self.src_view)
+            if self.malloc_mview:
+                PyBuffer_Release(self.src_view)
+                PyMem_Free(self.src_view)
             self.src_view = NULL
             self.original_obj = None
             if self.have_ownership:
