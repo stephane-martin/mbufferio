@@ -45,8 +45,6 @@ cdef class MBufferIO(object):
 
     """
     def __cinit__(self, object src=None, int64_t startpos=0, int64_t length=-1, bint copy=0):
-        if not PyObject_CheckBuffer(src):
-            raise TypeError()
         self.have_ownership = 0
         if startpos < 0:
             startpos = 0
@@ -69,6 +67,9 @@ cdef class MBufferIO(object):
             self.buf_pointer = self.copy_buf_pointer
             self.is_a_reference = 0
             return
+
+        if not PyObject_CheckBuffer(src):
+            raise TypeError()
 
         # build a MBufferIO from an existing buffer
         if PyMemoryView_Check(src):
