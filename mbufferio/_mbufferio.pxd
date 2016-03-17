@@ -19,6 +19,7 @@ cdef extern from "Python.h":
 
 cdef class MBufferIO(object):
     cdef Py_ssize_t shape[1]
+    cdef Py_ssize_t strides[1]
     cdef readonly int view_count
     cdef char* buf_pointer
     cdef char* copy_buf_pointer

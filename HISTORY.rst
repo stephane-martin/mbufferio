@@ -1,6 +1,10 @@
 History
 =======
 
+v0.5.6
+------
+fix: memoryview(MBufferIO()) used to raise BufferError
+
 v0.5.5
 ------
 fix: simple MBUfferIO() raised a TypeError

@@ -712,17 +712,16 @@ cdef class MBufferIO(object):
             raise BufferError("pybuf is NULL")
         if bool(flags & PyBUF_WRITABLE) and bool(self.readonly):
             raise BufferError('read only object')
-        if bool(flags & PyBUF_STRIDES) or bool(flags & PyBUF_ND):
-            raise BufferError
 
         self.shape[0] = self.length
+        self.strides[0] = 1
         pybuf.buf = self.buf_pointer + self.startpos
         pybuf.len = self.length
         pybuf.readonly = 1 if self.readonly else 0
         pybuf.format = "B"
         pybuf.ndim = 1
         pybuf.shape = self.shape
-        pybuf.strides = NULL
+        pybuf.strides = self.strides
         pybuf.suboffsets = NULL
         pybuf.itemsize = 1
         pybuf.internal = NULL
@@ -896,3 +895,4 @@ cpdef bytes make_utf8(s):
     if hasattr(s, '__unicode__'):
         return PyUnicode_AsUTF8String(s.__unicode__())
     return make_utf8(bytes(s))
+
