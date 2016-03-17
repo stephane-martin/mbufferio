@@ -1,6 +1,10 @@
 History
 =======
 
+v0.5.5
+------
+fix: simple MBUfferIO() raised a TypeError
+
 v0.5.3, v0.5.4
 --------------
 Allow to make MBufferIO objects from memory views that have been built by PyMemoryView_FromMemory() or
