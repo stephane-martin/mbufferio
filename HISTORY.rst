@@ -1,6 +1,11 @@
 History
 =======
 
+
+v0.5.8
+------
+- expose utility function "murmur128"
+
 v0.5.7
 ------
 - expose utility functions "make_utf8, make_unicode, umurmur128"

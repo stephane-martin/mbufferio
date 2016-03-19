@@ -27,7 +27,7 @@ extensions = [
 ]
 
 name = 'mbufferio'
-version = '0.5.7'
+version = '0.5.8'
 description = 'A convenient class to manipulate buffer objects as streams in Python'
 author = 'Stephane Martin'
 author_email = 'stephane.martin_github@vesperal.eu'
